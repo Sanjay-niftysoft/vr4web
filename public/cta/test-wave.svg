@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 500" width="1440" height="500">
+  <!-- Blue background -->
+  <rect width="1440" height="500" fill="#0B4F9C" />
+
+  <!-- Top white wave cut -->
+  <path d="M 0 0 L 1440 0 L 1440 50 C 1320 60 1200 135 1060 143 C 920 150 750 95 560 70 C 380 46 180 82 0 56 Z" fill="#FFFFFF" />
+
+  <!-- Top orange accent line -->
+  <path d="M 180 82 C 380 46 560 70 750 95 C 920 150 1200 135 1440 45" fill="none" stroke="#F97316" stroke-width="2" />
+  <!-- Top subtle secondary orange accent line -->
+  <path d="M 450 60 C 650 82 850 135 1060 138 C 1220 140 1350 90 1440 32" fill="none" stroke="rgba(249,115,22,0.4)" stroke-width="1.2" />
+
+  <!-- Bottom white wave cut -->
+  <path d="M 0 500 L 1440 500 L 1440 425 C 1280 436 1120 455 920 455 C 680 455 450 402 260 401 C 120 401 0 432 0 432 Z" fill="#FFFFFF" />
+
+  <!-- Bottom orange accent line -->
+  <path d="M 0 445 C 120 415 280 412 450 415" fill="none" stroke="rgba(249,115,22,0.8)" stroke-width="1.8" />
+</svg>

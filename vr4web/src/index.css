@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-cyber-cyan: #00b8d4;
+  --color-cyber-magenta: #ff007f;
+  --color-cyber-purple: #7000ff;
+  --color-cyber-bg: #f8f9fa;
+  --color-cyber-panel: rgba(255, 255, 255, 0.8);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-cyber-bg);
+    color: #334155;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    background: var(--color-cyber-panel);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  }
+  
+  .glass-button {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+    color: #334155;
+  }
+  
+  .glass-button:hover {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-color: var(--color-cyber-cyan);
+    color: var(--color-cyber-cyan);
+  }
+
+  .neon-text {
+    /* Adjusted for light mode: softer drop shadow */
+    text-shadow: 0 2px 10px rgba(0, 184, 212, 0.3);
+  }
+
+  .neon-text-magenta {
+    text-shadow: 0 2px 10px rgba(255, 0, 127, 0.3);
+  }
+
+  .text-white-black-border {
+    color: #f1f5f9;
+    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.6);
+    paint-order: stroke fill;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  }
+
+  @media (min-width: 768px) {
+    .text-white-black-border {
+      -webkit-text-stroke: 0.75px rgba(0, 0, 0, 0.65);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .grid-bg {
+    background-size: 40px 40px;
+    background-image: 
+      linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  }
+}
+
+/* Custom Scrollbar for light theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.font-handwritten {
+  font-family: 'Caveat', cursive;
+}

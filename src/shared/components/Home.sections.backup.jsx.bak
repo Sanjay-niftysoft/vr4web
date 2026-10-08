@@ -1,0 +1,2036 @@
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { AppWindow, X, ArrowRight, ArrowUpRight, Award, Braces, Calendar, ChevronLeft, ChevronRight, Clock, CloudCog, Code2, Factory, GraduationCap, Handshake, Headphones, HeartPulse, Layout, LayoutGrid, LifeBuoy, LineChart, Lock, Mail, MapPin, Maximize, Megaphone, MessageSquare, Minus, Palette, PenTool, Phone, Plus, Rocket, Search, Settings, ShieldCheck, ShoppingBag, ShoppingCart, Smartphone, TrendingUp, Truck, Zap } from 'lucide-react';
+
+const ABOUT_IMAGES = [
+  {
+    id: 'web-development',
+    tag: 'Web Development',
+    title: 'Modern Web Solutions',
+    url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80',
+    alt: 'Professional Software Engineer Working on Modern Web Application Code'
+  },
+  {
+    id: 'digital-marketing',
+    tag: 'Digital Marketing',
+    title: 'Data-Driven Growth',
+    url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80',
+    alt: 'Marketing Specialist Analyzing Digital Performance and Campaign Analytics Dashboard'
+  },
+  {
+    id: 'app-development',
+    tag: 'App Development',
+    title: 'Mobile Applications',
+    url: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=900&q=80',
+    alt: 'User Testing and Interacting with Smartphone Mobile Application'
+  }
+];
+
+function AboutUs() {
+  const [activeImg, setActiveImg] = useState(1);
+
+  return (
+    <section className="w-full bg-[#FAFAFA] py-8 sm:py-10 md:py-12 lg:py-14 overflow-hidden relative z-10 font-sans">
+      {/* Subtle brand background glows */}
+      <div className="absolute top-[-5%] left-[-5%] w-[35%] h-[35%] bg-blue-100/50 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-5%] right-[-5%] w-[35%] h-[35%] bg-orange-100/40 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
+
+        {/* Centered Top Heading with Brand Accent Line */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center text-center mb-8 sm:mb-10"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-sans font-bold text-[#0f172a] tracking-tight">
+            About <span className="italic text-[#D37B5C]">Us</span>
+          </h2>
+          <div className="w-16 h-1 bg-[#172554] rounded-full mt-3.5" />
+        </motion.div>
+
+        {/* Two-Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
+
+          {/* Left Column (~42% on desktop) */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="lg:col-span-5 flex flex-col items-start justify-center"
+          >
+            {/* Headline */}
+            <h3 className="text-xl sm:text-2xl md:text-[28px] font-sans font-bold text-[#0f172a] leading-tight tracking-tight mb-5">
+              Empowering Businesses Through <br className="hidden sm:block" />
+              <span className="italic text-[#D37B5C]">
+                Innovative Technology
+              </span>
+            </h3>
+
+            {/* Description quote using real company information */}
+            <p className="text-black font-medium text-base sm:text-lg leading-relaxed mb-8">
+              &ldquo;Born out of a dedication to technology that lasts, VR4WEB connects Australian enterprises to scalable, high-performance digital realities. We believe in transparent partnerships, robust software engineering, and delivering intelligent solutions tailored to accelerate your growth.&rdquo;
+            </p>
+
+            {/* Button Actions: Rectangular box shape */}
+            <div className="flex flex-wrap items-center gap-4">
+              <Link to="/about">
+                <button className="group relative flex items-center justify-center gap-2.5 px-6 py-3.5 bg-[#172554] text-white text-xs sm:text-sm font-semibold rounded-md overflow-hidden hover:bg-blue-900 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 shadow-md">
+                  <span>About Us</span>
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </button>
+              </Link>
+
+              <Link to="/services">
+                <button className="flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-[#172554] text-xs sm:text-sm font-semibold rounded-md border border-slate-300 hover:border-[#172554] hover:bg-slate-50 hover:-translate-y-0.5 transition-all duration-300 shadow-sm">
+                  <span>Our Services</span>
+                </button>
+              </Link>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Interactive 3-Image Composition with hover expansion & box-shadow */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="lg:col-span-7 flex flex-row items-center justify-center gap-2.5 sm:gap-4 md:gap-5 h-[340px] sm:h-[400px] md:h-[440px] lg:h-[470px] pt-4 lg:pt-0"
+            onMouseLeave={() => setActiveImg(1)}
+          >
+            {ABOUT_IMAGES.map((img, idx) => {
+              const isActive = activeImg === idx;
+              return (
+                <div
+                  key={img.id}
+                  onMouseEnter={() => setActiveImg(idx)}
+                  onClick={() => setActiveImg(idx)}
+                  className={`group relative overflow-hidden cursor-pointer rounded-2xl sm:rounded-3xl border-2 transition-all duration-500 ease-out min-w-0 ${isActive
+                      ? 'flex-[2.2] sm:flex-[2.5] h-full border-[#172554]/30 shadow-[0_25px_60px_rgba(23,37,84,0.35)] z-20 scale-[1.01]'
+                      : 'flex-1 h-[84%] sm:h-[88%] border-white/90 shadow-md opacity-80 hover:opacity-100 z-10'
+                    }`}
+                >
+                  <img
+                    src={img.url}
+                    alt={img.alt}
+                    className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  {/* Subtle depth gradient overlay */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-t from-[#0f172a]/80 via-transparent to-transparent transition-opacity duration-500 ${isActive ? 'opacity-90' : 'opacity-0 group-hover:opacity-40'
+                      }`}
+                  />
+
+                  {/* Active Caption Details */}
+                  <div
+                    className={`absolute bottom-3 sm:bottom-5 left-3 sm:left-5 right-3 sm:right-5 transition-all duration-500 ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+                      }`}
+                  >
+                    <span className="inline-block px-2.5 py-0.5 rounded bg-white/20 backdrop-blur-md text-white text-[10px] sm:text-xs font-semibold tracking-wide border border-white/20 mb-1">
+                      {img.tag}
+                    </span>
+                    <p className="text-white text-xs sm:text-sm font-bold truncate drop-shadow-md">
+                      {img.title}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const servicesData = [
+  {
+    id: 1,
+    number: '01',
+    tag: 'Mobile & Spatial',
+    title: 'App Development',
+    description: 'High-performance mobile and spatial application engineering across iOS, Android, Flutter, and cross-platform ecosystems.',
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80',
+    icon: Smartphone,
+    link: '/services',
+    features: ['iOS & Android Apps', 'Cross-Platform Flutter', 'Spatial UI/UX']
+  },
+  {
+    id: 2,
+    number: '02',
+    tag: 'Enterprise SaaS',
+    title: 'Software Application Development',
+    description: 'Bespoke enterprise software architecture, multi-tenant SaaS products, cloud systems, and intelligent workflow automation.',
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80',
+    icon: Code2,
+    link: '/services',
+    features: ['Custom SaaS Systems', 'Enterprise Architecture', 'API & Cloud Integrations']
+  },
+  {
+    id: 3,
+    number: '03',
+    tag: 'Full-Stack Web',
+    title: 'Web Design and Development',
+    description: 'Full-stack modern web applications, high-converting corporate portals, headless CMS setups, and bespoke reactive UI/UX designs.',
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80',
+    icon: Layout,
+    link: '/services',
+    features: ['Next.js & React Apps', 'Corporate Web Portals', 'Headless CMS Solutions']
+  },
+  {
+    id: 4,
+    number: '04',
+    tag: 'Retail & Marketplaces',
+    title: 'E-commerce Solutions',
+    description: 'High-converting online stores, multi-vendor marketplace engines, frictionless checkout flows, and automated inventory sync.',
+    image: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80',
+    icon: ShoppingCart,
+    link: '/services',
+    features: ['Multi-Vendor Marketplaces', 'Custom Storefronts', 'Secure Payment Gateways']
+  },
+  {
+    id: 5,
+    number: '05',
+    tag: 'AEO & Performance',
+    title: 'Digital Marketing Solutions',
+    description: 'Targeted SEO, Generative Engine Optimization (GEO/AEO), high-ROI PPC campaigns, and data-backed viral social strategies.',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
+    icon: Megaphone,
+    link: '/services',
+    features: ['AEO & AI Search SEO', 'High-ROI PPC Ads', 'Omnichannel Growth']
+  },
+  {
+    id: 6,
+    number: '06',
+    tag: 'Branding & 3D',
+    title: 'Creative Solutions',
+    description: 'Cutting-edge brand identity design, custom logo crafting, interactive 3D motion graphics, and compelling visual storytelling.',
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80',
+    icon: Palette,
+    link: '/services',
+    features: ['Brand Identity & Logos', 'UI/UX Prototypes', 'Motion & Video Graphics']
+  },
+  {
+    id: 7,
+    number: '07',
+    tag: '24/7 Operations',
+    title: 'Back Office Support',
+    description: 'Continuous operational, technical, and administrative excellence with 24/7 dedicated helpdesk, maintenance, and support teams.',
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80',
+    icon: Headphones,
+    link: '/services',
+    features: ['24/7 Technical Support', 'Store & Server Upkeep', 'Operations Management']
+  }
+];
+
+function OurServices() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1200
+  );
+  const total = servicesData.length;
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % total);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + total) % total);
+  };
+
+  // Slow, relaxing auto-orbit every 4.0s (1.15s of smooth physical glide, then 2.85s to appreciate each card)
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [isPaused, currentIndex]);
+
+  // Calculate relative orbital offset from currentIndex
+  const getOffset = (idx) => {
+    let diff = (idx - currentIndex) % total;
+    if (diff > total / 2) diff -= total;
+    if (diff < -total / 2) diff += total;
+    return diff;
+  };
+
+  // Responsive horizontal displacement for the curved cylinder (generous spacing, no overlapping)
+  const getOffsets = () => {
+    if (windowWidth >= 1280) return { near: '114%', outer: '196%' };
+    if (windowWidth >= 1024) return { near: '106%', outer: '180%' };
+    if (windowWidth >= 768) return { near: '96%', outer: '165%' };
+    return { near: '82%', outer: '145%' };
+  };
+
+  const { near, outer } = getOffsets();
+
+  // Compute 3D Cylindrical Perspective according to master prompt hierarchy:
+  // FAR (0.58) -> LEFT (0.80) -> ⭐ HERO (1.25) ⭐ <- RIGHT (0.80) <- FAR (0.58)
+  const getCardStyle = (diff) => {
+    switch (diff) {
+      case 0:
+        return {
+          x: '0%',
+          y: -16,
+          scale: 1.25,
+          rotateY: 0,
+          opacity: 1,
+          filter: 'none',
+          backdropFilter: 'none',
+          zIndex: 40,
+          visibility: 'visible',
+          pointerEvents: 'auto'
+        };
+      case -1:
+        return {
+          x: `-${near}`,
+          y: 12,
+          scale: 0.80,
+          rotateY: 13,
+          opacity: 0.95,
+          filter: 'none',
+          backdropFilter: 'none',
+          zIndex: 25,
+          visibility: 'visible',
+          pointerEvents: 'auto'
+        };
+      case 1:
+        return {
+          x: near,
+          y: 12,
+          scale: 0.80,
+          rotateY: -13,
+          opacity: 0.95,
+          filter: 'none',
+          backdropFilter: 'none',
+          zIndex: 25,
+          visibility: 'visible',
+          pointerEvents: 'auto'
+        };
+      case -2:
+        return {
+          x: `-${outer}`,
+          y: 30,
+          scale: 0.58,
+          rotateY: 25,
+          opacity: 0.65,
+          filter: 'none',
+          backdropFilter: 'none',
+          zIndex: 15,
+          visibility: 'visible',
+          pointerEvents: 'auto'
+        };
+      case 2:
+        return {
+          x: outer,
+          y: 30,
+          scale: 0.58,
+          rotateY: -25,
+          opacity: 0.65,
+          filter: 'none',
+          backdropFilter: 'none',
+          zIndex: 15,
+          visibility: 'visible',
+          pointerEvents: 'auto'
+        };
+      case -3:
+        return {
+          x: '-220%',
+          y: 48,
+          scale: 0.40,
+          rotateY: 34,
+          opacity: 0,
+          filter: 'none',
+          backdropFilter: 'none',
+          zIndex: 0,
+          visibility: 'hidden',
+          pointerEvents: 'none'
+        };
+      case 3:
+        return {
+          x: '220%',
+          y: 48,
+          scale: 0.40,
+          rotateY: -34,
+          opacity: 0,
+          filter: 'none',
+          backdropFilter: 'none',
+          zIndex: 0,
+          visibility: 'hidden',
+          pointerEvents: 'none'
+        };
+      default:
+        return {
+          x: diff < 0 ? '-240%' : '240%',
+          y: 60,
+          scale: 0.35,
+          rotateY: 0,
+          opacity: 0,
+          filter: 'none',
+          backdropFilter: 'none',
+          zIndex: 0,
+          visibility: 'hidden',
+          pointerEvents: 'none'
+        };
+    }
+  };
+
+  return (
+    <section className="w-full bg-[#F9F7F1] py-8 sm:py-10 md:py-12 relative z-10 font-sans overflow-hidden">
+      {/* Ambient background glows */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-r from-blue-100/50 via-orange-100/40 to-blue-100/50 rounded-full blur-[110px] pointer-events-none -z-10" />
+
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
+
+        {/* Top Header Section with Controls */}
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 sm:gap-8 mb-4 sm:mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="max-w-2xl"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-sans font-bold text-[#0f172a] tracking-tight mb-3 md:mb-4">
+              Our <span className="italic text-[#D37B5C]">Services</span>
+            </h2>
+            <p className="text-black font-medium text-base sm:text-lg leading-relaxed max-w-2xl">
+              Whether you need a robust enterprise system or an engaging mobile application, our offerings are designed to maximize and support you on your digital journey.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} 
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex items-center gap-3 self-start md:self-auto"
+          >
+            {/* Header Navigation Arrows (Available across all screen sizes) */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={prevSlide}
+                aria-label="Previous service"
+                className="w-10 h-10 rounded-xl bg-white border border-slate-200/90 text-[#172554] hover:bg-[#172554] hover:text-white transition-all duration-300 shadow-sm flex items-center justify-center cursor-pointer"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={nextSlide}
+                aria-label="Next service"
+                className="w-10 h-10 rounded-xl bg-white border border-slate-200/90 text-[#172554] hover:bg-[#172554] hover:text-white transition-all duration-300 shadow-sm flex items-center justify-center cursor-pointer"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            <Link to="/services">
+              <button className="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#172554] text-white text-xs sm:text-sm font-semibold rounded-xl hover:bg-blue-900 hover:shadow-md transition-all duration-300 whitespace-nowrap border border-[#172554]">
+                Explore all services
+              </button>
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* 3D Curved Cylindrical Carousel Stage */}
+        <div
+          className="relative w-full py-4 min-h-[580px] sm:min-h-[620px] md:min-h-[650px] flex items-center justify-center"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Curved orbital guide arc behind cards */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10">
+            <svg className="w-full max-w-5xl h-[320px] overflow-visible opacity-25 hidden md:block" viewBox="0 0 1000 280" fill="none">
+              <ellipse cx="500" cy="140" rx="460" ry="85" stroke="#172554" strokeWidth="1.5" strokeDasharray="6 6" />
+              <circle cx="120" cy="165" r="4" fill="#D37B5C" />
+              <circle cx="880" cy="165" r="4" fill="#172554" />
+            </svg>
+          </div>
+
+          {/* Floating Navigation Controls on Extra-Wide Displays (Hidden on standard displays to prevent covering cards) */}
+          <button
+            onClick={prevSlide}
+            aria-label="Previous service"
+            className="hidden 2xl:flex absolute -left-12 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white text-[#172554] shadow-xl border border-slate-200/90 hover:bg-[#172554] hover:text-white hover:scale-105 active:scale-95 transition-all duration-300 items-center justify-center cursor-pointer"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          <button
+            onClick={nextSlide}
+            aria-label="Next service"
+            className="hidden 2xl:flex absolute -right-12 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white text-[#172554] shadow-xl border border-slate-200/90 hover:bg-[#172554] hover:text-white hover:scale-105 active:scale-95 transition-all duration-300 items-center justify-center cursor-pointer"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          {/* 3D Track with 1400px Perspective */}
+          <div
+            className="relative w-full h-[580px] sm:h-[620px] md:h-[650px] flex items-center justify-center"
+            style={{ perspective: 1400, transformStyle: 'preserve-3d' }}
+          >
+            {servicesData.map((service, index) => {
+              const diff = getOffset(index);
+              const isCenter = diff === 0;
+              const isNear = Math.abs(diff) === 1;
+              const Icon = service.icon;
+              const style = getCardStyle(diff);
+
+              return (
+                <motion.div
+                  key={service.id}
+                  initial={false}
+                  animate={{
+                    x: style.x,
+                    y: style.y,
+                    scale: style.scale,
+                    rotateY: style.rotateY,
+                    opacity: style.opacity,
+                    zIndex: style.zIndex,
+                    visibility: style.visibility || 'visible'
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 85,
+                    damping: 22,
+                    mass: 1.2
+                  }}
+                  onClick={() => {
+                    if (diff !== 0) setCurrentIndex(index);
+                  }}
+                  className={`group absolute w-[84%] sm:w-[325px] md:w-[345px] lg:w-[365px] h-[440px] sm:h-[455px] rounded-3xl flex flex-col justify-between transition-shadow duration-700 select-none will-change-transform ${
+                    isCenter
+                      ? 'shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] cursor-default ring-1 ring-white/40'
+                      : isNear
+                      ? 'shadow-[0_20px_40px_rgba(0,0,0,0.3)] cursor-pointer hover:shadow-[0_30px_60px_rgba(0,0,0,0.4)] hover:ring-1 hover:ring-white/20'
+                      : 'shadow-[0_10px_20px_rgba(0,0,0,0.2)] cursor-pointer hover:opacity-100'
+                  }`}
+                  style={{
+                    transformStyle: 'preserve-3d',
+                    pointerEvents: style.pointerEvents
+                  }}
+                >
+                  {/* Full Background Image Layer (clipped) */}
+                  <div 
+                    className="absolute inset-0 rounded-3xl overflow-hidden bg-black border border-white/10" 
+                    style={{ transform: 'translateZ(0px)' }}
+                  >
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    
+                    {/* Dark overlay specifically to push side-cards back visually without fading UI content */}
+                    <div 
+                      className="absolute inset-0 bg-black transition-opacity duration-700 pointer-events-none" 
+                      style={{ opacity: isCenter ? 0 : 0.4 }} 
+                    />
+
+                    {/* Dark atmospheric overlays for guaranteed text readability without any blue tint */}
+                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="absolute inset-x-0 bottom-0 h-[85%] bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
+                  </div>
+
+                  {/* Inner glowing border effect for 3D feel */}
+                  <div 
+                    className="absolute inset-0 border border-white/20 rounded-3xl pointer-events-none" 
+                    style={{ transform: 'translateZ(1px)' }} 
+                  />
+
+                  {/* Top Floating Badges */}
+                  <div 
+                    className="relative z-10 flex justify-between items-start p-5 sm:p-6 transition-transform duration-700 ease-out group-hover:[transform:translateZ(40px)]"
+                    style={{ transform: 'translateZ(30px)' }}
+                  >
+                    {/* Floating Service Pill Tag */}
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-[#0f172a] text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-lg border border-white/60">
+                      <span className={`w-1.5 h-1.5 rounded-full ${isCenter ? 'bg-[#D37B5C] animate-pulse' : 'bg-blue-600'}`} />
+                      {service.tag}
+                    </span>
+                    
+                    {/* Floating Glassmorphic Icon Badge */}
+                    <div
+                      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shadow-2xl transition-all duration-500 ${
+                        isCenter
+                          ? 'bg-[#172554] text-white ring-2 ring-white/60 scale-110'
+                          : 'bg-white text-[#172554] ring-1 ring-black/10'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.8]" />
+                    </div>
+                  </div>
+
+                  {/* Bottom Content Body */}
+                  <div 
+                    className="relative z-10 p-5 sm:p-6 flex flex-col justify-end h-full transition-transform duration-700 ease-out group-hover:[transform:translateZ(50px)]"
+                    style={{ transform: 'translateZ(40px)' }}
+                  >
+                    <div className="mt-auto transform transition-transform duration-500 group-hover:-translate-y-1">
+                      {/* Title */}
+                      <h3 className="font-sans font-bold text-white text-xl sm:text-2xl leading-snug drop-shadow-md mb-2">
+                        {service.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="font-semibold text-xs sm:text-[13px] leading-relaxed text-white line-clamp-2 mb-4 drop-shadow-md">
+                        {service.description}
+                      </p>
+
+                      {/* Feature Pills */}
+                      <div className="flex flex-wrap gap-1.5 mb-4">
+                        {service.features.map((feature, fIdx) => (
+                          <span
+                            key={fIdx}
+                            className="px-2.5 py-1 bg-black/50 border border-white/20 text-white text-[10px] sm:text-[11px] font-bold rounded-lg shadow-sm"
+                          >
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action CTA Footer */}
+                    <div className="pt-4 border-t border-white/20">
+                      {isCenter ? (
+                        <Link
+                          to={service.link}
+                          className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-white text-[#172554] text-xs sm:text-sm font-bold rounded-xl hover:bg-[#D37B5C] hover:text-white shadow-[0_10px_20px_rgba(255,255,255,0.3)] transition-all duration-300 group/btn"
+                        >
+                          <span>Explore Service</span>
+                          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                        </Link>
+                      ) : (
+                        <div className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-white border border-white/20 text-[#0f172a] group-hover:bg-[#172554] group-hover:text-white text-xs font-bold transition-all duration-300 shadow-[0_4px_15px_rgba(0,0,0,0.3)]">
+                          <span>Click to focus</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+const whyChooseStats = [
+  {
+    number: '1',
+    percentage: '100%',
+    title: 'Client Retention & Long-Term Trust',
+    desc: 'Enterprises and growing brands rely on VR4WEB for mission-critical software engineering, transparent sprint milestones, and continuous technical evolution.',
+    bgColor: 'bg-[#041525]',
+  },
+  {
+    number: '2',
+    percentage: '100%',
+    title: 'Faster Time-to-Market & Delivery',
+    desc: 'Our battle-tested agile frameworks, modular codebases, and automated CI/CD pipelines ensure your web and mobile applications launch on schedule with zero downtime.',
+    bgColor: 'bg-[#536B73]',
+  },
+  {
+    number: '3',
+    percentage: '100%',
+    title: 'Operational & Infrastructure ROI',
+    desc: 'Scalable cloud architecture, custom workflow automations, and optimized high-performance systems reduce long-term maintenance overhead and maximize profitability.',
+    bgColor: 'bg-[#C19B2E]',
+  }
+];
+
+function WhyChooseUs() {
+  return (
+    <section className="w-full bg-[#F9F7F1] relative overflow-hidden font-sans">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        <div className="w-full flex flex-col md:flex-row items-stretch">
+
+          {/* Left Side: Deep Blue #041525 with full-bleed left background */}
+          <div className="relative w-full md:w-[38%] lg:w-[35%] xl:w-[34%] bg-[#041525] md:bg-transparent py-6 sm:py-8 md:py-9 lg:py-10 xl:py-12 flex flex-col justify-center items-start md:items-end">
+            {/* Desktop Left-Bleed Background Layer to cover everything to the left of the seam */}
+            <div className="hidden md:block absolute inset-y-0 right-0 w-[200vw] bg-[#041525] pointer-events-none" />
+
+            <div className="relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-sm lg:max-w-md md:ml-auto px-4 sm:px-6 md:px-0 md:pr-10 lg:pr-14 xl:pr-16 text-left">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-sans font-bold text-white tracking-tight leading-tight">
+                  Why<br className="hidden md:inline" /> Choose<br className="hidden md:inline" /> Us?
+                </h2>
+                <p className="text-white font-medium text-xs sm:text-sm md:text-sm lg:text-base xl:text-lg mt-2 sm:mt-3 md:mt-4 leading-relaxed max-w-xs">
+                  The numbers speak for themselves.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Right Side: Cream Swatch #F9F7F1 aligned with the 7xl grid */}
+          <div className="relative w-full md:w-[62%] lg:w-[65%] xl:w-[66%] py-6 sm:py-8 md:py-9 lg:py-10 xl:py-12 flex flex-col justify-center">
+
+            {/* Continuous Dividing Seam Line */}
+            {/* Mobile (< md): Runs behind badges at left-[38px] */}
+            <div className="absolute top-8 bottom-8 md:hidden w-[2px] bg-black/15 left-[38px] sm:left-[42px] pointer-events-none" />
+            {/* Desktop (md+): Sits directly at the seam x = 0 */}
+            <div className="hidden md:block absolute top-10 bottom-10 lg:top-12 lg:bottom-12 w-[2px] bg-black/15 left-0 -translate-x-1/2 pointer-events-none" />
+
+            {/* 3 Statistical Items */}
+            <div className="w-full flex flex-col gap-7 sm:gap-8 md:gap-9 lg:gap-11 xl:gap-14">
+              {whyChooseStats.map((item, idx) => (
+                <motion.div
+                  key={item.number}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="relative w-full flex items-center px-4 sm:px-6 md:px-0"
+                >
+                  {/* Numbered Circular Badge: on Desktop (md+), centered directly on the seam */}
+                  <div
+                    className={`relative md:absolute md:left-0 md:-translate-x-1/2 md:top-1/2 md:-translate-y-1/2 flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 xl:w-[70px] xl:h-[70px] rounded-full border-[3px] sm:border-4 lg:border-[5px] border-white shadow-md md:shadow-lg flex items-center justify-center text-white font-bold text-base sm:text-lg md:text-lg lg:text-xl xl:text-2xl ${item.bgColor} z-10 transition-transform duration-300 hover:scale-105 select-none`}
+                  >
+                    {item.number}
+                  </div>
+
+                  {/* Stat Text Content (All text in black, spanning flush across the column) */}
+                  <div className="w-full flex-1 pl-4 sm:pl-5 md:pl-10 lg:pl-14 xl:pl-16 pr-0">
+                    <h3 className="text-base sm:text-lg md:text-lg lg:text-xl xl:text-2xl font-sans font-bold text-black tracking-tight mb-1 sm:mb-1.5">
+                      <span>{item.percentage}</span>{' '}
+                      <span>{item.title}</span>
+                    </h3>
+
+                    <p className="text-black font-medium text-xs sm:text-sm lg:text-base leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const industries = [
+  { id: 1, name: 'Healthcare', desc: 'Secure patient portals and telemedicine apps.', icon: HeartPulse, img: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 2, name: 'Education', desc: 'E-learning platforms and university systems.', icon: GraduationCap, img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 3, name: 'Finance', desc: 'Fintech solutions and secure payment gateways.', icon: LineChart, img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 4, name: 'Retail and E-commerce', desc: 'Scalable digital storefronts and ERP integrations.', icon: ShoppingBag, img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 5, name: 'Logistics', desc: 'Fleet tracking and supply chain management.', icon: Truck, img: 'https://images.unsplash.com/photo-1580674285054-bed31e145f59?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
+  { id: 6, name: 'Manufacturing', desc: 'IoT dashboards and automated inventory software.', icon: Factory, img: 'https://images.unsplash.com/photo-1565891741441-64926e441838?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }
+];
+
+function IndustriesWeServe() {
+  return (
+    <section className="w-full bg-white py-12 md:py-16 lg:py-20 relative z-10">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 sm:gap-8 mb-8 sm:mb-10 md:mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="max-w-2xl 2xl:max-w-4xl"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-sans font-bold text-[#0f172a] mb-3 md:mb-4 tracking-tight">
+              Technology Solutions Across <span className="italic text-[#D37B5C]">Industries</span>
+            </h2>
+            <p className="text-black font-medium text-base sm:text-lg leading-relaxed max-w-2xl">
+              We adapt our advanced software engineering practices to meet the unique regulatory and operational demands of diverse sectors.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex-shrink-0"
+          >
+            <Link to="/sectors">
+              <button className="px-5 py-2.5 sm:px-6 sm:py-3 bg-[#172554] text-white text-xs sm:text-sm font-semibold rounded-xl hover:bg-blue-900 hover:shadow-md transition-all duration-300 whitespace-nowrap border border-[#172554]">
+                View more
+              </button>
+            </Link>
+          </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+          {industries.map((industry, index) => {
+            const Icon = industry.icon;
+            return (
+              <motion.div
+                key={industry.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                className="group relative rounded-2xl overflow-hidden h-64 sm:h-72 md:h-80 cursor-pointer shadow-md hover:shadow-xl transition-all duration-500"
+              >
+                <img
+                  src={industry.img}
+                  alt={industry.name}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
+
+                {/* Dual Gradient overlay for better depth */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/30 to-slate-950/95 opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-[#172554]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-multiply"></div>
+
+                <div className="absolute inset-0 p-6 md:p-8 2xl:p-10 flex flex-col justify-end overflow-hidden">
+                  <div className="transform transition-transform duration-500 ease-out translate-y-11 sm:translate-y-12 md:translate-y-14 group-hover:translate-y-0">
+                    <div className="flex items-center gap-3 sm:gap-4 mb-2.5 md:mb-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 group-hover:bg-white group-hover:text-[#172554] transition-all duration-500 flex-shrink-0">
+                        <Icon className="w-6 h-6 md:w-7 md:h-7 2xl:w-8 2xl:h-8" />
+                      </div>
+                      <h3 className="text-base sm:text-lg font-sans font-bold text-white tracking-wide group-hover:text-blue-100 transition-colors duration-300">
+                        {industry.name}
+                      </h3>
+                    </div>
+                    <p className="text-white/90 text-xs sm:text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-2 md:line-clamp-3">
+                      {industry.desc}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const steps = [
+  { id: 1, title: 'Discovery and Planning', desc: 'In-depth consultation to map out requirements, user journeys, and technical architecture.', icon: Search },
+  { id: 2, title: 'UI/UX Design', desc: 'Crafting intuitive, human-centric interfaces and interactive prototypes for approval.', icon: PenTool },
+  { id: 3, title: 'Development and Testing', desc: 'Agile coding sprints paired with rigorous QA testing for seamless performance.', icon: Braces },
+  { id: 4, title: 'Deployment and Support', desc: 'Smooth product launch followed by ongoing maintenance and scalability upgrades.', icon: Rocket },
+];
+
+function OurWorkProcess() {
+  const [activeStep, setActiveStep] = useState(null);
+
+  return (
+    <section className="w-full bg-[#F9F7F1] py-10 sm:py-12 md:py-14 lg:py-16 relative z-10 font-sans overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-8 sm:mb-10 md:mb-12 w-full flex flex-col items-center justify-center text-center"
+        >
+          <div className="max-w-3xl mx-auto text-center px-2 flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-50 border border-rose-200/60 text-rose-600 text-xs sm:text-sm font-bold uppercase tracking-wider mb-3.5 shadow-sm">
+              How We Work
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-sans font-bold text-black tracking-tight text-center">
+              From Ideas to <span className="italic text-[#D37B5C]">Intelligent Solutions</span>
+            </h2>
+          </div>
+        </motion.div>
+
+        <div className="w-full border-t border-black/15">
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+            const isActive = activeStep === step.id;
+
+            return (
+              <motion.div
+                key={step.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group border-b border-black/15 cursor-pointer relative overflow-hidden select-none"
+                onClick={() => setActiveStep(isActive ? null : step.id)}
+              >
+                {/* Background Hover/Active Effect */}
+                <div className={`absolute inset-0 bg-white transition-transform duration-700 ease-in-out -z-10 ${isActive ? 'translate-y-0' : 'translate-y-full lg:group-hover:translate-y-0'}`}></div>
+
+                <div className="flex flex-col py-4 sm:py-5 md:py-6 lg:py-7 px-3 sm:px-4 md:px-8 relative z-10">
+                  <div className="flex items-center w-full">
+                    <div className="w-12 sm:w-16 md:w-20 lg:w-24 flex-shrink-0">
+                      <span className={`text-base sm:text-lg md:text-xl lg:text-2xl font-bold font-sans transition-colors duration-500 ${isActive ? 'text-[#D37B5C]' : 'text-black lg:group-hover:text-[#D37B5C]'}`}>
+                        0{step.id}
+                      </span>
+                    </div>
+
+                    <h3 className={`text-base sm:text-lg md:text-xl lg:text-2xl font-sans font-bold text-black transition-transform duration-500 ease-out flex-1 ${isActive ? 'translate-x-1.5 md:translate-x-3 text-[#D37B5C]' : 'lg:group-hover:translate-x-3'}`}>
+                      {step.title}
+                    </h3>
+
+                    <div className={`flex-shrink-0 transition-all duration-500 hidden md:block ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 lg:group-hover:opacity-100 lg:group-hover:translate-x-0'}`}>
+                      <Icon className="w-7 h-7 md:w-8 md:h-8 lg:w-9 lg:h-9 stroke-[1.5] text-[#D37B5C]" />
+                    </div>
+
+                    {/* Mobile indicator chevron */}
+                    <div className={`flex-shrink-0 md:hidden transition-transform duration-300 ${isActive ? 'rotate-180 text-[#D37B5C]' : 'text-black'}`}>
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Expanding Description */}
+                  <div className={`transition-all duration-700 ease-in-out overflow-hidden ${isActive ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0 lg:group-hover:max-h-[300px] lg:group-hover:opacity-100'}`}>
+                    <div className="pl-12 sm:pl-16 md:pl-20 lg:pl-24 pt-2 md:pt-3 pb-1">
+                      <p className={`text-black font-medium text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed max-w-2xl transform transition-transform duration-700 ${isActive ? 'translate-y-0' : '-translate-y-4 lg:group-hover:translate-y-0'}`}>
+                        {step.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const projects = [
+  {
+    id: 1,
+    category: 'SMM Consult',
+    title: 'SMM Consult',
+    desc: 'Professional social media marketing, management, content creation, and platform-specific marketing strategies to drive engagement and quality leads.',
+    tech: ['Social Marketing', 'Content Creation', 'Paid Campaigns'],
+    img: '/project/smm.png',
+    link: 'https://smmconsult.com/',
+    bgColor: 'bg-[#15202B]',
+  },
+  {
+    id: 2,
+    category: 'ORM Consult',
+    title: 'ORM Consult',
+    desc: 'Powerful online reputation management software and no-code review widgets to monitor brand sentiment, showcase Google reviews, and build customer trust.',
+    tech: ['Reputation Mgmt', 'Review Widgets', 'Brand Trust'],
+    img: '/project/orm.png',
+    link: 'https://ormconsult.com/',
+    bgColor: 'bg-[#1E293B]',
+  },
+  {
+    id: 3,
+    category: 'AI Chat Support',
+    title: 'ChatSupport',
+    desc: 'AI-powered chat support platform that automates customer conversations with intelligent AI chatbots, delivering instant, accurate, and 24/7 customer assistance.',
+    tech: ['AI Chatbot', '24/7 Live Chat', 'Customer Automation'],
+    img: '/project/chatsupport.png',
+    link: 'https://chatsupport.in/',
+    bgColor: 'bg-[#131D28]',
+  },
+  {
+    id: 4,
+    category: 'Digital Marketing & SEO',
+    title: 'SEOAD',
+    desc: 'Premier digital marketing agency delivering 100% organic SEO, AEO, GEO, Social Media Marketing, PPC, and data-driven brand acceleration.',
+    tech: ['Organic SEO', 'AEO & GEO', 'SMM & PPC'],
+    img: '/project/seoad.png',
+    link: 'https://seoad.in/',
+    bgColor: 'bg-[#1A232E]',
+  }
+];
+
+function ProjectsCaseStudies() {
+  return (
+    <section className="w-full bg-white pt-6 sm:pt-7 md:pt-8 lg:pt-10 pb-8 sm:pb-9 md:pb-10 lg:pb-12 relative z-10 font-sans" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+
+        {/* Section Header with font sizes matching WhyChooseUs */}
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-7 md:mb-8">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-sans font-bold text-[#0f172a] tracking-tight leading-tight mb-2 sm:mb-2.5"
+          >
+            Our Recent <span className="text-[#041525]">Projects</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-black font-medium text-xs sm:text-sm md:text-sm lg:text-base xl:text-lg leading-relaxed max-w-2xl mx-auto"
+          >
+            Explore how we've helped businesses transform their operations and accelerate growth through innovative software engineering.
+          </motion.p>
+        </div>
+
+        {/* 2x2 Grid: Product 1, Product 2 (Row 1) & Product 3, Product 4 (Row 2) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-7">
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+              className={`group relative rounded-3xl overflow-hidden ${project.bgColor} border border-white/10 hover:border-white/25 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col justify-between`}
+            >
+              {/* Card Top: Category, Title, Description, Button */}
+              <div className="p-5 sm:p-6 md:p-7 lg:p-8 pb-3 sm:pb-4 z-10 flex flex-col flex-1">
+                <div className="flex items-center justify-between gap-3 mb-2.5 sm:mb-3">
+                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white">
+                    {project.category}
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="text-[10px] sm:text-[11px] font-semibold px-2.5 py-0.5 rounded-md bg-white/15 text-white border border-white/20"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <h3 className="text-base sm:text-lg md:text-lg lg:text-xl xl:text-2xl font-sans font-bold text-white tracking-tight mb-1.5 sm:mb-2 group-hover:text-blue-100 transition-colors">
+                  {project.title}
+                </h3>
+
+                <p className="text-white font-medium text-xs sm:text-sm lg:text-base leading-relaxed mb-5 sm:mb-6 flex-1">
+                  {project.desc}
+                </p>
+
+                <div>
+                  {project.link.startsWith('http') ? (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-[#041525] font-semibold text-xs sm:text-sm hover:bg-slate-100 hover:shadow-lg transition-all duration-300 group/btn"
+                    >
+                      View Project
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                    </a>
+                  ) : (
+                    <Link
+                      to={project.link}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-[#041525] font-semibold text-xs sm:text-sm hover:bg-slate-100 hover:shadow-lg transition-all duration-300 group/btn"
+                    >
+                      View Project
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                    </Link>
+                  )}
+                </div>
+              </div>
+
+              {/* Card Bottom: Device Mockup Showcase Framed inside the Card */}
+              <div className="px-5 sm:px-6 md:px-7 lg:px-8 pb-5 sm:pb-6 pt-1 sm:pt-2">
+                <div className="relative rounded-2xl overflow-hidden h-44 sm:h-52 md:h-56 lg:h-60 bg-black/40 border border-white/10 shadow-2xl group-hover:border-white/20 transition-all duration-500">
+                  <img
+                    src={project.img}
+                    alt={project.title}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* View More Button at the Bottom */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex justify-center mt-7 sm:mt-8 md:mt-10"
+        >
+          <Link
+            to="/our-work"
+            className="inline-flex items-center gap-2 px-8 sm:px-10 py-3 sm:py-3.5 rounded-xl bg-[#041525] text-white font-bold text-xs sm:text-sm hover:bg-blue-950 hover:shadow-xl transition-all duration-300 group shadow-md"
+          >
+            View More
+            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+          </Link>
+        </motion.div>
+
+      </div>
+    </section>
+  );
+}
+
+// const faqs = [
+//   {
+//     id: 1,
+//     question: 'What software solutions does VR4WEB provide?',
+//     answer: 'We provide end-to-end software solutions including custom enterprise applications, cloud-native web development, cross-platform mobile apps, UI/UX design, and complete digital transformation consulting.'
+//   },
+//   {
+//     id: 2,
+//     question: 'Do you offer custom software development?',
+//     answer: 'Yes. We specialize in building tailored software from the ground up, specifically engineered to map to your unique business processes, compliance requirements, and scalability goals.'
+//   },
+//   {
+//     id: 3,
+//     question: 'How does your development process work?',
+//     answer: 'Our agile methodology consists of four core phases: Discovery and Planning, UI/UX Design, Development and Testing, and Deployment and Support. This ensures transparency, regular updates, and high-quality deliverables.'
+//   },
+//   {
+//     id: 4,
+//     question: 'Do you provide ongoing support and maintenance?',
+//     answer: 'Absolutely. We offer dedicated post-launch support, 24/7 technical maintenance, security patching, and scalable upgrades to ensure your software remains robust and competitive.'
+//   },
+//   {
+//     id: 5,
+//     question: 'How can I request a quote?',
+//     answer: 'You can request a free, tailored quote by clicking the "Get a Quote" button in our navigation bar or at the bottom of this page. Our Australian solution architects will respond within 2 business hours.'
+//   }
+// ];
+
+const mapLocations = [
+  {
+    name: 'Perth',
+    pos: {
+      320: { top: '67%', left: '27%' },
+      375: { top: '69%', left: '28%' },
+      425: { top: '71%', left: '28%' },
+      768: { top: '61%', left: '23%' },
+      1024: { top: '65%', left: '30%' },
+      1440: { top: '60%', left: '27%' },
+    },
+    labelPos: {
+      320: { top: '50%', right: '100%', transform: 'translateY(-50%)', marginRight: '6px' },
+      375: { top: '50%', right: '100%', transform: 'translateY(-50%)', marginRight: '6px' },
+      425: { top: '50%', right: '100%', transform: 'translateY(-50%)', marginRight: '6px' },
+      768: { top: '50%', right: '100%', transform: 'translateY(-50%)', marginRight: '6px' },
+      1024: { top: '50%', right: '100%', transform: 'translateY(-50%)', marginRight: '6px' },
+      1440: { top: '50%', right: '100%', transform: 'translateY(-50%)', marginRight: '6px' },
+    }
+  },
+  {
+    name: 'Adelaide',
+    pos: {
+      320: { top: '69%', left: '58%' },
+      375: { top: '69%', left: '57%' },
+      425: { top: '72%', left: '57.5%' },
+      768: { top: '65%', left: '53%' },
+      1024: { top: '68%', left: '54%' },
+      1440: { top: '63%', left: '54%' },
+    },
+    labelPos: {
+      320: { bottom: '100%', right: '50%', marginBottom: '4px', marginRight: '-12px' },
+      375: { bottom: '100%', right: '50%', marginBottom: '4px', marginRight: '-12px' },
+      425: { bottom: '100%', right: '50%', marginBottom: '4px', marginRight: '-12px' },
+      768: { bottom: '100%', right: '50%', marginBottom: '4px', marginRight: '-12px' },
+      1024: { bottom: '100%', right: '50%', marginBottom: '4px', marginRight: '-12px' },
+      1440: { bottom: '100%', right: '50%', marginBottom: '4px', marginRight: '-12px' },
+    }
+  },
+  {
+    name: 'Melbourne',
+    pos: {
+      320: { top: '72.5%', left: '68%' },
+      375: { top: '75%', left: '66%' },
+      425: { top: '78%', left: '65.5%' },
+      768: { top: '72%', left: '61%' },
+      1024: { top: '82%', left: '60%' },
+      1440: { top: '73%', left: '62%' },
+    },
+    labelPos: {
+      320: { top: '100%', right: '50%', marginTop: '4px', marginRight: '-12px' },
+      375: { top: '100%', right: '50%', marginTop: '4px', marginRight: '-12px' },
+      425: { top: '100%', right: '50%', marginTop: '4px', marginRight: '-12px' },
+      768: { top: '100%', right: '50%', marginTop: '4px', marginRight: '-12px' },
+      1024: { top: '100%', right: '50%', marginTop: '4px', marginRight: '-12px' },
+      1440: { top: '100%', right: '50%', marginTop: '4px', marginRight: '-12px' },
+    }
+  },
+  {
+    name: 'Sydney',
+    pos: {
+      320: { top: '68%', left: '77%' },
+      375: { top: '70%', left: '77%' },
+      425: { top: '72%', left: '77%' },
+      768: { top: '65%', left: '75%' },
+      1024: { top: '68.5%', left: '70%' },
+      1440: { top: '63%', left: '73%' },
+    },
+    labelPos: {
+      320: { top: '50%', left: '100%', transform: 'translateY(-50%)', marginLeft: '6px' },
+      375: { top: '50%', left: '100%', transform: 'translateY(-50%)', marginLeft: '6px' },
+      425: { top: '50%', left: '100%', transform: 'translateY(-50%)', marginLeft: '6px' },
+      768: { top: '50%', left: '100%', transform: 'translateY(-50%)', marginLeft: '6px' },
+      1024: { top: '50%', left: '100%', transform: 'translateY(-50%)', marginLeft: '6px' },
+      1440: { top: '50%', left: '100%', transform: 'translateY(-50%)', marginLeft: '6px' },
+    }
+  },
+  {
+    name: 'Brisbane',
+    pos: {
+      320: { top: '63%', left: '73%' },
+      375: { top: '64%', left: '72%' },
+      425: { top: '66%', left: '73%' },
+      768: { top: '50%', left: '72%' },
+      1024: { top: '54%', left: '67.5%' },
+      1440: { top: '54%', left: '71%' },
+    },
+    labelPos: {
+      320: { bottom: '100%', left: '50%', marginBottom: '4px', marginLeft: '-12px' },
+      375: { bottom: '100%', left: '50%', marginBottom: '4px', marginLeft: '-12px' },
+      425: { bottom: '100%', left: '50%', marginBottom: '4px', marginLeft: '-12px' },
+      768: { bottom: '100%', left: '50%', marginBottom: '4px', marginLeft: '-12px' },
+      1024: { bottom: '100%', left: '50%', marginBottom: '4px', marginLeft: '-12px' },
+      1440: { bottom: '100%', left: '50%', marginBottom: '4px', marginLeft: '-12px' },
+    }
+  },
+];
+
+// Helper to convert React style object to CSS string
+const objToCss = (obj) => {
+  if (!obj) return '';
+  return Object.entries(obj).map(([k, v]) => `${k.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${v};`).join(' ');
+};
+
+const AnimatedText = ({ text, delay = 0, className = "" }) => {
+  const words = text.split(" ");
+  return (
+    <span className={className}>
+      {words.map((word, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0, y: 20, filter: 'blur(5px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.8, delay: delay + index * 0.12, ease: "easeOut" }}
+          className="inline-block mr-[0.25em]"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
+
+
+
+const BRANDS = [
+  {
+    id: 1,
+    name: 'NetworkCare',
+    desc: 'End-to-end network setup, IT support, and infrastructure management for businesses of every size.',
+    link: 'https://www.networkcare.in/',
+    img: '/brand/networkcare.png',
+    color: 'from-emerald-400 to-teal-500',
+    shadow: 'shadow-emerald-500/20'
+  },
+  {
+    id: 2,
+    name: 'Low Cost Web Design',
+    desc: 'Budget-friendly, fast-turnaround websites for startups and small businesses that need to launch quickly.',
+    link: 'https://www.lowcostwebdesign.in/',
+    img: '/brand/lcw.png',
+    color: 'from-orange-400 to-amber-500',
+    shadow: 'shadow-orange-500/20'
+  },
+  {
+    id: 3,
+    name: 'Nifty Soft',
+    desc: 'Websites, mobile applications, and digital marketing solutions built to grow your business online.',
+    link: 'https://niftysoft.com/',
+    img: '/brand/niftysoft.png',
+    color: 'from-rose-400 to-red-500',
+    shadow: 'shadow-rose-500/20'
+  },
+  {
+    id: 4,
+    name: 'Business Mail Solutions',
+    desc: 'Professional business email hosting solutions for secure, reliable, and scalable business communication.',
+    link: 'https://www.businessmailsolutions.in/',
+    img: '/brand/email.png',
+    color: 'from-blue-400 to-indigo-500',
+    shadow: 'shadow-blue-500/20'
+  }
+];
+
+function OurBrands() {
+  return (
+    <section className="relative w-full bg-white py-10 sm:py-14 md:py-16 lg:py-20 font-sans overflow-hidden">
+      {/* Subtle warm ambient background glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[20%] left-[-10%] w-[45%] h-[45%] rounded-full bg-[#F9F7F1]/80 blur-[130px]" />
+        <div className="absolute bottom-[10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-orange-50/50 blur-[120px]" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-3 sm:px-6 md:px-8 lg:px-12 z-10">
+        
+        {/* 3x2 Grid layout matching 1st image with sand color cards: responsive across 320px, 768px, 1024px, 1440px */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-7 items-stretch">
+
+          {/* Cell 1: Header Block (Row 1, Column 1) */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col justify-center p-2 sm:p-5 lg:p-6"
+          >
+
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[42px] font-sans font-bold text-black tracking-tight leading-[1.15] mb-2.5 sm:mb-4">
+              Our Prestigious <span className="italic text-[#D37B5C] block">Brands</span>
+            </h2>
+            
+            <p className="text-xs sm:text-sm md:text-base text-black font-medium leading-relaxed max-w-sm">
+              VR4WEB operates a portfolio of specialized brands, each focused on solving a specific problem — from networking to immersive web experiences.
+            </p>
+          </motion.div>
+
+          {/* Cells 2 to 5: The 4 Website Brands in Sand Color (#F9F7F1) */}
+          {BRANDS.map((brand, i) => (
+            <motion.a
+              href={brand.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              key={brand.id}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.6, delay: (i + 1) * 0.1 }}
+              className="group relative flex flex-col justify-between rounded-[20px] sm:rounded-[24px] bg-[#F9F7F1] border border-[#EAE5D9] p-5 sm:p-6 md:p-7 lg:p-8 transition-all duration-300 hover:-translate-y-1.5 hover:bg-[#F3EFE6] hover:border-[#D37B5C]/30 hover:shadow-xl hover:shadow-stone-900/5"
+            >
+              <div>
+                {/* Brand Logo in clean elevated white container */}
+                <div className="h-12 sm:h-14 w-fit max-w-[190px] sm:max-w-[210px] px-3.5 py-1.5 sm:py-2 rounded-xl bg-white border border-[#EAE5D9] shadow-sm flex items-center justify-start mb-4 sm:mb-6 group-hover:scale-[1.03] transition-transform duration-300">
+                  <img
+                    src={brand.img}
+                    alt={brand.name}
+                    className="max-h-full max-w-full object-contain filter"
+                  />
+                </div>
+
+                <h3 className="mb-2 font-sans text-base sm:text-lg md:text-xl font-bold text-[#07213a] group-hover:text-[#D37B5C] transition-colors">
+                  {brand.name}
+                </h3>
+
+                <p className="text-xs sm:text-sm leading-relaxed text-black font-medium mb-4 sm:mb-6">
+                  {brand.desc}
+                </p>
+              </div>
+
+              <div className="mt-auto flex items-center justify-between pt-3.5 sm:pt-4 border-t border-[#EAE5D9]">
+                <span className="text-xs sm:text-sm font-semibold text-[#07213a] group-hover:text-[#D37B5C] transition-colors">
+                  Explore Brand
+                </span>
+                <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-[#041525] shadow-sm border border-[#EAE5D9] transition-all duration-300 group-hover:bg-[#041525] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                </div>
+              </div>
+            </motion.a>
+          ))}
+
+          {/* Cell 6: Card 5 (Partners & Alliances in Sand Color) */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <Link
+              to="/brands-partners"
+              className="group relative h-full flex flex-col justify-between rounded-[20px] sm:rounded-[24px] bg-[#F9F7F1] border border-[#EAE5D9] p-5 sm:p-6 md:p-7 lg:p-8 transition-all duration-300 hover:-translate-y-1.5 hover:bg-[#F3EFE6] hover:border-[#D37B5C]/30 hover:shadow-xl hover:shadow-stone-900/5 block"
+            >
+              <div>
+                <div className="h-12 sm:h-14 w-12 sm:w-14 rounded-xl bg-white border border-[#EAE5D9] shadow-sm flex items-center justify-center mb-4 sm:mb-6 text-[#D37B5C] group-hover:scale-[1.03] transition-transform duration-300">
+                  <Handshake className="w-6 h-6 sm:w-7 sm:h-7" />
+                </div>
+
+                <h3 className="mb-2 font-sans text-base sm:text-lg md:text-xl font-bold text-[#07213a] group-hover:text-[#D37B5C] transition-colors">
+                  Partners & Alliances
+                </h3>
+
+                <p className="text-xs sm:text-sm leading-relaxed text-black font-medium mb-4 sm:mb-6">
+                  Explore VR4WEB's trusted partner network, joint ventures, and strategic alliances delivering enterprise innovation globally.
+                </p>
+              </div>
+
+              <div className="mt-auto flex items-center justify-between pt-3.5 sm:pt-4 border-t border-[#EAE5D9]">
+                <span className="text-xs sm:text-sm font-semibold text-[#07213a] group-hover:text-[#D37B5C] transition-colors">
+                  View All Partnerships
+                </span>
+                <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white text-[#041525] shadow-sm border border-[#EAE5D9] transition-all duration-300 group-hover:bg-[#041525] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+const Styles = () => (
+  <style>{`
+    @keyframes vr-left{to{transform:translateX(-50%)}}
+    @keyframes vr-right{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+    .vr-left{animation:vr-left 40s linear infinite}
+    .vr-right{animation:vr-right 46s linear infinite}
+    .vr-pause:hover .vr-left,.vr-pause:hover .vr-right{animation-play-state:paused}
+    @keyframes vr-float{50%{transform:translateY(-16px)}}
+    .vr-float{animation:vr-float 6s ease-in-out infinite}
+    @media (prefers-reduced-motion:reduce){.vr-left,.vr-right,.vr-float{animation:none}}
+  `}</style>
+);
+
+/* ============================ CTA ============================ */
+export function CallToAction() {
+  const mx = useMotionValue(50), my = useMotionValue(40);
+  const glow = useMotionTemplate`radial-gradient(520px circle at ${mx}% ${my}%, rgba(211,123,92,.45), transparent 60%)`;
+  const move = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set(((e.clientX - r.left) / r.width) * 100);
+    my.set(((e.clientY - r.top) / r.height) * 100);
+  };
+  const words = ['Websites', 'Mobile apps', 'E-commerce', 'Software', 'Digital marketing', 'Creative'];
+
+  return (
+    <section className="relative z-10 w-full bg-white px-3 py-10 sm:px-6 md:py-16 font-sans">
+      <Styles />
+      <motion.div
+        onPointerMove={move}
+        initial={{ opacity: 0, y: 40, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="relative mx-auto overflow-hidden rounded-[2rem] bg-[#07213a] md:rounded-[2rem] max-w-4xl"
+      >
+        <motion.div style={{ background: glow }} className="pointer-events-none absolute inset-0" />
+        <div className="vr-float pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full border border-white/10" />
+        <div className="vr-float pointer-events-none absolute -bottom-32 -left-20 h-96 w-96 rounded-full border border-white/10 [animation-delay:2s]" />
+
+        {/* headline */}
+        <div className="relative mx-auto w-full px-6 py-12 text-center md:py-14 md:px-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-sans text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight text-white"
+          >
+            Let's build <br className="hidden sm:block" />
+            something <span className="italic text-[#D37B5C]">great</span> together.
+          </motion.h2>
+          <p className="mx-auto mt-4 max-w-xl text-xs sm:text-sm md:text-base text-blue-100/90">
+            Have a project in mind? Tell us what you need and we'll reply with a clear plan within 2 business hours.
+          </p>
+          <div className="mt-8 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center">
+            <Link to="/contact">
+              <button className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#fa5a4b] px-6 py-3 text-xs sm:text-sm font-semibold text-white shadow-[0_8px_30px_rgba(250,90,75,.4)] transition hover:-translate-y-1 active:scale-95 sm:w-auto">
+                <span className="absolute inset-0 -translate-x-[150%] skew-x-12 bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-1000 group-hover:translate-x-[150%]" />
+                <span className="relative">Get a Quote</span>
+                <ArrowRight className="relative h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </button>
+            </Link>
+            <Link to="/contact">
+              <button className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/25 px-6 py-3 text-xs sm:text-sm font-semibold text-white transition hover:bg-white hover:text-[#07213a] active:scale-95 sm:w-auto">
+                <MessageSquare className="h-5 w-5" /> Contact Us
+              </button>
+            </Link>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+/* ============================ FAQ ============================ */
+const faqs = [
+  {
+    q: 'What software solutions does VR4WEB engineer?',
+    a: 'We engineer end-to-end digital solutions: custom enterprise software, cloud-native web applications, high-performance mobile apps (iOS, Android, Flutter), bespoke SaaS platforms, and intelligent automated workflows tailored to accelerate business growth.'
+  },
+  {
+    q: 'Do you build custom software tailored from scratch?',
+    a: 'Yes. Every solution is custom-architected around your unique business workflows, compliance mandates, and long-term scalability requirements. We build modular, battle-tested codebases designed to adapt as your company scales.'
+  },
+  {
+    q: 'How does your agile development process work?',
+    a: 'Our methodology runs across four proven phases: 1) Discovery & Architecture Planning, 2) Human-Centric UI/UX Design & Prototyping, 3) Agile Code Sprints with Rigorous QA Testing, and 4) Zero-Downtime Deployment backed by ongoing maintenance.'
+  },
+  {
+    q: 'Who owns the source code and intellectual property?',
+    a: 'You own 100% of the code, intellectual property, repositories, design assets, and deployment environments. We execute complete commercial IP transfers upon sprint milestone delivery.'
+  },
+  {
+    q: 'Do you provide ongoing support, hosting and maintenance?',
+    a: 'Yes. We offer comprehensive post-launch SLA packages including 24/7 infrastructure monitoring, automated security patching, performance optimization, and regular feature updates to ensure seamless uptime.'
+  },
+  {
+    q: 'How quickly can we start and receive a project quote?',
+    a: 'You can request a consultation right now. Our senior technical architects review your requirements and provide an itemized roadmap and sprint estimation within 2 business hours.'
+  },
+];
+
+export function FAQSection() {
+  const [open, setOpen] = useState(0);
+
+  return (
+    <section className="relative z-10 w-full bg-[#fcf7f6] py-12 sm:py-16 md:py-20 lg:py-24 font-sans">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 md:px-8 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 xl:gap-14 items-start">
+          
+          {/* Left Column: Heading, Trust Pillars & Contact Box (Fills empty space completely) */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-5 flex flex-col justify-start"
+          >
+            <h2 className="font-sans text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold tracking-tight text-[#07213a] leading-[1.15] mb-3">
+              Questions, <span className="italic text-[#D37B5C]">Answered</span>
+            </h2>
+
+            <p className="text-xs sm:text-sm md:text-base text-black font-medium leading-relaxed mb-6">
+              Everything you need to know about our engineering standards, agile sprint delivery, intellectual property ownership, and ongoing technical support.
+            </p>
+
+            {/* 3 Trust Pillar Micro-Cards (Fills space with credibility) */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3 sm:gap-3.5 mb-6">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-slate-200/90 shadow-sm hover:border-[#D37B5C]/30 transition-all">
+                <div className="w-9 h-9 rounded-lg bg-orange-50 border border-orange-200/60 text-[#D37B5C] flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-[#07213a]">Fast 2-Hour Response</h4>
+                  <p className="text-[11px] sm:text-xs text-black font-medium leading-relaxed">Direct review from a Senior Solution Architect.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-slate-200/90 shadow-sm hover:border-[#D37B5C]/30 transition-all">
+                <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-200/60 text-[#2563eb] flex items-center justify-center flex-shrink-0">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-[#07213a]">100% IP & Code Ownership</h4>
+                  <p className="text-[11px] sm:text-xs text-black font-medium leading-relaxed">Full repository & commercial rights transferred to you.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white border border-slate-200/90 shadow-sm hover:border-[#D37B5C]/30 transition-all">
+                <div className="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-200/60 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                  <Headphones className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-[#07213a]">Post-Launch SLA Guarantee</h4>
+                  <p className="text-[11px] sm:text-xs text-black font-medium leading-relaxed">Continuous security patching, uptime & scalability support.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Direct Consultation Box */}
+            <div className="rounded-2xl bg-[#041525] p-5 sm:p-6 text-white shadow-xl border border-slate-800">
+              <h3 className="font-sans text-base sm:text-lg font-bold text-white mb-1.5">Have a specific project in mind?</h3>
+              <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed mb-4">
+                Speak directly with an enterprise software engineer. We'll map your technical requirements and timeline with zero obligation.
+              </p>
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5">
+                <Link to="/contact">
+                  <button className="group w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#fa5a4b] px-4 py-2.5 text-xs sm:text-sm font-semibold text-white transition hover:bg-[#d84c3e] active:scale-95 shadow-md">
+                    <span>Schedule Free Consultation</span>
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </button>
+                </Link>
+                <div className="flex items-center justify-center gap-2 text-xs text-slate-400 pt-1">
+                  <Mail className="w-3.5 h-3.5 text-slate-300" />
+                  <span>support@vr4web.com</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Interactive FAQ Accordion */}
+          <div className="lg:col-span-7 flex flex-col">
+            {faqs.map((f, i) => {
+              const isOpen = open === i;
+              return (
+                <motion.div
+                  key={f.q}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.4, delay: i * 0.06 }}
+                  className={`mb-3.5 overflow-hidden rounded-2xl border transition-all duration-300 ${
+                    isOpen
+                      ? 'border-[#041525] bg-white shadow-lg'
+                      : 'border-slate-200/90 bg-white hover:border-[#D37B5C]/40 hover:shadow-md'
+                  }`}
+                >
+                  <button
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    className="flex w-full items-center justify-between gap-3 sm:gap-4 p-4 sm:p-5 md:p-6 text-left select-none"
+                  >
+                    <span className="flex-1 font-sans font-bold text-sm sm:text-base md:text-lg text-[#07213a] leading-snug">
+                      {f.q}
+                    </span>
+                    <span
+                      className={`grid h-8 w-8 sm:h-9 sm:w-9 shrink-0 place-items-center rounded-full transition-transform duration-300 shadow-sm ${
+                        isOpen ? 'bg-[#fa5a4b] text-white rotate-45' : 'bg-[#F9F7F1] text-[#07213a] hover:bg-slate-200/80'
+                      }`}
+                    >
+                      <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: 'easeInOut' }}
+                      >
+                        <div className="border-t border-slate-100 px-4 sm:px-5 md:px-6 pt-3 sm:pt-4 pb-4 sm:pb-5">
+                          <p className="text-xs sm:text-sm md:text-base leading-relaxed text-black font-medium">
+                            {f.a}
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}/* ====================== GALLERY ====================== */
+const GALLERY = [
+  { id: 1, img: '/home-gallery/1.png', span: 'md:col-span-2 md:row-span-2' },
+  { id: 2, img: '/home-gallery/2.png', span: 'md:col-span-2' },
+  { id: 3, img: '/home-gallery/3.png', span: 'md:col-span-1 lg:col-span-1' },
+  { id: 4, img: '/home-gallery/4.png', span: 'md:col-span-1 lg:col-span-1' },
+];
+
+function TiltCard({ item, onOpen, index }) {
+  const x = useMotionValue(0), y = useMotionValue(0);
+  const rx = useSpring(useTransform(y, [-0.5, 0.5], [12, -12]), { stiffness: 200, damping: 20 });
+  const ry = useSpring(useTransform(x, [-0.5, 0.5], [-12, 12]), { stiffness: 200, damping: 20 });
+  const move = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - r.left) / r.width - 0.5);
+    y.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const reset = () => { x.set(0); y.set(0); };
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.7, delay: index * 0.08 }}
+      className={`min-h-[220px] [perspective:1000px] ${item.span}`}
+    >
+      <motion.button
+        onPointerMove={move} onPointerLeave={reset} onClick={() => onOpen(index)}
+        style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
+        className="group relative h-full w-full overflow-hidden rounded-[1.5rem] border border-white/10 text-left shadow-[0_30px_60px_-20px_rgba(0,0,0,.8)]"
+      >
+        <img src={item.img} alt="Gallery item" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+      </motion.button>
+    </motion.div>
+  );
+}
+
+export function GallerySection() {
+  const [selIndex, setSelIndex] = useState(null);
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setSelIndex((prev) => (prev === 0 ? GALLERY.length - 1 : prev - 1));
+  };
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setSelIndex((prev) => (prev === GALLERY.length - 1 ? 0 : prev + 1));
+  };
+
+  return (
+    <section className="relative z-10 w-full overflow-hidden bg-[#041525] py-12 md:py-16 font-sans">
+      <div className="relative z-10 mx-auto max-w-[1440px] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+
+        <div className="mb-10 md:mb-14 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="max-w-3xl">
+            <h2 className="font-sans text-2xl sm:text-3xl md:text-4xl tracking-tight text-white font-bold">
+              Our <span className="italic text-[#D37B5C]">Gallery</span>
+            </h2>
+            <p className="mt-4 text-base text-white/70">A glimpse into our studio and projects.</p>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}>
+            <Link to="/gallery" className="group flex items-center justify-center gap-3 overflow-hidden rounded-[1rem] bg-[#0287d0] pl-6 pr-2 py-2 text-sm font-bold text-white shadow-md transition hover:-translate-y-1 hover:shadow-lg active:scale-95 sm:w-auto">
+              <span>View All Gallery</span>
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 transition-colors group-hover:bg-white text-white group-hover:text-[#0287d0]">
+                <ArrowRight className="h-4 w-4" />
+              </div>
+            </Link>
+          </motion.div>
+        </div>
+
+        <div className="grid auto-rows-[220px] grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:auto-rows-[240px] md:gap-6">
+          {GALLERY.map((g, i) => <TiltCard key={g.id} item={g} index={i} onOpen={setSelIndex} />)}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {selIndex !== null && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelIndex(null)}
+            className="fixed inset-0 z-[99999] flex items-center justify-center bg-[#07213a]/95 p-6 backdrop-blur-md">
+
+            <button aria-label="Previous" onClick={handlePrev} className="absolute left-4 md:left-10 z-10 grid h-12 w-12 place-items-center rounded-[1rem] bg-white/10 text-white shadow-lg backdrop-blur hover:bg-white hover:text-[#07213a] hover:scale-105 transition-all">
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+
+            <motion.div key={selIndex} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }} onClick={(e) => e.stopPropagation()} className="relative w-full max-w-3xl flex justify-center [perspective:1000px]">
+
+              <div className="relative inline-block">
+                <img src={GALLERY[selIndex].img} alt="Gallery focus" className="max-h-[70vh] w-auto rounded-[1rem] object-contain shadow-2xl" />
+                <button aria-label="Close" onClick={() => setSelIndex(null)} className="absolute -top-4 -right-4 z-20 grid h-10 w-10 place-items-center rounded-full bg-white text-[#07213a] shadow-lg hover:bg-[#fa5a4b] hover:text-white hover:scale-105 transition-all">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+            </motion.div>
+
+            <button aria-label="Next" onClick={handleNext} className="absolute right-4 md:right-10 z-10 grid h-12 w-12 place-items-center rounded-[1rem] bg-white/10 text-white shadow-lg backdrop-blur hover:bg-white hover:text-[#07213a] hover:scale-105 transition-all">
+              <ChevronRight className="h-6 w-6" />
+            </button>
+
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+}
+
+/* ============================ CLIENTS ============================ */
+const CLIENTS_GRID = [
+  {
+    id: 1,
+    name: 'Sterling Reprographics',
+    category: 'Manufacturing',
+    logo: '/client/1.png',
+    impact: 'Engineered custom inventory and digital machinery tracking systems.'
+  },
+  {
+    id: 2,
+    name: 'Sree KPJ Gems',
+    category: 'E-Commerce',
+    logo: '/client/image.png',
+    impact: 'Built a high-converting luxury storefront with global currency checkout.'
+  },
+  {
+    id: 3,
+    name: 'Athveka Healthcare',
+    category: 'Healthcare',
+    logo: '/client/image copy.png',
+    impact: 'Delivered an automated patient appointment and telehealth clinic portal.'
+  },
+  {
+    id: 4,
+    name: 'Bizalom Solutions',
+    category: 'Enterprise SaaS',
+    logo: '/client/image copy 2.png',
+    impact: 'Scalable multi-tenant cloud software with automated workflow pipelines.'
+  },
+  {
+    id: 5,
+    name: 'Domi Bay',
+    category: 'Logistics',
+    logo: '/client/image copy 3.png',
+    impact: 'Real-time logistics tracking and automated shipping fulfillment.'
+  },
+  {
+    id: 6,
+    name: 'AREG Energy',
+    category: 'Energy & Utilities',
+    logo: '/client/image copy 4.png',
+    impact: 'Centralized operational analytics and IoT data monitoring platform.'
+  },
+  {
+    id: 7,
+    name: 'eBz Software',
+    category: 'Fintech',
+    logo: '/client/image copy 5.png',
+    impact: 'High-security financial processing and enterprise accounting software.'
+  },
+  {
+    id: 8,
+    name: 'B Square Asset',
+    category: 'Real Estate',
+    logo: '/client/image copy 6.png',
+    impact: 'Asset valuation engines and interactive commercial property dashboards.'
+  },
+  {
+    id: 9,
+    name: 'SSS Health',
+    category: 'Medical Science',
+    logo: '/client/image copy 7.png',
+    impact: 'Secure clinical records management and patient engagement mobile apps.'
+  },
+  {
+    id: 10,
+    name: 'KPJ International',
+    category: 'Retail & Export',
+    logo: '/client/image copy 8.png',
+    impact: 'Omnichannel B2B wholesale platform with automated supply-chain sync.'
+  },
+  {
+    id: 11,
+    name: 'Bizalom Cloud',
+    category: 'Cloud Systems',
+    logo: '/client/image copy 2.png',
+    impact: 'Zero-downtime cloud migration and microservices backend architecture.'
+  },
+  {
+    id: 12,
+    name: 'Athveka Wellness',
+    category: 'Telemedicine',
+    logo: '/client/image copy.png',
+    impact: 'End-to-end digital consultation scheduling with HIPAA-compliant security.'
+  },
+];
+
+export function ClientsSection() {
+  return (
+    <section className="relative z-10 w-full overflow-hidden bg-white py-12 sm:py-16 md:py-20 font-sans">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 md:px-8 lg:px-12">
+        
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mx-auto mb-10 sm:mb-12 max-w-3xl text-center"
+        >
+          <h2 className="font-sans font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight text-[#07213a]">
+            Trusted by <span className="italic text-[#D37B5C]">Growing Businesses</span>
+          </h2>
+          <p className="mt-3 text-xs sm:text-sm md:text-base lg:text-lg text-black font-medium max-w-2xl mx-auto">
+            The teams we've built, launched and supported software for.
+          </p>
+        </motion.div>
+
+        {/* Client Grid Table: 6 columns x 2 rows on desktop, responsive down to 2 cols on mobile */}
+        <div className="rounded-2xl border border-slate-200/90 overflow-hidden bg-slate-200/90 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-[1px] shadow-sm">
+          {CLIENTS_GRID.map((c, i) => (
+            <motion.div
+              key={`${c.id}-${i}`}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: (i % 6) * 0.04 }}
+              className="group relative bg-white h-32 sm:h-36 md:h-40 flex flex-col justify-between p-3 sm:p-4 cursor-pointer overflow-hidden transition-all duration-300"
+            >
+              {/* Default View: Full Color Logo in Original Branding (NO black and white) */}
+              <div className="flex-1 flex items-center justify-center p-2">
+                <img
+                  src={c.logo}
+                  alt={c.name}
+                  className="max-h-11 sm:max-h-12 md:max-h-14 max-w-[115px] sm:max-w-[130px] md:max-w-[145px] object-contain filter-none transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+
+              {/* Bottom: Industry Category Tag */}
+              <div className="flex items-center justify-between w-full pt-1 z-10">
+                <span className="text-[9px] sm:text-[10px] md:text-[11px] font-semibold text-slate-700 bg-slate-100/90 px-2 py-0.5 rounded border border-slate-200/70 truncate max-w-[110px] sm:max-w-[130px]">
+                  {c.category}
+                </span>
+              </div>
+
+              {/* Interactive Hover Card Overlay (Matching reference image GRTgaz style) */}
+              <div className="absolute inset-0 bg-[#041525] text-white p-3 sm:p-3.5 md:p-4 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                <div>
+                  <div className="h-7 sm:h-8 flex items-center justify-start mb-1.5 sm:mb-2">
+                    <img
+                      src={c.logo}
+                      alt={c.name}
+                      className="max-h-6 sm:max-h-7 max-w-[95px] object-contain brightness-0 invert opacity-95"
+                    />
+                  </div>
+                  <p className="text-[10px] sm:text-[11px] md:text-xs leading-relaxed text-white/95 font-medium line-clamp-3">
+                    {c.impact}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between pt-2 border-t border-white/15">
+                  <span className="text-[9px] sm:text-[10px] font-bold text-white bg-white/20 px-2 py-0.5 rounded truncate max-w-[95px]">
+                    {c.category}
+                  </span>
+                  <div className="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center text-white group-hover:translate-x-0.5 transition-transform">
+                    <ArrowUpRight className="w-3 h-3" />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+
+export default function Home() {
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStep((prev) => (prev >= 6 ? 0 : prev + 1));
+    }, 800);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="flex-1 w-full flex flex-col min-h-screen">
+
+      {/* Hero Banner Section */}
+      <section
+        className="relative w-full h-[100vh] min-h-[600px] flex flex-col items-center justify-start pt-[100px] md:pt-[120px] overflow-hidden"
+      >
+        {/* Background Image with absolute positioning */}
+        <div
+          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 bg-[url('/mobileviewbanner.png')] md:bg-[url('/tabview.png')] lg:bg-[url('/banner1.png')]"
+        >
+          {/* Map Locations Responsive Styles */}
+          <style>
+            {mapLocations.map((loc, i) => `
+              .pin-${i} { top: ${loc.pos[320].top}; left: ${loc.pos[320].left}; }
+              .label-${i} { ${objToCss(loc.labelPos[320])} }
+              
+              @media (min-width: 375px) { 
+                .pin-${i} { top: ${loc.pos[375].top}; left: ${loc.pos[375].left}; } 
+                .label-${i} { ${objToCss(loc.labelPos[375])} }
+              }
+              @media (min-width: 425px) { 
+                .pin-${i} { top: ${loc.pos[425].top}; left: ${loc.pos[425].left}; } 
+                .label-${i} { ${objToCss(loc.labelPos[425])} }
+              }
+              @media (min-width: 768px) { 
+                .pin-${i} { top: ${loc.pos[768].top}; left: ${loc.pos[768].left}; } 
+                .label-${i} { ${objToCss(loc.labelPos[768])} }
+              }
+              @media (min-width: 1024px) { 
+                .pin-${i} { top: ${loc.pos[1024].top}; left: ${loc.pos[1024].left}; } 
+                .label-${i} { ${objToCss(loc.labelPos[1024])} }
+              }
+              @media (min-width: 1440px) { 
+                .pin-${i} { top: ${loc.pos[1440].top}; left: ${loc.pos[1440].left}; } 
+                .label-${i} { ${objToCss(loc.labelPos[1440])} }
+              }
+            `).join('')}
+          </style>
+
+          {/* Unified Map Locations */}
+          <div className="absolute inset-0 w-full h-full">
+            {mapLocations.map((loc, index) => (
+              <motion.div
+                key={loc.name}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{
+                  opacity: step > index ? 1 : 0,
+                  scale: step > index ? 1 : 0.5
+                }}
+                transition={{ duration: 0.4, type: "spring", bounce: 0.4 }}
+                className={`pin-${index} absolute transform -translate-x-1/2 -translate-y-1/2 flex items-center md:gap-2`}
+              >
+                <div className="relative flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 md:w-6 md:h-6 lg:w-8 lg:h-8 text-[#2563eb] drop-shadow-[0_4px_6px_rgba(37,99,235,0.6)] relative z-10">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                  </svg>
+
+                  {/* Unified Responsive Label */}
+                  <span
+                    className={`label-${index} absolute text-[10px] md:text-[12px] lg:text-[13px] font-semibold text-slate-800 bg-white/95 backdrop-blur-md px-2 py-0.5 md:px-3 md:py-1 rounded-md shadow-sm md:shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-white/60 whitespace-nowrap tracking-wide z-20`}
+                  >
+                    {loc.name}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Content Container */}
+        <div className="relative z-20 max-w-6xl mx-auto px-6 flex flex-col items-center text-center w-full">
+
+          <div className="mb-6 md:mb-8 w-full flex flex-col items-center">
+            <div className="mb-4 md:mb-6">
+              <p className="text-blue-950 font-bold tracking-wider text-xs sm:text-sm uppercase text-center px-4 drop-shadow-[0_0_10px_rgba(255,255,255,1)]">
+                <AnimatedText text="Software Solutions For A Brighter Australia" delay={0.2} />
+              </p>
+            </div>
+
+            <h1
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-extrabold text-blue-950 tracking-tight leading-[1.2] w-full text-center flex flex-col items-center px-4 drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
+            >
+              <AnimatedText
+                text="Powering Australian Businesses with"
+                delay={0.6}
+                className="whitespace-normal md:whitespace-nowrap leading-tight md:leading-[1.1]"
+              />
+              <AnimatedText
+                text="Smarter Software"
+                delay={1.2}
+                className="text-white-black-border mt-3 md:mt-4 whitespace-nowrap inline-block text-3xl sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
+              />
+            </h1>
+          </div>
+
+
+
+        </div>
+      </section>
+
+      <AboutUs />
+      <OurServices />
+      <IndustriesWeServe />
+      <WhyChooseUs />
+      <ProjectsCaseStudies />
+      <OurWorkProcess />
+      <OurBrands />
+      <GallerySection />
+      <ClientsSection />
+      <FAQSection />
+      <CallToAction />
+
+    </div>
+  );
+}
