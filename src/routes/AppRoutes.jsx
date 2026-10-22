@@ -3,13 +3,20 @@ import Main from '../core/Main';
 import Home from '../components/Home';
 import SectorsPage from '../components/SectorsPage';
 import AboutUs from '../components/AboutUs';
+import HowWeWork from '../components/HowWeWork';
 import Gallery from '../components/Gallery';
 import Client from '../components/Client';
+import BrandsPartners from '../components/BrandsPartners';
+import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 import Product from '../components/Product';
-import Enquiry from '../components/Enquiry';
-
-import { useSearchParams } from 'react-router-dom';
+import EnquiryPage from '../shared/components/Enquirypage';
+import Stories from '../components/Stories';
+import CaseStudyDetails from '../components/CaseStudyDetails';
+import Blogs from '../components/Blogs';
+import BlogDetails from '../components/BlogDetails';
+import Whitepaper from '../shared/components/Whitepaper';
+import ServicesDetails from '../shared/components/servicesdetails';
 
 // Placeholder components for the other routes so they don't break
 const Placeholder = ({ title }) => (
@@ -18,48 +25,6 @@ const Placeholder = ({ title }) => (
  </div>
 );
 
-const ServicesPage = () => {
- const [searchParams] = useSearchParams();
- const category = searchParams.get('category');
- const item = searchParams.get('item');
-
- return (
- <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh] px-4 py-20 text-center">
- <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#111111]/10 text-[#0B4F9C] text-xs font-bold mb-4 shadow-sm">
- <span>Our Services</span>
- {category && (
- <>
- <span className="text-[#F97316]">?</span>
- <span>{category}</span>
- </>
- )}
- </div>
- <h1 className="text-3xl sm:text-5xl font-extrabold text-[#0B4F9C] mb-4 tracking-tight">
- {item || category || 'Our Services'}
- </h1>
- <p className="text-[#111111] font-normal max-w-lg text-base sm:text-lg mb-8 leading-relaxed">
- {item 
- ? `Comprehensive engineering and consulting solutions for ${item}. Full dedicated page coming soon.` 
- : 'Delivering end- digital engineering and software architecture tailored for Australian businesses.'}
- </p>
- <div className="flex items-center gap-3">
- <a 
- href="/services" 
- className="px-5 py-2.5 rounded-xl bg-[#0B4F9C] hover:bg-[#0B4F9C] text-white font-semibold text-xs shadow-md transition-colors"
- >
- All Services
- </a>
- <a 
- href="/contact" 
- className="px-5 py-2.5 rounded-xl bg-white border border-[#111111]/10 text-[#111111] hover:bg-white font-semibold text-xs transition-colors"
- >
- Contact Us
- </a>
- </div>
- </div>
- );
-};
-
 export default function AppRoutes() {
  return (
  <Routes>
@@ -67,20 +32,30 @@ export default function AppRoutes() {
  <Route element={<Main />}>
  <Route path="/" element={<Home />} />
  <Route path="/about" element={<AboutUs />} />
- <Route path="/how-we-work" element={<Placeholder title="How We Work" />} />
- <Route path="/testimonials" element={<Placeholder title="Testimonials" />} />
- <Route path="/brands-partners" element={<Client />} />
+ <Route path="/how-we-work" element={<HowWeWork />} />
+ <Route path="/testimonials" element={<Testimonials />} />
+ <Route path="/brands-partners" element={<BrandsPartners />} />
  <Route path="/client" element={<Client />} />
- <Route path="/services" element={<ServicesPage />} />
+ <Route path="/services" element={<ServicesDetails />} />
+ <Route path="/services/:categorySlug" element={<ServicesDetails />} />
+ <Route path="/services/:categorySlug/:subServiceSlug" element={<ServicesDetails />} />
  <Route path="/sectors" element={<SectorsPage />} />
- <Route path="/stories" element={<Placeholder title="Stories" />} />
+ <Route path="/stories" element={<Stories />} />
+ <Route path="/stories/:id" element={<CaseStudyDetails />} />
+ <Route path="/case-studies" element={<Stories />} />
+ <Route path="/case-studies/:id" element={<CaseStudyDetails />} />
  <Route path="/our-work" element={<Placeholder title="Our Work" />} />
- <Route path="/journal" element={<Placeholder title="Journal" />} />
- <Route path="/white-paper" element={<Placeholder title="White Paper" />} />
+ <Route path="/blogs" element={<Blogs />} />
+ <Route path="/blogs/:id" element={<BlogDetails />} />
+ <Route path="/blog/:id" element={<BlogDetails />} />
+ <Route path="/journal" element={<Blogs />} />
+ <Route path="/white-paper" element={<Whitepaper />} />
+ <Route path="/whitepaper" element={<Whitepaper />} />
+ <Route path="/whitepapers" element={<Whitepaper />} />
  <Route path="/gallery" element={<Gallery />} />
  <Route path="/contact" element={<Contact />} />
- <Route path="/get-a-quote" element={<Enquiry />} />
- <Route path="/enquiry" element={<Enquiry />} />
+ <Route path="/get-a-quote" element={<EnquiryPage />} />
+ <Route path="/enquiry" element={<EnquiryPage />} />
  <Route path="/product" element={<Product />} />
  </Route>
  </Routes>

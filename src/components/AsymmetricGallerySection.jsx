@@ -19,113 +19,113 @@ export const GALLERY_ITEMS = [
   {
     id: '01',
     number: '01',
-    title: 'Spatial Hardware',
-    category: 'IMMERSIVE VR INTERFACE',
-    location: 'VR Hardware Lab',
-    desc: 'Precision-engineered virtual reality headset and optical motion controller built for seamless 6DOF web exploration.',
-    img: '/gallery/gallery_01.jpg',
-    fallback: 'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?auto=format&fit=crop&q=80&w=1200',
+    title: 'Web Architecture',
+    category: 'WEBSITE DESIGN / DEVELOPMENT',
+    location: 'Digital Solutions',
+    desc: 'Hand-crafted, responsive websites engineered for optimal performance, engaging user experience, and seamless technical functionality.',
+    img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200',
+    fallback: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200',
     focalPoint: 'center center',
   },
   {
     id: '02',
     number: '02',
-    title: 'Monolithic Horizon',
-    category: 'METROPOLITAN SCALE',
-    location: 'Financial District',
-    desc: 'Towering geometric glass skyscrapers piercing the clouds, exemplifying scale, precision, and structural engineering.',
-    img: '/gallery/gallery_02.jpg',
-    fallback: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200',
-    focalPoint: 'center 40%',
+    title: 'Scalable Storefronts',
+    category: 'E-COMMERCE DEVELOPMENT',
+    location: 'Digital Retail',
+    desc: 'End-to-end digital storefronts designed with intuitive navigation, secure payment gateways, and optimized conversion funnels.',
+    img: '/cms.png',
+    fallback: '/cms.png',
+    focalPoint: 'center center',
   },
   {
     id: '03',
     number: '03',
-    title: 'Neural Circuitry',
-    category: 'CORE HARDWARE',
-    location: 'Silicon Core',
-    desc: 'Luminescent blueprint and circuit pathways illustrating the microscopic processing power behind real-time 3D simulation.',
-    img: '/gallery/gallery_03.jpg',
-    fallback: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200',
+    title: 'Content Platforms',
+    category: 'CONTENT MANAGEMENT SYSTEM (CMS)',
+    location: 'Data Infrastructure',
+    desc: 'Flexible content management systems built for scalability, giving you complete control over your digital narrative.',
+    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200',
+    fallback: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200',
     focalPoint: 'center center',
   },
   {
     id: '04',
     number: '04',
-    title: 'Parametric Villa',
-    category: '3D ARCHITECTURAL CAPTURE',
-    location: 'Melbourne, Australia',
-    desc: 'Contemporary residential architecture featuring contrasting timber slats, dark cladding, and ambient architectural lighting.',
-    img: '/gallery/gallery_04.jpg',
-    fallback: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=1200',
-    focalPoint: 'center 35%',
+    title: 'SEO Analytics Dashboard',
+    category: 'SEARCH ENGINE OPTIMIZATION (SEO)',
+    location: 'Performance Analytics',
+    desc: 'Data-driven SEO and AEO strategies designed to increase organic visibility, outrank competitors, and drive targeted traffic.',
+    img: '/SEO Analytics Dashboard.png',
+    fallback: '/SEO Analytics Dashboard.png',
+    focalPoint: 'center center',
   },
   {
     id: '05',
     number: '05',
-    title: 'Virtual Engine',
-    category: 'WEBGL CODE ARCHITECTURE',
-    location: 'Engineering Suite',
-    desc: 'Clean algorithmic code structure and responsive logic powering smooth 60fps immersive WebGL visual pipelines.',
-    img: '/gallery/gallery_05.jpg',
-    fallback: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200',
+    title: 'Brand Identity',
+    category: 'BRAND IDENTITY',
+    location: 'Digital Campaigns',
+    desc: 'Strategic brand identity and visual systems that amplify brand voice, engage audiences, and build meaningful community.',
+    img: '/brand.png',
+    fallback: '/brand.png',
     focalPoint: 'center center',
   },
   {
     id: '06',
     number: '06',
-    title: 'Panoramic Living',
-    category: 'SPATIAL INTERIOR SCAN',
-    location: 'Modern Estate',
-    desc: 'High-fidelity spatial interior featuring Scandinavian minimalism, natural lighting, and seamless indoor-outdoor flow.',
-    img: '/gallery/gallery_06.jpg',
-    fallback: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=1200',
+    title: 'Visual Identity',
+    category: 'BRAND IDENTITY',
+    location: 'Creative Studio',
+    desc: 'Comprehensive visual branding and identity systems that ensure your company stands out with clarity and professionalism.',
+    img: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=1200',
+    fallback: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&q=80&w=1200',
     focalPoint: 'center center',
   },
   {
     id: '07',
     number: '07',
-    title: 'Global Network',
-    category: 'WORLDWIDE CLOUD FABRIC',
-    location: 'Orbital Perspective',
-    desc: 'Planetary node connectivity and city light constellations representing global low-latency CDN distribution.',
-    img: '/gallery/gallery_07.jpg',
-    fallback: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200',
+    title: 'UI/UX Experience',
+    category: 'WEBSITE DESIGN / DEVELOPMENT',
+    location: 'Interactive Interfaces',
+    desc: 'Human-centered design systems creating intuitive digital experiences that convert visitors into loyal customers.',
+    img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200',
+    fallback: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1200',
     focalPoint: 'center center',
   },
   {
     id: '08',
     number: '08',
-    title: 'Compute Telemetry',
-    category: 'DATA CENTER INFRASTRUCTURE',
-    location: 'Tier-4 Server Cluster',
-    desc: 'Tier-4 datacenter server clusters interconnected with high-throughput fiber channels for instant 3D asset streaming.',
-    img: '/gallery/gallery_08.jpg',
-    fallback: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1200',
-    focalPoint: 'center 45%',
+    title: 'E-COMMERCE DEVELOPMENT',
+    category: 'E-COMMERCE DEVELOPMENT',
+    location: 'Enterprise Solutions',
+    desc: 'Advanced B2B e-commerce platforms engineered for complex product catalogs and seamless operational workflows.',
+    img: '/e-com.png',
+    fallback: '/e-com.png',
+    focalPoint: 'center center',
   },
   {
     id: '09',
     number: '09',
-    title: 'Spatial Analytics',
-    category: 'REAL-TIME TELEMETRY',
-    location: 'Operations Dashboard',
-    desc: 'Interactive telemetry monitoring user engagement, frame rates, bounce rates, and spatial interaction times.',
-    img: '/gallery/gallery_09.jpg',
-    fallback: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200',
+    title: 'Creative Direction',
+    category: 'BRAND IDENTITY',
+    location: 'Design Lab',
+    desc: 'Evocative brand storytelling, typography, and color systems designed to leave a lasting impact on your audience.',
+    img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200',
+    fallback: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200',
     focalPoint: 'center center',
   },
   {
     id: '10',
     number: '10',
-    title: 'Glass Pavilion',
-    category: 'COMMERCIAL SPACE SCAN',
-    location: 'Corporate Headquarters',
-    desc: 'Expansive modern glass office corridor scanned with millimeter precision for interactive virtual corporate walkthroughs.',
-    img: '/gallery/gallery_10.jpg',
-    fallback: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200',
+    title: 'Local SEO Strategy',
+    category: 'SEARCH ENGINE OPTIMIZATION (SEO)',
+    location: 'Search Analytics',
+    desc: 'Targeted local SEO implementations that dominate map results and drive foot traffic directly to your business doors.',
+    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
+    fallback: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
     focalPoint: 'center center',
-  },
+  }
 ];
 
 // Interactive 3D Card with mouse tilt, image parallax & smooth spring reset
@@ -137,6 +137,11 @@ function GalleryCard3D({ item, index, onOpen, className = '', heightStyle = '' }
   const [isHovered, setIsHovered] = useState(false);
   const [imgSrc, setImgSrc] = useState(item.img);
   const rafRef = useRef(null);
+
+  // Ensure image updates if the item data changes during hot reload
+  useEffect(() => {
+    setImgSrc(item.img);
+  }, [item.img]);
 
   const handleMouseMove = useCallback((e) => {
     if (!cardRef.current) return;
@@ -353,7 +358,7 @@ export default function AsymmetricGallerySection({ onExploreClick }) {
     <section className="relative w-full bg-white text-[#111111] overflow-hidden pt-28 xs:pt-32 sm:pt-32 md:pt-28 lg:pt-20 pb-4 sm:pb-6 md:pb-8 lg:pb-10">
       {/* Subtle Ambient Background Gradients (Clean & Light) */}
       <div className="absolute top-0 left-1/4 w-[650px] h-[650px] bg-gradient-to-br from-[#0B4F9C]/[0.035] to-transparent rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[550px] h-[550px] bg-gradient-to-tl from-[#F97316]/[0.035] to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[550px] h-[550px] bg-gradient-to-tl from-[#D92419]/[0.035] to-transparent rounded-full blur-3xl pointer-events-none" />
 
       {/* Main Container */}
       <div className="w-full max-w-[1560px] mx-auto px-4 xs:px-5 sm:px-6 md:px-8 lg:px-8 xl:px-12 relative z-10">
@@ -379,13 +384,13 @@ export default function AsymmetricGallerySection({ onExploreClick }) {
                 <span className="text-[#0B3B82] font-extrabold text-[11px] sm:text-[12px] xl:text-[13px] tracking-[0.25em] uppercase mb-1.5">
                   FEATURED GALLERY
                 </span>
-                <div className="w-12 h-1 bg-[#F97316] rounded-full"></div>
+                <div className="w-12 h-1 bg-[#D92419] rounded-full"></div>
               </div>
 
-              {/* Main Heading matching Why Choose Us style (Blue line 1, Orange line 2) */}
+              {/* Main Heading matching Why Choose Us style (Blue line 1, Red line 2) */}
               <h2 className="text-[34px] sm:text-[44px] lg:text-[48px] xl:text-[56px] 2xl:text-[64px] font-extrabold leading-[1.05] tracking-tight mb-5">
                 <span className="text-[#0B3B82] block">Beyond Color.</span>
-                <span className="text-[#F97316] block mt-0.5 sm:mt-1">Pure Emotion.</span>
+                <span className="text-[#D92419] block mt-0.5 sm:mt-1">Pure Emotion.</span>
               </h2>
 
               {/* Concise Supporting Description (Updated to black) */}
@@ -401,10 +406,10 @@ export default function AsymmetricGallerySection({ onExploreClick }) {
                   if (onExploreClick) onExploreClick();
                   else setLightboxIndex(0);
                 }}
-                className="group pl-5 pr-2 py-2 rounded-xl bg-[#0B3B82] hover:bg-[#F97316] text-white font-medium text-[13.5px] xl:text-[14px] inline-flex items-center gap-3 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
+                className="group pl-5 pr-2 py-2 rounded-xl bg-[#0B3B82] hover:bg-[#D92419] text-white font-medium text-[13.5px] xl:text-[14px] inline-flex items-center gap-3 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
               >
                 <span>See the Stories</span>
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/20 group-hover:bg-white text-white group-hover:text-[#F97316] flex items-center justify-center transition-all duration-300">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/20 group-hover:bg-white text-white group-hover:text-[#D92419] flex items-center justify-center transition-all duration-300">
                   <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                 </div>
               </motion.button>
@@ -521,11 +526,11 @@ export default function AsymmetricGallerySection({ onExploreClick }) {
                 <span className="text-[#0B3B82] font-extrabold text-[12px] tracking-[0.25em] uppercase mb-1">
                   FEATURED GALLERY
                 </span>
-                <div className="w-12 h-1 bg-[#F97316] rounded-full"></div>
+                <div className="w-12 h-1 bg-[#D92419] rounded-full"></div>
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-[38px] font-extrabold leading-[1.08] tracking-tight">
                 <span className="text-[#0B3B82] block">Beyond Color.</span>
-                <span className="text-[#F97316] block mt-0.5">Pure Emotion.</span>
+                <span className="text-[#D92419] block mt-0.5">Pure Emotion.</span>
               </h2>
             </div>
 
@@ -535,10 +540,10 @@ export default function AsymmetricGallerySection({ onExploreClick }) {
               </p>
               <button
                 onClick={() => setLightboxIndex(0)}
-                className="group pl-4 pr-1.5 py-1.5 rounded-xl bg-[#0B3B82] hover:bg-[#F97316] text-white font-medium text-xs inline-flex items-center gap-2.5 transition-all duration-300 shadow-md cursor-pointer"
+                className="group pl-4 pr-1.5 py-1.5 rounded-xl bg-[#0B3B82] hover:bg-[#D92419] text-white font-medium text-xs inline-flex items-center gap-2.5 transition-all duration-300 shadow-md cursor-pointer"
               >
                 <span>See the Stories</span>
-                <div className="w-6 h-6 rounded-full bg-white/20 group-hover:bg-white text-white group-hover:text-[#F97316] flex items-center justify-center transition-all duration-300">
+                <div className="w-6 h-6 rounded-full bg-white/20 group-hover:bg-white text-white group-hover:text-[#D92419] flex items-center justify-center transition-all duration-300">
                   <ArrowRight className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5" />
                 </div>
               </button>
@@ -634,11 +639,11 @@ export default function AsymmetricGallerySection({ onExploreClick }) {
               <span className="text-[#0B3B82] font-extrabold text-[11px] tracking-[0.22em] uppercase mb-1">
                 FEATURED GALLERY
               </span>
-              <div className="w-10 h-1 bg-[#F97316] rounded-full mb-2"></div>
+              <div className="w-10 h-1 bg-[#D92419] rounded-full mb-2"></div>
             </div>
             <h2 className="text-2xl xs:text-3xl font-extrabold leading-[1.1] tracking-tight mb-2.5">
               <span className="text-[#0B3B82] block">Beyond Color.</span>
-              <span className="text-[#F97316] block mt-0.5">Pure Emotion.</span>
+              <span className="text-[#D92419] block mt-0.5">Pure Emotion.</span>
             </h2>
             <p className="text-xs xs:text-sm text-[#111111] font-medium leading-relaxed mb-4">
               Timeless visual narratives and spatial perspectives that speak without words.
@@ -646,10 +651,10 @@ export default function AsymmetricGallerySection({ onExploreClick }) {
             <div className="flex items-center justify-between">
               <button
                 onClick={() => setLightboxIndex(0)}
-                className="group pl-4 pr-1.5 py-1.5 rounded-xl bg-[#0B3B82] hover:bg-[#F97316] text-white font-medium text-xs inline-flex items-center gap-2.5 transition-all duration-300 shadow-md cursor-pointer"
+                className="group pl-4 pr-1.5 py-1.5 rounded-xl bg-[#0B3B82] hover:bg-[#D92419] text-white font-medium text-xs inline-flex items-center gap-2.5 transition-all duration-300 shadow-md cursor-pointer"
               >
                 <span>See the Stories</span>
-                <div className="w-6 h-6 rounded-full bg-white/20 group-hover:bg-white text-white group-hover:text-[#F97316] flex items-center justify-center transition-all duration-300">
+                <div className="w-6 h-6 rounded-full bg-white/20 group-hover:bg-white text-white group-hover:text-[#D92419] flex items-center justify-center transition-all duration-300">
                   <ArrowRight className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5" />
                 </div>
               </button>
@@ -763,7 +768,7 @@ export default function AsymmetricGallerySection({ onExploreClick }) {
                     {activeLightboxItem.title}
                   </h3>
 
-                  <p className="text-xs font-semibold text-[#F97316] uppercase tracking-wider mb-4">
+                  <p className="text-xs font-semibold text-[#D92419] uppercase tracking-wider mb-4">
                     {activeLightboxItem.category}
                   </p>
 

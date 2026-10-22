@@ -8,7 +8,7 @@ import { Star, CheckCircle2 } from 'lucide-react';
 const testimonials = [
   {
     id: 1,
-    quote: "The entire experience was smooth, professional, and thoughtfully executed. The quality and attention to detail exceeded our expectations.",
+    quote: "The entire experience was smooth and professional. Their digital solutions increased our AI search visibility and brand reach across Australia.",
     author: "Arun Kumar",
     role: "Business Owner",
     initial: "A",
@@ -18,7 +18,7 @@ const testimonials = [
   },
   {
     id: 2,
-    quote: "From the first interaction to the final delivery, the team was responsive, reliable, and focused on getting every detail right.",
+    quote: "VR4WEB engineered our web platform with built-in AEO and GEO strategies. Our AI search visibility and organic inquiries scaled dramatically.",
     author: "Priya Sharma",
     role: "Marketing Director",
     initial: "P",
@@ -49,7 +49,7 @@ export default function TestimonialsSection({ className = '' }) {
       ───────────────────────────────────────────────────────── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Soft radial glow in center */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#0B3B82]/5 via-[#F97316]/5 to-[#38BDF8]/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#0B3B82]/5 via-[#D92419]/5 to-[#38BDF8]/5 rounded-full blur-3xl" />
         {/* Subtle grid pattern */}
         <div 
           className="absolute inset-0 opacity-[0.025]"
@@ -72,18 +72,18 @@ export default function TestimonialsSection({ className = '' }) {
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
           className="text-center max-w-4xl mx-auto mb-8 sm:mb-10 md:mb-12 lg:mb-14"
         >
-          {/* Eyebrow with Orange Accent Bar */}
+          {/* Eyebrow with Red Accent Bar */}
           <div className="flex flex-col items-center mb-2.5 sm:mb-3">
             <span className="text-[#0B3B82] font-extrabold text-[11px] xs:text-[12px] sm:text-[13px] tracking-[0.25em] uppercase mb-1.5">
               CLIENT STORIES
             </span>
-            <div className="w-12 h-1 bg-[#F97316] rounded-full" />
+            <div className="w-12 h-1 bg-[#D92419] rounded-full" />
           </div>
 
           {/* Main 2-Tone Heading */}
           <h2 className="text-[26px] xs:text-[32px] sm:text-[40px] md:text-[46px] lg:text-[52px] font-extrabold text-center leading-[1.12] tracking-tight mb-2.5 sm:mb-3.5">
             <span className="text-[#0B3B82]">What Our </span>
-            <span className="text-[#F97316]">Clients Say</span>
+            <span className="text-[#D92419]">Clients Say</span>
           </h2>
 
           {/* Supporting Paragraph */}
@@ -120,7 +120,7 @@ export default function TestimonialsSection({ className = '' }) {
                   {[...Array(item.rating)].map((_, i) => (
                     <Star 
                       key={i} 
-                      className="w-4 h-4 fill-[#F97316] text-[#F97316]" 
+                      className="w-4 h-4 fill-[#D92419] text-[#D92419]" 
                     />
                   ))}
                 </div>
@@ -144,7 +144,7 @@ export default function TestimonialsSection({ className = '' }) {
                     <h3 className="text-[#0B3B82] font-bold text-[14.5px] sm:text-[15.5px] tracking-tight group-hover:text-[#0B3B82] transition-colors">
                       {item.author}
                     </h3>
-                    <span className="text-[#F97316] font-semibold text-[11.5px] sm:text-[12.5px] tracking-wide">
+                    <span className="text-[#D92419] font-semibold text-[11.5px] sm:text-[12.5px] tracking-wide">
                       {item.role}
                     </span>
                   </div>

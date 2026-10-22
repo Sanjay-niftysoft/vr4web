@@ -15,7 +15,7 @@ export default function WhyChooseUsSection() {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full bg-[#F8FCFF] py-8 sm:py-10 md:py-12 lg:py-14 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 font-['Inter',sans-serif] overflow-hidden selection:bg-[#F97316] selection:text-white"
+      className="relative w-full bg-[#F8FCFF] py-8 sm:py-10 md:py-12 lg:py-14 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 font-['Inter',sans-serif] overflow-hidden selection:bg-[#D92419] selection:text-white"
     >
       {/* ========================================================================= */}
       {/* FUTURISTIC ARCHITECTURAL BACKGROUND (Central Towers, Sunrise & Plaza)     */}
@@ -33,7 +33,7 @@ export default function WhyChooseUsSection() {
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#F8FCFF] to-transparent" />
 
         {/* Subtle Light Rays / Golden Center Glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-r from-[#F97316]/10 via-[#F59E0B]/15 to-[#38BDF8]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-r from-[#D92419]/10 via-[#F59E0B]/15 to-[#38BDF8]/10 rounded-full blur-3xl pointer-events-none" />
       </div>
 
       <div className="max-w-[1440px] 4xl:max-w-[2400px] mx-auto relative z-10 flex flex-col justify-between h-full">
@@ -52,13 +52,13 @@ export default function WhyChooseUsSection() {
             <span className="text-[#0B3B82] font-extrabold text-[11px] xs:text-[12px] sm:text-[13px] tracking-[0.25em] uppercase mb-1.5">
               WHY CHOOSE US
             </span>
-            <div className="w-12 h-1 bg-[#F97316] rounded-full"></div>
+            <div className="w-12 h-1 bg-[#D92419] rounded-full"></div>
           </div>
 
           {/* Main Heading */}
           <h2 className="text-[28px] xs:text-[34px] sm:text-[44px] md:text-[50px] lg:text-[56px] font-extrabold text-center leading-[1.12] tracking-tight mb-3 sm:mb-4">
             <span className="text-[#0B3B82] block">Technology built around</span>
-            <span className="text-[#F97316] block mt-0.5 sm:mt-1">your business.</span>
+            <span className="text-[#D92419] block mt-0.5 sm:mt-1">your business.</span>
           </h2>
 
 
@@ -70,12 +70,12 @@ export default function WhyChooseUsSection() {
             className="inline-flex items-center flex-wrap justify-center gap-2 xs:gap-3 sm:gap-4 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full bg-white/70 backdrop-blur-md border border-slate-200/60 shadow-sm"
           >
             <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#0B3B82]">IDEAS</span>
-            <ArrowRight className="w-3 h-3 text-[#F97316]" />
+            <ArrowRight className="w-3 h-3 text-[#D92419]" />
             <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#0B3B82]">SOLUTIONS</span>
-            <ArrowRight className="w-3 h-3 text-[#F97316]" />
+            <ArrowRight className="w-3 h-3 text-[#D92419]" />
+            <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#0B3B82]">AI SEARCH VISIBILITY</span>
+            <ArrowRight className="w-3 h-3 text-[#D92419]" />
             <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#0B3B82]">GROWTH</span>
-            <ArrowRight className="w-3 h-3 text-[#F97316]" />
-            <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#0B3B82]">TOGETHER</span>
           </motion.div>
         </motion.div>
 
@@ -92,22 +92,22 @@ export default function WhyChooseUsSection() {
             animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -6, scale: 1.02, rotateY: 3 }}
-            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(11,59,130,0.07)] hover:shadow-[0_25px_60px_rgba(249,115,22,0.12)] transition-all duration-500 overflow-hidden flex flex-col sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
+            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(11,59,130,0.07)] hover:shadow-[0_25px_60px_rgba(217, 36, 25,0.12)] transition-all duration-500 overflow-hidden flex flex-col sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
           >
             {/* Left Content */}
             <div className="flex-1 p-5 sm:p-6 lg:p-7 flex flex-col justify-between z-10">
               <div>
 
-
                 {/* Heading */}
                 <h3 className="text-xl sm:text-2xl font-bold text-[#0B3B82] tracking-tight mb-1">
                   Business First
                 </h3>
-                <div className="w-7 h-0.5 bg-[#F97316] rounded-full mb-2.5"></div>
+                <div className="w-7 h-0.5 bg-[#D92419] rounded-full mb-2.5"></div>
 
                 {/* Description */}
                 <p className="text-[#111111] text-[13px] sm:text-[14px] leading-relaxed font-normal max-w-xs">
-                  We start with your business goals and build technology solutions that deliver real outcomes. Every solution is shaped around your priorities, customers and long-term growth.                </p>
+                  We start with your business goals and build technology solutions that deliver real outcomes. Every solution is shaped around your priorities, customers and long-term growth.
+                </p>
               </div>
             </div>
 
@@ -161,11 +161,12 @@ export default function WhyChooseUsSection() {
                 <h3 className="text-xl sm:text-2xl font-bold text-[#0B3B82] tracking-tight mb-1">
                   Built to Scale
                 </h3>
-                <div className="w-7 h-0.5 bg-[#F97316] rounded-full mb-2.5"></div>
+                <div className="w-7 h-0.5 bg-[#D92419] rounded-full mb-2.5"></div>
 
                 {/* Description */}
                 <p className="text-[#111111] text-[13px] sm:text-[14px] leading-relaxed font-normal max-w-xs">
-                  We create flexible and scalable solutions that grow alongside your business. Our technology is built to adapt as your needs evolve and new opportunities emerge.                </p>
+                  We create scalable digital solutions that increase AI search visibility. Built with future-ready AEO and GEO frameworks, our technology evolves as AI engines grow.
+                </p>
               </div>
             </div>
           </motion.div>
@@ -189,7 +190,7 @@ export default function WhyChooseUsSection() {
                 <h3 className="text-xl sm:text-2xl font-bold text-[#0B3B82] tracking-tight mb-1">
                   Clear Delivery
                 </h3>
-                <div className="w-7 h-0.5 bg-[#F97316] rounded-full mb-2.5"></div>
+                <div className="w-7 h-0.5 bg-[#D92419] rounded-full mb-2.5"></div>
 
                 {/* Description */}
                 <p className="text-[#111111] text-[13px] sm:text-[14px] leading-relaxed font-normal max-w-xs">
@@ -221,7 +222,7 @@ We believe in transparent communication, predictable processes and reliable deli
             animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -6, scale: 1.02, rotateY: -3 }}
-            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(11,59,130,0.07)] hover:shadow-[0_25px_60px_rgba(249,115,22,0.12)] transition-all duration-500 overflow-hidden flex flex-col-reverse sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
+            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(11,59,130,0.07)] hover:shadow-[0_25px_60px_rgba(217, 36, 25,0.12)] transition-all duration-500 overflow-hidden flex flex-col-reverse sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
           >
             {/* Left Diagonal Cut Architectural Image */}
             <div 
@@ -248,7 +249,7 @@ We believe in transparent communication, predictable processes and reliable deli
                 <h3 className="text-xl sm:text-2xl font-bold text-[#0B3B82] tracking-tight mb-1">
                   Long-Term Partnership
                 </h3>
-                <div className="w-7 h-0.5 bg-[#F97316] rounded-full mb-2.5"></div>
+                <div className="w-7 h-0.5 bg-[#D92419] rounded-full mb-2.5"></div>
 
                 {/* Description */}
                 <p className="text-[#111111] text-[13px] sm:text-[14px] leading-relaxed font-normal max-w-xs">

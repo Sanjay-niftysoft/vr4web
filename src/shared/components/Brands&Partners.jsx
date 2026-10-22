@@ -1,0 +1,920 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useReducedMotion,
+} from 'framer-motion';
+import { Link } from 'react-router-dom';
+import {
+  ExternalLink,
+  ArrowRight,
+  CheckCircle2,
+  ArrowUpRight,
+  ChevronRight,
+  ChevronLeft,
+  ChevronDown,
+  MessageSquare,
+  TrendingUp,
+  FileText,
+  Share2,
+  Shield,
+  Link2,
+  Target,
+} from 'lucide-react';
+import PageBanner from '../../components/common/PageBanner';
+import CtaSection from '../../components/CtaSection';
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BRAND LOGO RENDERER
+// ─────────────────────────────────────────────────────────────────────────────
+
+function BrandLogo({ logo, name, className = 'h-11 w-auto' }) {
+  if (typeof logo === 'string') {
+    return (
+      <div className="inline-flex items-center gap-2.5">
+        <img
+          src={logo}
+          alt={name}
+          className={`${className} object-contain select-none`}
+          loading="lazy"
+        />
+        {name === 'Content Consult' && (
+          <div className="flex flex-col leading-tight select-none">
+            <span className="text-[11.5px] font-black tracking-tight text-[#102448] uppercase">Content</span>
+            <span className="text-[12px] font-black tracking-tight text-[#0B4F9C] uppercase">Consult</span>
+          </div>
+        )}
+      </div>
+    );
+  }
+  const LogoComponent = logo;
+  return <LogoComponent className={className} />;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────────────────────────────────────
+
+const BRANDS_DATA = [
+  {
+    id: 'niftysoft',
+    name: 'NIFTYSOFT',
+    domain: 'niftysoft.com',
+    url: 'https://niftysoft.com',
+    desc: 'Digital Solutions for Modern Businesses',
+    fullDesc:
+      'End-to-end custom software architecture, enterprise cloud solutions, and digital transformation tailored for high-growth enterprises.',
+    tags: ['Custom Software', 'Cloud Platforms', 'Web Apps'],
+    stats: 'Enterprise Grade',
+    logo: '/logo/niftysoft.png',
+    accent: '#D7192D',
+    tint: 'rgba(215,25,45,0.10)',
+    glow: 'rgba(215,25,45,0.35)',
+  },
+  {
+    id: 'lowcostwebdesign',
+    name: 'LOW COST WEB DESIGN',
+    domain: 'lowcostwebdesign.in',
+    url: 'https://lowcostwebdesign.in',
+    desc: 'Affordable & Professional Web Design Services',
+    fullDesc:
+      'Cost-effective, modern, and mobile-first website solutions designed to help startups and local businesses build an exceptional online presence.',
+    tags: ['Affordable Web', 'Mobile First', 'CMS Setup'],
+    stats: '500+ Projects',
+    logo: '/logo/lcwd.png',
+    accent: '#0B4F9C',
+    tint: 'rgba(11,79,156,0.10)',
+    glow: 'rgba(11,79,156,0.35)',
+  },
+  {
+    id: 'businessmailsolutions',
+    name: 'BUSINESS MAIL SOLUTIONS',
+    domain: 'businessmailsolutions.in',
+    url: 'https://businessmailsolutions.in',
+    desc: 'Reliable Business Email Solutions',
+    fullDesc:
+      'High-security corporate email hosting with zero spam tolerance, automated daily backups, and 99.9% uptime SLA.',
+    tags: ['Corporate Email', 'Spam Guard', '99.9% Uptime'],
+    stats: 'Zero Data Loss',
+    logo: '/logo/email.png',
+    accent: '#D7192D',
+    tint: 'rgba(215,25,45,0.09)',
+    glow: 'rgba(215,25,45,0.32)',
+  },
+  {
+    id: 'networkcare',
+    name: 'NETWORK CARE',
+    domain: 'networkcare.in',
+    url: 'https://networkcare.in',
+    desc: 'IT & Network Support Services',
+    fullDesc:
+      'Comprehensive enterprise IT infrastructure management, cyber security monitoring, firewall governance, and remote tech assistance.',
+    tags: ['Server Care', 'Network Security', '24/7 Monitoring'],
+    stats: '< 15m Response',
+    logo: '/logo/networkcare.png',
+    accent: '#102342',
+    tint: 'rgba(16,35,66,0.10)',
+    glow: 'rgba(16,35,66,0.38)',
+  },
+];
+
+const PARTNERS_DATA = [
+  {
+    id: 'chatsupport',
+    name: 'Chat Support',
+    domain: 'chatsupport.in',
+    url: 'https://chatsupport.in',
+    icon: MessageSquare,
+    desc: 'Live Chat & Customer Support',
+    fullDesc:
+      'Omnichannel live chat agents and AI-augmented conversational support to convert visitors and delight existing customers 24/7.',
+    badge: 'Customer Care',
+    tags: ['24/7 Live Chat', 'Helpdesk Agents', 'AI Escalation'],
+    points: ['Trained agents reply to your visitors in real time', 'AI answers routine questions and hands the rest to a person', 'Chat history shows what customers ask most'],
+    logo: '/partners/chatbot.png',
+    banner: '/chatbot.png',
+  },
+  {
+    id: 'leadseo',
+    name: 'Lead SEO',
+    domain: 'leadseo.in',
+    url: 'https://leadseo.in',
+    icon: TrendingUp,
+    desc: 'Lead Generation & SEO Services',
+    fullDesc:
+      'Strategic organic search dominance and performance lead funnels that capture high-intent buyers and skyrocket conversion rates.',
+    badge: 'Search & Leads',
+    tags: ['Technical SEO', 'Lead Gen Funnels', 'Keyword Growth'],
+    points: ['Site audits that find what holds your rankings back', 'Keywords chosen around what buyers actually search', 'Reports that track leads, not just traffic'],
+    logo: '/logo-2/leadseo.png',
+    banner: '/leadseo-banner.jpg',
+  },
+  {
+    id: 'contentconsult',
+    name: 'Content Consult',
+    domain: 'contentconsult.in',
+    url: 'https://contentconsult.in',
+    icon: FileText,
+    desc: 'Content Strategy & Content Marketing',
+    fullDesc:
+      'High-impact copywriting, editorial strategy, and multi-channel content pipelines crafted to establish thought leadership and rank on Google.',
+    badge: 'Content Strategy',
+    tags: ['Brand Voice', 'Editorial Content', 'SEO Copywriting'],
+    points: ['Articles and pages written for your audience', 'An editorial calendar built around your goals', 'Copy that reads well and ranks'],
+    logo: '/logo-2/content.png',
+    banner: '/content-banner.jpg',
+  },
+  {
+    id: 'smmconsult',
+    name: 'SMM Consult',
+    domain: 'smmconsult.com',
+    url: 'https://smmconsult.com',
+    icon: Share2,
+    desc: 'Social Media Marketing Solutions',
+    fullDesc:
+      'Full-service social media campaigns, viral short-form creative production, and community management across Instagram, LinkedIn, and Meta.',
+    badge: 'Social Media',
+    tags: ['Viral Campaigns', 'Paid Social', 'Audience Building'],
+    points: ['Posts and short videos made for each platform', 'Paid campaigns aimed at the right audience', 'Comments and messages handled for you'],
+    logo: '/partners/smm.png',
+    banner: '/smm.png',
+  },
+  {
+    id: 'ormconsult',
+    name: 'ORM Consult',
+    domain: 'ormconsult.com',
+    url: 'https://ormconsult.com',
+    icon: Shield,
+    desc: 'Online Reputation Management',
+    fullDesc:
+      'Proactive brand protection, corporate review moderation, crisis PR management, and search result suppression for executive reputations.',
+    badge: 'Brand Protection',
+    tags: ['Review Shield', 'Executive PR', 'Sentiment Recovery'],
+    points: ['Reviews and mentions monitored as they appear', 'Professional replies to negative feedback', 'Positive content pushed higher in search results'],
+    logo: '/partners/orm.png',
+    banner: '/orm.png',
+  },
+  {
+    id: 'niftyweblinks',
+    name: 'Nifty Web Links',
+    domain: 'niftyweblinks.com',
+    url: 'https://niftyweblinks.com',
+    icon: Link2,
+    desc: 'Quality Web Links & Digital Promotion',
+    fullDesc:
+      'High Domain Authority editorial outreach, permanent contextual backlink syndication, and ethical digital PR for sustained search dominance.',
+    badge: 'Link Building',
+    tags: ['High DA Links', 'Digital PR', 'Outreach Networks'],
+    points: ['Outreach to relevant, high-authority websites', 'Links placed inside real editorial content', 'Digital PR that builds lasting visibility'],
+    logo: '/logo-2/niftyweblinks.png',
+    banner: '/weblinks-banner.jpg',
+  },
+  {
+    id: 'seoad',
+    name: 'SEO AD',
+    domain: 'seoad.in',
+    url: 'https://seoad.in',
+    icon: Target,
+    desc: 'SEO & Online Advertising',
+    fullDesc:
+      'Precision pay-per-click management across Google Search, Display, and Retargeting engineered for maximal ROAS and lowest CPA.',
+    badge: 'Performance Ads',
+    tags: ['Google Ads', 'PPC Optimization', 'Conversion Tracking'],
+    points: ['Campaigns set up on Google Search and Display', 'Retargeting that brings past visitors back', 'Conversion tracking that shows what each click earns'],
+    logo: '/partners/seoad.png',
+    banner: '/seoad.png',
+  },
+];
+
+const FAQS_DATA = [
+  {
+    id: 'faq-1',
+    question: 'What is the difference between your brands and partners?',
+    answer:
+      'Our brands are businesses owned and operated by our group, delivering core services like web development, business email, IT support and digital solutions. Our partners are specialist companies we work closely with, bringing deep domain expertise in areas like SEO, content, social media, lead generation and more.',
+  },
+  {
+    id: 'faq-2',
+    question: 'How do these businesses work together?',
+    answer:
+      'Our brands and partners operate within a single, seamlessly connected ecosystem. When you partner with us, you receive a dedicated account strategist who coordinates across relevant specialists. This ensures unified execution, shared data insights, and consistent quality without the administrative burden of managing multiple isolated agencies.',
+  },
+  {
+    id: 'faq-3',
+    question: 'Can I choose services from multiple brands?',
+    answer:
+      'Yes, absolutely! You have complete flexibility to select individual standalone services or mix-and-match capabilities across our brands and partners into an integrated package tailored to your exact business goals, budget, and growth roadmap.',
+  },
+  {
+    id: 'faq-4',
+    question: 'Who should I contact for the right solution?',
+    answer:
+      'You can reach out through any specific brand website or submit an inquiry through our central contact portal. Our consulting team will evaluate your needs, conduct a complimentary scoping consultation, and connect you directly with the appropriate specialists within our network.',
+  },
+  {
+    id: 'faq-5',
+    question: 'Are your partner services available globally?',
+    answer:
+      'Yes, both our in-house brands and strategic partner network operate internationally, serving clients across Australia, New Zealand, the United Kingdom, the United States, India, and worldwide with 24/7 dedicated support and localized domain expertise.',
+  },
+  {
+    id: 'faq-6',
+    question: 'How do you guarantee consistent quality across all partners?',
+    answer:
+      'Every partner organization undergoes strict verification covering delivery excellence, cybersecurity compliance, and ongoing performance KPIs. We uphold unified Service Level Agreements (SLAs) and centralized project governance so your standards are never compromised.',
+  },
+];
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const stagger = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SHARED STYLES (marquee + drifting blobs)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function PageStyles() {
+  return (
+    <style>{`
+      @keyframes bp-marquee { to { transform: translateX(-50%); } }
+      @keyframes bp-drift   { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-30px) scale(1.12); } }
+      @keyframes bp-pulse   { 0% { transform: scale(1); opacity: .6; } 100% { transform: scale(2.6); opacity: 0; } }
+      @keyframes bp-dot     { 0%,80%,100% { transform: translateY(0); opacity: .4; } 40% { transform: translateY(-5px); opacity: 1; } }
+      .bp-marquee { animation: bp-marquee 38s linear infinite; }
+      .bp-marquee:hover { animation-play-state: paused; }
+      .bp-drift   { animation: bp-drift 14s ease-in-out infinite; }
+      .bp-pulse   { animation: bp-pulse 1.8s ease-out infinite; }
+      .bp-dot     { animation: bp-dot 1s ease-in-out infinite; }
+      @media (prefers-reduced-motion: reduce) {
+        .bp-marquee, .bp-drift, .bp-pulse, .bp-dot { animation: none; }
+      }
+    `}</style>
+  );
+}
+
+function SectionHeading({ title, sub, text, light = false, align = 'center' }) {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={stagger}
+      className={`max-w-[780px] mb-8 sm:mb-10 ${align === 'center' ? 'mx-auto text-center' : ''}`}
+    >
+      <motion.h2
+        variants={fadeInUp}
+        className={`text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight leading-[1.05] ${
+          light ? 'text-white' : 'text-[#102448]'
+        }`}
+      >
+        {title}
+      </motion.h2>
+      <motion.div
+        variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.7, ease: 'easeOut' } } }}
+        style={{ originX: align === 'center' ? 0.5 : 0 }}
+        className={`h-1 w-24 bg-[#D7192D] rounded-full mt-4 ${align === 'center' ? 'mx-auto' : ''}`}
+      />
+      <motion.p
+        variants={fadeInUp}
+        className="mt-5 text-lg sm:text-xl font-bold text-[#D7192D]"
+      >
+        {sub}
+      </motion.p>
+      <motion.p
+        variants={fadeInUp}
+        className={`mt-2 text-sm sm:text-base leading-relaxed max-w-[640px] ${align === 'center' ? 'mx-auto' : ''} ${
+          light ? 'text-white' : 'text-black'
+        }`}
+      >
+        {text}
+      </motion.p>
+    </motion.div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION 01 — OUR BRANDS: click-to-expand cards (all 4 stay in ONE row)
+// ─────────────────────────────────────────────────────────────────────────────
+
+function BrandCard({ item, open, onToggle }) {
+  const ref = useRef(null);
+  const reduce = useReducedMotion();
+
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [7, -7]), { stiffness: 180, damping: 18 });
+  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-9, 9]), { stiffness: 180, damping: 18 });
+
+  const handleMove = (e) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    el.style.setProperty('--mx', `${px * 100}%`);
+    el.style.setProperty('--my', `${py * 100}%`);
+    if (!open && !reduce) {
+      mx.set(px - 0.5);
+      my.set(py - 0.5);
+    }
+  };
+  const handleLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
+
+  const highlights = [...item.tags, item.stats];
+
+  return (
+    <motion.div
+      ref={ref}
+      layout
+      transition={{ layout: { type: 'spring', stiffness: 260, damping: 30 } }}
+      variants={fadeInUp}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      style={{ '--accent': item.accent, '--glow': item.glow, '--tint': item.tint, '--mx': '50%', '--my': '50%', perspective: 900 }}
+      className={`group relative rounded-[26px] w-full min-w-0 ${
+        open ? 'lg:flex-[1.7]' : 'lg:flex-1'
+      }`}
+    >
+      <motion.div
+        layout="position"
+        style={{ rotateX: open ? 0 : rotateX, rotateY: open ? 0 : rotateY, transformStyle: 'preserve-3d' }}
+        role="button"
+        tabIndex={0}
+        aria-expanded={open}
+        onClick={onToggle}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onToggle();
+          }
+        }}
+        className={`relative overflow-hidden rounded-[26px] bg-white cursor-pointer border outline-none focus-visible:ring-4 focus-visible:ring-[#D7192D]/30 transition-shadow duration-500 ${
+          open
+            ? 'border-[color:var(--accent)] shadow-[0_24px_50px_-20px_rgba(15,23,42,0.3)]'
+            : 'border-[#E5EBF2] shadow-[0_14px_32px_-20px_rgba(15,23,42,0.25)] hover:shadow-[0_22px_44px_-18px_rgba(15,23,42,0.3)]'
+        }`}
+      >
+        {/* Accent bar that fills on hover/open */}
+        <div
+          className={`absolute top-0 left-0 h-1.5 bg-[color:var(--accent)] transition-all duration-500 ${
+            open ? 'w-full' : 'w-0 group-hover:w-full'
+          }`}
+        />
+
+        <div className="relative z-10 p-6 sm:p-7">
+          {/* Open / close indicator */}
+          <div
+            className={`absolute top-5 right-5 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+              open
+                ? 'bg-[color:var(--accent)] text-white'
+                : 'border-2 border-[color:var(--accent)] text-[color:var(--accent)] group-hover:bg-[color:var(--accent)] group-hover:text-white'
+            }`}
+          >
+            <ChevronDown className={`w-4 h-4 stroke-[3] transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
+          </div>
+
+          {/* Logo */}
+          <motion.div
+            layout="position"
+            className={`flex items-center h-16 ${open ? 'justify-start' : 'justify-center'} transition-transform duration-300 group-hover:scale-[1.04]`}
+            style={{ transform: 'translateZ(30px)' }}
+          >
+            <BrandLogo logo={item.logo} name={item.name} className="h-11 max-h-11 max-w-full w-auto" />
+          </motion.div>
+
+          {/* Name */}
+          <motion.h3
+            layout="position"
+            className={`mt-5 text-[17px] font-black tracking-tight text-[#102448] ${open ? 'text-left' : 'text-center'}`}
+          >
+            {item.name}
+          </motion.h3>
+
+          {/* Description */}
+          <motion.p
+            layout="position"
+            className={`mt-2 text-[13.5px] leading-relaxed text-black ${
+              open ? 'text-left' : 'text-center line-clamp-2'
+            }`}
+          >
+            {item.fullDesc}
+          </motion.p>
+
+          {/* Collapsed hint */}
+          {!open && (
+            <p className="mt-4 text-center text-xs font-semibold text-[color:var(--accent)] opacity-70 group-hover:opacity-100 transition-opacity">
+              Click to explore
+            </p>
+          )}
+
+          {/* Expanded content */}
+          <AnimatePresence initial={false}>
+            {open && (
+              <motion.div
+                key="more"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="overflow-hidden"
+              >
+                <div className="pt-6">
+                  <p className="text-sm font-bold text-[#102448] mb-3">What you get</p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {highlights.map((h, i) => (
+                      <motion.li
+                        key={h}
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.12 + i * 0.07, duration: 0.35 }}
+                        className="flex items-center gap-3 rounded-xl bg-[#F8FAFC] border border-slate-200/80 px-4 py-3"
+                      >
+                        <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-[color:var(--accent)]" />
+                        <span className="text-sm font-bold text-[#102448]">{h}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+
+                  <motion.a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.45 }}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="mt-6 flex w-full flex-nowrap items-center justify-center gap-2.5 whitespace-nowrap px-5 py-3 rounded-[10px] bg-[#D7192D] text-white font-bold text-sm shadow-[0_10px_24px_-8px_rgba(215,25,45,0.7)] hover:bg-[#b51426] transition-colors"
+                  >
+                    Visit Website
+                    <span className="min-w-0 truncate text-white font-semibold">{item.domain}</span>
+                    <ExternalLink className="w-4 h-4 flex-shrink-0" />
+                  </motion.a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export function OurBrandsSection() {
+  const [openId, setOpenId] = useState(null);
+
+  return (
+    <section id="brands" className="relative w-full bg-[#F8FAFC] py-10 lg:py-14 overflow-hidden">
+      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          title="Our Brands"
+          sub="Specialist solutions. One connected ecosystem."
+          text="Our own brands deliver core digital, web, email and IT solutions, helping businesses establish, manage and grow their online presence with uncompromised reliability."
+        />
+
+        <motion.div
+          layout
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={stagger}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-row gap-6 lg:gap-7 items-start"
+        >
+          {BRANDS_DATA.map((brand) => (
+            <BrandCard
+              key={brand.id}
+              item={brand}
+              open={openId === brand.id}
+              onToggle={() => setOpenId(openId === brand.id ? null : brand.id)}
+            />
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BRIDGE — logo marquee
+// ─────────────────────────────────────────────────────────────────────────────
+
+function LogoMarquee() {
+  const all = [...BRANDS_DATA, ...PARTNERS_DATA];
+  const loop = [...all, ...all];
+
+  return (
+    <section className="relative w-full bg-[#102342] py-5 overflow-hidden border-y border-white/10">
+      <div className="bp-marquee flex w-max gap-5">
+        {loop.map((it, i) => (
+          <div
+            key={`${it.id}-${i}`}
+            className="flex items-center justify-center h-16 px-7 rounded-2xl bg-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]"
+          >
+            <BrandLogo logo={it.logo} name={it.name} className="h-9 max-h-9 max-w-[140px] w-auto" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION 02 — OUR PARTNERS (bento layout: white main card + feature cards + tall image)
+// ─────────────────────────────────────────────────────────────────────────────
+
+const ROTATE_MS = 6000;
+
+export function OurPartnersSection() {
+  const [active, setActive] = useState(0);
+  const auto = true;
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    if (!auto || reduce) return undefined;
+    const t = setTimeout(() => setActive((a) => (a + 1) % PARTNERS_DATA.length), ROTATE_MS);
+    return () => clearTimeout(t);
+  }, [active, auto, reduce]);
+
+  // Clicking a tab or arrow jumps to that partner; the timer then restarts and keeps rotating.
+  const select = (i) => setActive(i);
+
+  const p = PARTNERS_DATA[active];
+
+  return (
+    <section id="partners" className="relative w-full bg-[#0B1F3A] py-12 lg:py-16 overflow-hidden">
+      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeading
+          light
+          title="Our Partners"
+          sub="Specialist expertise. Shared ambition."
+          text="Our partner companies bring deep domain expertise in digital marketing, content, reputation management and more, helping us deliver greater value together."
+        />
+
+        {/* Partner tabs */}
+        <div
+          role="tablist"
+          aria-label="Partners"
+          className="flex gap-2.5 overflow-x-auto pb-4 mb-8 -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] justify-start lg:justify-center"
+        >
+          {PARTNERS_DATA.map((item, i) => {
+            const isActive = i === active;
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => select(i)}
+                className={`group relative flex items-center gap-2.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm whitespace-nowrap transition-all duration-300 outline-none ${
+                  isActive
+                    ? 'bg-[#D7192D] text-white shadow-[0_10px_24px_-6px_rgba(215,25,45,0.7)]'
+                    : 'bg-white/5 text-white hover:bg-white/15 border border-white/20'
+                }`}
+              >
+                <Icon className="w-4 h-4 text-white" strokeWidth={isActive ? 2.5 : 2} />
+                <span>{item.name}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* ── BENTO SPOTLIGHT ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
+          {/* LEFT: main card + feature cards */}
+          <div className="lg:col-span-7 flex flex-col gap-5 lg:gap-6">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={p.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="flex flex-col gap-5 lg:gap-6 flex-1"
+              >
+                {/* White main card */}
+                <div className="relative flex-1 overflow-hidden rounded-[28px] bg-white p-7 sm:p-9 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.55)]">
+
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex items-center gap-3">
+                      <BrandLogo logo={p.logo} name={p.name} className="h-9 max-h-9 max-w-[150px] w-auto" />
+                      <span className="ml-1 pl-3 border-l border-slate-200 text-[#0B4F9C] font-extrabold text-[11px] tracking-[0.18em] uppercase">
+                        {p.badge}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-6 text-2xl sm:text-3xl lg:text-[2.2rem] font-black text-[#102448] tracking-tight leading-tight">
+                      {p.desc}
+                    </h3>
+                    <p className="mt-3 text-[15px] leading-relaxed text-slate-600 max-w-[560px]">
+                      {p.fullDesc}
+                    </p>
+
+                    <ul className="mt-6 space-y-3">
+                      {p.points.map((pt) => (
+                        <li key={pt} className="flex items-start gap-3 text-[15px] leading-snug text-slate-700">
+                          <span className="mt-[7px] w-1.5 h-1.5 rounded-full bg-[#D7192D] flex-shrink-0" />
+                          {pt}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-auto pt-8 flex items-center justify-between gap-4">
+                      <button
+                        onClick={() => select((active - 1 + PARTNERS_DATA.length) % PARTNERS_DATA.length)}
+                        aria-label="Previous partner"
+                        className="w-10 h-10 rounded-[10px] bg-slate-100 hover:bg-slate-200 text-[#102448] flex items-center justify-center transition-colors"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+
+                      <motion.a
+                        href={p.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-[10px] bg-[#D7192D] text-white font-bold text-sm shadow-[0_12px_28px_-8px_rgba(215,25,45,0.8)] hover:bg-[#b51426] transition-colors"
+                      >
+                        Visit Website
+                        <span className="w-9 h-9 rounded-lg bg-white text-[#D7192D] flex items-center justify-center shrink-0">
+                          <ArrowUpRight className="w-4 h-4 stroke-[2.8]" />
+                        </span>
+                      </motion.a>
+
+                      <button
+                        onClick={() => select((active + 1) % PARTNERS_DATA.length)}
+                        aria-label="Next partner"
+                        className="w-10 h-10 rounded-[10px] bg-[#102448] hover:bg-[#0B4F9C] text-white flex items-center justify-center transition-colors"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Feature cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 lg:gap-6">
+                  {p.tags.map((t, i) => (
+                    <motion.div
+                      key={t}
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + i * 0.07 }}
+                                            className="group flex items-center gap-3 rounded-[10px] bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 px-5 py-4 transition-colors"
+                    >
+                      <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-[#D7192D] group-hover:text-white transition-colors" />
+                      <p className="text-[15px] font-bold text-white leading-snug">{t}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* RIGHT: tall image card */}
+          <div className="lg:col-span-5">
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              className="group relative h-[380px] sm:h-[440px] lg:h-full lg:min-h-[520px] overflow-hidden rounded-[28px] bg-[#061834] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] ring-1 ring-white/15"
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={p.id}
+                  src={p.banner}
+                  alt={p.name}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.65, ease: 'easeInOut' }}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </AnimatePresence>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+
+              <div className="absolute top-5 left-5 bg-white/95 backdrop-blur px-4 py-2 rounded-full shadow-lg">
+                <span className="text-[#0B4F9C] font-extrabold text-[11px] tracking-[0.2em] uppercase">{p.name}</span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION 03 — FAQ as a chat conversation
+// ─────────────────────────────────────────────────────────────────────────────
+
+function ChatAnswer({ text }) {
+  const [typing, setTyping] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setTyping(false), 700);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -6 }}
+      transition={{ duration: 0.3 }}
+      style={{ originX: 0, originY: 0 }}
+      className="flex items-start gap-3 mt-3 w-full"
+    >
+      <span className="flex-shrink-0 w-9 h-9 rounded-full bg-[#102342] text-white text-sm font-black flex items-center justify-center ring-4 ring-white shadow">
+        N
+      </span>
+      <div className="flex-1 rounded-[10px] bg-white border border-slate-200 shadow-[0_12px_30px_-14px_rgba(16,35,66,0.35)] px-5 py-4">
+        {typing ? (
+          <div className="flex items-center gap-1.5 h-5" aria-label="Typing">
+            {[0, 1, 2].map((d) => (
+              <span
+                key={d}
+                className="bp-dot w-2 h-2 rounded-full bg-[#0B4F9C]"
+                style={{ animationDelay: `${d * 0.15}s` }}
+              />
+            ))}
+          </div>
+        ) : (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-[14.5px] leading-relaxed text-black"
+          >
+            {text}
+          </motion.p>
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+export function FaqSection() {
+  const [openId, setOpenId] = useState('faq-1');
+
+  return (
+    <section id="faqs" className="relative w-full bg-[#F8FAFC] py-8 lg:py-12 overflow-hidden">
+      <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[360px_1fr] gap-6 lg:gap-12">
+        {/* Left: sticky intro */}
+        <div className="lg:sticky lg:top-28 self-start">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={stagger}
+          >
+            <motion.h2 variants={fadeInUp} className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.05] text-[#102448]">
+              Got questions? Ask away.
+            </motion.h2>
+            <motion.div
+              variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.7 } } }}
+              style={{ originX: 0 }}
+              className="h-1 w-24 bg-[#D7192D] rounded-full mt-4"
+            />
+            <motion.p variants={fadeInUp} className="mt-5 text-[15px] leading-relaxed text-black">
+              Tap a question to see our answer. Need something that isn&apos;t covered? Our specialists will map the right
+              solution for your business.
+            </motion.p>
+
+            <motion.div variants={fadeInUp}>
+              <Link
+                to="/contact"
+                className="group mt-6 inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-[10px] bg-[#D7192D] text-white font-bold text-sm shadow-[0_12px_28px_-8px_rgba(215,25,45,0.7)] hover:bg-[#b51426] transition-colors"
+              >
+                Talk to an Expert
+                <span className="w-9 h-9 rounded-lg bg-white text-[#D7192D] flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
+                  <ArrowRight className="w-4 h-4 stroke-[2.8]" />
+                </span>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Right: conversation */}
+        <div className="space-y-3">
+          {FAQS_DATA.map((faq, i) => {
+            const isOpen = openId === faq.id;
+            return (
+              <motion.div
+                key={faq.id}
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.45, delay: (i % 3) * 0.05 }}
+              >
+                <div>
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() => setOpenId(isOpen ? null : faq.id)}
+                    className={`group flex w-full items-center justify-between gap-3 text-left rounded-[10px] px-5 py-3.5 font-bold text-[14.5px] sm:text-[15px] transition-all duration-300 outline-none focus-visible:ring-4 focus-visible:ring-[#D7192D]/30 ${
+                      isOpen
+                        ? 'bg-[#D7192D] text-white shadow-[0_16px_34px_-12px_rgba(215,25,45,0.7)]'
+                        : 'bg-white text-[#102448] border border-slate-200 shadow-sm hover:border-[#D7192D]/50 hover:-translate-y-0.5 hover:shadow-md'
+                    }`}
+                  >
+                    <span>{faq.question}</span>
+                    <span
+                      className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
+                        isOpen ? 'bg-white/20 text-white' : 'bg-[#FEECEF] text-[#D7192D]'
+                      }`}
+                    >
+                      <ChevronDown className={`w-4 h-4 stroke-[3] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                    </span>
+                  </button>
+                </div>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && <ChatAnswer key={`${faq.id}-answer`} text={faq.answer} />}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MAIN PAGE
+// ─────────────────────────────────────────────────────────────────────────────
+
+export default function BrandsAndPartners() {
+  return (
+    <div className="w-full min-h-screen bg-white font-sans text-[#102448] selection:bg-[#D7192D] selection:text-white">
+      <PageStyles />
+
+      <PageBanner
+        title="Our Brands & Partners"
+        breadcrumbs={[{ label: 'Brands & Partners' }]}
+        bgImage="/banner/image copy.png"
+        className="!mb-0 lg:!mb-0"
+      />
+
+      <OurBrandsSection />
+      <LogoMarquee />
+      <OurPartnersSection />
+      <FaqSection />
+      <div className="[&>*]:!py-6 lg:[&>*]:!py-8 [&>*]:!my-0">
+        <CtaSection />
+      </div>
+    </div>
+  );
+}

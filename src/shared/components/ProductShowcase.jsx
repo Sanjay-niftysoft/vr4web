@@ -15,10 +15,11 @@ const products = [
     shortName: "ORM",
     headlineBlue: "BUILD A STRONGER",
     headlineOrange: "DIGITAL REPUTATION",
-    description: "Build trust with smarter online reputation and review management solutions designed to strengthen how your business is seen online.",
+    description: "Build trust with smarter online reputation and review management solutions designed to strengthen brand authority and online credibility.",
     highlightText: "ENTERPRISE REPUTATION AND REVIEW DEFENSE DESIGNED TO SAFEGUARD YOUR DIGITAL BRAND EQUITY.",
     url: "https://ormconsult.com/",
     image: "/orm.png",
+    logo: "/partners/orm.png?v=2",
     tags: ["Reputation", "Reviews", "Trust", "Crisis Mgmt", "Google Business", "Sentiment"]
   },
   {
@@ -27,13 +28,14 @@ const products = [
     shortNum: "02",
     name: "SEOAD",
     shortName: "SEOAD",
-    headlineBlue: "GET FOUND WHERE YOUR",
-    headlineOrange: "CUSTOMERS SEARCH",
-    description: "Improve search visibility and organic growth through SEO, AEO, GEO and performance-focused digital marketing.",
-    highlightText: "NEXT-GEN SEARCH VISIBILITY OPTIMIZED FOR AI ENGINES, PERPLEXITY, CHATGPT, AND GOOGLE.",
+    headlineBlue: "MAXIMIZE YOUR",
+    headlineOrange: "AI SEARCH VISIBILITY",
+    description: "Targeted digital solutions that increase AI search visibility across Perplexity, ChatGPT, Gemini, and Google with dedicated AEO and GEO optimization.",
+    highlightText: "ENGINEERED DIGITAL SOLUTIONS TO INCREASE AI SEARCH VISIBILITY THROUGH NEXT-GEN AEO AND GEO ARCHITECTURE.",
     url: "https://seoad.in/",
     image: "/seoad.png",
-    tags: ["SEO", "AEO", "GEO", "Rank Tracking", "AI Overviews", "Organic Traffic"]
+    logo: "/partners/seoad.png?v=2",
+    tags: ["AI Search Visibility", "AEO", "GEO", "ChatGPT Search", "AI Overviews", "Organic Traffic"]
   },
   {
     id: 3,
@@ -47,6 +49,7 @@ const products = [
     highlightText: "AUTONOMOUS CONVERSATIONAL PLATFORM TRAINED TO ENGAGE VISITORS AND RESOLVE INQUIRIES 24/7.",
     url: "https://chatsupport.in/",
     image: "/chatbot.png",
+    logo: "/partners/chatbot.png?v=2",
     tags: ["Live Chat", "Instant Reply", "Ticketing", "Multi-Agent", "Lead Bot", "Conversational"]
   },
   {
@@ -61,6 +64,7 @@ const products = [
     highlightText: "HIGH-IMPACT SOCIAL CAMPAIGNS AND VIRAL REACH STRATEGIES THAT FUEL BRAND ADVOCACY.",
     url: "https://smmconsult.com/",
     image: "/smm.png",
+    logo: "/partners/smm.png?v=2",
     tags: ["Social", "Content", "Growth", "Viral Loops", "Brand Identity", "Engagement"]
   }
 ];
@@ -75,11 +79,15 @@ export default function ProductShowcase() {
   const ROTATION_TIME = 3200; // 3.2 seconds
   const activeProduct = products[activeIdx];
 
-  // Preload all 4 images on mount
+  // Preload all 4 images and logos on mount
   useEffect(() => {
     products.forEach((p) => {
       const img = new Image();
       img.src = p.image;
+      if (p.logo) {
+        const logoImg = new Image();
+        logoImg.src = p.logo;
+      }
     });
   }, []);
 
@@ -119,11 +127,11 @@ export default function ProductShowcase() {
   };
 
   return (
-    <section className="relative w-full bg-[#f4f6fa] py-8 sm:py-10 md:py-12 lg:py-14 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 font-['Inter',sans-serif] selection:bg-[#F97316] selection:text-white overflow-hidden">
+    <section className="relative w-full bg-[#f4f6fa] py-8 sm:py-10 md:py-12 lg:py-14 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 font-['Inter',sans-serif] selection:bg-[#D92419] selection:text-white overflow-hidden">
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 -left-40 w-72 sm:w-96 h-72 sm:h-96 bg-[#0B4F9C]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 -right-40 w-72 sm:w-96 h-72 sm:h-96 bg-[#F97316]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 -right-40 w-72 sm:w-96 h-72 sm:h-96 bg-[#D92419]/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="max-w-[1440px] 4xl:max-w-[2400px] mx-auto relative z-10 w-full">
@@ -139,15 +147,15 @@ export default function ProductShowcase() {
           {/* Eyebrow */}
           <div className="flex flex-col items-center mb-2.5 sm:mb-3">
             <span className="text-[#0B4F9C] font-extrabold text-[11px] xs:text-[12px] sm:text-[13px] tracking-[0.22em] sm:tracking-[0.25em] uppercase mb-1.5">
-              OUR PRODUCTS
+              OUR PARTNERS
             </span>
-            <div className="w-10 sm:w-12 h-1 bg-[#F97316] rounded-full"></div>
+            <div className="w-10 sm:w-12 h-1 bg-[#D92419] rounded-full"></div>
           </div>
 
           {/* Main Heading */}
           <h2 className="text-[22px] xs:text-[26px] sm:text-[32px] md:text-[38px] lg:text-[44px] xl:text-[48px] font-extrabold text-center leading-[1.16] sm:leading-[1.14] tracking-tight mb-3 max-w-4xl">
             <span className="text-[#0B4F9C]">Proprietary technology that </span>
-            <span className="text-[#F97316]">powers business growth.</span>
+            <span className="text-[#D92419]">powers business growth.</span>
           </h2>
 
           {/* Subtitle */}
@@ -197,7 +205,7 @@ export default function ProductShowcase() {
                             </span>
                           </span>
                         </span>
-                        <span className="text-[#F97316] block mt-1">
+                        <span className="text-[#D92419] block mt-1">
                           {activeProduct.headlineOrange}
                         </span>
                       </h3>
@@ -319,7 +327,7 @@ export default function ProductShowcase() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-1.5 sm:gap-2 bg-white/95 hover:bg-white text-slate-900 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-full shadow-md backdrop-blur-md transition-all hover:scale-105 group/tag border border-white/80"
                   >
-                    <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-slate-900 text-white flex items-center justify-center group-hover/tag:bg-[#F97316] transition-colors">
+                    <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-slate-900 text-white flex items-center justify-center group-hover/tag:bg-[#D92419] transition-colors">
                       <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                     </span>
                     <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
@@ -350,6 +358,30 @@ export default function ProductShowcase() {
                         </span>
                       ))}
                     </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* BOTTOM LEFT PARTNER LOGO BADGE */}
+                <div className="absolute bottom-3.5 left-3.5 sm:bottom-6 sm:left-6 z-20">
+                  <AnimatePresence mode="wait">
+                    <motion.a
+                      key={activeProduct.id}
+                      href={activeProduct.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, scale: 0.9, y: 12 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: 12 }}
+                      transition={{ duration: 0.35, ease: "easeOut" }}
+                      className="bg-white hover:bg-slate-50 backdrop-blur-md px-3.5 py-2 xs:px-4.5 xs:py-2.5 sm:px-6 sm:py-3 rounded-2xl sm:rounded-3xl shadow-2xl border border-white/95 flex items-center justify-center transition-all duration-300 hover:scale-105 group/logo cursor-pointer"
+                      title={`Visit ${activeProduct.name}`}
+                    >
+                      <img
+                        src={activeProduct.logo}
+                        alt={`${activeProduct.name} logo`}
+                        className="h-8 xs:h-10 sm:h-13 md:h-15 w-auto max-w-[130px] xs:max-w-[160px] sm:max-w-[210px] md:max-w-[240px] object-contain drop-shadow-sm transition-transform duration-300 group-hover/logo:scale-105"
+                      />
+                    </motion.a>
                   </AnimatePresence>
                 </div>
 

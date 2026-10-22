@@ -86,8 +86,8 @@ export default function Viewport3D({ showGrid = true }) {
  
  {/* Overlay UI elements */}
  <div className="absolute top-4 left-4 p-4 glass-panel rounded-lg">
- <h3 className="text-[#F97316] font-extrabold mb-2 flex items-center gap-2">
- <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse"></span>
+ <h3 className="text-[#D92419] font-extrabold mb-2 flex items-center gap-2">
+ <span className="w-2 h-2 rounded-full bg-[#D92419] animate-pulse"></span>
  SCENE CONTROLS
  </h3>
  <p className="text-[#111111] text-sm">Drag to rotate • Scroll to zoom</p>
