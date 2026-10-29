@@ -1,81 +1,222 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, ChevronRight, Home } from 'lucide-react';
 import { getAllCaseStudies } from '../../data/caseStudiesData';
 import CtaSection from '../../components/CtaSection';
 
-/* ───────── Theme ───────── */
-const NAVY = '#102448';
-const RED = '#D7192D';
+// ─────────────────────────────────────────────────────────────────────────────
+// COLOURS (change the whole page here)
+//   GREEN  = #0F3D2E
+//   YELLOW = #E8890C
+//   WHITE  = #FFFFFF
+// ─────────────────────────────────────────────────────────────────────────────
 
 /* Hero background image */
-const HERO_BG = '/banner/5.png';
+const HERO_BG = '/blogs.png';
 
-/* ───────── 3D tilt wrapper ───────── */
-function TiltCard({ children, className = '' }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [7, -7]), { stiffness: 200, damping: 20 });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-7, 7]), { stiffness: 200, damping: 20 });
+/* New card images from  public/case-study/
+   Matched by words in the case study title / id. Add more lines if you add more images. */
+const CARD_IMAGES = [
+  [/bhoomi|property|real estate/i, '/case-study/property.png'],
+  [/chatsupport|chat support|chatbot/i, '/case-study/chatbot.png'],
+  [/smm|social media/i, '/case-study/ad.png'],
+];
 
-  const handleMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-  const reset = () => {
-    x.set(0);
-    y.set(0);
-  };
+function getCardImage(study) {
+  const key = `${study.id || ''} ${study.title || ''}`;
+  const hit = CARD_IMAGES.find(([re]) => re.test(key));
+  return hit ? hit[1] : study.cardImage;
+}
+
+/* Used only if a case study has no image at all */
+const FALLBACK_IMG =
+  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80';
+
+const EASE = [0.22, 1, 0.36, 1];
+
+const imgFallback = (e) => {
+  if (e.currentTarget.src !== FALLBACK_IMG) e.currentTarget.src = FALLBACK_IMG;
+};
+
+/* ───────────────────────────────────────────────────────────────
+   Turn a long case-study title into a short name + one short line.
+   Works with your current titles, for example:
+   "How We Built SMM Consult's End-to-End Social Media Management Platform"
+        → name: SMM Consult        text: End-to-End Social Media Management Platform
+   "How We Built BhoomiBay — A Complete Real Estate Collaboration Platform ..."
+        → name: BhoomiBay          text: A Complete Real Estate Collaboration Platform ...
+   If a case study has its own shortTitle / summary / tags in
+   caseStudiesData, those are used first.
+─────────────────────────────────────────────────────────────── */
+function splitTitle(study) {
+  const raw = String(study.title || '').trim();
+  const cleaned = raw.replace(/^how we (built|created|developed|designed)\s+/i, '');
+
+  let name = study.shortTitle;
+  let text = study.summary || study.excerpt || study.shortDescription;
+
+  if (!name) {
+    const dash = cleaned.match(/^(.+?)\s+[—–-]\s+(.+)$/);
+    const poss = cleaned.match(/^(.+?)['’]s\s+(.+)$/);
+    if (dash) {
+      name = dash[1];
+      text = text || dash[2];
+    } else if (poss) {
+      name = poss[1];
+      text = text || poss[2];
+    } else {
+      name = cleaned;
+    }
+  }
+  return { name, text: text || '' };
+}
+
+function getTags(study) {
+  const t = study.tags || study.categories || study.technologies;
+  if (Array.isArray(t)) return t.slice(0, 3);
+  const single = study.category || study.industry;
+  return single ? [single] : [];
+}
+
+/* ───────── LEFT: one case study row (image left, text right) ───────── */
+function StoryRow({ study }) {
+  const reduce = useReducedMotion();
+  const { name, text } = splitTitle(study);
+  const tags = getTags(study);
+  const badge = tags[0] || 'Case Study';
+  const link = `/stories/${study.id}`;
 
   return (
-    <div style={{ perspective: 1000 }} className="h-full">
-      <motion.article
-        onMouseMove={handleMove}
-        onMouseLeave={reset}
-        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        whileHover={{ z: 20 }}
-        className={className}
+    <motion.article
+      initial={reduce ? false : { opacity: 0, x: -50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.6, ease: EASE }}
+      className="group grid grid-cols-1 sm:grid-cols-[minmax(0,320px)_1fr] lg:grid-cols-[minmax(0,300px)_1fr] gap-5 sm:gap-7 items-center pb-6 mb-6 border-b border-[#0F3D2E]/10 last:border-b-0 last:mb-0 last:pb-0"
+    >
+      {/* Image (case study artwork is shown whole, never cropped) */}
+      <Link
+        to={link}
+        aria-label={`Read case study: ${study.title}`}
+        className="block overflow-hidden rounded-md aspect-[4/3] bg-[#E6F0EC] shadow-[0_18px_40px_-20px_rgba(15,61,46,0.35)] outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/40"
       >
-        {children}
-      </motion.article>
-    </div>
+        <img
+          src={getCardImage(study) || FALLBACK_IMG}
+          alt={study.title}
+          loading="lazy"
+          onError={imgFallback}
+          className="h-full w-full object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.07]"
+        />
+      </Link>
+
+      {/* Text */}
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[13px]">
+          <span className="inline-block rounded-full bg-[#E8890C] px-3.5 py-1 text-xs font-bold text-white">
+            {badge}
+          </span>
+          {study.date && <span className="font-medium text-black">{study.date}</span>}
+        </div>
+
+        <h3 className="mt-3 text-2xl sm:text-[28px] font-extrabold tracking-tight leading-tight text-[#0F3D2E] transition-colors duration-300 group-hover:text-[#E8890C]">
+          <Link to={link} className="outline-none focus-visible:underline">
+            {name}
+          </Link>
+        </h3>
+
+        {text && (
+          <p className="mt-3 text-[15px] leading-relaxed text-black line-clamp-3 max-w-[520px]">
+            {text}
+          </p>
+        )}
+
+        <Link
+          to={link}
+          className="mt-4 inline-flex items-center gap-2 border-b-2 border-[#E8890C] pb-0.5 text-sm font-bold text-[#0F3D2E] transition-colors duration-300 hover:text-[#E8890C]"
+        >
+          View Case Study
+          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+        </Link>
+      </div>
+    </motion.article>
+  );
+}
+
+/* ───────── RIGHT: one item of the "all case studies" list ───────── */
+function SidebarItem({ study, index }) {
+  const reduce = useReducedMotion();
+  const { name, text } = splitTitle(study);
+
+  return (
+    <motion.div
+      initial={reduce ? false : { opacity: 0, x: 40 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, delay: Math.min(index, 5) * 0.06, ease: EASE }}
+      className="border-b border-[#0F3D2E]/10 last:border-b-0 py-4 first:pt-0 last:pb-0"
+    >
+      <Link
+        to={`/stories/${study.id}`}
+        aria-label={`Read case study: ${study.title}`}
+        className="group flex items-center gap-4 outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/40 rounded-md"
+      >
+        <div className="h-[92px] w-[84px] flex-shrink-0 overflow-hidden rounded-md bg-[#E6F0EC]">
+          <img
+            src={getCardImage(study) || FALLBACK_IMG}
+            alt=""
+            loading="lazy"
+            onError={imgFallback}
+            className="h-full w-full object-contain p-1.5 transition-transform duration-500 group-hover:scale-110"
+          />
+        </div>
+        <div className="min-w-0">
+          <h4 className="text-[16px] font-extrabold leading-snug text-[#0F3D2E] line-clamp-2 transition-colors duration-300 group-hover:text-[#E8890C]">
+            {name}
+          </h4>
+          {text && <p className="mt-1 text-xs font-medium leading-snug text-black line-clamp-2">{text}</p>}
+        </div>
+      </Link>
+    </motion.div>
   );
 }
 
 export default function CaseStudies() {
   const caseStudies = getAllCaseStudies();
 
+  /* Tags card is shown only if your case studies have tags / categories */
+  const tags = useMemo(
+    () => Array.from(new Set(caseStudies.flatMap((s) => getTags(s)))),
+    [caseStudies]
+  );
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-white font-sans text-[#102448] selection:bg-[#D7192D] selection:text-white">
-      {/* ─── 1. HERO (short, single background image) ─── */}
+    <div className="w-full min-h-screen bg-white font-sans text-[#0F3D2E] selection:bg-[#0F3D2E] selection:text-white">
+      {/* ─── 1. HERO ─── */}
       <section
-        className="relative w-full overflow-hidden px-4 md:px-8 pt-32 pb-12 md:pt-36 md:pb-14 bg-cover bg-center border-b border-slate-200"
-        style={{ backgroundImage: `url(${HERO_BG})` }}
+        className="relative w-full overflow-hidden px-4 md:px-8 pt-32 pb-8 md:pt-36 md:pb-9 bg-[rgb(240,231,195)] border-b border-slate-200"
       >
-        <div className="absolute inset-0 bg-white/75 backdrop-blur-[1px] z-0" />
         <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
           <motion.h1
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3 leading-tight text-[#102448]"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3 leading-tight text-[#0F3D2E]"
           >
-            Our Successful <span className="text-[#D7192D]">Case Studies</span>
+            Our Successful <span className="text-[#E8890C]">Case Studies</span>
           </motion.h1>
 
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium bg-[#102448] text-white px-4 py-1.5 rounded-full shadow-md"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium bg-[#0F3D2E] text-white px-4 py-1.5 rounded-full shadow-md"
           >
-            <Link to="/" className="flex items-center gap-1 hover:text-red-300 transition-colors">
+            <Link to="/" className="flex items-center gap-1 hover:text-[#E8890C] transition-colors">
               <Home className="w-3.5 h-3.5" />
               <span>Home</span>
             </Link>
@@ -85,16 +226,16 @@ export default function CaseStudies() {
         </div>
       </section>
 
-      {/* ─── 2. SELECTED WORKS ─── */}
-      <section className="py-14 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-12 md:mb-16">
-          <span className="inline-block px-4 py-1 rounded-full bg-[#D7192D]/10 border border-[#D7192D]/30 text-[#D7192D] text-sm font-bold mb-4">
+      {/* ─── 2. CASE STUDY LIST (left: one by one) + SIDEBAR (right: all case studies) ─── */}
+      <section className="py-8 md:py-10 px-4 sm:px-6 lg:px-8 max-w-[1240px] mx-auto">
+        <div className="text-center mb-6 md:mb-8">
+          <span className="inline-block px-4 py-1 rounded-full bg-[#E8890C]/15 border border-[#E8890C] text-[#0F3D2E] text-sm font-bold mb-4">
             Selected Works
           </span>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-            <span className="text-[#102448]">Real Projects,</span>{' '}
-            <span className="text-[#D7192D]">Real Impact</span>
+            <span className="text-[#0F3D2E]">Real Projects,</span>{' '}
+            <span className="text-[#E8890C]">Real Impact</span>
           </h2>
 
           <p className="text-black text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
@@ -102,64 +243,48 @@ export default function CaseStudies() {
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-          {caseStudies.map((study, idx) => (
-            <motion.div
-              key={study.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="h-full"
-            >
-              <TiltCard
-                className="group h-full flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white text-[#102448]
-                           shadow-[0_10px_30px_-12px_rgba(16,36,72,0.25)]
-                           transition-colors duration-500 ease-out
-                           hover:bg-[#102448] hover:border-[#102448]
-                           hover:shadow-[0_30px_60px_-15px_rgba(16,36,72,0.6)]"
-              >
-                {/* Image — full bleed, fills the whole top of the card */}
-                <div className="relative w-full h-56 sm:h-64 overflow-hidden" style={{ transform: 'translateZ(25px)' }}>
-                  <img
-                    src={study.cardImage}
-                    alt={study.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    loading="lazy"
-                  />
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-8 lg:gap-12 items-start">
+          {/* LEFT: case studies appear one by one as you scroll */}
+          <div>
+            {caseStudies.map((study) => (
+              <StoryRow key={study.id} study={study} />
+            ))}
+          </div>
+
+          {/* RIGHT: sidebar showing all case studies (stays in view while you scroll) */}
+          <aside className="lg:sticky lg:top-28 space-y-8">
+            <div className="rounded-lg border border-[#0F3D2E]/10 bg-white p-6 shadow-[0_18px_40px_-24px_rgba(15,61,46,0.35)]">
+              <div className="mb-5">
+                <h3 className="text-xl font-extrabold tracking-tight text-[#0F3D2E]">All Case Studies</h3>
+                <span className="mt-2 block h-[3px] w-12 rounded-full bg-[#E8890C]" />
+              </div>
+
+              <div className="max-h-[560px] overflow-y-auto pr-1 [scrollbar-width:thin]">
+                {caseStudies.map((study, i) => (
+                  <SidebarItem key={study.id} study={study} index={i} />
+                ))}
+              </div>
+            </div>
+
+            {tags.length > 0 && (
+              <div className="rounded-lg border border-[#0F3D2E]/10 bg-white p-6 shadow-[0_18px_40px_-24px_rgba(15,61,46,0.35)]">
+                <div className="mb-5">
+                  <h3 className="text-xl font-extrabold tracking-tight text-[#0F3D2E]">Tags</h3>
+                  <span className="mt-2 block h-[3px] w-12 rounded-full bg-[#E8890C]" />
                 </div>
-
-                {/* Body */}
-                <div className="px-6 sm:px-7 py-4 flex-1 flex flex-col justify-between" style={{ transform: 'translateZ(15px)' }}>
-                  <div>
-                    <h3 className="text-base sm:text-lg font-medium tracking-tight leading-snug mb-4 text-[#102448] group-hover:text-white transition-colors duration-500">
-                      {study.title}
-                    </h3>
-                  </div>
-
-                  <div className="pt-3 flex justify-center border-t border-slate-200 group-hover:border-white/20 transition-colors duration-500">
-                    {/* Rectangle button with circle arrow box — lifts forward on hover / press */}
-                    <Link
-                      to={`/stories/${study.id}`}
-                      style={{ transform: 'translateZ(0)' }}
-                      className="inline-flex items-center gap-3 pl-5 pr-2 py-2 rounded-xl bg-[#D7192D] text-white text-sm sm:text-base font-bold
-                                 shadow-[0_6px_0_0_#9d0f1f]
-                                 transition-all duration-200 ease-out
-                                 hover:-translate-y-1.5 hover:shadow-[0_12px_0_0_#9d0f1f,0_18px_28px_-6px_rgba(215,25,45,0.55)]
-                                 active:translate-y-1 active:shadow-[0_2px_0_0_#9d0f1f]
-                                 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#D7192D]/40"
+                <div className="flex flex-wrap gap-2.5">
+                  {tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-[#0F3D2E]/20 px-4 py-1.5 text-sm font-semibold text-[#0F3D2E] transition-colors duration-300 hover:border-[#E8890C] hover:bg-[#E8890C] hover:text-white"
                     >
-                      <span>Read Case Study</span>
-                      <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-[#D7192D] transition-transform duration-300 group-hover:rotate-[-45deg]">
-                        <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </Link>
-                  </div>
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-              </TiltCard>
-            </motion.div>
-          ))}
+              </div>
+            )}
+          </aside>
         </div>
       </section>
 

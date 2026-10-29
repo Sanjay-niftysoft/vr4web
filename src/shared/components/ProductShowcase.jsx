@@ -127,11 +127,11 @@ export default function ProductShowcase() {
   };
 
   return (
-    <section className="relative w-full bg-[#f4f6fa] py-8 sm:py-10 md:py-12 lg:py-14 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 font-['Inter',sans-serif] selection:bg-[#D92419] selection:text-white overflow-hidden">
+    <section className="relative w-full bg-[#f4f6fa] py-8 sm:py-10 md:py-12 lg:py-14 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 font-['Inter',sans-serif] selection:bg-[#0F3D2E] selection:text-white overflow-hidden">
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 -left-40 w-72 sm:w-96 h-72 sm:h-96 bg-[#0B4F9C]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 -right-40 w-72 sm:w-96 h-72 sm:h-96 bg-[#D92419]/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 -left-40 w-72 sm:w-96 h-72 sm:h-96 bg-[#E8890C]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 -right-40 w-72 sm:w-96 h-72 sm:h-96 bg-[#0F3D2E]/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="max-w-[1440px] 4xl:max-w-[2400px] mx-auto relative z-10 w-full">
@@ -146,16 +146,16 @@ export default function ProductShowcase() {
         >
           {/* Eyebrow */}
           <div className="flex flex-col items-center mb-2.5 sm:mb-3">
-            <span className="text-[#0B4F9C] font-extrabold text-[11px] xs:text-[12px] sm:text-[13px] tracking-[0.22em] sm:tracking-[0.25em] uppercase mb-1.5">
+            <span className="text-[#E8890C] font-extrabold text-[11px] xs:text-[12px] sm:text-[13px] tracking-[0.22em] sm:tracking-[0.25em] uppercase mb-1.5">
               OUR PARTNERS
             </span>
-            <div className="w-10 sm:w-12 h-1 bg-[#D92419] rounded-full"></div>
+            <div className="w-10 sm:w-12 h-1 bg-[#0F3D2E] rounded-full"></div>
           </div>
 
           {/* Main Heading */}
           <h2 className="text-[22px] xs:text-[26px] sm:text-[32px] md:text-[38px] lg:text-[44px] xl:text-[48px] font-extrabold text-center leading-[1.16] sm:leading-[1.14] tracking-tight mb-3 max-w-4xl">
-            <span className="text-[#0B4F9C]">Proprietary technology that </span>
-            <span className="text-[#D92419]">powers business growth.</span>
+            <span className="text-[#E8890C]">Proprietary technology that </span>
+            <span className="text-[#0F3D2E]">powers business growth.</span>
           </h2>
 
           {/* Subtitle */}
@@ -190,7 +190,7 @@ export default function ProductShowcase() {
                       className="flex flex-col"
                     >
                       <h3 className="text-[20px] xs:text-[23px] sm:text-[28px] md:text-[32px] lg:text-[28px] xl:text-[36px] font-extrabold leading-[1.14] tracking-tight uppercase">
-                        <span className="text-[#0B4F9C] block">
+                        <span className="text-[#E8890C] block">
                           {activeProduct.headlineBlue}
                           {/* Inline avatar pile decoration */}
                           <span className="inline-flex items-center align-middle ml-2 sm:ml-3 -mt-1 space-x-[-6px] sm:space-x-[-7px]">
@@ -200,12 +200,12 @@ export default function ProductShowcase() {
                             <span className="w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white bg-slate-300 overflow-hidden inline-block shadow-sm">
                               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="avatar" className="w-full h-full object-cover" />
                             </span>
-                            <span className="w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white bg-[#0B4F9C] text-white text-[9px] sm:text-[10px] font-bold inline-flex items-center justify-center shadow-sm">
+                            <span className="w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 rounded-full border-2 border-white bg-[#E8890C] text-white text-[9px] sm:text-[10px] font-bold inline-flex items-center justify-center shadow-sm">
                               +4k
                             </span>
                           </span>
                         </span>
-                        <span className="text-[#D92419] block mt-1">
+                        <span className="text-[#0F3D2E] block mt-1">
                           {activeProduct.headlineOrange}
                         </span>
                       </h3>
@@ -248,7 +248,7 @@ export default function ProductShowcase() {
                           aria-label={`View ${p.name}`}
                           className={`relative flex flex-col items-center p-1 xs:p-1.5 sm:p-2 rounded-xl sm:rounded-2xl transition-all duration-300 cursor-pointer text-left ${
                             isActive
-                              ? 'bg-slate-50 ring-2 ring-[#0B4F9C] shadow-md scale-102 sm:scale-105 z-10'
+                              ? 'bg-slate-50 ring-2 ring-[#E8890C] shadow-md scale-102 sm:scale-105 z-10'
                               : 'bg-white hover:bg-slate-50 border border-slate-200/80 opacity-75 hover:opacity-100 scale-100'
                           }`}
                         >
@@ -264,7 +264,7 @@ export default function ProductShowcase() {
 
                           {/* Title & Progress */}
                           <div className="w-full flex items-center justify-between px-0.5">
-                            <span className={`text-[9px] xs:text-[10px] sm:text-[11px] font-bold uppercase tracking-tight truncate ${isActive ? 'text-[#0B4F9C]' : 'text-slate-700'}`}>
+                            <span className={`text-[9px] xs:text-[10px] sm:text-[11px] font-bold uppercase tracking-tight truncate ${isActive ? 'text-[#E8890C]' : 'text-slate-700'}`}>
                               {p.shortName}
                             </span>
                             <span className="text-[8px] xs:text-[9px] font-mono text-slate-400 hidden xs:inline-block">
@@ -276,7 +276,7 @@ export default function ProductShowcase() {
                           {isActive && (
                             <div className="w-full mt-1 h-0.5 sm:h-1 bg-slate-200 rounded-full overflow-hidden">
                               <motion.div
-                                className="h-full bg-[#0B4F9C]"
+                                className="h-full bg-[#E8890C]"
                                 style={{ width: `${progress}%` }}
                                 transition={{ ease: "linear" }}
                               />
@@ -327,7 +327,7 @@ export default function ProductShowcase() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-1.5 sm:gap-2 bg-white/95 hover:bg-white text-slate-900 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-full shadow-md backdrop-blur-md transition-all hover:scale-105 group/tag border border-white/80"
                   >
-                    <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-slate-900 text-white flex items-center justify-center group-hover/tag:bg-[#D92419] transition-colors">
+                    <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-slate-900 text-white flex items-center justify-center group-hover/tag:bg-[#0F3D2E] transition-colors">
                       <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                     </span>
                     <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">

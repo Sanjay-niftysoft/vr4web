@@ -2,8 +2,8 @@
 
 @theme {
   --color-brand-blue: #0B4F9C;
-  --color-brand-orange: #D92419;
-  --color-brand-red: #D92419;
+  --color-brand-orange: #FB0202;
+  --color-brand-red: #FB0202;
   --color-brand-bg: #ffffff;
   --color-brand-panel: rgba(255, 255, 255, 0.8);
   --font-sans: 'Poppins', sans-serif;
@@ -83,7 +83,7 @@
 
   .text-orange-black-border,
   .text-red-black-border {
-    color: #D92419;
+    color: #FB0202;
     -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.65);
     paint-order: stroke fill;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);

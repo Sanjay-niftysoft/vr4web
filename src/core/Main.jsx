@@ -41,8 +41,8 @@ export default function Main() {
       </main>
       <Footer />
       
-      {/* Floating Action Controls on Right Side (WhatsApp & Scroll To Top) */}
-      <div className="fixed bottom-6 right-6 lg:bottom-8 lg:right-8 z-50 flex flex-col items-end gap-3 pointer-events-none">
+      {/* Floating Action Controls on Right Side (WhatsApp & Scroll To Top - positioned directly above the Call Now widget) */}
+      <div className="fixed bottom-[74px] right-3 sm:bottom-[78px] sm:right-4 lg:bottom-[84px] lg:right-5 z-50 flex flex-col items-end gap-3 pointer-events-none">
         {/* Floating Scroll To Top Button */}
         <AnimatePresence>
           {showScrollTop && (
@@ -79,9 +79,6 @@ export default function Main() {
           >
             {/* Ambient radar pulse ring */}
             <span className="absolute -inset-1 rounded-full bg-[#25D366]/35 animate-ping -z-10 opacity-75 pointer-events-none" />
-            
-            {/* Online status badge */}
-            <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-emerald-300 border-2 border-white rounded-full shadow-sm" />
 
             {/* Official WhatsApp SVG Icon */}
             <WhatsAppIcon className="w-7 h-7 text-white fill-current drop-shadow-sm" />

@@ -1,18 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   MapPin, Mail, Phone, Clock, ArrowRight, ChevronRight, Home, CheckCircle2,
-  Send, ShieldCheck, Zap, Users, MessageSquare, Building2, AlertCircle, RotateCcw,
+  Send, AlertCircle, RotateCcw,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import BusinessHoursWidget from '../../components/common/BusinessHoursWidget';
+import GoogleMapsWidget from '../../components/common/GoogleMapsWidget';
 
-// ─── Theme Colors ───
-const RED = '#D7192D';
-const NAVY = '#172B4D';
-const DARK_NAVY = '#0B1428';
+/*  Palette: Yellow #E8890C · Dark Green #0F3D2E  */
+
+/* Hero background image  →  file lives at public/contact.png */
+const HERO_BG = '/contact.png';
+
+// WhatsApp number: country code + number, digits only (no + or spaces)
+const WHATSAPP_NUMBER = '919444116316';
+
+// Australia first, then the rest (text labels: flag emojis don't render on Windows Chrome)
+const COUNTRY_CODES = [
+  { code: '+61', label: 'AU +61' },
+  { code: '+91', label: 'IN +91' },
+  { code: '+1', label: 'US +1' },
+  { code: '+44', label: 'UK +44' },
+  { code: '+64', label: 'NZ +64' },
+  { code: '+65', label: 'SG +65' },
+];
 
 // ─── Clean Custom Social SVGs ───
+const GoogleMapsIcon = (props) => (
+  <svg fill="currentColor" viewBox="0 0 24 24" className="w-4 h-4" {...props}>
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z" />
+  </svg>
+);
+
 const LinkedInIcon = (props) => (
   <svg fill="currentColor" viewBox="0 0 24 24" className="w-4 h-4" {...props}>
     <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m1.4 9.74V9.97H5.06v8.53h2.8z" />
@@ -36,14 +57,14 @@ const TwitterIcon = (props) => (
 
 // ─── Shared form helpers (keeps every input styled identically) ───
 const inputClass = (hasError) =>
-  `w-full px-4 py-3 rounded-xl border text-sm text-black placeholder:text-black/40 bg-slate-50/80 transition-all duration-200 outline-none font-medium ${
+  `w-full px-4 py-3 rounded-[10px] border text-sm text-black placeholder:text-black/60 transition-all duration-200 outline-none font-medium ${
     hasError
-      ? 'border-red-500 focus:border-red-600 focus:ring-2 focus:ring-red-100 bg-red-50/20'
-      : 'border-slate-300 focus:border-[#D7192D] focus:ring-2 focus:ring-[#D7192D]/15 focus:bg-white'
+      ? 'border-red-500 bg-red-50/40 focus:border-red-600 focus:ring-2 focus:ring-red-100'
+      : 'border-slate-300 bg-white focus:border-[#E8890C] focus:ring-2 focus:ring-[#E8890C]/15'
   }`;
 
-const labelClass = 'block text-xs sm:text-sm font-bold text-black mb-1.5';
-const Req = () => <span className="text-[#D7192D]">*</span>;
+const labelClass = 'block text-xs sm:text-sm font-bold text-[#0F3D2E] mb-1.5';
+const Req = () => <span className="text-red-600">*</span>;
 
 const FieldError = ({ msg, className = '' }) =>
   msg ? (
@@ -56,18 +77,86 @@ const FieldError = ({ msg, className = '' }) =>
 const EMPTY_FORM = {
   fullName: '',
   email: '',
-  phoneCode: '+91',
+  phoneCode: '+61', // Australia default
   phone: '',
   subject: '',
   message: '',
   consent: false,
 };
 
+const CONTACT_ITEMS = [
+  {
+    icon: MapPin,
+    label: 'Office Address',
+    content: (
+      <>
+        <p className="text-white text-sm font-medium leading-snug">
+          Unit No.23 Block I, SIDCO Electronic Complex, Guindy, Chennai – 600 032
+        </p>
+        <span className="text-xs text-white mt-0.5 block">Development Center (India)</span>
+      </>
+    ),
+  },
+  {
+    icon: Mail,
+    label: 'Email Us',
+    content: (
+      <a
+        href="mailto:info@niftysoft.com"
+        className="text-white hover:text-[#E8890C] text-sm font-medium transition-colors break-words"
+      >
+        info@niftysoft.com
+      </a>
+    ),
+  },
+  {
+    icon: Phone,
+    label: 'Call Us',
+    content: (
+      <div className="flex flex-col gap-1">
+        <a
+          href="tel:+919444116316"
+          className="text-white hover:text-[#E8890C] text-sm font-medium transition-colors"
+        >
+          +91 94441 16316 <span className="text-xs text-white/80">(India)</span>
+        </a>
+        <a
+          href="tel:+61489986622"
+          className="text-white hover:text-[#E8890C] text-sm font-medium transition-colors"
+        >
+          +61 489 986 622 <span className="text-xs text-white/80">(Australia)</span>
+        </a>
+      </div>
+    ),
+  },
+  {
+    icon: Clock,
+    label: 'Business Hours',
+    content: (
+      <>
+        <p className="text-white text-sm font-medium">Mon – Sat: 9:00 AM – 7:00 PM IST</p>
+        <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-300">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          Priority Support 24/7 Available
+        </span>
+      </>
+    ),
+  },
+];
+
+const SOCIALS = [
+  { icon: LinkedInIcon, label: 'LinkedIn', href: 'https://linkedin.com' },
+  { icon: InstagramIcon, label: 'Instagram', href: 'https://instagram.com' },
+  { icon: FacebookIcon, label: 'Facebook', href: 'https://facebook.com' },
+  { icon: TwitterIcon, label: 'Twitter', href: 'https://twitter.com' },
+  { icon: GoogleMapsIcon, label: 'Google Maps', href: 'https://maps.app.goo.gl/TE4BHQyxoyt74fJ66', hoverColor: 'hover:border-[#EA4335] hover:bg-[#EA4335] hover:text-white' },
+];
+
 export default function Contact() {
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState('');
 
   const validateForm = () => {
     const errs = {};
@@ -99,441 +188,381 @@ export default function Contact() {
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
+  const buildWhatsappUrl = () => {
+    const text =
+`New Website Enquiry
+
+Name: ${formData.fullName}
+Email: ${formData.email}
+Phone: ${formData.phoneCode} ${formData.phone}
+Subject: ${formData.subject}
+
+Message:
+${formData.message}`;
+
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    setIsSubmitting(true);
+    const url = buildWhatsappUrl();
+    setWhatsappUrl(url);
 
-    // Simulate API submission (replace with your real endpoint call)
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      try {
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: [RED, NAVY, DARK_NAVY, '#ffffff'],
-        });
-      } catch (err) {
-        /* ignore confetti errors */
-      }
-    }, 1200);
+    // Open directly inside the click handler so popup blockers don't stop it
+    window.open(url, '_blank', 'noopener,noreferrer');
+
+    setIsSubmitted(true);
+    try {
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#0F3D2E', '#E8890C', '#124A37', '#ffffff'],
+      });
+    } catch (err) {
+      /* ignore confetti errors */
+    }
   };
 
   const handleReset = () => {
     setFormData(EMPTY_FORM);
     setErrors({});
+    setWhatsappUrl('');
     setIsSubmitted(false);
   };
 
   return (
-    <div className="w-full min-h-screen bg-slate-50 font-sans text-[#111111] selection:bg-[#D7192D] selection:text-white">
+    <div className="w-full min-h-screen bg-white font-sans text-[#0F3D2E] selection:bg-[#E8890C] selection:text-white">
       {/* ───────────── 1. HERO ───────────── */}
-      <section className="relative w-full bg-[#0B1428] text-white pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden border-b border-[#172B4D]/60">
-        <div className="absolute -top-24 right-1/4 w-96 h-96 bg-[#D7192D]/15 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute top-1/2 left-10 w-80 h-80 bg-[#172B4D]/50 rounded-full blur-[100px] pointer-events-none" />
-
+      <section
+        className="relative w-full overflow-hidden px-4 md:px-8 pt-32 pb-12 md:pt-36 md:pb-14 bg-[rgb(240,231,195)] border-b border-slate-200"
+      >
         <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
+          <motion.h1
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-white bg-white/10 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20 mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3 leading-tight text-[#0F3D2E]"
           >
-            <Link to="/" className="flex items-center gap-1 text-white hover:text-[#D7192D] transition-colors">
+            Contact <span className="text-[#E8890C]">Us</span>
+          </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium bg-[#0F3D2E] text-white px-4 py-1.5 rounded-full shadow-md"
+          >
+            <Link to="/" className="flex items-center gap-1 hover:text-[#E8890C] transition-colors">
               <Home className="w-3.5 h-3.5" />
               <span>Home</span>
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-white/80" />
-            <span className="text-[#D7192D] font-bold">Contact Us</span>
+            <ChevronRight className="w-3.5 h-3.5 text-white/60" />
+            <span className="font-semibold">Contact Us</span>
           </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-5 leading-tight text-white"
-          >
-            Let’s Build Something <span className="text-[#D7192D]">Great Together.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg md:text-xl text-white max-w-2xl font-normal leading-relaxed"
-          >
-            Have a project in mind or need expert digital solutions? Tell us what you’re looking for,
-            and our team will help you take the next step.
-          </motion.p>
         </div>
       </section>
 
-      {/* ───────────── 2. TWO-COLUMN CONTACT ───────────── */}
-      <section id="contact-form" className="relative z-20 -mt-8 sm:-mt-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pb-16 sm:pb-24">
-        <div className="bg-white rounded-3xl shadow-2xl border border-slate-200/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12">
-          {/* LEFT: info panel */}
-          <div className="lg:col-span-5 bg-gradient-to-b from-[#0B1428] via-[#0E1A33] to-[#172B4D] text-white p-8 sm:p-10 lg:p-12 flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#D7192D]/10 rounded-full blur-[80px] pointer-events-none" />
-            <div className="absolute -bottom-16 -left-16 w-60 h-60 bg-[#172B4D] rounded-full blur-[60px] pointer-events-none" />
+      {/* ───────────── 2. CONTACT FORM ───────────── */}
+      <section
+        id="contact-form"
+        className="relative overflow-hidden bg-white py-16 md:py-24 px-4 sm:px-6 lg:px-8"
+      >
+        <div className="relative max-w-6xl mx-auto">
+          <div className="text-center mb-10 md:mb-14">
+            <span className="inline-block px-3.5 py-1 rounded-full bg-[#E8890C]/20 border border-[#E8890C] text-[#0F3D2E] text-xs sm:text-sm font-bold mb-3 sm:mb-4">
+              Let’s Connect
+            </span>
+            <h2 className="text-2xl sm:text-2xl md:text-4xl lg:text-3xl font-extrabold tracking-tight mb-3">
+              <span className="text-[#0F3D2E]">Share your project vision to,</span>{' '}
+              <span className="text-[#E8890C]">get a custom roadmap and estimate.</span>
+            </h2>
 
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D7192D]/20 border border-[#D7192D]/40 text-[#D7192D] text-xs font-bold uppercase tracking-wider mb-4">
-                <span>GET IN TOUCH</span>
+          </div>
+
+          <div className="relative">
+            {/* GREEN INFO PANEL */}
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="relative z-10 overflow-hidden rounded-[10px] bg-gradient-to-br from-[#0A291E] via-[#0F3D2E] to-[#124A37] p-8 sm:p-10 text-white shadow-[0_30px_60px_-20px_rgba(15,61,46,0.6)] mb-6 lg:mb-0 lg:absolute lg:left-0 lg:top-10 lg:bottom-10 lg:w-[38%] lg:flex lg:flex-col lg:justify-between"
+            >
+              <div className="relative">
+                <h3 className="text-2xl sm:text-[28px] font-extrabold tracking-tight">Contact Us</h3>
+                <span aria-hidden className="mt-2 block h-[3px] w-14 rounded-full bg-[#E8890C]" />
+                <p className="mt-4 text-sm text-white leading-relaxed">
+                  A website, a web app or a complete tech solution — we’re ready to help.
+                </p>
+
+                <ul className="mt-7 space-y-5">
+                  {CONTACT_ITEMS.map(({ icon: Icon, label, content }) => (
+                    <li key={label} className="flex items-start gap-4">
+                      <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[10px] bg-[#E8890C] text-[#0F3D2E] shadow-md">
+                        <Icon className="h-[18px] w-[18px]" />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <span className="block text-[11px] font-bold uppercase tracking-wider text-[#E8890C] mb-0.5">
+                          {label}
+                        </span>
+                        {content}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-3 text-white leading-snug">
-                Let’s Talk About Your Next Project
-              </h2>
-
-              <p className="text-white text-sm sm:text-base leading-relaxed mb-8">
-                Whether you need a website, a web application, a digital transformation, or a complete
-                technology solution, we’re ready to help.
-              </p>
-
-              <div className="space-y-6">
-                {/* Address */}
-                <div className="flex items-start gap-4 pb-5 border-b border-white/15 group">
-                  <div className="w-11 h-11 rounded-full bg-[#D7192D] text-white flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-105 transition-transform duration-200">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className="text-xs font-bold uppercase tracking-wider text-white block mb-0.5">OFFICE ADDRESS</span>
-                    <p className="text-white text-sm sm:text-base font-semibold leading-snug">
-                      Unit No.23 Block I, SIDCO Electronic Complex, Guindy, Chennai – 600 032
-                    </p>
-                    <span className="text-xs text-white/90 mt-0.5 block font-normal">Development Center (India)</span>
-                  </div>
-                </div>
-
-                {/* Email */}
-                <div className="flex items-start gap-4 pb-5 border-b border-white/15 group">
-                  <div className="w-11 h-11 rounded-full bg-[#D7192D] text-white flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-105 transition-transform duration-200">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className="text-xs font-bold uppercase tracking-wider text-white block mb-0.5">EMAIL US</span>
-                    <a href="mailto:info@niftysoft.com" className="text-white hover:text-[#D7192D] text-sm sm:text-base font-semibold transition-colors block break-words">
-                      info@niftysoft.com
-                    </a>
-                  </div>
-                </div>
-
-                {/* Phone */}
-                <div className="flex items-start gap-4 pb-5 border-b border-white/15 group">
-                  <div className="w-11 h-11 rounded-full bg-[#D7192D] text-white flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-105 transition-transform duration-200">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className="text-xs font-bold uppercase tracking-wider text-white block mb-0.5">CALL US</span>
-                    <a href="tel:+919444116316" className="text-white hover:text-[#D7192D] text-sm sm:text-base font-semibold transition-colors block">
-                      +91 94441 16316 <span className="text-xs text-white/80 font-normal">(Direct Line)</span>
-                    </a>
-                  </div>
-                </div>
-
-                {/* Hours */}
-                <div className="flex items-start gap-4 group">
-                  <div className="w-11 h-11 rounded-full bg-[#D7192D] text-white flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-105 transition-transform duration-200">
-                    <Clock className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className="text-xs font-bold uppercase tracking-wider text-white block mb-0.5">BUSINESS HOURS</span>
-                    <p className="text-white text-sm sm:text-base font-semibold">Mon – Fri: 9:00 AM – 6:00 PM IST</p>
-                    <span className="text-xs text-emerald-400 mt-0.5 inline-flex items-center gap-1 font-semibold">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Priority Support 24/7 Available
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative z-10 pt-8 mt-8 border-t border-white/20">
-              <span className="text-xs font-bold uppercase tracking-wider text-white block mb-3">Connect With Us</span>
-              <div className="flex items-center gap-3">
-                {[
-                  { icon: LinkedInIcon, label: 'LinkedIn', href: 'https://linkedin.com' },
-                  { icon: InstagramIcon, label: 'Instagram', href: 'https://instagram.com' },
-                  { icon: FacebookIcon, label: 'Facebook', href: 'https://facebook.com' },
-                  { icon: TwitterIcon, label: 'Twitter', href: 'https://twitter.com' },
-                ].map((social, idx) => (
+              <div className="relative mt-8 flex items-center gap-3">
+                {SOCIALS.map((social) => (
                   <a
-                    key={idx}
+                    key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D7192D] text-white flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm border border-white/15 hover:border-[#D7192D]"
+                    className={`flex h-9 w-9 items-center justify-center rounded-[10px] border border-white/20 bg-white/10 text-white transition-all duration-300 hover:scale-110 ${
+                      social.hoverColor || 'hover:border-[#E8890C] hover:bg-[#E8890C] hover:text-[#0F3D2E]'
+                    }`}
                   >
                     <social.icon />
                   </a>
                 ))}
               </div>
-            </div>
-          </div>
+            </motion.div>
 
-          {/* RIGHT: form */}
-          <div className="lg:col-span-7 bg-white p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
-            <AnimatePresence mode="wait">
-              {isSubmitted ? (
-                <motion.div
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4 }}
-                  className="py-12 px-4 sm:px-8 text-center flex flex-col items-center justify-center"
-                >
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-5 shadow-inner">
-                    <CheckCircle2 className="w-10 h-10 stroke-[2.2]" />
-                  </div>
-
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#111111] mb-2 tracking-tight">
-                    Thank You, {formData.fullName}!
-                  </h3>
-
-                  <p className="text-black text-base max-w-md mx-auto mb-6 leading-relaxed">
-                    Your enquiry has been received successfully. A senior solutions consultant from VR4Web
-                    will review your requirements and reach out to you within 24 business hours.
-                  </p>
-
-                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 max-w-sm w-full text-left text-xs text-black mb-8 space-y-2">
-                    <div className="flex justify-between gap-4 border-b border-slate-200/80 pb-1.5">
-                      <span className="font-bold text-black">Subject:</span>
-                      <span className="text-black font-semibold text-right break-words min-w-0">{formData.subject}</span>
-                    </div>
-                    <div className="flex justify-between gap-4">
-                      <span className="font-bold text-black">Work Email:</span>
-                      <span className="text-black font-semibold text-right break-words min-w-0">{formData.email}</span>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={handleReset}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#172B4D] hover:bg-[#0B1428] text-white text-sm font-semibold transition-all duration-200 shadow-md cursor-pointer"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                    <span>Send Another Enquiry</span>
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-                  <div className="mb-8">
-                    <h3 className="text-2xl sm:text-3xl font-extrabold text-[#111111] tracking-tight mb-2">Send Us an Enquiry</h3>
-                    <p className="text-black text-sm sm:text-base leading-relaxed font-normal">
-                      Share a few details about your project, and our team will get back to you as soon as possible.
-                    </p>
-                  </div>
-
-                  <form onSubmit={handleSubmit} noValidate className="space-y-5">
-                    {/* Row 1: Full Name & Work Email */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label htmlFor="fullName" className={labelClass}>Full Name <Req /></label>
-                        <input
-                          id="fullName" name="fullName" type="text" autoComplete="name"
-                          value={formData.fullName} onChange={handleChange}
-                          placeholder="e.g. John Doe"
-                          aria-invalid={!!errors.fullName}
-                          className={inputClass(errors.fullName)}
-                        />
-                        <FieldError msg={errors.fullName} />
-                      </div>
-
-                      <div>
-                        <label htmlFor="email" className={labelClass}>Work Email Address <Req /></label>
-                        <input
-                          id="email" name="email" type="email" autoComplete="email"
-                          value={formData.email} onChange={handleChange}
-                          placeholder="john@company.com"
-                          aria-invalid={!!errors.email}
-                          className={inputClass(errors.email)}
-                        />
-                        <FieldError msg={errors.email} />
-                      </div>
-                    </div>
-
-                    {/* Row 2: Phone Number & Subject */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label htmlFor="phone" className={labelClass}>Phone Number <Req /></label>
-                        <div className="flex rounded-xl overflow-hidden">
-                          <select
-                            name="phoneCode" aria-label="Country code"
-                            value={formData.phoneCode} onChange={handleChange}
-                            className="bg-slate-100 border border-r-0 border-slate-300 text-xs sm:text-sm font-bold text-black px-2.5 py-3 outline-none focus:bg-slate-200 transition-colors"
-                          >
-                            <option value="+91">🇮🇳 +91</option>
-                            <option value="+61">🇦🇺 +61</option>
-                            <option value="+1">🇺🇸 +1</option>
-                            <option value="+44">🇬🇧 +44</option>
-                            <option value="+64">🇳🇿 +64</option>
-                            <option value="+65">🇸🇬 +65</option>
-                          </select>
-                          <input
-                            id="phone" name="phone" type="tel" autoComplete="tel-national"
-                            value={formData.phone} onChange={handleChange}
-                            placeholder="94441 16316"
-                            aria-invalid={!!errors.phone}
-                            className={`${inputClass(errors.phone)} flex-1 min-w-0 !rounded-l-none`}
-                          />
-                        </div>
-                        <FieldError msg={errors.phone} />
-                      </div>
-
-                      <div>
-                        <label htmlFor="subject" className={labelClass}>Subject <Req /></label>
-                        <input
-                          id="subject" name="subject" type="text"
-                          value={formData.subject} onChange={handleChange}
-                          placeholder="e.g. New website for my business"
-                          maxLength={120}
-                          aria-invalid={!!errors.subject}
-                          className={inputClass(errors.subject)}
-                        />
-                        <FieldError msg={errors.subject} />
-                      </div>
-                    </div>
-
-                    {/* Row 3: Message */}
-                    <div>
-                      <label htmlFor="message" className={labelClass}>Message / Project Requirements <Req /></label>
-                      <textarea
-                        id="message" name="message" rows={5}
-                        value={formData.message} onChange={handleChange}
-                        placeholder="Please tell us about your project goals, timelines, and requirements..."
-                        aria-invalid={!!errors.message}
-                        className={`${inputClass(errors.message)} resize-y`}
-                      />
-                      <FieldError msg={errors.message} />
-                    </div>
-
-                    {/* Consent */}
-                    <div>
-                      <label className="flex items-start gap-3 cursor-pointer group">
-                        <input
-                          type="checkbox" name="consent"
-                          checked={formData.consent} onChange={handleChange}
-                          className="mt-1 w-4 h-4 rounded border-slate-300 text-[#D7192D] focus:ring-[#D7192D] accent-[#D7192D]"
-                        />
-                        <span className="text-xs sm:text-sm text-black leading-snug font-normal">
-                          I agree to the{' '}
-                          <a
-                            href="https://niftysoft.com/privacypolicy"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-black font-bold underline hover:text-[#D7192D] transition-colors"
-                          >
-                            privacy policy
-                          </a>{' '}
-                          and consent to VR4Web contacting me regarding my enquiry. <span className="text-[#D7192D] font-bold">*</span>
-                        </span>
-                      </label>
-                      <FieldError msg={errors.consent} className="pl-7" />
-                    </div>
-
-                    {/* Submit */}
-                    <div className="pt-2">
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#D7192D] hover:bg-[#172B4D] text-white font-bold text-sm sm:text-base shadow-lg shadow-[#D7192D]/25 hover:shadow-xl hover:shadow-[#172B4D]/25 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer disabled:opacity-60 disabled:pointer-events-none"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            <span>Sending Your Enquiry...</span>
-                          </>
-                        ) : (
-                          <>
-                            <span>Send Your Enquiry</span>
-                            <Send className="w-4 h-4" />
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  </form>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-      </section>
-
-      {/* ───────────── 3. TRUST STRIP ───────────── */}
-      <section className="pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { icon: Zap, title: 'Quick Response', desc: 'Guaranteed response within 24 business hours.' },
-            { icon: ShieldCheck, title: 'Client-Focused Solutions', desc: 'Tailored architectures built around your goals.' },
-            { icon: Users, title: 'Experienced Dev Team', desc: 'Senior full-stack engineers and UX specialists.' },
-            { icon: MessageSquare, title: 'Reliable Communication', desc: 'Transparent milestones and regular sprint reviews.' },
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:border-[#D7192D]/40 transition-all duration-300 flex items-start gap-4 group"
+            {/* WHITE FORM CARD */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-[10px] shadow-[0_30px_60px_-24px_rgba(15,23,42,0.28)] lg:ml-14"
             >
-              <div className="w-12 h-12 rounded-xl bg-[#D7192D]/10 text-[#D7192D] flex items-center justify-center flex-shrink-0 group-hover:bg-[#D7192D] group-hover:text-white transition-colors duration-300">
-                <item.icon className="w-6 h-6" />
+              <div className="rounded-[10px] bg-white p-7 sm:p-10 lg:py-14 lg:pr-12 lg:pl-[calc(38%_-_0.5rem)] min-h-[560px] flex flex-col justify-center">
+                <AnimatePresence mode="wait">
+                  {isSubmitted ? (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.4 }}
+                      className="py-10 text-center flex flex-col items-center justify-center"
+                    >
+                      <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-5 shadow-inner">
+                        <CheckCircle2 className="w-10 h-10 stroke-[2.2]" />
+                      </div>
+
+                      <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0F3D2E] mb-2 tracking-tight">
+                        Thank You, {formData.fullName}!
+                      </h3>
+
+                      <p className="text-black text-base max-w-md mx-auto mb-6 leading-relaxed">
+                        WhatsApp has opened with your enquiry. Please tap{' '}
+                        <span className="font-bold">Send</span> in WhatsApp to complete it, and our team will
+                        reply shortly.
+                      </p>
+
+                      <div className="bg-white border border-slate-300 rounded-[10px] p-4 max-w-sm w-full text-left text-xs text-black mb-6 space-y-2">
+                        <div className="flex justify-between gap-4 border-b border-slate-300 pb-1.5">
+                          <span className="font-bold">Subject:</span>
+                          <span className="font-semibold text-right break-words min-w-0">{formData.subject}</span>
+                        </div>
+                        <div className="flex justify-between gap-4">
+                          <span className="font-bold">Work Email:</span>
+                          <span className="font-semibold text-right break-words min-w-0">{formData.email}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-center gap-3">
+                        {/* Fallback if WhatsApp didn't open (popup blocked) */}
+                        <a
+                          href={whatsappUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-6 py-3 rounded-[10px] bg-[#25D366] hover:bg-[#1ebe5a] text-white text-sm font-semibold transition-all duration-200 shadow-md"
+                        >
+                          <Send className="w-4 h-4" />
+                          <span>Open WhatsApp Again</span>
+                        </a>
+
+                        <button
+                          type="button"
+                          onClick={handleReset}
+                          className="inline-flex items-center gap-2 px-6 py-3 rounded-[10px] bg-[#0F3D2E] hover:bg-[#124A37] text-white text-sm font-semibold transition-all duration-200 shadow-md cursor-pointer"
+                        >
+                          <RotateCcw className="w-4 h-4" />
+                          <span>Send Another Enquiry</span>
+                        </button>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="form"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="mb-7">
+                        <h3 className="text-2xl sm:text-[28px] font-extrabold text-[#0F3D2E] tracking-tight">
+                          Get in <span className="text-[#E8890C]">Touch</span>
+                        </h3>
+                        <span aria-hidden className="mt-2 block h-[3px] w-14 rounded-full bg-[#E8890C]" />
+                        <p className="mt-3 text-black text-sm sm:text-base leading-relaxed">
+                          Share a few details about your project and we’ll get back to you soon.
+                        </p>
+                      </div>
+
+                      <form onSubmit={handleSubmit} noValidate className="space-y-5">
+                        {/* Row 1: Full Name & Work Email */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                          <div>
+                            <label htmlFor="fullName" className={labelClass}>Full Name <Req /></label>
+                            <input
+                              id="fullName" name="fullName" type="text" autoComplete="name"
+                              value={formData.fullName} onChange={handleChange}
+                              placeholder="e.g. John Doe"
+                              aria-invalid={!!errors.fullName}
+                              className={inputClass(errors.fullName)}
+                            />
+                            <FieldError msg={errors.fullName} />
+                          </div>
+
+                          <div>
+                            <label htmlFor="email" className={labelClass}>Work Email Address <Req /></label>
+                            <input
+                              id="email" name="email" type="email" autoComplete="email"
+                              value={formData.email} onChange={handleChange}
+                              placeholder="john@company.com"
+                              aria-invalid={!!errors.email}
+                              className={inputClass(errors.email)}
+                            />
+                            <FieldError msg={errors.email} />
+                          </div>
+                        </div>
+
+                        {/* Row 2: Phone Number & Subject */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                          <div>
+                            <label htmlFor="phone" className={labelClass}>Phone Number <Req /></label>
+                            <div className="flex rounded-[10px] overflow-hidden">
+                              <select
+                                name="phoneCode" aria-label="Country code"
+                                value={formData.phoneCode} onChange={handleChange}
+                                className="bg-slate-100 border border-r-0 border-slate-300 text-xs sm:text-sm font-bold text-[#0F3D2E] px-2.5 py-3 outline-none focus:bg-slate-200 transition-colors"
+                              >
+                                {COUNTRY_CODES.map((c) => (
+                                  <option key={c.code} value={c.code}>{c.label}</option>
+                                ))}
+                              </select>
+                              <input
+                                id="phone" name="phone" type="tel" autoComplete="tel-national"
+                                value={formData.phone} onChange={handleChange}
+                                placeholder="412 345 678"
+                                aria-invalid={!!errors.phone}
+                                className={`${inputClass(errors.phone)} flex-1 min-w-0 !rounded-l-none`}
+                              />
+                            </div>
+                            <FieldError msg={errors.phone} />
+                          </div>
+
+                          <div>
+                            <label htmlFor="subject" className={labelClass}>Subject <Req /></label>
+                            <input
+                              id="subject" name="subject" type="text"
+                              value={formData.subject} onChange={handleChange}
+                              placeholder="e.g. New website for my business"
+                              maxLength={120}
+                              aria-invalid={!!errors.subject}
+                              className={inputClass(errors.subject)}
+                            />
+                            <FieldError msg={errors.subject} />
+                          </div>
+                        </div>
+
+                        {/* Row 3: Message */}
+                        <div>
+                          <label htmlFor="message" className={labelClass}>Message / Project Requirements <Req /></label>
+                          <textarea
+                            id="message" name="message" rows={5}
+                            value={formData.message} onChange={handleChange}
+                            placeholder="Please tell us about your project goals, timelines, and requirements..."
+                            aria-invalid={!!errors.message}
+                            className={`${inputClass(errors.message)} resize-y`}
+                          />
+                          <FieldError msg={errors.message} />
+                        </div>
+
+                        {/* Consent */}
+                        <div>
+                          <label className="flex items-start gap-3 cursor-pointer">
+                            <input
+                              type="checkbox" name="consent"
+                              checked={formData.consent} onChange={handleChange}
+                              className="mt-1 w-4 h-4 rounded border-slate-300 accent-[#E8890C]"
+                            />
+                            <span className="text-xs sm:text-sm text-black leading-snug">
+                              I agree to the{' '}
+                              <a
+                                href="https://niftysoft.com/privacypolicy"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[#0F3D2E] font-bold underline hover:text-[#E8890C] transition-colors"
+                              >
+                                privacy policy
+                              </a>{' '}
+                              and consent to VR4Web contacting me regarding my enquiry.{' '}
+                              <span className="text-[#E8890C] font-bold">*</span>
+                            </span>
+                          </label>
+                          <FieldError msg={errors.consent} className="pl-7" />
+                        </div>
+
+                        {/* Submit */}
+                        <div className="pt-1">
+                          <button
+                            type="submit"
+                            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-9 py-3.5 rounded-[10px] bg-gradient-to-b from-[#E8890C] to-[#d67d0a] hover:from-[#d67d0a] hover:to-[#b86906] text-white font-bold text-sm sm:text-base shadow-[0_12px_26px_-8px_rgba(232,137,12,0.7)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                          >
+                            <span>Send Enquiry</span>
+                            <Send className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </form>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-              <div>
-                <h4 className="text-base font-bold text-black mb-1 tracking-tight">{item.title}</h4>
-                <p className="text-xs sm:text-sm text-black leading-relaxed font-normal">{item.desc}</p>
-              </div>
-            </div>
-          ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ───────────── 4. MAP ───────────── */}
-      <section className="pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D7192D]/10 border border-[#D7192D]/25 text-[#D7192D] text-xs font-bold uppercase tracking-wider mb-3">
-            <Building2 className="w-3.5 h-3.5 text-[#D7192D]" />
-            <span>FIND US</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111111] tracking-tight mb-3">
-            Our Development Center & Office Location
+      {/* ───────────── 3. MAP & BUSINESS HOURS ───────────── */}
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="text-center mb-10 md:mb-14">
+          <span className="inline-block px-4 py-1 rounded-full bg-[#E8890C]/20 border border-[#E8890C] text-[#0F3D2E] text-sm font-bold mb-4">
+            Find Us & Business Hours
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+            <span className="text-[#0F3D2E]">Visit Our</span>{' '}
+            <span className="text-[#E8890C]">Development Center</span>
           </h2>
-          <p className="text-black text-sm sm:text-base max-w-xl mx-auto leading-relaxed font-normal">
-            We’d love to hear from you. Reach out to our engineering team to discuss your next project in person or virtually.
+          <p className="text-black text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            Drop by our Guindy office or reach out to discuss your next project in person or online.
           </p>
         </div>
 
-        <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-xl bg-slate-100 h-80 sm:h-96 md:h-[420px]">
-          <iframe
-            title="VR4Web Development Center Map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.3752538965934!2d80.20387557584483!3d13.01174621401362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52670e30d66c5d%3A0xe543db487f58b760!2sSIDCO%20Industrial%20Estate%2C%20Guindy%2C%20Chennai%2C%20Tamil%20Nadu%20600032!5e0!3m2!1sen!2sin!4v1718000000000!5m2!1sen!2sin"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="w-full h-full grayscale-[25%] contrast-[105%]"
-          />
-
-          <div className="absolute bottom-5 left-5 right-5 sm:right-auto sm:max-w-sm bg-white/95 backdrop-blur-md rounded-2xl p-5 border border-slate-200/90 shadow-lg flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-[#D7192D] text-white flex items-center justify-center flex-shrink-0 shadow-md">
-              <MapPin className="w-5 h-5" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h5 className="text-sm font-bold text-black mb-0.5">Development Center (India)</h5>
-              <p className="text-xs text-black leading-snug font-normal">Unit No.23 Block I, SIDCO Electronic Complex, Guindy, Chennai – 600 032</p>
-              <a
-                href="https://maps.google.com/?q=SIDCO+Electronic+Complex+Guindy+Chennai+600032"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs font-bold text-[#D7192D] hover:text-[#172B4D] transition-colors mt-2"
-              >
-                <span>Open in Google Maps</span>
-                <ArrowRight className="w-3 h-3" />
-              </a>
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="lg:col-span-5 w-full">
+            <BusinessHoursWidget />
+          </div>
+          <div className="lg:col-span-7 rounded-[10px] shadow-[0_20px_50px_-20px_rgba(15,23,42,0.25)] overflow-hidden bg-white">
+            <GoogleMapsWidget />
           </div>
         </div>
       </section>

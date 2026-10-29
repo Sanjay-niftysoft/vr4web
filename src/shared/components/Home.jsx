@@ -19,7 +19,7 @@ const mapLocations = [
       425: { top: '71%', left: '28%' },
       768: { top: '61%', left: '23%' },
       1024: { top: '65%', left: '30%' },
-      1440: { top: '62%', left: '26%' },
+      1440: { top: '62%', left: '30' },
       2560: { top: '64%', left: '15%' },
     },
     labelPos: {
@@ -155,6 +155,26 @@ const objToCss = (obj) => {
   return Object.entries(obj).map(([k, v]) => `${k.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${v};`).join(' ');
 };
 
+/* Section tag: bold uppercase text + short rounded underline.
+   Defaults are gold text / forest green line; pass textClass and lineClass to override. */
+const SectionTag = ({
+  children,
+  align = 'center',
+  className = '',
+  textClass = 'text-[#E8890C]',
+  lineClass = 'bg-[#0F3D2E]',
+}) => (
+  <div className={`flex flex-col ${align === 'center' ? 'items-center' : 'items-start'} ${className}`}>
+    <span
+      className={`text-xs sm:text-sm lg:text-base 4xl:text-lg font-bold uppercase tracking-[0.2em] ${textClass} ${align === 'center' ? 'pl-[0.2em] text-center' : 'text-left'
+        }`}
+    >
+      {children}
+    </span>
+    <span className={`mt-2 sm:mt-2.5 block w-10 sm:w-12 lg:w-14 4xl:w-16 h-[3px] rounded-full ${lineClass}`}></span>
+  </div>
+);
+
 const AnimatedText = ({ text, delay = 0, className = "" }) => {
   const words = text.split(" ");
   return (
@@ -259,7 +279,7 @@ export default function Home() {
       >
         {/* Background Image with absolute positioning: optimized for mobile (320px-767px), tablet (768px-1023px), laptop (1024px-1440px), ultrawide (2560px) */}
         <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 bg-[url('/mobileviewbanner.png')] md:bg-[url('/tabview.png')] lg:bg-[url('/banner1.png')]"
+          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 bg-[url('/mobileviewbanner.png')] md:bg-[url('/tabview.png')] lg:bg-[url('banner1.png')]"
         >
           {/* Map Locations Responsive Styles for All Breakpoints */}
           <style>
@@ -312,9 +332,9 @@ export default function Home() {
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                   </svg>
 
-                  {/* Unified Responsive Label */}
+                  {/* Unified Responsive Label – city names in forest green */}
                   <span
-                    className={`label-${index} absolute text-[8px] xs:text-[9px] md:text-[10px] lg:text-[11px] 2xl:text-[12px] 4xl:text-[15px] font-semibold text-[#111111] bg-white/95 backdrop-blur-md px-1.5 py-0.5 md:px-3 md:py-1 4xl:px-4 4xl:py-1.5 rounded-md shadow-sm md:shadow-[0_4px_12px_rgba(0,0,0,0.15)] 4xl:shadow-[0_6px_18px_rgba(0,0,0,0.2)] border border-white/60 whitespace-normal sm:whitespace-nowrap tracking-wide z-20`}
+                    className={`label-${index} absolute text-[8px] xs:text-[9px] md:text-[10px] lg:text-[11px] 2xl:text-[12px] 4xl:text-[15px] font-semibold text-[#0F3D2E] bg-white/95 backdrop-blur-md px-1.5 py-0.5 md:px-3 md:py-1 4xl:px-4 4xl:py-1.5 rounded-md shadow-sm md:shadow-[0_4px_12px_rgba(0,0,0,0.15)] 4xl:shadow-[0_6px_18px_rgba(0,0,0,0.2)] border border-white/60 whitespace-normal sm:whitespace-nowrap tracking-wide z-20`}
                   >
                     {loc.name}
                   </span>
@@ -325,91 +345,99 @@ export default function Home() {
         </div>
 
         {/* Content Container: Fully Responsive Width and Typography */}
-        <div className="relative z-20 max-w-6xl 2xl:max-w-7xl 4xl:max-w-[2100px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-12 4xl:px-16 flex flex-col items-center text-center w-full">
-<div className="mb-4 xs:mb-5 sm:mb-6 md:mb-8 4xl:mb-14 w-full flex flex-col items-center px-3 sm:px-5 md:px-6">
-  <div className="mb-3 sm:mb-4 md:mb-5 4xl:mb-8 w-full max-w-5xl">
-    <p
-      className="
-        text-[#0B4F9C]
-        font-extrabold
-        tracking-[0.15em] md:tracking-[0.2em]
-        uppercase
-        text-center
-        leading-relaxed
-        text-[10px]
-        xs:text-[11px]
-        sm:text-[12px]
-        md:text-[13px]
-        lg:text-sm
-        xl:text-sm
-        2xl:text-base
-        4xl:text-lg
-        px-2 sm:px-4
-        break-words
-        [text-wrap:balance]
-        drop-shadow-[0_0_15px_rgba(255,255,255,1)]
-      "
-    >
-      <AnimatedText
-        text="Digital Solutions That Increase AI Search Visibility · AEO · GEO"
-        delay={0.2}
-      />
-    </p>
+        
+{/* Content Container: Fully Responsive Width and Typography */}
+<div className="relative z-20 max-w-6xl 2xl:max-w-7xl 4xl:max-w-[2100px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-12 4xl:px-16 flex flex-col items-center text-center w-full">
+  <div className="mb-4 xs:mb-5 sm:mb-6 md:mb-8 4xl:mb-14 w-full flex flex-col items-center px-3 sm:px-5 md:px-6">
+    <div className="mb-3 sm:mb-4 md:mb-5 4xl:mb-8 w-full max-w-5xl">
+      {/* 1) Tagline: YELLOW */}
+      <p
+        className="
+          !text-[#7C2D12]
+          font-extrabold
+          tracking-[0.15em] md:tracking-[0.2em]
+          uppercase
+          text-center
+          leading-relaxed
+          text-[10px]
+          xs:text-[11px]
+          sm:text-[12px]
+          md:text-[13px]
+          lg:text-sm
+          xl:text-sm
+          2xl:text-base
+          4xl:text-lg
+          px-2 sm:px-4
+          break-words
+          [text-wrap:balance]
+          drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)]
+        "
+      >
+        <AnimatedText
+          text="Digital Solutions That Increase AI Search Visibility · AEO · GEO"
+          delay={0.2}
+        />
+      </p>
+    </div>
   </div>
+
+  {/* Heading */}
+  <h1
+    className="text-[clamp(1rem,2.1vw,2.5rem)] font-extrabold !text-white tracking-tight leading-[1.2] w-full text-center flex flex-col items-center px-2 sm:px-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]"
+  >
+    {/* 2) "Powering Australian Businesses with": WHITE */}
+    <AnimatedText
+      text="Powering Australian Businesses with"
+      delay={0.6}
+      className="!text-white whitespace-normal lg:whitespace-nowrap leading-tight md:leading-[1.1]"
+    />
+
+    {/* 3) WHITE + YELLOW + WHITE */}
+    <div
+      className="mt-1.5 xs:mt-2 sm:mt-2.5 md:mt-3 4xl:mt-5 flex flex-wrap items-center justify-center gap-x-[0.25em] text-[clamp(1.4rem,3.3vw,3.75rem)] font-extrabold leading-[1.2]"
+    >
+      <motion.span
+        initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 1.0, delay: 1.1, ease: [0.25, 0.1, 0.25, 1.0] }}
+        className="!text-white inline-block"
+      >
+        Smarter
+      </motion.span>
+
+      <motion.span
+        initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 1.0, delay: 1.8, ease: [0.25, 0.1, 0.25, 1.0] }}
+        className="inline-flex items-center justify-center relative overflow-hidden py-1 px-1"
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={wordIndex}
+            initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -24, filter: 'blur(8px)' }}
+            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1.0] }}
+            className="!text-[#FFC400] inline-block whitespace-normal sm:whitespace-nowrap"
+          >
+            {ROTATING_WORDS[wordIndex]}
+          </motion.span>
+        </AnimatePresence>
+      </motion.span>
+
+      <motion.span
+        initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 1.0, delay: 2.5, ease: [0.25, 0.1, 0.25, 1.0] }}
+        className="!text-white inline-block"
+      >
+        Solutions
+      </motion.span>
+    </div>
+  </h1>
 </div>
 
-            <h1
-              className="text-[clamp(1rem,2.1vw,2.5rem)] font-extrabold text-[#0B4F9C] tracking-tight leading-[1.2] w-full text-center flex flex-col items-center px-2 sm:px-4 drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
-            >
-              <AnimatedText
-                text="Powering Australian Businesses with"
-                delay={0.6}
-                className="whitespace-normal lg:whitespace-nowrap leading-tight md:leading-[1.1]"
-              />
-              <div
-                className="mt-1.5 xs:mt-2 sm:mt-2.5 md:mt-3 4xl:mt-5 flex flex-wrap items-center justify-center gap-x-[0.25em] text-[clamp(1.4rem,3.3vw,3.75rem)] font-extrabold leading-[1.2]"
-              >
-                <motion.span
-                  initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.0, delay: 1.1, ease: [0.25, 0.1, 0.25, 1.0] }}
-                  className="text-white inline-block"
-                >
-                  Smarter
-                </motion.span>
 
-                <motion.span
-                  initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.0, delay: 1.8, ease: [0.25, 0.1, 0.25, 1.0] }}
-                  className="inline-flex items-center justify-center relative overflow-hidden py-1 px-1"
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.span
-                      key={wordIndex}
-                      initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                      exit={{ opacity: 0, y: -24, filter: 'blur(8px)' }}
-                      transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1.0] }}
-                      className="text-[#D92419] inline-block whitespace-normal sm:whitespace-nowrap"
-                    >
-                      {ROTATING_WORDS[wordIndex]}
-                    </motion.span>
-                  </AnimatePresence>
-                </motion.span>
-
-                <motion.span
-                  initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.0, delay: 2.5, ease: [0.25, 0.1, 0.25, 1.0] }}
-                  className="text-white inline-block"
-                >
-                  Solutions
-                </motion.span>
-              </div>
-            </h1>
-          </div>
-        
       </section>
 
       {/* About Us Section */}
@@ -429,12 +457,12 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4 }}
-                className="flex items-center gap-4 mb-3"
+                className="mb-4"
               >
-                <div className="w-10 h-0.5 bg-[#D92419]"></div>
-                <span className="text-[#0B4F9C] font-bold text-sm 4xl:text-lg tracking-widest uppercase">Who We Are</span>
+                {/* "Who We Are": gold text + gold underline */}
+                <SectionTag align="left" textClass="text-[#E8890C]" lineClass="bg-[#E8890C]">Who We Are</SectionTag>
               </motion.div>
-              <p className="text-[#0B4F9C] text-base lg:text-lg 4xl:text-2xl mb-8 4xl:mb-12 leading-relaxed font-normal max-w-sm xl:max-w-md 4xl:max-w-2xl">
+              <p className="text-[#0F3D2E] text-base lg:text-lg 4xl:text-2xl mb-8 4xl:mb-12 leading-relaxed font-normal max-w-sm xl:max-w-md 4xl:max-w-2xl">
                 <AnimatedTextScroll text="You bring the vision. We engineer digital solutions that increase AI search visibility, accelerate growth through AEO and GEO, and carry your business forward." delay={0.3} />
               </p>
               <motion.div
@@ -443,7 +471,8 @@ export default function Home() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: 0.4 }}
               >
-                <a href="/about" className="group inline-flex items-center justify-center px-6 py-3 4xl:px-10 4xl:py-5 4xl:text-xl border-2 border-[#0B4F9C] text-[#0B4F9C] font-semibold rounded-xl hover:bg-[#0B4F9C] hover:text-white transition-all duration-300">
+                {/* Button: forest green first, gold on hover */}
+                <a href="/about" className="group inline-flex items-center justify-center px-6 py-3 4xl:px-10 4xl:py-5 4xl:text-xl border-2 border-[#0F3D2E] text-[#0F3D2E] font-semibold rounded-xl hover:bg-[#E8890C] hover:border-[#E8890C] hover:text-white transition-all duration-300">
                   Discover Who We Are
                   <ArrowRight className="w-5 h-5 4xl:w-7 4xl:h-7 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                 </a>
@@ -459,7 +488,7 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.1, ease: "easeInOut" }}
                 src="/about/animal.png"
                 alt="Australian Technology"
-                className="w-full max-w-[400px] md:max-w-[550px] lg:max-w-[650px] xl:max-w-[750px] h-auto object-contain transform transition-all duration-500 md:scale-[1.15] lg:scale-[1.15] xl:scale-[1.25] hover:scale-[1.05] md:hover:scale-[1.20] lg:hover:scale-[1.22] xl:hover:scale-[1.32] origin-bottom lg:origin-center drop-shadow-2xl hover:drop-shadow-[0_25px_40px_rgba(11,79,156,0.4)] hover:-translate-y-2 relative z-20 cursor-pointer"
+                className="w-full max-w-[400px] md:max-w-[550px] lg:max-w-[650px] xl:max-w-[750px] h-auto object-contain transform transition-all duration-500 md:scale-[1.15] lg:scale-[1.15] xl:scale-[1.25] hover:scale-[1.05] md:hover:scale-[1.20] lg:hover:scale-[1.22] xl:hover:scale-[1.32] origin-bottom lg:origin-center drop-shadow-2xl hover:drop-shadow-[0_25px_40px_rgba(232,137,12,0.4)] hover:-translate-y-2 relative z-20 cursor-pointer"
               />
             </div>
 
@@ -472,13 +501,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="flex items-start gap-5 pb-6 border-b border-[#0B4F9C]/15 group"
+                className="flex items-start gap-5 pb-6 border-b border-[#0F3D2E]/15 group"
               >
                 <div className="flex-shrink-0 w-12 h-12 4xl:w-16 4xl:h-16 flex items-center justify-center mt-0.5 4xl:mt-2">
-                  <Lightbulb className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#D92419] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                  <Lightbulb className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#E8890C] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="text-[#0B4F9C] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">01 — Carry Your Idea</h3>
+                  <h3 className="text-[#0F3D2E] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">01 — Carry Your Idea</h3>
                   <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] 4xl:text-[20px] font-normal">
                     You bring the vision. We turn your idea into a powerful digital solution.
                   </p>
@@ -491,13 +520,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="flex items-start gap-5 pb-6 border-b border-[#0B4F9C]/15 group"
+                className="flex items-start gap-5 pb-6 border-b border-[#0F3D2E]/15 group"
               >
                 <div className="flex-shrink-0 w-12 h-12 4xl:w-16 4xl:h-16 flex items-center justify-center mt-0.5 4xl:mt-2">
-                  <Rocket className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#D92419] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                  <Rocket className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#E8890C] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="text-[#0B4F9C] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">02 — Boost AI Search Visibility</h3>
+                  <h3 className="text-[#0F3D2E] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">02 — Boost AI Search Visibility</h3>
                   <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] 4xl:text-[20px] font-normal">
                     Targeted digital solutions that increase AI search visibility, integrating AEO and GEO to dominate conversational search engines.
                   </p>
@@ -513,10 +542,10 @@ export default function Home() {
                 className="flex items-start gap-5 group"
               >
                 <div className="flex-shrink-0 w-12 h-12 4xl:w-16 4xl:h-16 flex items-center justify-center mt-0.5 4xl:mt-2">
-                  <RefreshCw className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#D92419] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                  <RefreshCw className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#E8890C] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="text-[#0B4F9C] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">03 — Keep Moving Forward</h3>
+                  <h3 className="text-[#0F3D2E] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">03 — Keep Moving Forward</h3>
                   <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] 4xl:text-[20px] font-normal">
                     We build, support, and evolve your technology as your business grows.
                   </p>
@@ -531,7 +560,7 @@ export default function Home() {
 
       <ServicesSection />
       <WhyChooseUsSection />
-            <ProductShowcase />
+      <ProductShowcase />
       <SectorsSection />
 
 
@@ -539,9 +568,9 @@ export default function Home() {
       {/* ===================== OUR PROCESS SECTION ===================== */}
       <section className="relative w-full overflow-hidden py-16 sm:py-20 lg:py-24 4xl:py-32 bg-gradient-to-b from-white via-[#F3F7FF] to-white">
         {/* Soft colour glows (no dots) */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#D92419]/10 blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 -right-40 w-[28rem] h-[28rem] rounded-full bg-[#0B4F9C]/10 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-32 left-1/3 w-80 h-80 rounded-full bg-[#2563eb]/10 blur-3xl pointer-events-none" />
+        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#0F3D2E]/10 blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 -right-40 w-[28rem] h-[28rem] rounded-full bg-[#E8890C]/10 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 left-1/3 w-80 h-80 rounded-full bg-[#E8890C]/10 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-[1440px] 4xl:max-w-[1900px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           {/* Heading */}
@@ -552,10 +581,9 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-center max-w-3xl 4xl:max-w-5xl mx-auto mb-12 lg:mb-8 4xl:mb-14"
           >
-            <span className="block text-[#0B4F9C] font-bold text-xs sm:text-sm 4xl:text-base tracking-widest uppercase">Our Process</span>
-            <span className="block w-10 h-0.5 bg-[#D92419] mx-auto mt-2 mb-4" />
-            <h2 className="text-[clamp(1.75rem,4vw,3rem)] 4xl:text-[4rem] font-extrabold text-[#0B4F9C] leading-[1.15] tracking-tight">
-              Your journey, <span className="text-[#D92419]">mapped out</span><br />step by step
+            <SectionTag align="center" className="mb-4">Our Process</SectionTag>
+            <h2 className="text-[clamp(1.75rem,4vw,3rem)] 4xl:text-[4rem] font-extrabold text-[#E8890C] leading-[1.15] tracking-tight">
+              Your journey, <span className="text-[#0F3D2E]">mapped out</span><br />step by step
             </h2>
             <p className="mt-4 text-[#111111]/80 text-sm sm:text-base 4xl:text-xl leading-relaxed">
               From discovery to deployment, our digital solutions increase AI search visibility with structured AEO and GEO frameworks at every milestone.
@@ -575,7 +603,7 @@ export default function Home() {
                 <motion.path
                   key={i}
                   d={d}
-                  stroke="#D92419"
+                  stroke="#0F3D2E"
                   strokeWidth="2.5"
                   strokeDasharray="7 7"
                   strokeLinecap="round"
@@ -598,9 +626,9 @@ export default function Home() {
                 className="absolute top-[56px] -translate-x-1/2 -translate-y-1/2"
                 style={{ left: `${12.5 + i * 25}%` }}
               >
-                <span className="absolute inset-0 rounded-full bg-[#D92419]/40 animate-ping" style={{ animationDuration: '2.6s' }} />
-                <span className="relative flex items-center justify-center w-7 h-7 4xl:w-9 4xl:h-9 rounded-full bg-white ring-[3px] ring-[#D92419] shadow-[0_6px_16px_rgba(217, 36, 25,0.35)]">
-                  <span className="w-2.5 h-2.5 4xl:w-3 4xl:h-3 rounded-full bg-[#0B4F9C]" />
+                <span className="absolute inset-0 rounded-full bg-[#0F3D2E]/40 animate-ping" style={{ animationDuration: '2.6s' }} />
+                <span className="relative flex items-center justify-center w-7 h-7 4xl:w-9 4xl:h-9 rounded-full bg-white ring-[3px] ring-[#0F3D2E] shadow-[0_6px_16px_rgba(15,61,46,0.35)]">
+                  <span className="w-2.5 h-2.5 4xl:w-3 4xl:h-3 rounded-full bg-[#E8890C]" />
                 </span>
               </motion.div>
             ))}
@@ -608,7 +636,7 @@ export default function Home() {
 
           {/* Cards: vertical timeline on mobile/tablet, 4 staggered columns on desktop */}
           <div className="relative max-w-2xl lg:max-w-none mx-auto">
-            <div className="lg:hidden absolute left-[13px] top-6 bottom-6 border-l-2 border-dashed border-[#D92419]/60" aria-hidden="true" />
+            <div className="lg:hidden absolute left-[13px] top-6 bottom-6 border-l-2 border-dashed border-[#0F3D2E]/60" aria-hidden="true" />
 
             <ol className="relative pl-12 space-y-6 sm:pl-14 lg:pl-0 lg:space-y-0 lg:grid lg:grid-cols-4">
               {processSteps.map((s, i) => {
@@ -623,31 +651,31 @@ export default function Home() {
                     className="relative lg:px-3 xl:px-3.5 4xl:px-5 lg:even:mt-10 4xl:even:mt-14"
                   >
                     {/* Mobile stop */}
-                    <span className="lg:hidden absolute -left-12 sm:-left-14 top-7 flex items-center justify-center w-7 h-7 rounded-full bg-white ring-[3px] ring-[#D92419] shadow-[0_6px_16px_rgba(217, 36, 25,0.35)]">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#0B4F9C]" />
+                    <span className="lg:hidden absolute -left-12 sm:-left-14 top-7 flex items-center justify-center w-7 h-7 rounded-full bg-white ring-[3px] ring-[#0F3D2E] shadow-[0_6px_16px_rgba(15,61,46,0.35)]">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#E8890C]" />
                     </span>
 
-                    <article className="group relative h-full overflow-hidden rounded-3xl bg-white/90 backdrop-blur border border-[#0B4F9C]/10 shadow-[0_12px_32px_rgba(11,79,156,0.09)] p-6 xl:p-7 4xl:p-10 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_22px_48px_rgba(11,79,156,0.2)] hover:border-[#D92419]/40">
+                    <article className="group relative h-full overflow-hidden rounded-3xl bg-white/90 backdrop-blur border border-[#E8890C]/10 shadow-[0_12px_32px_rgba(232,137,12,0.09)] p-6 xl:p-7 4xl:p-10 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_22px_48px_rgba(232,137,12,0.2)] hover:border-[#0F3D2E]/40">
                       {/* Big faint icon as a decorative corner */}
                       <Icon
-                        className="absolute -bottom-5 -right-5 w-32 h-32 4xl:w-44 4xl:h-44 -rotate-12 text-[#0B4F9C]/[0.06] transition-all duration-500 group-hover:text-[#D92419]/[0.14] group-hover:rotate-0 group-hover:scale-110 pointer-events-none"
+                        className="absolute -bottom-5 -right-5 w-32 h-32 4xl:w-44 4xl:h-44 -rotate-12 text-[#E8890C]/[0.06] transition-all duration-500 group-hover:text-[#0F3D2E]/[0.14] group-hover:rotate-0 group-hover:scale-110 pointer-events-none"
                         strokeWidth={1.2}
                         aria-hidden="true"
                       />
                       {/* Glow on hover */}
-                      <div className="absolute -top-16 -left-16 w-40 h-40 rounded-full bg-[#D92419]/0 group-hover:bg-[#D92419]/15 blur-2xl transition-all duration-500 pointer-events-none" />
+                      <div className="absolute -top-16 -left-16 w-40 h-40 rounded-full bg-[#0F3D2E]/0 group-hover:bg-[#0F3D2E]/15 blur-2xl transition-all duration-500 pointer-events-none" />
 
                       <div className="relative">
                         {/* Icon + title */}
                         <div className="flex items-center gap-3.5 mb-3 4xl:mb-5">
-                          <div className="w-12 h-12 4xl:w-16 4xl:h-16 shrink-0 rounded-2xl bg-gradient-to-br from-[#0B4F9C] to-[#2563eb] text-white flex items-center justify-center shadow-[0_8px_18px_rgba(11,79,156,0.35)] transition-all duration-300 group-hover:-rotate-6 group-hover:scale-105 group-hover:from-[#D92419] group-hover:to-[#EF4444] group-hover:shadow-[0_8px_18px_rgba(217, 36, 25,0.4)]">
+                          <div className="w-12 h-12 4xl:w-16 4xl:h-16 shrink-0 rounded-2xl bg-gradient-to-br from-[#E8890C] to-[#F2A33A] text-white flex items-center justify-center shadow-[0_8px_18px_rgba(232,137,12,0.35)] transition-all duration-300 group-hover:-rotate-6 group-hover:scale-105 group-hover:from-[#0F3D2E] group-hover:to-[#0F3D2E] group-hover:shadow-[0_8px_18px_rgba(15,61,46,0.4)]">
                             <Icon className="w-6 h-6 4xl:w-8 4xl:h-8" strokeWidth={1.8} />
                           </div>
-                          <h3 className="text-[#0B4F9C] font-extrabold text-xl xl:text-2xl 4xl:text-4xl tracking-tight">{s.title}</h3>
+                          <h3 className="text-[#E8890C] font-extrabold text-xl xl:text-2xl 4xl:text-4xl tracking-tight">{s.title}</h3>
                         </div>
 
                         {/* Accent line grows on hover */}
-                        <div className="w-8 group-hover:w-20 h-[3px] rounded-full bg-[#D92419] mb-3 4xl:mb-5 transition-all duration-500" />
+                        <div className="w-8 group-hover:w-20 h-[3px] rounded-full bg-[#0F3D2E] mb-3 4xl:mb-5 transition-all duration-500" />
 
                         {/* Paragraph */}
                         <p className="text-[#111111]/80 text-[14px] xl:text-[15px] 4xl:text-xl leading-relaxed">{s.desc}</p>

@@ -13,8 +13,8 @@ export const BLOGS = [
     readTime: '6 min read',
     author: 'VR4Web Technology Team',
     category: 'Mobile Development',
-    cardImage: '/blogs/mobile-app-services.png',
-    heroImage: '/blogs/mobile-app-services.png',
+    cardImage: '/blog-images/2.png',
+    heroImage: '/mobile.png',
     summary:
       'Mobile applications have become an important part of how businesses connect with customers, manage operations, deliver services, and build digital experiences.',
     tableOfContents: [
@@ -126,8 +126,8 @@ export const BLOGS = [
     readTime: '5 min read',
     author: 'VR4Web UX & Strategy Team',
     category: 'Digital Experience',
-    cardImage: '/blogs/mobile-digital-experiences.png',
-    heroImage: '/blogs/mobile-digital-experiences.png',
+    cardImage: '/blog-images/1.png',
+    heroImage: '/mobile2.png',
     summary:
       'Discover how mobile applications help businesses improve customer engagement, streamline operations, support digital services, and create better experiences across devices.',
     tableOfContents: [
@@ -231,7 +231,7 @@ export const BLOGS = [
     author: 'VR4Web Enterprise Solutions Team',
     category: 'eCommerce & Operations',
     cardImage: '/blogs/erp-crm-ecommerce.png',
-    heroImage: '/blogs/erp-crm-ecommerce.png',
+    heroImage: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80',
     summary:
       'Discover how ERP and CRM solutions help eCommerce businesses streamline operations, manage customers, automate workflows, improve efficiency, and support sustainable growth.',
     tableOfContents: [

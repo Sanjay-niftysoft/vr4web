@@ -13,7 +13,7 @@ export default function PanoramaViewer() {
  ></div>
  
  <div className="z-10 text-center glass-panel p-8 rounded-2xl max-w-md">
- <Globe2 className="w-16 h-16 text-[#D92419] mx-auto mb-4 animate-pulse" />
+ <Globe2 className="w-16 h-16 text-[#FB0202] mx-auto mb-4 animate-pulse" />
  <h2 className="text-2xl font-bold text-white mb-2 neon-text">360° Explorer</h2>
  <p className="text-[#111111] text-sm mb-6">
  Immersive panorama viewer active. Rotate device or drag to look around.

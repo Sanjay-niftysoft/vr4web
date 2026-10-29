@@ -3,11 +3,11 @@ import { Headset, Eye, Settings, Volume2, Globe, Cuboid, Zap } from 'lucide-reac
 
 export default function Navbar({ activeTab, setActiveTab }) {
  return (
- <nav className="glass-panel w-full h-16 flex items-center justify-between px-6 z-50 relative border-b border-[#D92419]/20">
+ <nav className="glass-panel w-full h-16 flex items-center justify-between px-6 z-50 relative border-b border-[#FB0202]/20">
  <div className="flex items-center gap-3">
- <Zap className="text-[#D92419] w-8 h-8 animate-pulse" />
+ <Zap className="text-[#FB0202] w-8 h-8 animate-pulse" />
  <h1 className="text-2xl font-bold tracking-wider text-white neon-text">VR4WEB</h1>
- <span className="text-xs bg-[#D92419]/20 text-[#D92419] px-2 py-0.5 rounded border border-[#D92419]/30 ml-2">BETA</span>
+ <span className="text-xs bg-[#FB0202]/20 text-[#FB0202] px-2 py-0.5 rounded border border-[#FB0202]/30 ml-2">BETA</span>
  </div>
  
  <div className="flex items-center gap-1 bg-black/40 p-1 rounded-lg border border-white/10">
@@ -38,8 +38,8 @@ export default function Navbar({ activeTab, setActiveTab }) {
  </div>
 
  <div className="flex items-center gap-4">
- <div className="flex items-center gap-2 text-xs text-[#D92419] bg-[#D92419]/30 px-3 py-1.5 rounded-full border border-[#D92419]/30">
- <span className="w-2 h-2 rounded-full bg-[#D92419] animate-ping"></span>
+ <div className="flex items-center gap-2 text-xs text-[#FB0202] bg-[#FB0202]/30 px-3 py-1.5 rounded-full border border-[#FB0202]/30">
+ <span className="w-2 h-2 rounded-full bg-[#FB0202] animate-ping"></span>
  XR STATUS: READY
  </div>
  <button className="glass-button p-2 rounded-full text-[#111111] hover:text-white">
@@ -56,7 +56,7 @@ function NavButton({ icon, label, active, onClick }) {
  onClick={onClick}
  className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm transition-all duration-300 ${
  active 
- ? 'bg-[#D92419]/20 text-[#D92419] border border-[#D92419]/50 shadow-[0_0_10px_rgba(0,240,255,0.2)]' 
+ ? 'bg-[#FB0202]/20 text-[#FB0202] border border-[#FB0202]/50 shadow-[0_0_10px_rgba(0,240,255,0.2)]' 
  : 'text-[#111111] hover:text-[#111111] hover:bg-white/5 border border-transparent'
  }`}
  >

@@ -23,153 +23,124 @@ const CATEGORIES = [
 ];
 
 const GALLERY = [
-  // ── First batch: visible on page load (one of each category) ──
+  // ── First batch ──
   {
     id: 'g1',
-    category: 'Web Development',
-    title: 'Building for the Web',
-    caption: 'Fast, mobile-first websites built with clean code.',
-    photo: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
+    category: 'Digital Marketing',
+    title: 'Answer Engine Optimization',
+    caption: 'Helping businesses improve visibility across AI-powered search engines.',
+    photo: '/services-images-set2/aeo.png',
   },
   {
     id: 'g2',
-    category: 'App',
-    title: 'Mobile Apps',
-    caption: 'Apps designed to feel simple and smooth on every phone.',
-    photo: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c',
+    category: 'Content Marketing',
+    title: 'Content Marketing',
+    caption: 'Creating engaging content that connects brands with their audiences.',
+    photo: '/services-images-set2/content.png',
   },
   {
     id: 'g3',
-    category: 'Marketing',
-    title: 'Marketing That Performs',
-    caption: 'Plans and reports that show what is working.',
-    photo: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f',
+    category: 'App',
+    title: 'Flutter App Development',
+    caption: 'Building cross-platform mobile applications with Flutter.',
+    photo: '/services-section-home-page/app-development/flutter.png',
   },
   {
     id: 'g4',
-    category: 'Digital Marketing',
-    title: 'Data-Led Digital Marketing',
-    caption: 'SEO, ads and analytics tracked in one place.',
-    photo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71',
-  },
-  {
-    id: 'g5',
-    category: 'Computer',
-    title: 'Powerful Workstations',
-    caption: 'Reliable hardware set up for everyday business work.',
-    photo: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3',
+    category: 'App',
+    title: 'iOS App Development',
+    caption: 'Developing intuitive and high-performance applications for iOS.',
+    photo: '/services-section-home-page/app-development/iOS Development.png',
   },
   {
     id: 'g6',
-    category: 'Office',
-    title: 'Where Ideas Come Together',
-    caption: 'A bright workspace built for planning and building.',
-    photo: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2',
-  },
-  {
-    id: 'g7',
-    category: 'Other',
-    title: 'Reliable Infrastructure',
-    caption: 'Servers and networks monitored around the clock.',
-    photo: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31',
+    category: 'E-commerce',
+    title: 'Shopify Development',
+    caption: 'Creating scalable Shopify stores with seamless shopping experiences.',
+    photo: '/services-section-home-page/E-commerce Solutions/Shopify Development Solutions.png',
   },
 
-  // ── Second batch: appears when the user scrolls down ──
-  {
-    id: 'g8',
-    category: 'Web Development',
-    title: 'Clean, Modern Code',
-    caption: 'Every project is built to be fast and easy to maintain.',
-    photo: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6',
-  },
+  // ── Second batch ──
   {
     id: 'g9',
-    category: 'App',
-    title: 'App Design',
-    caption: 'Screens planned around how real people use them.',
-    photo: 'https://images.unsplash.com/photo-1551650975-87deedd944c3',
+    category: 'Software',
+    title: 'Software Integration',
+    caption: 'Connecting business systems for smoother workflows and operations.',
+    photo: '/services-section-home-page/Software Application Development/Software Integration.png',
   },
   {
     id: 'g10',
-    category: 'Marketing',
-    title: 'Campaign Planning',
-    caption: 'Clear goals, clear numbers, clear next steps.',
-    photo: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3',
+    category: 'Digital Marketing',
+    title: 'Digital Marketing',
+    caption: 'Driving online growth through targeted digital marketing strategies.',
+    photo: '/services-images-set2/digital-marketing.png',
   },
   {
     id: 'g11',
-    category: 'Digital Marketing',
-    title: 'Search and Social',
-    caption: 'Growing traffic with search, social and email.',
-    photo: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07',
-  },
-  {
-    id: 'g12',
-    category: 'Computer',
-    title: 'Inside the Machine',
-    caption: 'Hardware that keeps your business running.',
-    photo: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
+    category: 'SEO',
+    title: 'White Hat SEO',
+    caption: 'Improving organic search rankings through ethical SEO practices.',
+    photo: '/services-images-set2/white-hat-seo.png',
   },
   {
     id: 'g13',
-    category: 'Office',
-    title: 'A Space to Create',
-    caption: 'An open workspace for creative and technical work.',
-    photo: 'https://images.unsplash.com/photo-1497366216548-37526070297c',
+    category: 'Web Development',
+    title: 'Web Portal Development',
+    caption: 'Building interactive web portals for business and customer needs.',
+    photo: '/services-section-home-page/Web Design and Development/Web Portal Development.png',
   },
   {
     id: 'g14',
-    category: 'Other',
-    title: 'Security First',
-    caption: 'Protecting data, systems and customers.',
-    photo: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b',
+    category: 'Web Development',
+    title: 'PHP Development',
+    caption: 'Developing dynamic and secure web applications using PHP.',
+    photo: '/services-section-home-page/Web Design and Development/PHP Development.png',
   },
 
   // ── Third batch ──
   {
     id: 'g15',
-    category: 'Web Development',
-    title: 'Shipping Great Work',
-    caption: 'From first sketch to launch day, we deliver.',
-    photo: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c',
+    category: 'Support',
+    title: 'Customer Support',
+    caption: 'Providing reliable support to help businesses serve their customers.',
+    photo: '/support.png',
   },
   {
     id: 'g16',
-    category: 'App',
-    title: 'Built for Touch',
-    caption: 'Fast, friendly apps for iOS and Android.',
-    photo: 'https://images.unsplash.com/photo-1526498460520-4c246339dccb',
+    category: 'Branding',
+    title: 'Logo Design',
+    caption: 'Creating distinctive visual identities for modern businesses.',
+    photo: '/services-set3/logo.png',
   },
   {
     id: 'g17',
-    category: 'Marketing',
-    title: 'Brand and Growth',
-    caption: 'Ideas that turn attention into customers.',
-    photo: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312',
+    category: 'Design',
+    title: 'UI/UX Design',
+    caption: 'Designing intuitive interfaces and engaging user experiences.',
+    photo: '/services-set3/uiux.png',
   },
   {
     id: 'g18',
     category: 'Digital Marketing',
-    title: 'Content That Ranks',
-    caption: 'Pages written and built to be found.',
-    photo: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a',
+    title: 'SMS Marketing',
+    caption: 'Reaching customers through targeted SMS campaigns.',
+    photo: '/services-images-set2/sms.png',
   },
   {
     id: 'g19',
-    category: 'Computer',
-    title: 'Everyday Tech',
-    caption: 'Laptops and desktops ready for work from day one.',
-    photo: 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45',
+    category: 'Marketing',
+    title: 'WhatsApp Marketing',
+    caption: 'Connecting with customers through personalized WhatsApp campaigns.',
+    photo: '/services-images-set2/whatapp-marketing.png',
   },
   {
     id: 'g20',
-    category: 'Office',
-    title: 'Ready for the Day',
-    caption: 'A clean, comfortable place to do our best work.',
-    photo: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174',
+    category: 'Web Development',
+    title: 'CMS Development',
+    caption: 'Building content management systems for effortless website updates.',
+    photo: '/services-set2/Web Design and Development/CMS Development.png',
   },
 ];
-
 const BATCH = 7;
 
 const fadeInUp = {
@@ -214,18 +185,18 @@ function SectionHeading({ title, sub, text }) {
     >
       <motion.h2
         variants={fadeInUp}
-        className="text-[28px] min-[400px]:text-4xl sm:text-5xl lg:text-[56px] min-[1920px]:text-[72px] min-[2400px]:text-[84px] font-black tracking-tight leading-[1.05] text-[#102448]"
+        className="text-[28px] min-[400px]:text-4xl sm:text-5xl lg:text-[56px] min-[1920px]:text-[72px] min-[2400px]:text-[84px] font-black tracking-tight leading-[1.05] text-[#0F3D2E]"
       >
         {title}
       </motion.h2>
       <motion.div
         variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.7, ease: 'easeOut' } } }}
         style={{ originX: 0.5 }}
-        className="mx-auto mt-3 h-1 w-20 rounded-full bg-[#D7192D] sm:mt-4 sm:w-24 min-[1920px]:h-1.5 min-[1920px]:w-32"
+        className="mx-auto mt-3 h-1 w-20 rounded-full bg-[#E8890C] sm:mt-4 sm:w-24 min-[1920px]:h-1.5 min-[1920px]:w-32"
       />
       <motion.p
         variants={fadeInUp}
-        className="mt-4 text-base min-[400px]:text-lg sm:mt-5 sm:text-xl min-[1920px]:text-3xl min-[2400px]:text-4xl font-bold text-[#D7192D]"
+        className="mt-4 text-base min-[400px]:text-lg sm:mt-5 sm:text-xl min-[1920px]:text-3xl min-[2400px]:text-4xl font-bold text-[#E8890C]"
       >
         {sub}
       </motion.p>
@@ -239,39 +210,6 @@ function SectionHeading({ title, sub, text }) {
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// FILTER TABS
-// ─────────────────────────────────────────────────────────────────────────────
-
-function FilterTabs({ active, onChange }) {
-  return (
-    <div
-      role="tablist"
-      aria-label="Gallery categories"
-      className="mx-auto mb-6 flex flex-wrap justify-center gap-2 sm:mb-8 sm:gap-3 min-[1920px]:mb-12 min-[1920px]:gap-4"
-    >
-      {CATEGORIES.map((cat) => {
-        const on = cat === active;
-        return (
-          <button
-            key={cat}
-            type="button"
-            role="tab"
-            aria-selected={on}
-            onClick={() => onChange(cat)}
-            className={`rounded-full border px-3.5 py-1.5 text-xs font-bold transition-colors duration-300 sm:px-5 sm:py-2 sm:text-sm min-[1920px]:px-7 min-[1920px]:py-3 min-[1920px]:text-lg ${
-              on
-                ? 'border-[#D7192D] bg-[#D7192D] text-white'
-                : 'border-slate-300 bg-white text-[#102448] hover:border-[#D7192D] hover:text-[#D7192D]'
-            }`}
-          >
-            {cat}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LAZY-LOADED IMAGE
@@ -347,7 +285,7 @@ function GalleryTile({ item, onOpen }) {
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
       variants={fadeInUp}
-      className="group relative m-0 aspect-[4/3] w-full min-w-0 cursor-zoom-in overflow-hidden rounded-lg bg-gray-200 shadow-[0_14px_32px_-20px_rgba(15,23,42,0.35)] outline-none focus-visible:ring-2 focus-visible:ring-[#D7192D] min-[1920px]:rounded-xl"
+      className="group relative m-0 aspect-[4/3] w-full min-w-0 cursor-zoom-in overflow-hidden rounded-lg bg-gray-200 shadow-[0_14px_32px_-20px_rgba(15,23,42,0.35)] outline-none focus-visible:ring-2 focus-visible:ring-[#E8890C] min-[1920px]:rounded-xl"
     >
       <LazyImage src={item.photo} alt={item.title} />
 
@@ -365,7 +303,7 @@ function GalleryTile({ item, onOpen }) {
                    group-focus-within:translate-y-0 group-focus-within:opacity-100
                    [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100"
       >
-        <span className="mb-2 block h-1 w-8 rounded-full bg-[#D7192D] transition-all duration-500 group-hover:w-14 sm:w-10 min-[1920px]:h-1.5 min-[1920px]:w-14 min-[1920px]:group-hover:w-24" />
+        <span className="mb-2 block h-1 w-8 rounded-full bg-[#E8890C] transition-all duration-500 group-hover:w-14 sm:w-10 min-[1920px]:h-1.5 min-[1920px]:w-14 min-[1920px]:group-hover:w-24" />
         <h3 className="text-sm font-extrabold leading-snug text-white sm:text-base min-[1920px]:text-xl min-[2400px]:text-2xl">
           {item.title}
         </h3>
@@ -393,7 +331,7 @@ function ArrowButton({ dir, onClick }) {
         e.stopPropagation();
         onClick();
       }}
-      className={`absolute top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#102448] shadow-lg transition hover:scale-110 hover:bg-white sm:h-12 sm:w-12 min-[1920px]:h-16 min-[1920px]:w-16 ${
+      className={`absolute top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#0F3D2E] shadow-lg transition hover:scale-110 hover:bg-white sm:h-12 sm:w-12 min-[1920px]:h-16 min-[1920px]:w-16 ${
         dir === 'prev' ? 'left-2 sm:left-5' : 'right-2 sm:right-5'
       }`}
     >
@@ -478,7 +416,7 @@ function Lightbox({ items, index, onClose, onChange }) {
           e.stopPropagation();
           onClose();
         }}
-        className="absolute right-3 top-3 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#102448] shadow-lg transition hover:scale-110 hover:bg-white sm:right-5 sm:top-4 sm:h-12 sm:w-12"
+        className="absolute right-3 top-3 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#0F3D2E] shadow-lg transition hover:scale-110 hover:bg-white sm:right-5 sm:top-4 sm:h-12 sm:w-12"
       >
         <svg viewBox="0 0 24 24" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
           <line x1="6" y1="6" x2="18" y2="18" />
@@ -525,19 +463,12 @@ function Lightbox({ items, index, onClose, onChange }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function GallerySection() {
-  const [active, setActive] = useState('All');
   const [count, setCount] = useState(BATCH);
   const [openIndex, setOpenIndex] = useState(null);
   const sentinelRef = useRef(null);
 
-  const filtered = active === 'All' ? GALLERY : GALLERY.filter((g) => g.category === active);
+  const filtered = GALLERY;
   const visible = filtered.slice(0, count);
-
-  const handleFilter = (cat) => {
-    setActive(cat);
-    setCount(BATCH);
-    setOpenIndex(null);
-  };
 
   useEffect(() => {
     const el = sentinelRef.current;
@@ -554,20 +485,13 @@ function GallerySection() {
 
     io.observe(el);
     return () => io.disconnect();
-  }, [count, filtered.length, active]);
+  }, [count, filtered.length]);
 
   const openById = (id) => setOpenIndex(filtered.findIndex((g) => g.id === id));
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#F8FAFC] py-8 sm:py-12 lg:py-16 min-[1920px]:py-24">
+    <section className="relative w-full overflow-hidden bg-[#F8FAFC] pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 lg:pb-20 min-[1920px]:pb-24">
       <div className={CONTAINER}>
-        <SectionHeading
-          title="Our Gallery"
-          sub="A look inside our work and our people."
-          text="Browse moments from our projects, our team and the technology behind the services we deliver."
-        />
-
-        <FilterTabs active={active} onChange={handleFilter} />
 
         {/* Equal grid: same size tiles, perfectly aligned rows and columns */}
         <div className={GRID}>
@@ -600,7 +524,7 @@ function GallerySection() {
 
 export default function Gallery() {
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-white font-sans text-[#102448] selection:bg-[#D7192D] selection:text-white">
+    <div className="min-h-screen w-full overflow-x-hidden bg-white font-sans text-[#0F3D2E] selection:bg-[#E8890C] selection:text-white">
       <PageBanner
         title="Gallery"
         breadcrumbs={[{ label: 'Gallery' }]}

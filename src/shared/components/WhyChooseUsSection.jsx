@@ -15,7 +15,7 @@ export default function WhyChooseUsSection() {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full bg-[#F8FCFF] py-8 sm:py-10 md:py-12 lg:py-14 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 font-['Inter',sans-serif] overflow-hidden selection:bg-[#D92419] selection:text-white"
+      className="relative w-full bg-[#F8FCFF] py-8 sm:py-10 md:py-12 lg:py-14 px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 font-['Inter',sans-serif] overflow-hidden selection:bg-[#0F3D2E] selection:text-white"
     >
       {/* ========================================================================= */}
       {/* FUTURISTIC ARCHITECTURAL BACKGROUND (Central Towers, Sunrise & Plaza)     */}
@@ -33,7 +33,7 @@ export default function WhyChooseUsSection() {
         <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#F8FCFF] to-transparent" />
 
         {/* Subtle Light Rays / Golden Center Glow */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-r from-[#D92419]/10 via-[#F59E0B]/15 to-[#38BDF8]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-r from-[#0F3D2E]/10 via-[#F59E0B]/15 to-[#E8890C]/10 rounded-full blur-3xl pointer-events-none" />
       </div>
 
       <div className="max-w-[1440px] 4xl:max-w-[2400px] mx-auto relative z-10 flex flex-col justify-between h-full">
@@ -47,18 +47,18 @@ export default function WhyChooseUsSection() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col items-center text-center mb-6 sm:mb-8 lg:mb-9"
         >
-          {/* Eyebrow */}
-          <div className="flex flex-col items-center mb-2.5 sm:mb-3">
-            <span className="text-[#0B3B82] font-extrabold text-[11px] xs:text-[12px] sm:text-[13px] tracking-[0.25em] uppercase mb-1.5">
-              WHY CHOOSE US
+          {/* Tag: bold gold uppercase text + short green rounded underline */}
+          <div className="flex flex-col items-center mb-3 sm:mb-4">
+            <span className="text-[#E8890C] font-bold text-xs sm:text-sm lg:text-base tracking-[0.2em] pl-[0.2em] uppercase text-center">
+              Why Choose Us
             </span>
-            <div className="w-12 h-1 bg-[#D92419] rounded-full"></div>
+            <span className="mt-2 sm:mt-2.5 block w-10 sm:w-12 lg:w-14 h-[3px] rounded-full bg-[#0F3D2E]"></span>
           </div>
 
           {/* Main Heading */}
           <h2 className="text-[28px] xs:text-[34px] sm:text-[44px] md:text-[50px] lg:text-[56px] font-extrabold text-center leading-[1.12] tracking-tight mb-3 sm:mb-4">
-            <span className="text-[#0B3B82] block">Technology built around</span>
-            <span className="text-[#D92419] block mt-0.5 sm:mt-1">your business.</span>
+            <span className="text-[#E8890C] block">Technology built around</span>
+            <span className="text-[#0F3D2E] block mt-0.5 sm:mt-1">your business.</span>
           </h2>
 
 
@@ -69,13 +69,13 @@ export default function WhyChooseUsSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="inline-flex items-center flex-wrap justify-center gap-2 xs:gap-3 sm:gap-4 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full bg-white/70 backdrop-blur-md border border-slate-200/60 shadow-sm"
           >
-            <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#0B3B82]">IDEAS</span>
-            <ArrowRight className="w-3 h-3 text-[#D92419]" />
-            <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#0B3B82]">SOLUTIONS</span>
-            <ArrowRight className="w-3 h-3 text-[#D92419]" />
-            <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#0B3B82]">AI SEARCH VISIBILITY</span>
-            <ArrowRight className="w-3 h-3 text-[#D92419]" />
-            <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#0B3B82]">GROWTH</span>
+            <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#E8890C]">IDEAS</span>
+            <ArrowRight className="w-3 h-3 text-[#0F3D2E]" />
+            <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#E8890C]">SOLUTIONS</span>
+            <ArrowRight className="w-3 h-3 text-[#0F3D2E]" />
+            <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#E8890C]">AI SEARCH VISIBILITY</span>
+            <ArrowRight className="w-3 h-3 text-[#0F3D2E]" />
+            <span className="text-[11px] xs:text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase text-[#E8890C]">GROWTH</span>
           </motion.div>
         </motion.div>
 
@@ -92,17 +92,17 @@ export default function WhyChooseUsSection() {
             animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -6, scale: 1.02, rotateY: 3 }}
-            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(11,59,130,0.07)] hover:shadow-[0_25px_60px_rgba(217, 36, 25,0.12)] transition-all duration-500 overflow-hidden flex flex-col sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
+            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(232,137,12,0.07)] hover:shadow-[0_25px_60px_rgba(15,61,46,0.12)] transition-all duration-500 overflow-hidden flex flex-col sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
           >
             {/* Left Content */}
             <div className="flex-1 p-5 sm:p-6 lg:p-7 flex flex-col justify-between z-10">
               <div>
 
                 {/* Heading */}
-                <h3 className="text-xl sm:text-2xl font-bold text-[#0B3B82] tracking-tight mb-1">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#E8890C] tracking-tight mb-1">
                   Business First
                 </h3>
-                <div className="w-7 h-0.5 bg-[#D92419] rounded-full mb-2.5"></div>
+                <div className="w-7 h-0.5 bg-[#0F3D2E] rounded-full mb-2.5"></div>
 
                 {/* Description */}
                 <p className="text-[#111111] text-[13px] sm:text-[14px] leading-relaxed font-normal max-w-xs">
@@ -135,7 +135,7 @@ export default function WhyChooseUsSection() {
             animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -6, scale: 1.02, rotateY: -3 }}
-            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(11,59,130,0.07)] hover:shadow-[0_25px_60px_rgba(11,59,130,0.12)] transition-all duration-500 overflow-hidden flex flex-col-reverse sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
+            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(232,137,12,0.07)] hover:shadow-[0_25px_60px_rgba(232,137,12,0.12)] transition-all duration-500 overflow-hidden flex flex-col-reverse sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
           >
             {/* Left Diagonal Cut Architectural Image */}
             <div 
@@ -158,10 +158,10 @@ export default function WhyChooseUsSection() {
 
 
                 {/* Heading */}
-                <h3 className="text-xl sm:text-2xl font-bold text-[#0B3B82] tracking-tight mb-1">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#E8890C] tracking-tight mb-1">
                   Built to Scale
                 </h3>
-                <div className="w-7 h-0.5 bg-[#D92419] rounded-full mb-2.5"></div>
+                <div className="w-7 h-0.5 bg-[#0F3D2E] rounded-full mb-2.5"></div>
 
                 {/* Description */}
                 <p className="text-[#111111] text-[13px] sm:text-[14px] leading-relaxed font-normal max-w-xs">
@@ -179,7 +179,7 @@ export default function WhyChooseUsSection() {
             animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -6, scale: 1.02, rotateY: 3 }}
-            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(11,59,130,0.07)] hover:shadow-[0_25px_60px_rgba(11,59,130,0.12)] transition-all duration-500 overflow-hidden flex flex-col sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
+            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(232,137,12,0.07)] hover:shadow-[0_25px_60px_rgba(232,137,12,0.12)] transition-all duration-500 overflow-hidden flex flex-col sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
           >
             {/* Left Content */}
             <div className="flex-1 p-5 sm:p-6 lg:p-7 flex flex-col justify-between z-10">
@@ -187,10 +187,10 @@ export default function WhyChooseUsSection() {
 
 
                 {/* Heading */}
-                <h3 className="text-xl sm:text-2xl font-bold text-[#0B3B82] tracking-tight mb-1">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#E8890C] tracking-tight mb-1">
                   Clear Delivery
                 </h3>
-                <div className="w-7 h-0.5 bg-[#D92419] rounded-full mb-2.5"></div>
+                <div className="w-7 h-0.5 bg-[#0F3D2E] rounded-full mb-2.5"></div>
 
                 {/* Description */}
                 <p className="text-[#111111] text-[13px] sm:text-[14px] leading-relaxed font-normal max-w-xs">
@@ -222,7 +222,7 @@ We believe in transparent communication, predictable processes and reliable deli
             animate={isInView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -6, scale: 1.02, rotateY: -3 }}
-            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(11,59,130,0.07)] hover:shadow-[0_25px_60px_rgba(217, 36, 25,0.12)] transition-all duration-500 overflow-hidden flex flex-col-reverse sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
+            className="group relative bg-white/90 backdrop-blur-xl rounded-[28px] sm:rounded-[34px] border border-white/90 shadow-[0_20px_50px_rgba(232,137,12,0.07)] hover:shadow-[0_25px_60px_rgba(15,61,46,0.12)] transition-all duration-500 overflow-hidden flex flex-col-reverse sm:flex-row items-stretch min-h-[190px] sm:min-h-[220px]"
           >
             {/* Left Diagonal Cut Architectural Image */}
             <div 
@@ -246,10 +246,10 @@ We believe in transparent communication, predictable processes and reliable deli
 
 
                 {/* Heading */}
-                <h3 className="text-xl sm:text-2xl font-bold text-[#0B3B82] tracking-tight mb-1">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#E8890C] tracking-tight mb-1">
                   Long-Term Partnership
                 </h3>
-                <div className="w-7 h-0.5 bg-[#D92419] rounded-full mb-2.5"></div>
+                <div className="w-7 h-0.5 bg-[#0F3D2E] rounded-full mb-2.5"></div>
 
                 {/* Description */}
                 <p className="text-[#111111] text-[13px] sm:text-[14px] leading-relaxed font-normal max-w-xs">

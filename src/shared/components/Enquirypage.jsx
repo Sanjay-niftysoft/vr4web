@@ -1,26 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import BusinessHoursWidget from "../../components/common/BusinessHoursWidget";
+import GoogleMapsWidget from "../../components/common/GoogleMapsWidget";
 
 /* ------------------------------------------------------------------
    VR4Web – Enquiry page  (React + Tailwind, no extra deps)
 
-   LAYOUT (intentionally different from the Contact page):
-   - Light, left-aligned hero  (Contact page = dark, centred hero)
-   - Wide, sectioned single-column form with numbered steps
-   - Service + budget chosen as tappable chips instead of dropdowns
-   - Sticky right sidebar: "What happens next" timeline + quick contact
-     (Contact page = navy info panel on the LEFT of one big card)
-
-   WHERE THE FORM IS SENT
-   A) Web3Forms (no backend):  VITE_WEB3FORMS_KEY=your_key
-   B) Your own endpoint:       VITE_ENQUIRY_ENDPOINT=https://your-api.com/enquiry
-   (CRA users: use process.env.REACT_APP_X instead of import.meta.env.X)
+   SUBMIT BEHAVIOUR
+   When the form is valid, WhatsApp opens with the full enquiry
+   pre-filled, addressed to WHATSAPP_NUMBER below. The visitor just
+   taps Send in WhatsApp. No backend or API key needed.
 ------------------------------------------------------------------- */
-const ENDPOINT =
-  import.meta.env.VITE_ENQUIRY_ENDPOINT || "https://api.web3forms.com/submit";
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || "";
+
+// WhatsApp number: country code + number, digits only (no + or spaces)
+const WHATSAPP_NUMBER = "919444116316";
+
 const PRIVACY_URL = "/privacy-policy";
-const HERO_IMG = "/banner/5.png";
+const HERO_IMG = "public/enquiry.png";
 
 const SERVICES = [
   "Website Design & Development",
@@ -40,8 +36,9 @@ const BUDGETS = [
   "₹5,00,000+",
   "Prefer to Discuss",
 ];
+// Australia first, then the rest
 const COUNTRY_CODES = [
-  ["+91", "IN +91"], ["+61", "AU +61"], ["+1", "US/CA +1"], ["+44", "UK +44"],
+  ["+61", "AU +61"], ["+91", "IN +91"], ["+1", "US/CA +1"], ["+44", "UK +44"],
   ["+65", "SG +65"], ["+971", "AE +971"], ["+64", "NZ +64"],
 ];
 const STEPS = [
@@ -55,6 +52,7 @@ const SOCIALS = [
   { name: "Instagram", href: "https://www.instagram.com/", d: "M7.5 3h9A4.5 4.5 0 0 1 21 7.5v9a4.5 4.5 0 0 1-4.5 4.5h-9A4.5 4.5 0 0 1 3 16.5v-9A4.5 4.5 0 0 1 7.5 3Zm0 1.8A2.7 2.7 0 0 0 4.8 7.5v9a2.7 2.7 0 0 0 2.7 2.7h9a2.7 2.7 0 0 0 2.7-2.7v-9a2.7 2.7 0 0 0-2.7-2.7h-9ZM12 7.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm0 1.8a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4Zm4.9-2.5a1.05 1.05 0 1 1 0 2.1 1.05 1.05 0 0 1 0-2.1Z" },
   { name: "Facebook", href: "https://www.facebook.com/", d: "M13.5 21v-8h2.7l.4-3.2h-3.1V7.8c0-.9.3-1.5 1.6-1.5h1.7V3.4c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.1v2.4H7.7V13h2.7v8h3.1Z" },
   { name: "X", href: "https://x.com/", d: "M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.3L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8L17.8 3Zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5Z" },
+  { name: "Google Maps", href: "https://maps.app.goo.gl/TE4BHQyxoyt74fJ66", d: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z", hoverColor: "hover:border-[#EA4335] hover:bg-[#EA4335] hover:text-white" },
 ];
 
 /* ---------- icons ---------- */
@@ -88,21 +86,38 @@ function validate(v) {
   return e;
 }
 
+/* ---------- WhatsApp message ---------- */
+function buildWhatsappUrl(v) {
+  const lines = [
+    "New Website Enquiry",
+    "",
+    `Name: ${v.name.trim()}`,
+    `Email: ${v.email.trim()}`,
+    `Phone: ${v.countryCode} ${v.phone.trim()}`,
+  ];
+  if (v.company.trim()) lines.push(`Company: ${v.company.trim()}`);
+  lines.push(`Service: ${v.service}`);
+  if (v.budget) lines.push(`Budget: ${v.budget}`);
+  lines.push("", "Message:", v.message.trim());
+
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+}
+
 /* ---------- styling helpers ---------- */
 const inputBase =
-  "w-full rounded-xl border bg-white px-4 text-[15px] text-[#0B1730] placeholder:text-black/60 " +
-  "outline-none transition focus:border-[#174F91] focus:ring-4 focus:ring-[#174F91]/15";
-const inputCls = (err) => `${inputBase} ${err ? "border-[#E3182D]" : "border-[#D4DCE8]"}`;
+  "w-full rounded-xl border bg-white px-4 text-[15px] text-[#0F3D2E] placeholder:text-black/60 " +
+  "outline-none transition focus:border-[#E8890C] focus:ring-4 focus:ring-[#E8890C]/15";
+const inputCls = (err) => `${inputBase} ${err ? "border-[#E8890C]" : "border-[#D4DCE8]"}`;
 
 function Field({ label, required, error, htmlFor, children, className = "" }) {
   return (
     <div className={`min-w-0 ${className}`}>
-      <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-semibold text-[#0B1730]">
+      <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-semibold text-[#0F3D2E]">
         {label}
-        {required && <span className="ml-0.5 text-[#E3182D]" aria-hidden="true">*</span>}
+        {required && <span className="ml-0.5 text-[#E8890C]" aria-hidden="true">*</span>}
       </label>
       {children}
-      {error && <p id={`${htmlFor}-err`} role="alert" className="mt-1.5 text-[13px] text-[#E3182D]">{error}</p>}
+      {error && <p id={`${htmlFor}-err`} role="alert" className="mt-1.5 text-[13px] text-red-600 font-medium">{error}</p>}
     </div>
   );
 }
@@ -111,9 +126,9 @@ function Field({ label, required, error, htmlFor, children, className = "" }) {
 function SectionTitle({ n, title, hint }) {
   return (
     <div className="mb-5 flex items-start gap-3">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0B1730] text-sm font-bold text-white">{n}</span>
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0F3D2E] text-sm font-bold text-white">{n}</span>
       <div>
-        <h3 className="text-lg font-bold leading-8 text-[#0B1730]">{title}</h3>
+        <h3 className="text-lg font-bold leading-8 text-[#0F3D2E]">{title}</h3>
         {hint && <p className="text-sm text-black">{hint}</p>}
       </div>
     </div>
@@ -125,9 +140,9 @@ function SectionTitle({ n, title, hint }) {
 function ChipGroup({ id, legend, required, options, value, onChange, error }) {
   return (
     <fieldset id={id} tabIndex={-1} className="outline-none" aria-describedby={error ? `${id}-err` : undefined}>
-      <legend className="mb-2 text-sm font-semibold text-[#0B1730]">
+      <legend className="mb-2 text-sm font-semibold text-[#0F3D2E]">
         {legend}
-        {required && <span className="ml-0.5 text-[#E3182D]" aria-hidden="true">*</span>}
+        {required && <span className="ml-0.5 text-[#E8890C]" aria-hidden="true">*</span>}
       </legend>
       <div className="flex flex-wrap gap-2">
         {options.map((opt) => (
@@ -137,40 +152,41 @@ function ChipGroup({ id, legend, required, options, value, onChange, error }) {
                    onClick={() => value === opt && onChange("")}
                    className="peer sr-only" />
             <span className={`inline-block rounded-full border px-4 py-2 text-sm transition
-              peer-checked:border-[#174F91] peer-checked:bg-[#174F91] peer-checked:font-semibold peer-checked:text-white
-              peer-focus-visible:ring-4 peer-focus-visible:ring-[#174F91]/25
-              ${error ? "border-[#E3182D]/60" : "border-[#D4DCE8]"} bg-white text-[#0B1730] hover:border-[#174F91]`}>
+              peer-checked:border-[#E8890C] peer-checked:bg-[#E8890C] peer-checked:font-semibold peer-checked:text-white
+              peer-focus-visible:ring-4 peer-focus-visible:ring-[#E8890C]/25
+              ${error ? "border-red-400" : "border-[#D4DCE8]"} bg-white text-[#0F3D2E] hover:border-[#E8890C]`}>
               {opt}
             </span>
           </label>
         ))}
       </div>
-      {error && <p id={`${id}-err`} role="alert" className="mt-1.5 text-[13px] text-[#E3182D]">{error}</p>}
+      {error && <p id={`${id}-err`} role="alert" className="mt-1.5 text-[13px] text-red-600 font-medium">{error}</p>}
     </fieldset>
   );
 }
 
-const contactLink = "flex items-center gap-3 rounded-lg px-2 py-2 text-[15px] text-[#0B1730] transition hover:text-[#174F91]";
-const contactIcon = "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E3182D]/10 text-[#E3182D]";
+const contactLink = "flex items-center gap-3 rounded-lg px-2 py-2 text-[15px] text-[#0F3D2E] transition hover:text-[#E8890C]";
+const contactIcon = "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E8890C]/10 text-[#E8890C]";
 
 /* ================================================================== */
 export default function EnquiryPage() {
   const empty = {
-    name: "", email: "", countryCode: "+91", phone: "", company: "",
+    name: "", email: "", countryCode: "+61", phone: "", company: "",
     service: "", budget: "", message: "", consent: false, botcheck: "",
   };
   const [values, setValues] = useState(empty);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState("idle"); // idle | loading | success | error
+  const [status, setStatus] = useState("idle"); // idle | success
+  const [whatsappUrl, setWhatsappUrl] = useState("");
   const bannerRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  // bring the success / error message into view
+  // bring the success message into view
   useEffect(() => {
-    if (status === "success" || status === "error") {
+    if (status === "success") {
       bannerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [status]);
@@ -184,7 +200,7 @@ export default function EnquiryPage() {
     if (errors[k]) setErrors((p) => ({ ...p, [k]: undefined }));
   };
 
-  async function onSubmit(e) {
+  function onSubmit(e) {
     e.preventDefault();
     if (values.botcheck) return; // honeypot – bots only
     const errs = validate(values);
@@ -193,62 +209,36 @@ export default function EnquiryPage() {
       document.getElementById(Object.keys(errs)[0])?.focus();
       return;
     }
-    setStatus("loading");
-    try {
-      const payload = {
-        access_key: WEB3FORMS_KEY, // ignored by custom backends
-        subject: `New VR4Web enquiry – ${values.service}`,
-        from_name: "VR4Web Website",
-        name: values.name.trim(),
-        email: values.email.trim(),
-        phone: `${values.countryCode} ${values.phone.trim()}`,
-        company: values.company.trim(),
-        service: values.service,
-        budget: values.budget,
-        message: values.message.trim(),
-      };
-      const res = await fetch(ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || data.success === false) throw new Error(data.message || "Request failed");
-      setStatus("success");
-      setValues(empty);
-    } catch {
-      setStatus("error");
-    }
+
+    const url = buildWhatsappUrl(values);
+    setWhatsappUrl(url);
+
+    // Open directly inside the submit handler so popup blockers don't stop it
+    window.open(url, "_blank", "noopener,noreferrer");
+
+    setStatus("success");
+    setValues(empty);
   }
 
   return (
-    <main className="min-h-screen bg-white font-sans text-[#0B1730]">
-      {/* ---------------- HERO: background image + clean centered layout ---------------- */}
-      <section className="relative isolate overflow-hidden px-4 pb-12 pt-28 sm:px-6 sm:pb-16 sm:pt-32 lg:px-8 border-b border-[#1E3A66]">
-        <img src={HERO_IMG} alt="" aria-hidden="true" loading="eager"
-             className="absolute inset-0 -z-20 h-full w-full object-cover object-[center_20%]" />
-        {/* Subtle, soft Navy tint so /banner/5.png cloud texture is clearly visible with no heavy dark smoke filter */}
-        <div className="absolute inset-0 -z-10 bg-[#102448]/25" />
-
+    <main className="min-h-screen bg-white font-sans text-[#0F3D2E] selection:bg-[#E8890C] selection:text-white">
+      {/* ---------------- HERO ---------------- */}
+      <section className="relative isolate overflow-hidden px-4 pb-12 pt-28 sm:px-6 sm:pb-16 sm:pt-32 lg:px-8 border-b border-[#0F3D2E] bg-[rgb(240,231,195)]">
         <div className="mx-auto max-w-4xl text-center flex flex-col items-center justify-center">
-          <nav aria-label="Breadcrumb" className="mb-4 inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-medium bg-[#102448]/80 text-white px-4 py-1.5 rounded-full shadow-md backdrop-blur-md border border-white/20 mx-auto">
-            <Link to="/" className="transition-colors hover:text-[#FF6B7A]">Home</Link>
+          <nav aria-label="Breadcrumb" className="mb-4 inline-flex items-center justify-center gap-2 text-xs sm:text-sm font-medium bg-[#0F3D2E] text-white px-4 py-1.5 rounded-full shadow-sm mx-auto">
+            <Link to="/" className="transition-colors hover:text-[#E8890C]">Home</Link>
             <span aria-hidden="true" className="text-white/60">/</span>
             <span className="font-semibold text-white">Enquiry</span>
           </nav>
 
-          <span className="mb-3 inline-block h-1 w-16 rounded-full bg-[#E3182D] mx-auto" />
-          <h1 className="text-[clamp(2rem,4.4vw,3.25rem)] font-extrabold leading-tight text-white drop-shadow-[0_4px_16px_rgba(16,36,72,0.6)] mb-4 text-center">
-            Let’s Build Something <span className="text-[#E3182D]">Great Together.</span>
+          <h1 className="text-[clamp(2rem,4.4vw,3.25rem)] font-extrabold leading-tight text-[#0F3D2E] mb-6 text-center">
+            Let’s Build Something <span className="text-[#E8890C]">Great Together.</span>
           </h1>
-          <p className="max-w-2xl text-[clamp(0.95rem,1.4vw,1.1rem)] leading-relaxed text-white drop-shadow-[0_1px_4px_rgba(16,36,72,0.7)] mb-6 text-center mx-auto">
-            Have a project in mind or need expert digital solutions? Tell us what you’re looking for, and our team will help you take the next step.
-          </p>
 
           <ul className="flex flex-wrap items-center justify-center gap-2.5 mx-auto">
             {["Reply within 24 hrs", "No obligation", "Free consultation"].map((t) => (
-              <li key={t} className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-[#102448]/60 px-4 py-1.5 text-xs sm:text-sm font-medium text-white backdrop-blur-md shadow-sm">
-                <span className="text-[#FF6B7A]"><CheckIcon /></span>{t}
+              <li key={t} className="inline-flex items-center gap-1.5 rounded-full border border-[#0F3D2E]/20 bg-[#0F3D2E] px-4 py-1.5 text-xs sm:text-sm font-medium text-white shadow-sm">
+                <span className="text-[#E8890C]"><CheckIcon /></span>{t}
               </li>
             ))}
           </ul>
@@ -262,13 +252,11 @@ export default function EnquiryPage() {
           <div ref={bannerRef}>
             {status === "success" && (
               <div role="status" className="mb-6 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800">
-                <strong>Thank you!</strong> Your enquiry has been sent. We’ll reply shortly.
-              </div>
-            )}
-            {status === "error" && (
-              <div role="alert" className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
-                Something went wrong. Please try again, or email us at{" "}
-                <a className="font-semibold underline" href="mailto:info@niftysoft.com">info@niftysoft.com</a>.
+                <strong>Almost done!</strong> WhatsApp has opened with your enquiry. Please tap{" "}
+                <strong>Send</strong> in WhatsApp to complete it. If it didn’t open,{" "}
+                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
+                  open WhatsApp again
+                </a>.
               </div>
             )}
           </div>
@@ -298,13 +286,13 @@ export default function EnquiryPage() {
                 <Field label="Phone Number" required htmlFor="phone" error={errors.phone}>
                   <div className="flex gap-2">
                     <select aria-label="Country code" value={values.countryCode} onChange={set("countryCode")}
-                            className={`${inputCls(false)} h-12 w-[96px] shrink-0 px-2`}>
+                            className={`${inputCls(false).replace("w-full", "")} h-12 w-[110px] shrink-0 px-2`}>
                       {COUNTRY_CODES.map(([c, l]) => <option key={c} value={c}>{l}</option>)}
                     </select>
-                    <input id="phone" type="tel" autoComplete="tel-national" placeholder="94441 16316"
+                    <input id="phone" type="tel" autoComplete="tel-national" placeholder="412 345 678"
                            value={values.phone} onChange={set("phone")}
                            aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "phone-err" : undefined}
-                           className={`${inputCls(errors.phone)} h-12 min-w-0`} />
+                           className={`${inputCls(errors.phone)} h-12 min-w-0 flex-1`} />
                   </div>
                 </Field>
                 <Field label="Company / Brand" htmlFor="company">
@@ -346,28 +334,18 @@ export default function EnquiryPage() {
               <label className="flex cursor-pointer items-start gap-3 text-sm text-black">
                 <input id="consent" type="checkbox" checked={values.consent} onChange={set("consent")}
                        aria-invalid={!!errors.consent}
-                       className="mt-0.5 h-5 w-5 shrink-0 rounded border-[#D4DCE8] accent-[#E3182D]" />
+                       className="mt-0.5 h-5 w-5 shrink-0 rounded border-[#D4DCE8] accent-[#E8890C]" />
                 <span>
                   I agree to the{" "}
-                  <Link to={PRIVACY_URL} className="font-semibold text-[#174F91] underline">privacy policy</Link>{" "}
+                  <Link to={PRIVACY_URL} className="font-semibold text-[#0F3D2E] underline transition hover:text-[#E8890C]">privacy policy</Link>{" "}
                   and consent to VR4Web contacting me regarding my enquiry.
                 </span>
               </label>
-              {errors.consent && <p role="alert" className="mt-1.5 text-[13px] text-[#E3182D]">{errors.consent}</p>}
+              {errors.consent && <p role="alert" className="mt-1.5 text-[13px] font-medium text-red-600">{errors.consent}</p>}
 
-              <button type="submit" disabled={status === "loading"}
-                      className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#E3182D] px-8 font-bold text-white shadow-lg shadow-[#E3182D]/25 transition hover:bg-[#BF1024] focus:outline-none focus-visible:ring-4 focus-visible:ring-[#E3182D]/30 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto">
-                {status === "loading" ? (
-                  <>
-                    <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="3" opacity=".25" />
-                      <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                    </svg>
-                    Sending…
-                  </>
-                ) : (
-                  <>Send Your Enquiry <SendIcon /></>
-                )}
+              <button type="submit"
+                      className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-b from-[#E8890C] to-[#d67d0a] px-8 font-bold text-white shadow-lg shadow-[#E8890C]/25 transition hover:from-[#d67d0a] hover:to-[#b86906] focus:outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/30 sm:w-auto">
+                Send Your Enquiry <SendIcon />
               </button>
             </div>
           </form>
@@ -376,13 +354,13 @@ export default function EnquiryPage() {
         {/* SIDEBAR */}
         <aside className="space-y-6 lg:sticky lg:top-28">
           {/* What happens next */}
-          <div className="rounded-2xl bg-gradient-to-br from-[#0B1730] to-[#172B4D] p-6 text-white sm:p-7">
+          <div className="rounded-2xl bg-gradient-to-br from-[#0A291E] via-[#0F3D2E] to-[#124A37] p-6 text-white shadow-lg shadow-[#0F3D2E]/20 sm:p-7">
             <h2 className="text-lg font-bold">What happens next?</h2>
             <ol className="mt-5">
               {STEPS.map(([title, text], i) => (
                 <li key={title} className="relative flex gap-4 pb-6 last:pb-0">
                   {i < STEPS.length - 1 && <span className="absolute left-[15px] top-8 h-[calc(100%-2rem)] w-px bg-white/20" aria-hidden="true" />}
-                  <span className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E3182D] text-sm font-bold">{i + 1}</span>
+                  <span className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E8890C] text-sm font-bold text-white shadow-md shadow-[#E8890C]/30">{i + 1}</span>
                   <div>
                     <p className="font-semibold">{title}</p>
                     <p className="mt-0.5 text-sm leading-relaxed text-white">{text}</p>
@@ -392,14 +370,20 @@ export default function EnquiryPage() {
             </ol>
           </div>
 
+          {/* Business Hours Widget */}
+          <div className="w-full">
+            <BusinessHoursWidget />
+          </div>
+
           {/* Quick contact */}
           <div className="rounded-2xl border border-[#E2E8F0] bg-white p-5 shadow-sm sm:p-6">
-            <h2 className="text-lg font-bold text-[#0B1730]">Prefer to talk?</h2>
+            <h2 className="text-lg font-bold text-[#0F3D2E]">Prefer to talk?</h2>
             <div className="mt-3 space-y-2">
               <a className={contactLink} href="mailto:info@niftysoft.com"><span className={contactIcon}><MailIcon /></span><span className="min-w-0 break-words">info@niftysoft.com</span></a>
-              <a className={contactLink} href="tel:+919444116316"><span className={contactIcon}><PhoneIcon /></span><span>+91 94441 16316</span></a>
-              <div className="flex items-center gap-3 px-2 py-2 text-[15px] text-[#0B1730]"><span className={contactIcon}><ClockIcon /></span><span>Mon – Fri, 9:30 AM – 6:30 PM IST</span></div>
-              <div className="flex items-start gap-3 px-2 py-2 text-[15px] text-[#0B1730]">
+              <a className={contactLink} href="tel:+919444116316"><span className={contactIcon}><PhoneIcon /></span><span>+91 94441 16316 <span className="text-xs text-slate-500 font-normal">(India)</span></span></a>
+              <a className={contactLink} href="tel:+61489986622"><span className={contactIcon}><PhoneIcon /></span><span>+61 489 986 622 <span className="text-xs text-slate-500 font-normal">(Australia)</span></span></a>
+              <div className="flex items-center gap-3 px-2 py-2 text-[15px] text-[#0F3D2E]"><span className={contactIcon}><ClockIcon /></span><span>Mon – Sat, 9:00 AM – 7:00 PM IST</span></div>
+              <div className="flex items-start gap-3 px-2 py-2 text-[15px] text-[#0F3D2E]">
                 <span className={`${contactIcon} mt-0.5 shrink-0`}><PinIcon /></span>
                 <span>Unit No.23 Block I, SIDCO Electronic Complex, Guindy, Chennai – 600 032</span>
               </div>
@@ -407,13 +391,34 @@ export default function EnquiryPage() {
             <div className="mt-4 flex gap-2 border-t border-[#E2E8F0] pt-4">
               {SOCIALS.map((s) => (
                 <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.name}
-                   className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D4DCE8] text-[#0B1730] transition hover:border-[#174F91] hover:bg-[#174F91] hover:text-white">
+                   className={`flex h-9 w-9 items-center justify-center rounded-full border border-[#D4DCE8] text-[#0F3D2E] transition ${
+                     s.hoverColor || "hover:border-[#E8890C] hover:bg-[#E8890C] hover:text-white"
+                   }`}>
                   <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true"><path d={s.d} /></svg>
                 </a>
               ))}
             </div>
           </div>
         </aside>
+      </section>
+
+      {/* ───────────── MAP SECTION ───────────── */}
+      <section id="map" className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-center mb-10 md:mb-12">
+          <span className="inline-block px-3.5 py-1 rounded-full bg-[#E8890C]/20 border border-[#E8890C] text-[#0F3D2E] text-xs sm:text-sm font-bold mb-3">
+            Find Us
+          </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight mb-3 text-[#0F3D2E]">
+            Visit Our <span className="text-[#E8890C]">Development Center</span>
+          </h2>
+          <p className="text-black text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+            Drop by our Guindy office or reach out to discuss your next project in person or online.
+          </p>
+        </div>
+
+        <div className="rounded-[10px] shadow-[0_20px_50px_-20px_rgba(15,23,42,0.25)] overflow-hidden bg-white">
+          <GoogleMapsWidget />
+        </div>
       </section>
     </main>
   );

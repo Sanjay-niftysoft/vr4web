@@ -135,13 +135,13 @@ export default function Header() {
   const handleQuoteSubmit = (e) => {
     e.preventDefault();
     setQuoteSubmitted(true);
-    // Dark Blue and Gold Confetti
+    // Gold and Forest Green Confetti
     try {
       confetti({
         particleCount: 85,
         spread: 85,
         origin: { y: 0.55 },
-        colors: ['#172554', '#1e40af', '#2563eb', '#38bdf8', '#ffffff']
+        colors: ['#E8890C', '#F2A33A', '#0F3D2E', '#1F6B4F', '#ffffff']
       });
     } catch {
       // safe fallback
@@ -401,7 +401,7 @@ export default function Header() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_24px_rgba(23,37,84,0.06)] border-b border-[#111111]/10/80 h-[64px] sm:h-[72px] lg:h-[78px] xl:h-[84px] 4xl:h-[100px]'
+          ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_24px_rgba(15,61,46,0.06)] border-b border-[#111111]/10/80 h-[64px] sm:h-[72px] lg:h-[78px] xl:h-[84px] 4xl:h-[100px]'
           : 'bg-white/90 backdrop-blur-sm border-b border-[#111111]/10/50 h-[68px] sm:h-[76px] lg:h-[82px] xl:h-[88px] 4xl:h-[108px]'
           }`}
       >
@@ -461,8 +461,8 @@ export default function Header() {
                       transition={{ type: "spring", stiffness: 450, damping: 14 }}
                       onClick={() => setActiveDropdown(isOpen ? null : 'Our Services')}
                       className={`group relative px-1.5 py-1 lg:px-1.5 lg:py-1 xl:px-3 xl:py-2 4xl:px-5 4xl:py-2.5 rounded-2xl text-[12px] lg:text-[12px] xl:text-[13.5px] 4xl:text-[17px] font-medium flex items-center gap-1 lg:gap-1 xl:gap-2 transition-all duration-200 cursor-pointer ${active || isOpen
-                        ? 'text-[#0B4F9C] bg-white/90 shadow-sm border border-[#111111]/10/70'
-                        : 'text-[#111111] hover:text-[#0B4F9C] hover:bg-white/70'
+                        ? 'text-[#E8890C] bg-white/90 shadow-sm border border-[#111111]/10/70'
+                        : 'text-[#111111] hover:text-[#E8890C] hover:bg-white/70'
                         }`}
                     >
                       <motion.div
@@ -470,22 +470,22 @@ export default function Header() {
                         whileHover={{ scale: 1.1 }}
                         transition={{ type: "spring", stiffness: 600, damping: 15 }}
                         className={`w-5.5 h-5.5 lg:w-5.5 lg:h-5.5 xl:w-7 xl:h-7 4xl:w-9 4xl:h-9 rounded-full flex items-center justify-center transition-all duration-200 ${active || isOpen
-                          ? 'bg-[#0B4F9C] text-white shadow-sm shadow-[#0B4F9C]/30'
-                          : 'bg-white/70 text-[#111111] group-hover:bg-white group-hover:text-[#0B4F9C]'
+                          ? 'bg-[#E8890C] text-white shadow-sm shadow-[#E8890C]/30'
+                          : 'bg-white/70 text-[#111111] group-hover:bg-white group-hover:text-[#E8890C]'
                           }`}
                       >
                         <Icon className="w-2.5 h-2.5 lg:w-2.5 lg:h-2.5 xl:w-3.5 xl:h-3.5 4xl:w-4.5 4xl:h-4.5" />
                       </motion.div>
 
                       <span className="flex items-center whitespace-nowrap">
-                        <span className={`${active || isOpen ? 'text-[#0B4F9C] font-semibold text-[1.12em]' : ''}`}>
+                        <span className={`${active || isOpen ? 'text-[#E8890C] font-semibold text-[1.12em]' : ''}`}>
                           {item.name.charAt(0)}
                         </span>
                         <span>{item.name.slice(1)}</span>
                       </span>
 
                       <ChevronDown
-                        className={`w-3 h-3 lg:w-3 lg:h-3 xl:w-3.5 xl:h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#0B4F9C]' : active ? 'text-[#0B4F9C]' : 'text-[#111111]'}`}
+                        className={`w-3 h-3 lg:w-3 lg:h-3 xl:w-3.5 xl:h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#E8890C]' : active ? 'text-[#E8890C]' : 'text-[#111111]'}`}
                       />
                     </motion.button>
 
@@ -501,7 +501,7 @@ export default function Header() {
                           onMouseEnter={() => handleMouseEnter('Our Services')}
                           onMouseLeave={handleMouseLeave}
                         >
-                          <div className="bg-white border border-[#111111]/10/90 rounded-3xl shadow-[0_25px_70px_rgba(23,37,84,0.18)] overflow-hidden flex flex-col md:flex-row max-h-[82vh]">
+                          <div className="bg-white border border-[#111111]/10/90 rounded-3xl shadow-[0_25px_70px_rgba(15,61,46,0.18)] overflow-hidden flex flex-col md:flex-row max-h-[82vh]">
 
                             {/* LEFT COLUMN: Categories / Domains (Vertical Tabs) */}
                             <div className="w-[300px] xl:w-[330px] bg-white/90 p-4 border-r border-[#111111]/10/80 flex flex-col justify-between overflow-y-auto">
@@ -523,8 +523,8 @@ export default function Header() {
                                         onMouseEnter={() => setActiveServiceCategory(cat.id)}
                                         onClick={() => setActiveServiceCategory(cat.id)}
                                         className={`w-full flex items-center justify-between px-3 py-2.5 rounded-2xl text-left transition-all duration-200 cursor-pointer ${isSelected
-                                          ? 'bg-[#0B4F9C] text-white shadow-md shadow-[#0B4F9C]/25'
-                                          : 'text-[#111111] hover:bg-white/70 hover:text-[#0B4F9C]'
+                                          ? 'bg-[#E8890C] text-white shadow-md shadow-[#E8890C]/25'
+                                          : 'text-[#111111] hover:bg-white/70 hover:text-[#E8890C]'
                                           }`}
                                       >
                                         <div className="flex items-center gap-2.5 min-w-0">
@@ -551,7 +551,7 @@ export default function Header() {
 
                               {/* vr4web.com Badge in Left Column */}
                               <div className="mt-4 pt-3 border-t border-[#111111]/10/80 px-3 flex items-center gap-2 text-[#111111] text-[13px] font-medium">
-                                <Globe className="w-3.5 h-3.5 text-[#0B4F9C]" />
+                                <Globe className="w-3.5 h-3.5 text-[#E8890C]" />
                                 <span className="text-[#111111] font-medium tracking-wide">vr4web.com</span>
                               </div>
                             </div>
@@ -562,7 +562,7 @@ export default function Header() {
                                 {/* Sub-heading Section */}
                                 <div className="pb-4 mb-4 border-b border-[#111111]/10">
                                   <div>
-                                    <h3 className="text-xl xl:text-2xl font-semibold text-[#0B4F9C] tracking-tight flex items-center gap-2">
+                                    <h3 className="text-xl xl:text-2xl font-semibold text-[#E8890C] tracking-tight flex items-center gap-2">
                                       <span>{currentCategoryData.name}</span>
                                     </h3>
                                     <p className="text-[15px] xl:text-[17px] font-normal text-[#111111] mt-1">
@@ -589,15 +589,15 @@ export default function Header() {
                                               whileHover={{ scale: 1.15, rotate: 6 }}
                                               whileTap={{ scale: 0.86, rotate: -6 }}
                                               transition={{ type: "spring", stiffness: 450, damping: 16 }}
-                                              className="w-7 h-7 rounded-lg bg-white/90 group-hover:bg-[#0B4F9C] text-[#0B4F9C] group-hover:text-white flex items-center justify-center transition-all duration-200 border border-[#111111]/10/80 group-hover:border-[#0B4F9C] shadow-xs flex-shrink-0"
+                                              className="w-7 h-7 rounded-lg bg-white/90 group-hover:bg-[#E8890C] text-[#E8890C] group-hover:text-white flex items-center justify-center transition-all duration-200 border border-[#111111]/10/80 group-hover:border-[#E8890C] shadow-xs flex-shrink-0"
                                             >
                                               <SubItemIcon className="w-3.5 h-3.5 transition-transform duration-200 group-hover:scale-105" />
                                             </motion.div>
-                                            <span className="text-[14px] font-bold text-[#111111] group-hover:text-[#0B4F9C] transition-colors leading-tight">
+                                            <span className="text-[14px] font-bold text-[#111111] group-hover:text-[#E8890C] transition-colors leading-tight">
                                               {sub.name}
                                             </span>
                                           </div>
-                                          <ArrowUpRight className="w-3.5 h-3.5 text-[#111111] group-hover:text-[#0B4F9C] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all opacity-0 group-hover:opacity-100 flex-shrink-0 ml-1" />
+                                          <ArrowUpRight className="w-3.5 h-3.5 text-[#111111] group-hover:text-[#E8890C] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all opacity-0 group-hover:opacity-100 flex-shrink-0 ml-1" />
                                         </div>
                                         <p className="text-[13.5px] font-normal text-[#111111] line-clamp-1 leading-snug pl-[38px]">
                                           {sub.desc}
@@ -634,8 +634,8 @@ export default function Header() {
                       transition={{ type: "spring", stiffness: 450, damping: 14 }}
                       onClick={() => setActiveDropdown(isOpen ? null : item.name)}
                       className={`group relative px-1.5 py-1 lg:px-1.5 lg:py-1 xl:px-3 xl:py-2 4xl:px-5 4xl:py-2.5 rounded-2xl text-[12px] lg:text-[12px] xl:text-[13.5px] 4xl:text-[17px] font-medium flex items-center gap-1 lg:gap-1 xl:gap-2 transition-all duration-200 cursor-pointer ${active
-                        ? 'text-[#0B4F9C] bg-white/90 shadow-sm border border-[#111111]/10/70'
-                        : 'text-[#111111] hover:text-[#0B4F9C] hover:bg-white/70'
+                        ? 'text-[#E8890C] bg-white/90 shadow-sm border border-[#111111]/10/70'
+                        : 'text-[#111111] hover:text-[#E8890C] hover:bg-white/70'
                         }`}
                     >
                       <motion.div
@@ -643,22 +643,22 @@ export default function Header() {
                         whileHover={{ scale: 1.1 }}
                         transition={{ type: "spring", stiffness: 600, damping: 15 }}
                         className={`w-5.5 h-5.5 lg:w-5.5 lg:h-5.5 xl:w-7 xl:h-7 4xl:w-9 4xl:h-9 rounded-full flex items-center justify-center transition-all duration-200 ${active
-                          ? 'bg-[#0B4F9C] text-white shadow-sm shadow-[#0B4F9C]/30'
-                          : 'bg-white/70 text-[#111111] group-hover:bg-white group-hover:text-[#0B4F9C]'
+                          ? 'bg-[#E8890C] text-white shadow-sm shadow-[#E8890C]/30'
+                          : 'bg-white/70 text-[#111111] group-hover:bg-white group-hover:text-[#E8890C]'
                           }`}
                       >
                         <Icon className="w-2.5 h-2.5 lg:w-2.5 lg:h-2.5 xl:w-3.5 xl:h-3.5 4xl:w-4.5 4xl:h-4.5" />
                       </motion.div>
 
                       <span className="flex items-center whitespace-nowrap">
-                        <span className={`${active ? 'text-[#0B4F9C] font-semibold text-[1.12em]' : ''}`}>
+                        <span className={`${active ? 'text-[#E8890C] font-semibold text-[1.12em]' : ''}`}>
                           {item.name.charAt(0)}
                         </span>
                         <span>{item.name.slice(1)}</span>
                       </span>
 
                       <ChevronDown
-                        className={`w-3 h-3 lg:w-3 lg:h-3 xl:w-3.5 xl:h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#0B4F9C]' : active ? 'text-[#0B4F9C]' : 'text-[#111111]'}`}
+                        className={`w-3 h-3 lg:w-3 lg:h-3 xl:w-3.5 xl:h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#E8890C]' : active ? 'text-[#E8890C]' : 'text-[#111111]'}`}
                       />
                     </motion.button>
 
@@ -671,7 +671,7 @@ export default function Header() {
                           transition={{ duration: 0.22, ease: "easeOut" }}
                           className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 w-[300px] xl:w-[320px]"
                         >
-                          <div className="bg-white border border-[#111111]/10 rounded-2xl shadow-[0_18px_40px_rgba(23,37,84,0.12)] p-2.5 backdrop-blur-xl">
+                          <div className="bg-white border border-[#111111]/10 rounded-2xl shadow-[0_18px_40px_rgba(15,61,46,0.12)] p-2.5 backdrop-blur-xl">
                             <div className="space-y-1">
                               {item.subItems.map((sub) => {
                                 const isSubActive = location.pathname === sub.path;
@@ -683,7 +683,7 @@ export default function Header() {
                                     to={sub.path}
                                     onClick={() => setActiveDropdown(null)}
                                     className={`group flex items-start gap-3 p-2.5 rounded-xl transition-all duration-200 ${isSubActive
-                                      ? 'bg-[#0B4F9C] text-white shadow-md shadow-[#0B4F9C]/20'
+                                      ? 'bg-[#E8890C] text-white shadow-md shadow-[#E8890C]/20'
                                       : 'hover:bg-white/70 text-[#111111]'
                                       }`}
                                   >
@@ -693,7 +693,7 @@ export default function Header() {
                                       transition={{ type: "spring", stiffness: 600, damping: 15 }}
                                       className={`mt-0.5 w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-transform duration-200 ${isSubActive
                                         ? 'bg-white/20 text-white'
-                                        : 'bg-white/70 text-[#0B4F9C] group-hover:bg-[#0B4F9C] group-hover:text-white'
+                                        : 'bg-white/70 text-[#E8890C] group-hover:bg-[#E8890C] group-hover:text-white'
                                         }`}
                                     >
                                       <SubIcon className="w-4 h-4" />
@@ -701,15 +701,15 @@ export default function Header() {
 
                                     <div className="flex-1 min-w-0">
                                       <div className="flex items-center justify-between">
-                                        <span className={`text-[14px] font-bold tracking-tight transition-transform duration-200 group-hover:translate-x-0.5 ${isSubActive ? 'text-white' : 'text-[#111111] group-hover:text-[#0B4F9C]'
+                                        <span className={`text-[14px] font-bold tracking-tight transition-transform duration-200 group-hover:translate-x-0.5 ${isSubActive ? 'text-white' : 'text-[#111111] group-hover:text-[#E8890C]'
                                           }`}>
                                           {sub.name}
                                         </span>
 
-                                        <ArrowUpRight className={`w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${isSubActive ? 'opacity-100 text-white' : 'text-[#0B4F9C]'
+                                        <ArrowUpRight className={`w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${isSubActive ? 'opacity-100 text-white' : 'text-[#E8890C]'
                                           }`} />
                                       </div>
-                                      <p className={`text-[13px] font-normal leading-snug mt-0.5 line-clamp-1 ${isSubActive ? 'text-white/80' : 'text-[#111111]/70'
+                                      <p className={`text-[13px] font-normal leading-snug mt-0.5 line-clamp-1 ${isSubActive ? 'text-white/80' : 'text-[#111111]'
                                         }`}>
                                         {sub.desc}
                                       </p>
@@ -738,8 +738,8 @@ export default function Header() {
                     to={item.path}
                     onClick={() => setActiveDropdown(null)}
                     className={`group relative px-1.5 py-1 lg:px-1.5 lg:py-1 xl:px-3 xl:py-2 4xl:px-5 4xl:py-2.5 rounded-2xl text-[12px] lg:text-[12px] xl:text-[13.5px] 4xl:text-[17px] font-medium inline-flex items-center gap-1 lg:gap-1 xl:gap-2 transition-all duration-200 ${active
-                      ? 'text-[#0B4F9C] bg-white/90 shadow-sm border border-[#111111]/10/70'
-                      : 'text-[#111111] hover:text-[#0B4F9C] hover:bg-white/70'
+                      ? 'text-[#E8890C] bg-white/90 shadow-sm border border-[#111111]/10/70'
+                      : 'text-[#111111] hover:text-[#E8890C] hover:bg-white/70'
                       }`}
                   >
                     <motion.div
@@ -747,15 +747,15 @@ export default function Header() {
                       whileHover={{ scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 600, damping: 15 }}
                       className={`w-5.5 h-5.5 lg:w-5.5 lg:h-5.5 xl:w-7 xl:h-7 4xl:w-9 4xl:h-9 rounded-full flex items-center justify-center transition-all duration-200 ${active
-                        ? 'bg-[#0B4F9C] text-white shadow-sm shadow-[#0B4F9C]/30'
-                        : 'bg-white/70 text-[#111111] group-hover:bg-white group-hover:text-[#0B4F9C]'
+                        ? 'bg-[#E8890C] text-white shadow-sm shadow-[#E8890C]/30'
+                        : 'bg-white/70 text-[#111111] group-hover:bg-white group-hover:text-[#E8890C]'
                         }`}
                     >
                       <Icon className="w-2.5 h-2.5 lg:w-2.5 lg:h-2.5 xl:w-3.5 xl:h-3.5 4xl:w-4.5 4xl:h-4.5" />
                     </motion.div>
 
                     <span className="flex items-center whitespace-nowrap">
-                      <span className={`${active ? 'text-[#0B4F9C] font-semibold text-[1.12em]' : ''}`}>
+                      <span className={`${active ? 'text-[#E8890C] font-semibold text-[1.12em]' : ''}`}>
                         {item.name.charAt(0)}
                       </span>
                       <span>{item.name.slice(1)}</span>
@@ -766,17 +766,17 @@ export default function Header() {
             })}
           </motion.nav>
 
-          {/* CTA Button: Solid Normal Dark Blue (#172554) */}
+          {/* CTA Button: Solid Gold (#E8890C) - Desktop Only (hidden on mobile and tablet <= 720px/1024px) */}
           <motion.div
             initial={{ opacity: 0, x: 20, filter: 'blur(5px)' }}
             animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
             transition={{ duration: 0.9, delay: 0.4, ease: "easeOut" }}
-            className="hidden sm:flex items-center flex-shrink-0"
+            className="hidden lg:flex items-center flex-shrink-0"
           >
             <Link
               to="/enquiry"
               onClick={() => setActiveDropdown(null)}
-              className="relative flex items-center bg-[#0B4F9C] hover:bg-[#083a73] text-white px-2.5 sm:px-3 lg:px-3 lg:py-1.5 xl:px-5 xl:py-2 4xl:px-7 4xl:py-3 rounded-xl 4xl:rounded-2xl border border-[#0B4F9C] shadow-[0_4px_16px_rgba(23,37,84,0.35)] hover:shadow-[0_6px_22px_rgba(23,37,84,0.5)] hover:scale-105 active:scale-95 transition-all duration-200 overflow-hidden group focus:outline-none cursor-pointer flex-shrink-0"
+              className="relative flex items-center bg-[#E8890C] hover:bg-[#C9740A] text-white px-2.5 sm:px-3 lg:px-3 lg:py-1.5 xl:px-5 xl:py-2 4xl:px-7 4xl:py-3 rounded-xl 4xl:rounded-2xl border border-[#E8890C] shadow-[0_4px_16px_rgba(232,137,12,0.35)] hover:shadow-[0_6px_22px_rgba(232,137,12,0.5)] hover:scale-105 active:scale-95 transition-all duration-200 overflow-hidden group focus:outline-none cursor-pointer flex-shrink-0"
             >
               <span className="relative z-10 font-bold text-xs sm:text-[12.5px] lg:text-[12px] xl:text-[14px] 4xl:text-[17px] tracking-wide text-white whitespace-nowrap">
                 Get a Quote
@@ -784,21 +784,12 @@ export default function Header() {
             </Link>
           </motion.div>
 
-          {/* Mobile and Tablet Hamburger Toggle (320px, 425px, 768px) */}
+          {/* Mobile and Tablet Hamburger Toggle (320px to 720px - Quote button removed as requested) */}
           <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
-            <Link
-              to="/enquiry"
-              onClick={() => setMobileMenuOpen(false)}
-              className="sm:hidden relative flex items-center gap-1 bg-[#0B4F9C] text-white px-2.5 py-1.5 rounded-lg text-[11px] font-bold border border-[#0B4F9C] shadow-sm cursor-pointer whitespace-normal sm:whitespace-nowrap"
-            >
-              <AustralianKangarooIcon className="w-2.5 h-2.5 text-white" />
-              <span>Quote</span>
-            </Link>
-
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 sm:p-2.5 rounded-xl bg-white text-[#0B4F9C] hover:bg-white focus:outline-none transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2.5 rounded-xl bg-white text-[#E8890C] hover:bg-white focus:outline-none transition-colors cursor-pointer"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
@@ -831,24 +822,24 @@ export default function Header() {
                         <button
                           onClick={() => setMobileDropdown(isExpanded ? null : 'Our Services')}
                           className={`w-full flex items-center justify-between py-2.5 px-3 rounded-xl font-bold text-left transition-colors cursor-pointer ${active || isExpanded
-                            ? 'bg-white text-[#0B4F9C] border border-[#111111]/10/60'
+                            ? 'bg-white text-[#E8890C] border border-[#111111]/10/60'
                             : 'text-[#111111] hover:bg-white'
                             }`}
                         >
                           <span className="flex items-center gap-2.5 text-[15px]">
-                            <div className={`w-7 h-7 rounded-full flex items-center justify-center ${active || isExpanded ? 'bg-[#0B4F9C] text-white shadow-sm' : 'bg-white text-[#111111]'
+                            <div className={`w-7 h-7 rounded-full flex items-center justify-center ${active || isExpanded ? 'bg-[#E8890C] text-white shadow-sm' : 'bg-white text-[#111111]'
                               }`}>
                               <Icon className="w-3.5 h-3.5" />
                             </div>
                             <span className="whitespace-nowrap">
-                              <span className={active || isExpanded ? 'text-[#0B4F9C] font-semibold text-[1.12em]' : ''}>
+                              <span className={active || isExpanded ? 'text-[#E8890C] font-semibold text-[1.12em]' : ''}>
                                 {item.name.charAt(0)}
                               </span>
                               <span>{item.name.slice(1)}</span>
                             </span>
                           </span>
                           <ChevronDown
-                            className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-[#0B4F9C]' : 'text-[#111111]'}`}
+                            className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-[#E8890C]' : 'text-[#111111]'}`}
                           />
                         </button>
 
@@ -872,10 +863,10 @@ export default function Header() {
                                       className="w-full flex items-center justify-between p-2.5 text-left font-bold text-[13.5px] text-[#111111] hover:bg-white cursor-pointer"
                                     >
                                       <div className="flex items-center gap-2">
-                                        <CatIcon className="w-3.5 h-3.5 text-[#0B4F9C]" />
+                                        <CatIcon className="w-3.5 h-3.5 text-[#E8890C]" />
                                         <span>{cat.name}</span>
                                       </div>
-                                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isCatOpen ? 'rotate-180 text-[#0B4F9C]' : 'text-[#111111]'}`} />
+                                      <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isCatOpen ? 'rotate-180 text-[#E8890C]' : 'text-[#111111]'}`} />
                                     </button>
 
                                     <AnimatePresence>
@@ -897,18 +888,18 @@ export default function Header() {
                                                   setMobileMenuOpen(false);
                                                   setActiveDropdown(null);
                                                 }}
-                                                className="group flex items-center justify-between py-2 px-2.5 rounded-lg text-xs font-medium text-[#111111] hover:text-[#0B4F9C] hover:bg-white/80 transition-all"
+                                                className="group flex items-center justify-between py-2 px-2.5 rounded-lg text-xs font-medium text-[#111111] hover:text-[#E8890C] hover:bg-white/80 transition-all"
                                               >
                                                 <div className="flex items-center gap-2.5 min-w-0">
                                                   <motion.div
                                                     whileTap={{ scale: 0.85, rotate: -6 }}
-                                                    className="w-6 h-6 rounded-md bg-white group-hover:bg-[#0B4F9C] text-[#0B4F9C] group-hover:text-white flex items-center justify-center transition-colors flex-shrink-0 border border-[#111111]/10/60"
+                                                    className="w-6 h-6 rounded-md bg-white group-hover:bg-[#E8890C] text-[#E8890C] group-hover:text-white flex items-center justify-center transition-colors flex-shrink-0 border border-[#111111]/10/60"
                                                   >
                                                     <SubItemIcon className="w-3 h-3" />
                                                   </motion.div>
                                                   <span className="truncate">{sub.name}</span>
                                                 </div>
-                                                <ArrowUpRight className="w-3 h-3 text-[#111111] group-hover:text-[#0B4F9C] flex-shrink-0" />
+                                                <ArrowUpRight className="w-3 h-3 text-[#111111] group-hover:text-[#E8890C] flex-shrink-0" />
                                               </Link>
                                             );
                                           })}
@@ -934,24 +925,24 @@ export default function Header() {
                         <button
                           onClick={() => setMobileDropdown(isExpanded ? null : item.name)}
                           className={`w-full flex items-center justify-between py-2.5 px-3 rounded-xl font-bold text-left transition-colors cursor-pointer ${active
-                            ? 'bg-white text-[#0B4F9C] border border-[#111111]/10/60'
+                            ? 'bg-white text-[#E8890C] border border-[#111111]/10/60'
                             : 'text-[#111111] hover:bg-white'
                             }`}
                         >
                           <span className="flex items-center gap-2.5 text-[15px]">
-                            <div className={`w-7 h-7 rounded-full flex items-center justify-center ${active ? 'bg-[#0B4F9C] text-white shadow-sm' : 'bg-white text-[#111111]'
+                            <div className={`w-7 h-7 rounded-full flex items-center justify-center ${active ? 'bg-[#E8890C] text-white shadow-sm' : 'bg-white text-[#111111]'
                               }`}>
                               <Icon className="w-3.5 h-3.5" />
                             </div>
                             <span>
-                              <span className={active ? 'text-[#0B4F9C] font-semibold text-[1.12em]' : ''}>
+                              <span className={active ? 'text-[#E8890C] font-semibold text-[1.12em]' : ''}>
                                 {item.name.charAt(0)}
                               </span>
                               <span>{item.name.slice(1)}</span>
                             </span>
                           </span>
                           <ChevronDown
-                            className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-[#0B4F9C]' : 'text-[#111111]'}`}
+                            className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-[#E8890C]' : 'text-[#111111]'}`}
                           />
                         </button>
 
@@ -977,11 +968,11 @@ export default function Header() {
                                       setActiveDropdown(null);
                                     }}
                                     className={`flex items-center gap-3 py-2 px-3 rounded-lg text-[13.5px] font-medium transition-all ${isSubActive
-                                      ? 'bg-[#0B4F9C] text-white shadow-sm'
-                                      : 'text-[#111111] hover:bg-white/70 hover:text-[#0B4F9C]'
+                                      ? 'bg-[#E8890C] text-white shadow-sm'
+                                      : 'text-[#111111] hover:bg-white/70 hover:text-[#E8890C]'
                                       }`}
                                   >
-                                    <div className={`w-7 h-7 rounded-md flex items-center justify-center ${isSubActive ? 'bg-white/20 text-white' : 'bg-white text-[#0B4F9C]'
+                                    <div className={`w-7 h-7 rounded-md flex items-center justify-center ${isSubActive ? 'bg-white/20 text-white' : 'bg-white text-[#E8890C]'
                                       }`}>
                                       <SubIcon className="w-3.5 h-3.5" />
                                     </div>
@@ -1007,17 +998,17 @@ export default function Header() {
                           setActiveDropdown(null);
                         }}
                         className={`flex items-center justify-between py-2.5 px-3 rounded-xl font-bold text-[15px] transition-colors ${active
-                          ? 'bg-white text-[#0B4F9C] border border-[#111111]/10/60'
+                          ? 'bg-white text-[#E8890C] border border-[#111111]/10/60'
                           : 'text-[#111111] hover:bg-white'
                           }`}
                       >
                         <span className="flex items-center gap-2.5">
-                          <div className={`w-7 h-7 rounded-full flex items-center justify-center ${active ? 'bg-[#0B4F9C] text-white shadow-sm' : 'bg-white text-[#111111]'
+                          <div className={`w-7 h-7 rounded-full flex items-center justify-center ${active ? 'bg-[#E8890C] text-white shadow-sm' : 'bg-white text-[#111111]'
                             }`}>
                             <Icon className="w-3.5 h-3.5" />
                           </div>
                           <span>
-                            <span className={active ? 'text-[#0B4F9C] font-semibold text-[1.12em]' : ''}>
+                            <span className={active ? 'text-[#E8890C] font-semibold text-[1.12em]' : ''}>
                               {item.name.charAt(0)}
                             </span>
                             <span>{item.name.slice(1)}</span>
@@ -1037,7 +1028,7 @@ export default function Header() {
                       setMobileMenuOpen(false);
                       setActiveDropdown(null);
                     }}
-                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm bg-[#0B4F9C] hover:bg-[#083a73] text-white shadow-md transition-all"
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm bg-[#E8890C] hover:bg-[#C9740A] text-white shadow-md transition-all"
                   >
                     <span>Get a Quote / Make an Enquiry</span>
                     <ArrowUpRight className="w-4 h-4" />
@@ -1066,14 +1057,14 @@ export default function Header() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ type: "spring", stiffness: 380, damping: 25 }}
-              className="relative w-full max-w-lg 4xl:max-w-2xl bg-white rounded-2xl sm:rounded-3xl border border-[#111111]/10 shadow-[0_25px_60px_rgba(23,37,84,0.3)] overflow-hidden z-10 max-h-[92vh] overflow-y-auto"
+              className="relative w-full max-w-lg 4xl:max-w-2xl bg-white rounded-2xl sm:rounded-3xl border border-[#111111]/10 shadow-[0_25px_60px_rgba(15,61,46,0.3)] overflow-hidden z-10 max-h-[92vh] overflow-y-auto"
             >
-              <div className="h-1.5 sm:h-2 w-full bg-[#0B4F9C]" />
+              <div className="h-1.5 sm:h-2 w-full bg-[#E8890C]" />
 
               <div className="p-4 sm:p-6 pb-2 sm:pb-4 flex items-start justify-between">
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#111111]/10 text-[#0B4F9C] text-xs font-bold mb-2">
-                    <AustralianKangarooIcon className="w-3.5 h-3.5 text-[#0B4F9C]" />
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#111111]/10 text-[#E8890C] text-xs font-bold mb-2">
+                    <AustralianKangarooIcon className="w-3.5 h-3.5 text-[#E8890C]" />
                     <span>Australian Business Solutions</span>
                   </div>
                   <h3 className="text-xl sm:text-2xl 4xl:text-3xl font-semibold text-[#111111]">
@@ -1106,12 +1097,12 @@ export default function Header() {
                             key={serv}
                             onClick={() => setFormData({ ...formData, service: serv })}
                             className={`py-2 px-3 rounded-xl text-xs font-bold transition-all text-left flex items-center justify-between cursor-pointer ${formData.service === serv
-                              ? 'bg-[#0B4F9C] text-white shadow-md shadow-[#0B4F9C]/25'
+                              ? 'bg-[#E8890C] text-white shadow-md shadow-[#E8890C]/25'
                               : 'bg-white border border-[#111111]/10 text-[#111111] hover:bg-white'
                               }`}
                           >
                             <span>{serv}</span>
-                            {formData.service === serv && <CheckCircle2 className="w-3.5 h-3.5 text-[#F97316]" />}
+                            {formData.service === serv && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
                           </button>
                         ))}
                       </div>
@@ -1128,7 +1119,7 @@ export default function Header() {
                           placeholder="e.g. Liam Smith"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#111111]/10 text-[#111111] text-sm focus:outline-none focus:ring-2 focus:ring-[#172554]/30 focus:border-[#0B4F9C] transition-all"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#111111]/10 text-[#111111] text-sm focus:outline-none focus:ring-2 focus:ring-[#E8890C]/30 focus:border-[#E8890C] transition-all"
                         />
                       </div>
                       <div>
@@ -1141,20 +1132,20 @@ export default function Header() {
                           placeholder="liam@company.com.au"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#111111]/10 text-[#111111] text-sm focus:outline-none focus:ring-2 focus:ring-[#172554]/30 focus:border-[#0B4F9C] transition-all"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#111111]/10 text-[#111111] text-sm focus:outline-none focus:ring-2 focus:ring-[#E8890C]/30 focus:border-[#E8890C] transition-all"
                         />
                       </div>
                     </div>
 
                     <div>
                       <label className="block text-xs font-bold text-[#111111] mb-1 flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 text-[#0B4F9C]" />
+                        <MapPin className="w-3.5 h-3.5 text-[#E8890C]" />
                         <span>Australian Location / Region</span>
                       </label>
                       <select
                         value={formData.state}
                         onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#111111]/10 text-[#111111] text-sm focus:outline-none focus:ring-2 focus:ring-[#172554]/30 focus:border-[#0B4F9C] transition-all cursor-pointer"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#111111]/10 text-[#111111] text-sm focus:outline-none focus:ring-2 focus:ring-[#E8890C]/30 focus:border-[#E8890C] transition-all cursor-pointer"
                       >
                         <option value="NSW (Sydney)">New South Wales (Sydney)</option>
                         <option value="VIC (Melbourne)">Victoria (Melbourne)</option>
@@ -1171,7 +1162,7 @@ export default function Header() {
                         type="submit"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="w-full py-3 px-6 rounded-xl bg-[#0B4F9C] hover:bg-[#0B4F9C] text-white font-semibold text-sm flex items-center justify-center gap-2 border border-[#0B4F9C] shadow-lg shadow-[#0B4F9C]/30 cursor-pointer transition-all"
+                        className="w-full py-3 px-6 rounded-xl bg-[#E8890C] hover:bg-[#C9740A] text-white font-semibold text-sm flex items-center justify-center gap-2 border border-[#E8890C] shadow-lg shadow-[#E8890C]/30 cursor-pointer transition-all"
                       >
                         <AustralianKangarooIcon className="w-4 h-4 text-white" />
                         <span>Submit Quote Request</span>
@@ -1185,7 +1176,7 @@ export default function Header() {
                     animate={{ opacity: 1, scale: 1 }}
                     className="text-center py-8 space-y-4"
                   >
-                    <div className="w-16 h-16 rounded-full bg-[#0B4F9C] text-white border border-[#0B4F9C] flex items-center justify-center mx-auto shadow-lg shadow-[#0B4F9C]/30">
+                    <div className="w-16 h-16 rounded-full bg-[#E8890C] text-white border border-[#E8890C] flex items-center justify-center mx-auto shadow-lg shadow-[#E8890C]/30">
                       <AustralianKangarooIcon className="w-8 h-8 text-white" />
                     </div>
 
@@ -1194,16 +1185,16 @@ export default function Header() {
                         G&apos;day, {formData.name || 'there'}!
                       </h4>
                       <p className="text-sm text-[#111111] mt-1 max-w-sm mx-auto">
-                        Your custom quote request for <span className="font-bold text-[#0B4F9C]">{formData.service}</span> in <span className="font-bold text-[#111111]">{formData.state}</span> has been received!
+                        Your custom quote request for <span className="font-bold text-[#E8890C]">{formData.service}</span> in <span className="font-bold text-[#111111]">{formData.state}</span> has been received!
                       </p>
-                      <p className="text-xs text-[#0B4F9C] bg-white border border-[#111111]/10 rounded-lg p-2.5 mt-3 max-w-xs mx-auto">
+                      <p className="text-xs text-[#E8890C] bg-white border border-[#111111]/10 rounded-lg p-2.5 mt-3 max-w-xs mx-auto">
                         Our Australian solution architect will send your tailored proposal to <span className="font-medium">{formData.email}</span> within 2 business hours.
                       </p>
                     </div>
 
                     <button
                       onClick={closeQuoteModal}
-                      className="mt-4 px-6 py-2.5 rounded-xl bg-[#0B4F9C] hover:bg-[#0B4F9C] text-white font-semibold text-xs transition-colors cursor-pointer"
+                      className="mt-4 px-6 py-2.5 rounded-xl bg-[#E8890C] hover:bg-[#C9740A] text-white font-semibold text-xs transition-colors cursor-pointer"
                     >
                       Done and Close
                     </button>

@@ -28,10 +28,23 @@ import PageBanner from '../../components/common/PageBanner';
 import CtaSection from '../../components/CtaSection';
 
 // ─────────────────────────────────────────────────────────────────────────────
+// PARTNERS SECTION BACKGROUND PHOTO (Sydney, same as the About / Collaboration look)
+// To change the photo, replace the two links below.
+// ─────────────────────────────────────────────────────────────────────────────
+const PARTNERS_BG = 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&q=80&w=1800';
+const PARTNERS_BG_FALLBACK = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1800';
+
+/* If an image link fails, swap in the fallback once */
+const imgFallback = (fallback) => (e) => {
+  e.currentTarget.onerror = null;
+  e.currentTarget.src = fallback;
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // BRAND LOGO RENDERER
 // ─────────────────────────────────────────────────────────────────────────────
 
-function BrandLogo({ logo, name, className = 'h-11 w-auto' }) {
+function BrandLogo({ logo, name, className = 'h-14 w-auto' }) {
   if (typeof logo === 'string') {
     return (
       <div className="inline-flex items-center gap-2.5">
@@ -43,8 +56,8 @@ function BrandLogo({ logo, name, className = 'h-11 w-auto' }) {
         />
         {name === 'Content Consult' && (
           <div className="flex flex-col leading-tight select-none">
-            <span className="text-[11.5px] font-black tracking-tight text-[#102448] uppercase">Content</span>
-            <span className="text-[12px] font-black tracking-tight text-[#0B4F9C] uppercase">Consult</span>
+            <span className="text-[11.5px] font-black tracking-tight text-[#0F3D2E] uppercase">Content</span>
+            <span className="text-[12px] font-black tracking-tight text-[#E8890C] uppercase">Consult</span>
           </div>
         )}
       </div>
@@ -60,19 +73,19 @@ function BrandLogo({ logo, name, className = 'h-11 w-auto' }) {
 
 const BRANDS_DATA = [
   {
-    id: 'niftysoft',
-    name: 'NIFTYSOFT',
-    domain: 'niftysoft.com',
-    url: 'https://niftysoft.com',
-    desc: 'Digital Solutions for Modern Businesses',
+    id: 'niftyweblinks',
+    name: 'NIFTY WEB LINKS',
+    domain: 'niftyweblinks.com',
+    url: 'https://niftyweblinks.com',
+    desc: 'Global Web Directory & Link Building Solutions',
     fullDesc:
-      'End-to-end custom software architecture, enterprise cloud solutions, and digital transformation tailored for high-growth enterprises.',
-    tags: ['Custom Software', 'Cloud Platforms', 'Web Apps'],
-    stats: 'Enterprise Grade',
-    logo: '/logo/niftysoft.png',
-    accent: '#D7192D',
-    tint: 'rgba(215,25,45,0.10)',
-    glow: 'rgba(215,25,45,0.35)',
+      'Curated global web directory, high-authority link outreach, and search visibility architecture engineered to elevate domain authority.',
+    tags: ['Web Directory', 'Link Outreach', 'Domain Authority'],
+    stats: 'High Authority',
+    logo: '/logo-2/niftyweblinks.png',
+    accent: '#E8890C',
+    tint: 'rgba(232,137,12,0.10)',
+    glow: 'rgba(232,137,12,0.35)',
   },
   {
     id: 'lowcostwebdesign',
@@ -85,9 +98,9 @@ const BRANDS_DATA = [
     tags: ['Affordable Web', 'Mobile First', 'CMS Setup'],
     stats: '500+ Projects',
     logo: '/logo/lcwd.png',
-    accent: '#0B4F9C',
-    tint: 'rgba(11,79,156,0.10)',
-    glow: 'rgba(11,79,156,0.35)',
+    accent: '#0F3D2E',
+    tint: 'rgba(15,61,46,0.10)',
+    glow: 'rgba(15,61,46,0.35)',
   },
   {
     id: 'businessmailsolutions',
@@ -100,9 +113,9 @@ const BRANDS_DATA = [
     tags: ['Corporate Email', 'Spam Guard', '99.9% Uptime'],
     stats: 'Zero Data Loss',
     logo: '/logo/email.png',
-    accent: '#D7192D',
-    tint: 'rgba(215,25,45,0.09)',
-    glow: 'rgba(215,25,45,0.32)',
+    accent: '#E8890C',
+    tint: 'rgba(232,137,12,0.09)',
+    glow: 'rgba(232,137,12,0.32)',
   },
   {
     id: 'networkcare',
@@ -115,9 +128,9 @@ const BRANDS_DATA = [
     tags: ['Server Care', 'Network Security', '24/7 Monitoring'],
     stats: '< 15m Response',
     logo: '/logo/networkcare.png',
-    accent: '#102342',
-    tint: 'rgba(16,35,66,0.10)',
-    glow: 'rgba(16,35,66,0.38)',
+    accent: '#0F3D2E',
+    tint: 'rgba(15,61,46,0.10)',
+    glow: 'rgba(15,61,46,0.38)',
   },
 ];
 
@@ -135,13 +148,13 @@ const PARTNERS_DATA = [
     tags: ['24/7 Live Chat', 'Helpdesk Agents', 'AI Escalation'],
     points: ['Trained agents reply to your visitors in real time', 'AI answers routine questions and hands the rest to a person', 'Chat history shows what customers ask most'],
     logo: '/partners/chatbot.png',
-    banner: '/chatbot.png',
+    banner: '/PARTERNS-BANNER/CHATBOT.png',
   },
   {
     id: 'leadseo',
     name: 'Lead SEO',
     domain: 'leadseo.in',
-    url: 'https://leadseo.in',
+    url: 'https://leadseo.com',
     icon: TrendingUp,
     desc: 'Lead Generation & SEO Services',
     fullDesc:
@@ -150,7 +163,7 @@ const PARTNERS_DATA = [
     tags: ['Technical SEO', 'Lead Gen Funnels', 'Keyword Growth'],
     points: ['Site audits that find what holds your rankings back', 'Keywords chosen around what buyers actually search', 'Reports that track leads, not just traffic'],
     logo: '/logo-2/leadseo.png',
-    banner: '/leadseo-banner.jpg',
+    banner:'/PARTERNS-BANNER/LEADSEO.png',
   },
   {
     id: 'contentconsult',
@@ -165,7 +178,7 @@ const PARTNERS_DATA = [
     tags: ['Brand Voice', 'Editorial Content', 'SEO Copywriting'],
     points: ['Articles and pages written for your audience', 'An editorial calendar built around your goals', 'Copy that reads well and ranks'],
     logo: '/logo-2/content.png',
-    banner: '/content-banner.jpg',
+    banner: '/PARTERNS-BANNER/CONSUILT.png',
   },
   {
     id: 'smmconsult',
@@ -180,7 +193,7 @@ const PARTNERS_DATA = [
     tags: ['Viral Campaigns', 'Paid Social', 'Audience Building'],
     points: ['Posts and short videos made for each platform', 'Paid campaigns aimed at the right audience', 'Comments and messages handled for you'],
     logo: '/partners/smm.png',
-    banner: '/smm.png',
+    banner: '/PARTERNS-BANNER/SMM.png',
   },
   {
     id: 'ormconsult',
@@ -195,22 +208,7 @@ const PARTNERS_DATA = [
     tags: ['Review Shield', 'Executive PR', 'Sentiment Recovery'],
     points: ['Reviews and mentions monitored as they appear', 'Professional replies to negative feedback', 'Positive content pushed higher in search results'],
     logo: '/partners/orm.png',
-    banner: '/orm.png',
-  },
-  {
-    id: 'niftyweblinks',
-    name: 'Nifty Web Links',
-    domain: 'niftyweblinks.com',
-    url: 'https://niftyweblinks.com',
-    icon: Link2,
-    desc: 'Quality Web Links & Digital Promotion',
-    fullDesc:
-      'High Domain Authority editorial outreach, permanent contextual backlink syndication, and ethical digital PR for sustained search dominance.',
-    badge: 'Link Building',
-    tags: ['High DA Links', 'Digital PR', 'Outreach Networks'],
-    points: ['Outreach to relevant, high-authority websites', 'Links placed inside real editorial content', 'Digital PR that builds lasting visibility'],
-    logo: '/logo-2/niftyweblinks.png',
-    banner: '/weblinks-banner.jpg',
+    banner: '/PARTERNS-BANNER/orm.png',
   },
   {
     id: 'seoad',
@@ -225,7 +223,7 @@ const PARTNERS_DATA = [
     tags: ['Google Ads', 'PPC Optimization', 'Conversion Tracking'],
     points: ['Campaigns set up on Google Search and Display', 'Retargeting that brings past visitors back', 'Conversion tracking that shows what each click earns'],
     logo: '/partners/seoad.png',
-    banner: '/seoad.png',
+    banner: '/PARTERNS-BANNER/seoad.png',
   },
 ];
 
@@ -301,39 +299,43 @@ function PageStyles() {
   );
 }
 
-function SectionHeading({ title, sub, text, light = false, align = 'center' }) {
+/* `compact` = smaller heading and tighter spacing (used by the Partners section) */
+function SectionHeading({ title, sub, text, light = false, align = 'center', compact = false }) {
   return (
     <motion.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
       variants={stagger}
-      className={`max-w-[780px] mb-8 sm:mb-10 ${align === 'center' ? 'mx-auto text-center' : ''}`}
+      style={light ? { textShadow: '0 2px 10px rgba(0,0,0,0.45)' } : undefined}
+      className={`max-w-[780px] ${compact ? 'mb-5 sm:mb-6' : 'mb-8 sm:mb-10'} ${
+        align === 'center' ? 'mx-auto text-center' : ''
+      }`}
     >
       <motion.h2
         variants={fadeInUp}
-        className={`text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight leading-[1.05] ${
-          light ? 'text-white' : 'text-[#102448]'
-        }`}
+        className={`font-black tracking-tight leading-[1.05] ${
+          compact ? 'text-3xl sm:text-4xl lg:text-[44px]' : 'text-4xl sm:text-5xl lg:text-[56px]'
+        } ${light ? 'text-white' : 'text-[#0F3D2E]'}`}
       >
         {title}
       </motion.h2>
       <motion.div
         variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.7, ease: 'easeOut' } } }}
         style={{ originX: align === 'center' ? 0.5 : 0 }}
-        className={`h-1 w-24 bg-[#D7192D] rounded-full mt-4 ${align === 'center' ? 'mx-auto' : ''}`}
+        className={`h-1 w-24 bg-[#E8890C] rounded-full ${compact ? 'mt-3' : 'mt-4'} ${align === 'center' ? 'mx-auto' : ''}`}
       />
       <motion.p
         variants={fadeInUp}
-        className="mt-5 text-lg sm:text-xl font-bold text-[#D7192D]"
+        className={`font-bold text-[#E8890C] ${compact ? 'mt-3 text-base sm:text-lg' : 'mt-5 text-lg sm:text-xl'}`}
       >
         {sub}
       </motion.p>
       <motion.p
         variants={fadeInUp}
-        className={`mt-2 text-sm sm:text-base leading-relaxed max-w-[640px] ${align === 'center' ? 'mx-auto' : ''} ${
-          light ? 'text-white' : 'text-black'
-        }`}
+        className={`text-sm sm:text-base leading-relaxed max-w-[640px] ${compact ? 'mt-1.5' : 'mt-2'} ${
+          align === 'center' ? 'mx-auto' : ''
+        } ${light ? 'text-white' : 'text-black'}`}
       >
         {text}
       </motion.p>
@@ -400,7 +402,7 @@ function BrandCard({ item, open, onToggle }) {
             onToggle();
           }
         }}
-        className={`relative overflow-hidden rounded-[26px] bg-white cursor-pointer border outline-none focus-visible:ring-4 focus-visible:ring-[#D7192D]/30 transition-shadow duration-500 ${
+        className={`relative overflow-hidden rounded-[26px] bg-white cursor-pointer border outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/30 transition-shadow duration-500 ${
           open
             ? 'border-[color:var(--accent)] shadow-[0_24px_50px_-20px_rgba(15,23,42,0.3)]'
             : 'border-[#E5EBF2] shadow-[0_14px_32px_-20px_rgba(15,23,42,0.25)] hover:shadow-[0_22px_44px_-18px_rgba(15,23,42,0.3)]'
@@ -428,16 +430,16 @@ function BrandCard({ item, open, onToggle }) {
           {/* Logo */}
           <motion.div
             layout="position"
-            className={`flex items-center h-16 ${open ? 'justify-start' : 'justify-center'} transition-transform duration-300 group-hover:scale-[1.04]`}
+            className={`flex items-center h-20 sm:h-22 ${open ? 'justify-start' : 'justify-center'} transition-transform duration-300 group-hover:scale-[1.04]`}
             style={{ transform: 'translateZ(30px)' }}
           >
-            <BrandLogo logo={item.logo} name={item.name} className="h-11 max-h-11 max-w-full w-auto" />
+            <BrandLogo logo={item.logo} name={item.name} className="h-14 sm:h-16 max-h-16 max-w-[85%] sm:max-w-[90%] w-auto" />
           </motion.div>
 
           {/* Name */}
           <motion.h3
             layout="position"
-            className={`mt-5 text-[17px] font-black tracking-tight text-[#102448] ${open ? 'text-left' : 'text-center'}`}
+            className={`mt-5 text-[17px] font-black tracking-tight text-[#0F3D2E] ${open ? 'text-left' : 'text-center'}`}
           >
             {item.name}
           </motion.h3>
@@ -471,7 +473,7 @@ function BrandCard({ item, open, onToggle }) {
                 className="overflow-hidden"
               >
                 <div className="pt-6">
-                  <p className="text-sm font-bold text-[#102448] mb-3">What you get</p>
+                  <p className="text-sm font-bold text-[#0F3D2E] mb-3">What you get</p>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {highlights.map((h, i) => (
                       <motion.li
@@ -482,7 +484,7 @@ function BrandCard({ item, open, onToggle }) {
                         className="flex items-center gap-3 rounded-xl bg-[#F8FAFC] border border-slate-200/80 px-4 py-3"
                       >
                         <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-[color:var(--accent)]" />
-                        <span className="text-sm font-bold text-[#102448]">{h}</span>
+                        <span className="text-sm font-bold text-[#0F3D2E]">{h}</span>
                       </motion.li>
                     ))}
                   </ul>
@@ -497,7 +499,7 @@ function BrandCard({ item, open, onToggle }) {
                     transition={{ delay: 0.45 }}
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    className="mt-6 flex w-full flex-nowrap items-center justify-center gap-2.5 whitespace-nowrap px-5 py-3 rounded-[10px] bg-[#D7192D] text-white font-bold text-sm shadow-[0_10px_24px_-8px_rgba(215,25,45,0.7)] hover:bg-[#b51426] transition-colors"
+                    className="mt-6 flex w-full flex-nowrap items-center justify-center gap-2.5 whitespace-nowrap px-5 py-3 rounded-[10px] bg-[#E8890C] text-white font-bold text-sm shadow-[0_10px_24px_-8px_rgba(232,137,12,0.7)] hover:bg-[#d67d0a] transition-colors"
                   >
                     Visit Website
                     <span className="min-w-0 truncate text-white font-semibold">{item.domain}</span>
@@ -517,7 +519,8 @@ export function OurBrandsSection() {
   const [openId, setOpenId] = useState(null);
 
   return (
-    <section id="brands" className="relative w-full bg-[#F8FAFC] py-10 lg:py-14 overflow-hidden">
+    /* WHITE background */
+    <section id="brands" className="relative w-full bg-white py-10 lg:py-14 overflow-hidden">
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           title="Our Brands"
@@ -556,14 +559,15 @@ function LogoMarquee() {
   const loop = [...all, ...all];
 
   return (
-    <section className="relative w-full bg-[#102342] py-5 overflow-hidden border-y border-white/10">
+    /* GREEN strip (slightly deeper than the Partners section so they stay separate) */
+    <section className="relative w-full bg-transparent py-5 overflow-hidden border-y border-slate-200">
       <div className="bp-marquee flex w-max gap-5">
         {loop.map((it, i) => (
           <div
             key={`${it.id}-${i}`}
-            className="flex items-center justify-center h-16 px-7 rounded-2xl bg-white shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)]"
+            className="flex items-center justify-center h-18 px-8 rounded-2xl bg-white border border-slate-200 shadow-[0_8px_22px_-12px_rgba(15,23,42,0.25)]"
           >
-            <BrandLogo logo={it.logo} name={it.name} className="h-9 max-h-9 max-w-[140px] w-auto" />
+            <BrandLogo logo={it.logo} name={it.name} className="h-10 sm:h-11 max-h-11 max-w-[160px] w-auto" />
           </div>
         ))}
       </div>
@@ -572,7 +576,7 @@ function LogoMarquee() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SECTION 02 — OUR PARTNERS (bento layout: white main card + feature cards + tall image)
+// SECTION 02 — OUR PARTNERS (compact bento layout on a Sydney photo + green overlay)
 // ─────────────────────────────────────────────────────────────────────────────
 
 const ROTATE_MS = 6000;
@@ -594,10 +598,24 @@ export function OurPartnersSection() {
   const p = PARTNERS_DATA[active];
 
   return (
-    <section id="partners" className="relative w-full bg-[#0B1F3A] py-12 lg:py-16 overflow-hidden">
+    /* GREEN overlay on top of a Sydney photo (same look as the About page) */
+    <section id="partners" className="relative w-full bg-[#0F3D2E] py-8 lg:py-10 overflow-hidden">
+      {/* Background photo + green overlay (strong enough so the content stays easy to read) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <img
+          src={PARTNERS_BG}
+          onError={imgFallback(PARTNERS_BG_FALLBACK)}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+          decoding="async"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#14573F]/75 via-[#1A6B4E]/65 to-[#1F7A58]/55" />
+      </div>
+
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           light
+          compact
           title="Our Partners"
           sub="Specialist expertise. Shared ambition."
           text="Our partner companies bring deep domain expertise in digital marketing, content, reputation management and more, helping us deliver greater value together."
@@ -607,7 +625,7 @@ export function OurPartnersSection() {
         <div
           role="tablist"
           aria-label="Partners"
-          className="flex gap-2.5 overflow-x-auto pb-4 mb-8 -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] justify-start lg:justify-center"
+          className="flex gap-2.5 overflow-x-auto pb-3 mb-5 -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] justify-start lg:justify-center"
         >
           {PARTNERS_DATA.map((item, i) => {
             const isActive = i === active;
@@ -618,10 +636,10 @@ export function OurPartnersSection() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => select(i)}
-                className={`group relative flex items-center gap-2.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm whitespace-nowrap transition-all duration-300 outline-none ${
+                className={`group relative flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm whitespace-nowrap transition-all duration-300 outline-none ${
                   isActive
-                    ? 'bg-[#D7192D] text-white shadow-[0_10px_24px_-6px_rgba(215,25,45,0.7)]'
-                    : 'bg-white/5 text-white hover:bg-white/15 border border-white/20'
+                    ? 'bg-[#E8890C] text-white shadow-[0_10px_24px_-6px_rgba(232,137,12,0.7)]'
+                    : 'bg-[#0F3D2E]/45 backdrop-blur-sm text-white hover:bg-white/15 border border-white/30'
                 }`}
               >
                 <Icon className="w-4 h-4 text-white" strokeWidth={isActive ? 2.5 : 2} />
@@ -632,9 +650,9 @@ export function OurPartnersSection() {
         </div>
 
         {/* ── BENTO SPOTLIGHT ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5">
           {/* LEFT: main card + feature cards */}
-          <div className="lg:col-span-7 flex flex-col gap-5 lg:gap-6">
+          <div className="lg:col-span-7 flex flex-col gap-4 lg:gap-5">
             <AnimatePresence mode="wait">
               <motion.div
                 key={p.id}
@@ -642,40 +660,40 @@ export function OurPartnersSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
-                className="flex flex-col gap-5 lg:gap-6 flex-1"
+                className="flex flex-col gap-4 lg:gap-5 flex-1"
               >
                 {/* White main card */}
-                <div className="relative flex-1 overflow-hidden rounded-[28px] bg-white p-7 sm:p-9 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.55)]">
+                <div className="relative flex-1 overflow-hidden rounded-[24px] bg-white p-6 sm:p-7 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.45)]">
 
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="flex items-center gap-3">
-                      <BrandLogo logo={p.logo} name={p.name} className="h-9 max-h-9 max-w-[150px] w-auto" />
-                      <span className="ml-1 pl-3 border-l border-slate-200 text-[#0B4F9C] font-extrabold text-[11px] tracking-[0.18em] uppercase">
+                      <BrandLogo logo={p.logo} name={p.name} className="h-8 max-h-8 max-w-[150px] w-auto" />
+                      <span className="ml-1 pl-3 border-l border-slate-200 text-[#0F3D2E] font-extrabold text-[11px] tracking-[0.18em] uppercase">
                         {p.badge}
                       </span>
                     </div>
 
-                    <h3 className="mt-6 text-2xl sm:text-3xl lg:text-[2.2rem] font-black text-[#102448] tracking-tight leading-tight">
+                    <h3 className="mt-4 text-xl sm:text-2xl lg:text-[1.75rem] font-black text-[#0F3D2E] tracking-tight leading-tight">
                       {p.desc}
                     </h3>
-                    <p className="mt-3 text-[15px] leading-relaxed text-slate-600 max-w-[560px]">
+                    <p className="mt-2 text-sm sm:text-[14.5px] leading-relaxed text-slate-600 max-w-[560px]">
                       {p.fullDesc}
                     </p>
 
-                    <ul className="mt-6 space-y-3">
+                    <ul className="mt-4 space-y-2">
                       {p.points.map((pt) => (
-                        <li key={pt} className="flex items-start gap-3 text-[15px] leading-snug text-slate-700">
-                          <span className="mt-[7px] w-1.5 h-1.5 rounded-full bg-[#D7192D] flex-shrink-0" />
+                        <li key={pt} className="flex items-start gap-3 text-sm sm:text-[14.5px] leading-snug text-slate-700">
+                          <span className="mt-[7px] w-1.5 h-1.5 rounded-full bg-[#E8890C] flex-shrink-0" />
                           {pt}
                         </li>
                       ))}
                     </ul>
 
-                    <div className="mt-auto pt-8 flex items-center justify-between gap-4">
+                    <div className="mt-auto pt-5 flex items-center justify-between gap-4">
                       <button
                         onClick={() => select((active - 1 + PARTNERS_DATA.length) % PARTNERS_DATA.length)}
                         aria-label="Previous partner"
-                        className="w-10 h-10 rounded-[10px] bg-slate-100 hover:bg-slate-200 text-[#102448] flex items-center justify-center transition-colors"
+                        className="w-10 h-10 rounded-[10px] bg-slate-100 hover:bg-slate-200 text-[#0F3D2E] flex items-center justify-center transition-colors"
                       >
                         <ChevronLeft className="w-5 h-5" />
                       </button>
@@ -686,10 +704,10 @@ export function OurPartnersSection() {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.04 }}
                         whileTap={{ scale: 0.97 }}
-                        className="inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-[10px] bg-[#D7192D] text-white font-bold text-sm shadow-[0_12px_28px_-8px_rgba(215,25,45,0.8)] hover:bg-[#b51426] transition-colors"
+                        className="inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-[10px] bg-[#E8890C] text-white font-bold text-sm shadow-[0_12px_28px_-8px_rgba(232,137,12,0.8)] hover:bg-[#d67d0a] transition-colors"
                       >
                         Visit Website
-                        <span className="w-9 h-9 rounded-lg bg-white text-[#D7192D] flex items-center justify-center shrink-0">
+                        <span className="w-9 h-9 rounded-lg bg-white text-[#E8890C] flex items-center justify-center shrink-0">
                           <ArrowUpRight className="w-4 h-4 stroke-[2.8]" />
                         </span>
                       </motion.a>
@@ -697,7 +715,7 @@ export function OurPartnersSection() {
                       <button
                         onClick={() => select((active + 1) % PARTNERS_DATA.length)}
                         aria-label="Next partner"
-                        className="w-10 h-10 rounded-[10px] bg-[#102448] hover:bg-[#0B4F9C] text-white flex items-center justify-center transition-colors"
+                        className="w-10 h-10 rounded-[10px] bg-[#0F3D2E] hover:bg-[#124A37] text-white flex items-center justify-center transition-colors"
                       >
                         <ChevronRight className="w-5 h-5" />
                       </button>
@@ -706,17 +724,17 @@ export function OurPartnersSection() {
                 </div>
 
                 {/* Feature cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 lg:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-5">
                   {p.tags.map((t, i) => (
                     <motion.div
                       key={t}
                       initial={{ opacity: 0, y: 14 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 + i * 0.07 }}
-                                            className="group flex items-center gap-3 rounded-[10px] bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 px-5 py-4 transition-colors"
+                      className="group flex items-center gap-3 rounded-[10px] bg-[#0F3D2E]/45 backdrop-blur-sm hover:bg-[#0F3D2E]/65 border border-white/30 px-4 py-3 transition-colors"
                     >
-                      <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-[#D7192D] group-hover:text-white transition-colors" />
-                      <p className="text-[15px] font-bold text-white leading-snug">{t}</p>
+                      <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-[#E8890C] group-hover:text-white transition-colors" />
+                      <p className="text-sm sm:text-[14.5px] font-bold text-white leading-snug">{t}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -729,7 +747,7 @@ export function OurPartnersSection() {
             <motion.div
               whileHover={{ scale: 1.01 }}
               transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              className="group relative h-[380px] sm:h-[440px] lg:h-full lg:min-h-[520px] overflow-hidden rounded-[28px] bg-[#061834] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)] ring-1 ring-white/15"
+              className="group relative h-[260px] sm:h-[320px] lg:h-full lg:min-h-[380px] overflow-hidden rounded-[24px] bg-[#0A291E] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.45)] ring-1 ring-white/20"
             >
               <AnimatePresence mode="wait">
                 <motion.img
@@ -744,10 +762,6 @@ export function OurPartnersSection() {
                 />
               </AnimatePresence>
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
-
-              <div className="absolute top-5 left-5 bg-white/95 backdrop-blur px-4 py-2 rounded-full shadow-lg">
-                <span className="text-[#0B4F9C] font-extrabold text-[11px] tracking-[0.2em] uppercase">{p.name}</span>
-              </div>
             </motion.div>
           </div>
         </div>
@@ -777,16 +791,16 @@ function ChatAnswer({ text }) {
       style={{ originX: 0, originY: 0 }}
       className="flex items-start gap-3 mt-3 w-full"
     >
-      <span className="flex-shrink-0 w-9 h-9 rounded-full bg-[#102342] text-white text-sm font-black flex items-center justify-center ring-4 ring-white shadow">
+      <span className="flex-shrink-0 w-9 h-9 rounded-full bg-[#0F3D2E] text-white text-sm font-black flex items-center justify-center ring-4 ring-white shadow">
         N
       </span>
-      <div className="flex-1 rounded-[10px] bg-white border border-slate-200 shadow-[0_12px_30px_-14px_rgba(16,35,66,0.35)] px-5 py-4">
+      <div className="flex-1 rounded-[10px] bg-white border border-slate-200 shadow-[0_12px_30px_-14px_rgba(15,61,46,0.35)] px-5 py-4">
         {typing ? (
           <div className="flex items-center gap-1.5 h-5" aria-label="Typing">
             {[0, 1, 2].map((d) => (
               <span
                 key={d}
-                className="bp-dot w-2 h-2 rounded-full bg-[#0B4F9C]"
+                className="bp-dot w-2 h-2 rounded-full bg-[#0F3D2E]"
                 style={{ animationDelay: `${d * 0.15}s` }}
               />
             ))}
@@ -809,7 +823,8 @@ export function FaqSection() {
   const [openId, setOpenId] = useState('faq-1');
 
   return (
-    <section id="faqs" className="relative w-full bg-[#F8FAFC] py-8 lg:py-12 overflow-hidden">
+    /* WHITE background */
+    <section id="faqs" className="relative w-full bg-white py-8 lg:py-12 overflow-hidden">
       <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[360px_1fr] gap-6 lg:gap-12">
         {/* Left: sticky intro */}
         <div className="lg:sticky lg:top-28 self-start">
@@ -819,13 +834,13 @@ export function FaqSection() {
             viewport={{ once: true, amount: 0.3 }}
             variants={stagger}
           >
-            <motion.h2 variants={fadeInUp} className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.05] text-[#102448]">
+            <motion.h2 variants={fadeInUp} className="text-4xl sm:text-5xl font-black tracking-tight leading-[1.05] text-[#0F3D2E]">
               Got questions? Ask away.
             </motion.h2>
             <motion.div
               variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.7 } } }}
               style={{ originX: 0 }}
-              className="h-1 w-24 bg-[#D7192D] rounded-full mt-4"
+              className="h-1 w-24 bg-[#E8890C] rounded-full mt-4"
             />
             <motion.p variants={fadeInUp} className="mt-5 text-[15px] leading-relaxed text-black">
               Tap a question to see our answer. Need something that isn&apos;t covered? Our specialists will map the right
@@ -835,10 +850,10 @@ export function FaqSection() {
             <motion.div variants={fadeInUp}>
               <Link
                 to="/contact"
-                className="group mt-6 inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-[10px] bg-[#D7192D] text-white font-bold text-sm shadow-[0_12px_28px_-8px_rgba(215,25,45,0.7)] hover:bg-[#b51426] transition-colors"
+                className="group mt-6 inline-flex items-center gap-3 pl-6 pr-2 py-2 rounded-[10px] bg-[#E8890C] text-white font-bold text-sm shadow-[0_12px_28px_-8px_rgba(232,137,12,0.7)] hover:bg-[#d67d0a] transition-colors"
               >
                 Talk to an Expert
-                <span className="w-9 h-9 rounded-lg bg-white text-[#D7192D] flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
+                <span className="w-9 h-9 rounded-lg bg-white text-[#E8890C] flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
                   <ArrowRight className="w-4 h-4 stroke-[2.8]" />
                 </span>
               </Link>
@@ -863,16 +878,16 @@ export function FaqSection() {
                     type="button"
                     aria-expanded={isOpen}
                     onClick={() => setOpenId(isOpen ? null : faq.id)}
-                    className={`group flex w-full items-center justify-between gap-3 text-left rounded-[10px] px-5 py-3.5 font-bold text-[14.5px] sm:text-[15px] transition-all duration-300 outline-none focus-visible:ring-4 focus-visible:ring-[#D7192D]/30 ${
+                    className={`group flex w-full items-center justify-between gap-3 text-left rounded-[10px] px-5 py-3.5 font-bold text-[14.5px] sm:text-[15px] transition-all duration-300 outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/30 ${
                       isOpen
-                        ? 'bg-[#D7192D] text-white shadow-[0_16px_34px_-12px_rgba(215,25,45,0.7)]'
-                        : 'bg-white text-[#102448] border border-slate-200 shadow-sm hover:border-[#D7192D]/50 hover:-translate-y-0.5 hover:shadow-md'
+                        ? 'bg-[#E8890C] text-white shadow-[0_16px_34px_-12px_rgba(232,137,12,0.7)]'
+                        : 'bg-white text-[#0F3D2E] border border-slate-200 shadow-sm hover:border-[#E8890C]/50 hover:-translate-y-0.5 hover:shadow-md'
                     }`}
                   >
                     <span>{faq.question}</span>
                     <span
                       className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
-                        isOpen ? 'bg-white/20 text-white' : 'bg-[#FEECEF] text-[#D7192D]'
+                        isOpen ? 'bg-white/20 text-white' : 'bg-[#FFF3E0] text-[#E8890C]'
                       }`}
                     >
                       <ChevronDown className={`w-4 h-4 stroke-[3] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
@@ -898,18 +913,18 @@ export function FaqSection() {
 
 export default function BrandsAndPartners() {
   return (
-    <div className="w-full min-h-screen bg-white font-sans text-[#102448] selection:bg-[#D7192D] selection:text-white">
+    <div className="w-full min-h-screen bg-white font-sans text-[#0F3D2E] selection:bg-[#E8890C] selection:text-white">
       <PageStyles />
 
       <PageBanner
         title="Our Brands & Partners"
         breadcrumbs={[{ label: 'Brands & Partners' }]}
-        bgImage="/banner/image copy.png"
+        bgImage="/brand-partner-banner.png"
         className="!mb-0 lg:!mb-0"
       />
 
       <OurBrandsSection />
-      <LogoMarquee />
+      
       <OurPartnersSection />
       <FaqSection />
       <div className="[&>*]:!py-6 lg:[&>*]:!py-8 [&>*]:!my-0">

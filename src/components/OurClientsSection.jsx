@@ -21,8 +21,8 @@ export const CLIENT_LOGOS = [
 
 /**
  * OurClientsSection
- * Static display of 3 prominent clients flanked symmetrically by Blue Laurel Branches.
- * - Header matches Why Choose Us typography (2-tone Blue #0B3B82 & Orange #D92419).
+ * Static display of 3 prominent clients flanked symmetrically by Laurel Branches.
+ * - Header matches Why Choose Us typography (2-tone Gold #E8890C & Forest Green #0F3D2E).
  * - Static layout, no scrolling.
  * - Laurel branches on left and right sides.
  * - Responsive from 320px mobile to 2560px ultra-wide.
@@ -43,18 +43,18 @@ export default function OurClientsSection({ className = '' }) {
         {/* ============================================================== */}
         <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-7 md:mb-9">
           
-          {/* Eyebrow with Red Bar */}
+          {/* Eyebrow with Green Bar */}
           <div className="flex flex-col items-center mb-2.5 sm:mb-3">
-            <span className="text-[#0B3B82] font-extrabold text-[11px] xs:text-[12px] sm:text-[13px] tracking-[0.25em] uppercase mb-1.5">
+            <span className="text-[#E8890C] font-extrabold text-[11px] xs:text-[12px] sm:text-[13px] tracking-[0.25em] uppercase mb-1.5">
               OUR CLIENTS
             </span>
-            <div className="w-12 h-1 bg-[#D92419] rounded-full"></div>
+            <div className="w-12 h-1 bg-[#0F3D2E] rounded-full"></div>
           </div>
 
-          {/* Main 2-Tone Heading (Blue Line 1, Orange Line 2) */}
+          {/* Main 2-Tone Heading (Gold Line 1, Green Line 2) */}
           <h2 className="text-[26px] xs:text-[32px] sm:text-[42px] md:text-[48px] lg:text-[54px] font-extrabold text-center leading-[1.12] tracking-tight mb-2 sm:mb-3">
-            <span className="text-[#0B3B82] block">World-Class</span>
-            <span className="text-[#D92419] block mt-0.5 sm:mt-1">Digital Solutions.</span>
+            <span className="text-[#E8890C] block">World-Class</span>
+            <span className="text-[#0F3D2E] block mt-0.5 sm:mt-1">Digital Solutions.</span>
           </h2>
 
           {/* Supporting Paragraph (Clean 2-line layout) */}
@@ -64,7 +64,7 @@ export default function OurClientsSection({ className = '' }) {
         </div>
 
         {/* ============================================================== */}
-        {/* STATIC LAYOUT: 3 BIG CLIENTS FLANKED BY BLUE LAUREL BRANCHES  */}
+        {/* STATIC LAYOUT: 3 BIG CLIENTS FLANKED BY LAUREL BRANCHES       */}
         {/* ============================================================== */}
         <div className="w-full flex items-center justify-between gap-1 xs:gap-2 sm:gap-4 md:gap-6 lg:gap-8">
 

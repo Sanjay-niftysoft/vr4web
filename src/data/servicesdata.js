@@ -38,7 +38,7 @@ export const servicesData = [
             highlight: 'App Development',
             titleSuffix: 'for Global Scale.',
             description: 'We architect and build transformative mobile applications that delight millions of users. From native iOS and Android to spatial computing on Vision Pro, we deliver scalable digital experiences with zero latency.',
-            bgImage: '/banner/5.png',
+            bgImage: '/service.png',
             ctaPrimary: 'Get a Mobile Quote',
             ctaSecondary: 'View App Capabilities',
         },
@@ -426,7 +426,7 @@ export const servicesData = [
             highlight: 'Custom Software',
             titleSuffix: 'Engineered for Scale.',
             description: 'We design and construct mission-critical software architectures, multi-tenant SaaS platforms, and enterprise data pipelines that withstand massive traffic surges while automating complex business logic.',
-            bgImage: '/banner/5.png',
+            bgImage: '/service.png',
             ctaPrimary: 'Discuss Software Architecture',
             ctaSecondary: 'Explore SaaS Solutions'
         },
@@ -784,7 +784,7 @@ export const servicesData = [
             highlight: 'Web Design & Development',
             titleSuffix: 'That Converts.',
             description: 'We blend aesthetic perfection with high-performance web engineering. Ultra-fast page loads, Core Web Vitals mastery, and immersive micro-animations designed to turn casual visitors into high-value clients.',
-            bgImage: '/banner/5.png',
+            bgImage: '/service.png',
             ctaPrimary: 'Request a Web Quote',
             ctaSecondary: 'Explore Web Portfolio'
         },
@@ -1208,7 +1208,7 @@ export const servicesData = [
             highlight: 'E-Commerce Solutions',
             titleSuffix: 'Built to Scale Revenue.',
             description: 'We build digital storefronts that turn casual shoppers into repeat customers. From bespoke Shopify Plus custom themes to high-volume headless marketplaces, we optimize every pixel for maximum conversion and lightning-fast checkout.',
-            bgImage: '/banner/5.png',
+            bgImage: '/service.png',
             ctaPrimary: 'Grow Your Store',
             ctaSecondary: 'Explore E-Commerce Solutions'
         },
@@ -1555,7 +1555,7 @@ export const servicesData = [
             highlight: 'Digital Marketing & AI Growth',
             titleSuffix: 'That Drives Real Pipeline.',
             description: 'Dominate traditional search engines and AI generative models alike. We combine technical SEO, Answer Engine Optimization (AEO/GEO), high-ROI paid media, and automated multi-channel campaigns to systematically scale your revenue.',
-            bgImage: '/banner/5.png',
+            bgImage: '/service.png',
             ctaPrimary: 'Get a Growth Audit',
             ctaSecondary: 'Explore Marketing Channels'
         },
@@ -1564,7 +1564,7 @@ export const servicesData = [
             title: 'Pioneering Search & Growth in the Era of AI-Powered Discovery',
             description: 'The search landscape has fundamentally transformed. Consumers no longer just type keywords into Google—they ask ChatGPT, consult Perplexity, and seek conversational answers on Copilot. VR4Web leads the industry in Answer Engine Optimization (AEO) and Generative Engine Optimization (GEO).',
             descriptionSecondary: 'We combine algorithmic AI visibility with white-hat technical SEO, data-driven paid advertising (Google & Meta Ads), and omnichannel marketing funnels to ensure your business captures demand at every stage of the buyer journey.',
-            image: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?auto=format&fit=crop&w=1000&q=80',
+            image: '/services-images-set2/digital-marketing.png',
             highlights: [
                 { title: 'AEO & GEO Leadership', desc: 'Optimize brand citations to ensure ChatGPT, Perplexity, and Gemini cite you as the #1 authority.' },
                 { title: 'High-ROI Paid Advertising', desc: 'Targeted Google Ads, Meta, and LinkedIn B2B campaigns with strict cost-per-acquisition (CPA) targets.' },
@@ -1668,7 +1668,7 @@ export const servicesData = [
             badge: 'Why VR4Web Marketing',
             title: 'We Measure Success by Revenue, Not Vanity Metrics',
             description: 'Unlike traditional agencies that boast about meaningless impressions, we focus strictly on customer acquisition cost (CAC) and closed pipeline.',
-            image: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1000&q=80',
+            image: '/services-images-set2/digital-marketing.png',
             reasons: [
                 {
                     title: 'Pioneers in AEO & GEO Search',
@@ -1849,6 +1849,12 @@ export const servicesData = [
                     highlight: 'Answer Engine Optimization',
                     titleSuffix: 'on Modern AI Assistants.',
                     description: 'Position your business as the primary source cited by ChatGPT, Siri, Google Gemini, and voice assistants.'
+                },
+                about: {
+                    image: '/services-images-set2/aeo.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/aeo.png'
                 }
             },
             {
@@ -1860,6 +1866,12 @@ export const servicesData = [
                     highlight: 'Generative Engine Optimization',
                     titleSuffix: 'for LLM Discovery.',
                     description: 'Ensure your brand, products, and services are consistently recommended by generative AI search engines.'
+                },
+                about: {
+                    image: '/services-images-set2/image.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/image.png'
                 }
             },
             {
@@ -1871,6 +1883,12 @@ export const servicesData = [
                     highlight: 'AI-Powered SEO',
                     titleSuffix: 'for Sustainable Organic Growth.',
                     description: 'Harness semantic search intelligence, topical authority clustering, and neural matching to rank top on Google.'
+                },
+                about: {
+                    image: '/services-images-set2/Ai.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/Ai.png'
                 }
             },
             {
@@ -1882,6 +1900,12 @@ export const servicesData = [
                     highlight: 'Social Media Marketing',
                     titleSuffix: 'That Builds Loyal Communities.',
                     description: 'Build organic brand equity and high-converting paid social campaigns across LinkedIn, Instagram, and YouTube.'
+                },
+                about: {
+                    image: '/services-images-set2/digital-marketing.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/digital-marketing.png'
                 }
             },
             {
@@ -1893,6 +1917,12 @@ export const servicesData = [
                     highlight: 'PPC Paid Advertising',
                     titleSuffix: 'with Measurable ROAS.',
                     description: 'Turn ad spend into predictable revenue with data-backed search and display campaigns engineered for high conversion.'
+                },
+                about: {
+                    image: '/services-images-set2/ppc.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/ppc.png'
                 }
             },
             {
@@ -1904,6 +1934,12 @@ export const servicesData = [
                     highlight: 'Email Marketing Funnels',
                     titleSuffix: 'That Boost LTV.',
                     description: 'Nurture leads into customers and drive high lifetime value with behavioral email flows and personalized campaigns.'
+                },
+                about: {
+                    image: '/services-images-set2/email-marketing.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/email-marketing.png'
                 }
             },
             {
@@ -1915,6 +1951,12 @@ export const servicesData = [
                     highlight: 'WhatsApp Marketing',
                     titleSuffix: 'with 98% Read Rates.',
                     description: 'Engage customers directly on WhatsApp with official Business API automations, instant catalog checkouts, and CRM alerts.'
+                },
+                about: {
+                    image: '/services-images-set2/whatapp-marketing.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/whatapp-marketing.png'
                 }
             },
             {
@@ -1926,6 +1968,12 @@ export const servicesData = [
                     highlight: 'SMS Marketing',
                     titleSuffix: 'for Rapid Response.',
                     description: 'Reach customers instantly with targeted SMS alerts and time-sensitive promotions that drive immediate action.'
+                },
+                about: {
+                    image: '/services-images-set2/sms.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/sms.png'
                 }
             },
             {
@@ -1937,6 +1985,12 @@ export const servicesData = [
                     highlight: 'Content Marketing',
                     titleSuffix: 'That Establishes Leadership.',
                     description: 'Attract high-intent buyers with compelling technical thought leadership, articles, and comprehensive guides.'
+                },
+                about: {
+                    image: '/services-images-set2/content.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/content.png'
                 }
             },
             {
@@ -1948,6 +2002,12 @@ export const servicesData = [
                     highlight: 'Video Marketing',
                     titleSuffix: 'That Commands Attention.',
                     description: 'Tell your brand story with compelling video creative optimized for YouTube, Instagram Reels, and conversion landing pages.'
+                },
+                about: {
+                    image: '/services-images-set2/video.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/video.png'
                 }
             },
             {
@@ -1959,6 +2019,12 @@ export const servicesData = [
                     highlight: 'White Hat SEO Services',
                     titleSuffix: 'for Long-Term Rankings.',
                     description: 'Build enduring organic authority that withstands Google algorithmic updates and systematically scales your organic pipeline.'
+                },
+                about: {
+                    image: '/services-images-set2/white-hat-seo.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/white-hat-seo.png'
                 }
             },
             {
@@ -1970,6 +2036,12 @@ export const servicesData = [
                     highlight: 'Link Building Services',
                     titleSuffix: 'from Real Publications.',
                     description: 'Acquire high-DR editorial backlinks from genuine industry publications to establish dominant domain authority.'
+                },
+                about: {
+                    image: '/services-images-set2/link.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/link.png'
                 }
             },
             {
@@ -1981,6 +2053,12 @@ export const servicesData = [
                     highlight: 'Online Reputation Management',
                     titleSuffix: 'Protecting Your Brand.',
                     description: 'Take control of your digital narrative, accelerate 5-star customer reviews, and protect your hard-earned corporate reputation.'
+                },
+                about: {
+                    image: '/services-images-set2/orm.png'
+                },
+                whyChooseUs: {
+                    image: '/services-images-set2/orm.png'
                 }
             }
         ]
@@ -2001,7 +2079,7 @@ export const servicesData = [
             highlight: 'Creative Solutions',
             titleSuffix: 'That Inspire Action.',
             description: 'We translate complex brand philosophies into stunning visual identities, intuitive user interfaces, and immersive multimedia content that leaves an indelible impression on your target audience.',
-            bgImage: '/banner/5.png',
+            bgImage: '/service.png',
             ctaPrimary: 'Explore Design Services',
             ctaSecondary: 'View Creative Portfolio'
         },
@@ -2010,7 +2088,7 @@ export const servicesData = [
             title: 'Elevating Brands Through Human-Centric Design & Visual Precision',
             description: 'In an oversaturated digital world, generic design is invisible. At VR4Web, our creative studio blends behavioral psychology with avant-garde aesthetics to design corporate marks, digital products, and motion graphics that demand immediate respect.',
             descriptionSecondary: 'From complete brand identity systems (typography, iconography, color theory) to complex enterprise UI/UX wireframes tested on real users, we craft visual assets that tell a coherent, unforgettable story across every touchpoint.',
-            image: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=1000&q=80',
+            image: '/services-set3/logo.png',
             highlights: [
                 { title: 'Human-Centric UX Architecture', desc: 'Wireframing, customer journey mapping, and interactive prototypes tested for cognitive ease.' },
                 { title: 'Distinctive Corporate Identity', desc: 'Memorable brand marks, comprehensive style guides, and complete digital design systems.' },
@@ -2114,7 +2192,7 @@ export const servicesData = [
             badge: 'Why VR4Web Creative',
             title: 'Designs That Elevate Brand Valuation and Captivate Audiences',
             description: 'We bridge fine art with conversion science to create designs that aren’t merely decorative—they achieve strategic commercial goals.',
-            image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80',
+            image: '/services-set3/uiux.png',
             reasons: [
                 {
                     title: 'Obsession with Typography & Details',
@@ -2295,6 +2373,12 @@ export const servicesData = [
                     highlight: 'UI/UX Design Services',
                     titleSuffix: 'for Web & Mobile Apps.',
                     description: 'Transform complex workflows into elegant, intuitive interfaces with research-backed UX architecture and pixel-perfect UI.'
+                },
+                about: {
+                    image: '/services-set3/uiux.png'
+                },
+                whyChooseUs: {
+                    image: '/services-set3/uiux.png'
                 }
             },
             {
@@ -2306,6 +2390,12 @@ export const servicesData = [
                     highlight: 'Custom Logo Design',
                     titleSuffix: 'and Corporate Identity.',
                     description: 'Stand out in any market with an iconic, scientifically balanced corporate brand mark that commands immediate prestige.'
+                },
+                about: {
+                    image: '/services-set3/logo.png'
+                },
+                whyChooseUs: {
+                    image: '/services-set3/logo.png'
                 }
             },
             {
@@ -2317,6 +2407,12 @@ export const servicesData = [
                     highlight: 'Video Production',
                     titleSuffix: 'and 3D Motion Graphics.',
                     description: 'Captivate your audience with high-definition video storytelling and photorealistic 3D product motion graphics.'
+                },
+                about: {
+                    image: '/services-set3/video.png'
+                },
+                whyChooseUs: {
+                    image: '/services-set3/video.png'
                 }
             },
             {
@@ -2328,6 +2424,12 @@ export const servicesData = [
                     highlight: 'User Manual Development',
                     titleSuffix: 'and Technical Guides.',
                     description: 'Demystify complex hardware and software systems with beautifully illustrated technical guides and interactive manuals.'
+                },
+                about: {
+                    image: '/services-set3/user-management.png'
+                },
+                whyChooseUs: {
+                    image: '/services-set3/user-management.png'
                 }
             },
             {
@@ -2339,6 +2441,12 @@ export const servicesData = [
                     highlight: 'Product Design & Prototyping',
                     titleSuffix: 'for Innovative Ideas.',
                     description: 'Accelerate stakeholder buy-in and user validation with interactive clickable prototypes and 3D visual models.'
+                },
+                about: {
+                    image: '/services-set3/product-design.png'
+                },
+                whyChooseUs: {
+                    image: '/services-set3/product-design.png'
                 }
             },
             {
@@ -2350,6 +2458,12 @@ export const servicesData = [
                     highlight: 'Social Media Creative Design',
                     titleSuffix: 'Engineered to Stop the Scroll.',
                     description: 'Supercharge your organic engagement and paid ad CTRs with cohesive, trend-aware social media graphics and carousels.'
+                },
+                about: {
+                    image: '/services-set3/social-media.png'
+                },
+                whyChooseUs: {
+                    image: '/services-set3/social-media.png'
                 }
             }
         ]
@@ -2370,7 +2484,7 @@ export const servicesData = [
             highlight: 'Back Office Support',
             titleSuffix: '& Technical Maintenance.',
             description: 'Protect your revenue and peace of mind. We provide enterprise-grade 24/7 technical helpdesk, proactive malware monitoring, server hardening, e-commerce store upkeep, and backend data processing so your team can focus on growth.',
-            bgImage: '/banner/5.png',
+            bgImage: '/service.png',
             ctaPrimary: 'Explore Support Plans',
             ctaSecondary: 'Request SLA Details'
         },
@@ -2379,7 +2493,7 @@ export const servicesData = [
             title: 'Guaranteed Uptime, Rock-Solid Security & Seamless Daily Operations',
             description: 'A broken checkout, unpatched security vulnerability, or slow customer resolution can instantly wipe out months of hard-earned goodwill. VR4Web provides proactive, round-the-clock operational and technical support to eliminate downtime before it affects your customers.',
             descriptionSecondary: 'From managing catalog inventory updates and resolving order processing issues to conducting automated weekly security vulnerability scans and core framework updates, our dedicated team acts as an extension of your company.',
-            image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1000&q=80',
+            image: '/services-set4/support.png',
             highlights: [
                 { title: '15-Minute Critical SLA', desc: 'Guaranteed rapid response times for production outages and severe operational incidents.' },
                 { title: 'Proactive Malware & Vulnerability Audits', desc: 'Continuous automated vulnerability scans, core patches, and firewall monitoring.' },
@@ -2483,7 +2597,7 @@ export const servicesData = [
             badge: 'Why VR4Web Support',
             title: 'Enterprise Reliability Without the Overhead of a 24/7 In-House Team',
             description: 'Building an in-house 24/7/365 engineering operations team costs hundreds of thousands annually. We provide elite coverage at a fraction of the cost.',
-            image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=80',
+            image: '/services-set4/tech-management.png',
             reasons: [
                 {
                     title: 'Guaranteed 15-Minute Critical SLA',
@@ -2664,6 +2778,12 @@ export const servicesData = [
                     highlight: 'E-Commerce Maintenance',
                     titleSuffix: 'for Uninterrupted Sales.',
                     description: 'Keep your online store running at peak speed with daily checkout simulation tests, inventory sync, and proactive plugin security updates.'
+                },
+                about: {
+                    image: '/services-set4/E-commerce Website Maintenance.png'
+                },
+                whyChooseUs: {
+                    image: '/services-set4/E-commerce Website Maintenance.png'
                 }
             },
             {
@@ -2675,6 +2795,12 @@ export const servicesData = [
                     highlight: '24/7 Technical Support',
                     titleSuffix: 'with 15-Minute SLAs.',
                     description: 'Never face a middle-of-the-night server crash alone. Our senior on-call engineers monitor your infrastructure 24/7/365.'
+                },
+                about: {
+                    image: '/services-set4/support.png'
+                },
+                whyChooseUs: {
+                    image: '/services-set4/support.png'
                 }
             },
             {
@@ -2686,6 +2812,12 @@ export const servicesData = [
                     highlight: 'Technical Security',
                     titleSuffix: '& Vulnerability Hardening.',
                     description: 'Protect your intellectual property and customer records with automated daily vulnerability scanning and firewall management.'
+                },
+                about: {
+                    image: '/services-set4/tech-management.png'
+                },
+                whyChooseUs: {
+                    image: '/services-set4/tech-management.png'
                 }
             },
             {
@@ -2697,16 +2829,31 @@ export const servicesData = [
                     highlight: 'Order & Backend Management',
                     titleSuffix: 'for Seamless Operations.',
                     description: 'Eliminate operational bottlenecks with dedicated catalog updates, inventory reconciliation, and customer order triage.'
+                },
+                about: {
+                    image: '/services-set4/order-mangement.png'
+                },
+                whyChooseUs: {
+                    image: '/services-set4/order-mangement.png'
                 }
             }
         ]
     }
 ];
 
+const CATEGORY_ALIASES = {
+    'software-development': 'software-application-development',
+    'web-development': 'web-design-and-development',
+    'ecommerce': 'e-commerce-solutions',
+    'creative': 'creative-solutions',
+    'back-office': 'back-office-support',
+};
+
 // ─── QUERY & SLUG RESOLVER WITH SAFE FALLBACKS & INHERITANCE ───
 export const getServiceData = (categorySlug, subServiceSlug) => {
     // 1. Find category by slug or id or fallback to first category
-    const targetCatSlug = slugify(categorySlug || '');
+    const rawSlug = slugify(categorySlug || '');
+    const targetCatSlug = CATEGORY_ALIASES[rawSlug] || rawSlug;
     let category = servicesData.find(
         (c) => c.slug === targetCatSlug || c.id === targetCatSlug || slugify(c.name) === targetCatSlug
     );
@@ -2763,7 +2910,7 @@ export const getServiceData = (categorySlug, subServiceSlug) => {
             highlight: subService?.hero?.highlight || category.hero.highlight || activeTitle,
             titleSuffix: subService?.hero?.titleSuffix || category.hero.titleSuffix || '',
             description: subService?.hero?.description || subService?.desc || category.hero.description,
-            bgImage: subService?.hero?.bgImage || category.hero?.bgImage || '/banner/5.png',
+            bgImage: subService?.hero?.bgImage || category.hero?.bgImage || '/service.png',
             ctaPrimary: subService?.hero?.ctaPrimary || category.hero.ctaPrimary,
             ctaSecondary: subService?.hero?.ctaSecondary || category.hero.ctaSecondary
         },

@@ -14,6 +14,12 @@ import {
   ArrowLeft
 } from 'lucide-react';
 
+// Icon colours: former red icons are now forest green, former blue icons are now gold
+const GREEN = '#0F3D2E';
+const GREEN_BG = '#E8F3EE';
+const GOLD = '#E8890C';
+const GOLD_BG = '#FDF3E3';
+
 // Exact 8 Sectors with 100% verified daylight high-key photography
 const sectors = [
   {
@@ -21,8 +27,8 @@ const sectors = [
     title: 'Retail',
     desc: 'Modern retail experiences with scalable digital solutions.',
     icon: ShoppingCart,
-    iconColor: '#D92419',
-    iconBg: '#FEF2F2',
+    iconColor: GREEN,
+    iconBg: GREEN_BG,
     image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80',
     link: '/sectors'
   },
@@ -31,8 +37,8 @@ const sectors = [
     title: 'Education',
     desc: 'Interactive learning platforms for a smarter future.',
     icon: GraduationCap,
-    iconColor: '#0B4F9C',
-    iconBg: '#EFF6FF',
+    iconColor: GOLD,
+    iconBg: GOLD_BG,
     image: '/sectors/education.jpg',
     link: '/sectors'
   },
@@ -41,8 +47,8 @@ const sectors = [
     title: 'Healthcare',
     desc: 'Next-gen healthcare systems for better care and outcomes.',
     icon: HeartPulse,
-    iconColor: '#D92419',
-    iconBg: '#FEF2F2',
+    iconColor: GREEN,
+    iconBg: GREEN_BG,
     image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
     link: '/sectors'
   },
@@ -51,8 +57,8 @@ const sectors = [
     title: 'Finance',
     desc: 'Secure, scalable and intelligent financial solutions.',
     icon: TrendingUp,
-    iconColor: '#D92419',
-    iconBg: '#FEF2F2',
+    iconColor: GREEN,
+    iconBg: GREEN_BG,
     image: '/sectors/finance.jpg',
     link: '/sectors'
   },
@@ -61,8 +67,8 @@ const sectors = [
     title: 'Construction',
     desc: 'Digital solutions for a smarter and safer construction ecosystem.',
     icon: Building2,
-    iconColor: '#0B4F9C',
-    iconBg: '#EFF6FF',
+    iconColor: GOLD,
+    iconBg: GOLD_BG,
     image: '/sectors/construction.jpg',
     link: '/sectors'
   },
@@ -71,8 +77,8 @@ const sectors = [
     title: 'Real Estate',
     desc: 'Virtual property solutions and intelligent real estate platforms.',
     icon: Home,
-    iconColor: '#D92419',
-    iconBg: '#FEF2F2',
+    iconColor: GREEN,
+    iconBg: GREEN_BG,
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
     link: '/sectors'
   },
@@ -81,8 +87,8 @@ const sectors = [
     title: 'Logistics',
     desc: 'Connected logistics and supply chain solutions.',
     icon: Truck,
-    iconColor: '#0B4F9C',
-    iconBg: '#EFF6FF',
+    iconColor: GOLD,
+    iconBg: GOLD_BG,
     image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
     link: '/sectors'
   },
@@ -91,8 +97,8 @@ const sectors = [
     title: 'Professional Services',
     desc: 'Digital tools for modern professional businesses.',
     icon: Users,
-    iconColor: '#D92419',
-    iconBg: '#FEF2F2',
+    iconColor: GREEN,
+    iconBg: GREEN_BG,
     image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
     link: '/sectors'
   }
@@ -157,7 +163,7 @@ export default function SectorsSection() {
       {/* BACKGROUND TECHNOLOGY ORBIT DECORATION (Subtle lines & glowing nodes) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
         {/* Soft ambient radial glow */}
-        <div className="absolute w-[1200px] h-[550px] bg-gradient-to-b from-[#D92419]/5 via-[#0B4F9C]/5 to-transparent rounded-full blur-3xl opacity-50 transform -translate-y-8"></div>
+        <div className="absolute w-[1200px] h-[550px] bg-gradient-to-b from-[#0F3D2E]/5 via-[#E8890C]/5 to-transparent rounded-full blur-3xl opacity-50 transform -translate-y-8"></div>
 
         {/* Orbit Arc SVG */}
         <svg
@@ -167,16 +173,16 @@ export default function SectorsSection() {
         >
           <defs>
             <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#D92419" stopOpacity="0.1" />
-              <stop offset="25%" stopColor="#D92419" stopOpacity="0.45" />
-              <stop offset="50%" stopColor="#D92419" stopOpacity="0.75" />
-              <stop offset="75%" stopColor="#0B4F9C" stopOpacity="0.45" />
-              <stop offset="100%" stopColor="#0B4F9C" stopOpacity="0.1" />
+              <stop offset="0%" stopColor="#0F3D2E" stopOpacity="0.1" />
+              <stop offset="25%" stopColor="#0F3D2E" stopOpacity="0.45" />
+              <stop offset="50%" stopColor="#0F3D2E" stopOpacity="0.75" />
+              <stop offset="75%" stopColor="#E8890C" stopOpacity="0.45" />
+              <stop offset="100%" stopColor="#E8890C" stopOpacity="0.1" />
             </linearGradient>
             <linearGradient id="subtleDashed" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#0B4F9C" stopOpacity="0.04" />
-              <stop offset="50%" stopColor="#0B4F9C" stopOpacity="0.2" />
-              <stop offset="100%" stopColor="#0B4F9C" stopOpacity="0.04" />
+              <stop offset="0%" stopColor="#E8890C" stopOpacity="0.04" />
+              <stop offset="50%" stopColor="#E8890C" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="#E8890C" stopOpacity="0.04" />
             </linearGradient>
           </defs>
 
@@ -197,10 +203,10 @@ export default function SectorsSection() {
           />
 
           {/* Floating Orbit Nodes / Spheres */}
-          <circle cx="280" cy="390" r="9" fill="#D92419" opacity="0.85" className="filter drop-shadow-[0_0_10px_rgba(217, 36, 25,0.8)]" />
-          <circle cx="480" cy="280" r="12" fill="#38BDF8" opacity="0.75" className="filter drop-shadow-[0_0_14px_rgba(56,189,248,0.6)]" />
-          <circle cx="1180" cy="285" r="7" fill="#D92419" opacity="0.85" className="filter drop-shadow-[0_0_8px_rgba(217, 36, 25,0.7)]" />
-          <circle cx="1280" cy="395" r="9" fill="#D92419" opacity="0.8" className="filter drop-shadow-[0_0_10px_rgba(217, 36, 25,0.7)]" />
+          <circle cx="280" cy="390" r="9" fill="#0F3D2E" opacity="0.85" className="filter drop-shadow-[0_0_10px_rgba(15,61,46,0.8)]" />
+          <circle cx="480" cy="280" r="12" fill="#E8890C" opacity="0.75" className="filter drop-shadow-[0_0_14px_rgba(232,137,12,0.6)]" />
+          <circle cx="1180" cy="285" r="7" fill="#0F3D2E" opacity="0.85" className="filter drop-shadow-[0_0_8px_rgba(15,61,46,0.7)]" />
+          <circle cx="1280" cy="395" r="9" fill="#0F3D2E" opacity="0.8" className="filter drop-shadow-[0_0_10px_rgba(15,61,46,0.7)]" />
         </svg>
       </div>
 
@@ -216,16 +222,16 @@ export default function SectorsSection() {
         >
           {/* Eyebrow */}
           <div className="flex flex-col items-center mb-3">
-            <span className="text-[#0B4F9C] font-extrabold text-[12px] sm:text-[13px] tracking-[0.25em] uppercase mb-1.5">
+            <span className="text-[#E8890C] font-extrabold text-[12px] sm:text-[13px] tracking-[0.25em] uppercase mb-1.5">
               OUR SECTORS
             </span>
-            <div className="w-12 h-1 bg-[#D92419] rounded-full"></div>
+            <div className="w-12 h-1 bg-[#0F3D2E] rounded-full"></div>
           </div>
 
           {/* Main Heading */}
           <h2 className="text-[clamp(1.9rem,4vw,3.25rem)] font-extrabold text-center leading-[1.14] tracking-tight mb-3.5">
-            <span className="text-[#0B4F9C]">Technology for industries that</span><br />
-            <span className="text-[#D92419]">keep business moving.</span>
+            <span className="text-[#E8890C]">Technology for industries that</span><br />
+            <span className="text-[#0F3D2E]">keep business moving.</span>
           </h2>
 
           {/* Subtitle */}
@@ -317,8 +323,8 @@ export default function SectorsSection() {
                       transition: { duration: 0.25, ease: "easeOut" }
                     }}
                     className={`w-full h-full rounded-[24px] bg-white flex flex-col justify-between overflow-hidden transition-all duration-300 group ${isActive
-                      ? 'border-[1.5px] border-[#D92419]/75 shadow-[0_25px_50px_-10px_rgba(11,79,156,0.18),0_10px_25px_-5px_rgba(217, 36, 25,0.18)] ring-1 ring-[#D92419]/20'
-                      : 'border border-slate-200/90 shadow-[0_16px_35px_-8px_rgba(11,79,156,0.08)] hover:border-[#D92419]/50 hover:shadow-[0_20px_40px_-5px_rgba(217, 36, 25,0.14)]'
+                      ? 'border-[1.5px] border-[#0F3D2E]/75 shadow-[0_25px_50px_-10px_rgba(232,137,12,0.18),0_10px_25px_-5px_rgba(15,61,46,0.18)] ring-1 ring-[#0F3D2E]/20'
+                      : 'border border-slate-200/90 shadow-[0_16px_35px_-8px_rgba(232,137,12,0.08)] hover:border-[#0F3D2E]/50 hover:shadow-[0_20px_40px_-5px_rgba(15,61,46,0.14)]'
                       }`}
                   >
                     {/* Top Content Area: Icon + Title together, with description */}
@@ -333,7 +339,7 @@ export default function SectorsSection() {
                           <Icon className="w-5 h-5" style={{ color: sector.iconColor }} />
                         </div>
 
-                        <h3 className={`font-extrabold tracking-tight text-[#0B4F9C] transition-colors duration-200 group-hover:text-[#D92419] ${isActive ? 'text-[20px] sm:text-[21px]' : 'text-[17px] sm:text-[18px]'
+                        <h3 className={`font-extrabold tracking-tight text-[#E8890C] transition-colors duration-200 group-hover:text-[#0F3D2E] ${isActive ? 'text-[20px] sm:text-[21px]' : 'text-[17px] sm:text-[18px]'
                           }`}>
                           {sector.title}
                         </h3>
@@ -385,7 +391,7 @@ export default function SectorsSection() {
                     animate={{ opacity: 1, scale: 1, x: 0 }}
                     exit={{ opacity: 0, scale: 0.94, x: -30 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="w-full h-full rounded-[24px] bg-white border-[1.5px] border-[#D92419]/75 shadow-[0_18px_40px_rgba(11,79,156,0.10),0_6px_16px_rgba(217, 36, 25,0.10)] flex flex-col justify-between overflow-hidden"
+                    className="w-full h-full rounded-[24px] bg-white border-[1.5px] border-[#0F3D2E]/75 shadow-[0_18px_40px_rgba(232,137,12,0.10),0_6px_16px_rgba(15,61,46,0.10)] flex flex-col justify-between overflow-hidden"
                   >
                     <Link to={sector.link} className="block w-full h-full flex flex-col justify-between">
                       {/* Top Content: Icon + Title */}
@@ -397,7 +403,7 @@ export default function SectorsSection() {
                           >
                             <Icon className="w-5 h-5" style={{ color: sector.iconColor }} />
                           </div>
-                          <h3 className="text-xl sm:text-2xl font-extrabold text-[#0B4F9C] tracking-tight">
+                          <h3 className="text-xl sm:text-2xl font-extrabold text-[#E8890C] tracking-tight">
                             {sector.title}
                           </h3>
                         </div>
@@ -414,7 +420,7 @@ export default function SectorsSection() {
                           alt={sector.title}
                           className="w-full h-full object-cover"
                         />
-                        <div className="absolute bottom-2.5 right-2.5 w-9 h-9 rounded-full bg-white/95 border border-[#0B4F9C]/15 shadow-md flex items-center justify-center text-[#0B4F9C]">
+                        <div className="absolute bottom-2.5 right-2.5 w-9 h-9 rounded-full bg-white/95 border border-[#E8890C]/15 shadow-md flex items-center justify-center text-[#E8890C]">
                           <ArrowRight className="w-4 h-4" />
                         </div>
                       </div>
@@ -435,7 +441,7 @@ export default function SectorsSection() {
           <button
             onClick={handlePrev}
             aria-label="Previous Sector"
-            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#0B4F9C]/20 bg-white text-[#0B4F9C] hover:border-[#D92419] hover:text-[#D92419] hover:bg-red-50/40 shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#E8890C]/30 bg-white text-[#E8890C] hover:border-[#0F3D2E] hover:text-[#0F3D2E] hover:bg-[#0F3D2E]/5 shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
@@ -448,8 +454,8 @@ export default function SectorsSection() {
                 onClick={() => setActiveIndex(idx)}
                 aria-label={`Go to sector ${idx + 1}`}
                 className={`transition-all duration-300 rounded-full cursor-pointer ${idx === activeIndex
-                  ? 'w-6 h-2 bg-[#D92419] shadow-[0_0_8px_rgba(217, 36, 25,0.5)]'
-                  : 'w-2 h-2 bg-[#0B4F9C]/20 hover:bg-[#0B4F9C]/50'
+                  ? 'w-6 h-2 bg-[#0F3D2E] shadow-[0_0_8px_rgba(15,61,46,0.5)]'
+                  : 'w-2 h-2 bg-[#E8890C]/30 hover:bg-[#E8890C]/60'
                   }`}
               />
             ))}
@@ -459,7 +465,7 @@ export default function SectorsSection() {
           <button
             onClick={handleNext}
             aria-label="Next Sector"
-            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#0B4F9C]/20 bg-white text-[#0B4F9C] hover:border-[#D92419] hover:text-[#D92419] hover:bg-red-50/40 shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#E8890C]/30 bg-white text-[#E8890C] hover:border-[#0F3D2E] hover:text-[#0F3D2E] hover:bg-[#0F3D2E]/5 shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
           >
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>

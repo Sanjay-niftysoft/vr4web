@@ -1,503 +1,417 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ArrowLeft, ArrowRight, Calendar, Clock, Share2, ChevronRight, ChevronDown, Home,
-  Bookmark, CheckCircle2, User, Check, ImageIcon,
+  Share2, Bookmark, ChevronRight, ArrowRight, CheckCircle2, Home,
+  Copy, Check, Plus, Minus, Calendar, Clock, Sparkles
 } from 'lucide-react';
-import { getBlogById, getRelatedBlogs } from '../../data/blogsData';
+import { getBlogById, BLOGS } from '../../data/blogsData';
 import CtaSection from '../../components/CtaSection';
 
-/* ───────────── Icons ───────────── */
-const FacebookIcon = (p) => (
-  <svg fill="currentColor" viewBox="0 0 24 24" className="w-4 h-4" {...p}>
-    <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z" />
-  </svg>
-);
-const LinkedInIcon = (p) => (
-  <svg fill="currentColor" viewBox="0 0 24 24" className="w-4 h-4" {...p}>
-    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m1.4 9.74V9.97H5.06v8.53h2.8z" />
-  </svg>
-);
-const TwitterIcon = (p) => (
-  <svg fill="currentColor" viewBox="0 0 24 24" className="w-4 h-4" {...p}>
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-  </svg>
-);
+/* ─────────────────────────────────────────────────────────────
+   THEME : Green (#0F3D2E) + Yellow (#E8890C) + White (#FFFFFF) + Blue (#2563EB)
+   FONT  : Poppins
+   LAYOUT: Centered Panoramic Hero Banner + 2-Column Body with Next 2 Blogs in Sidebar
+   ───────────────────────────────────────────────────────────── */
 
-/* ───────────── Images (Unsplash, related to each section) ───────────── */
-const U = (id) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1400&q=80`;
+const FONT = "font-['Poppins',sans-serif]";
 
-const IMAGES = {
+/* Topic-specific, wide uncropped visuals & metadata */
+const BLOG_EXPANDED_DATA = {
   'mobile-application-development-services': {
-    hero: U('1512941937669-90a1b58e7e9c'),
-    'why-mobile': U('1551650975-87deedd944c3'),
-    'key-services': U('1555066931-4365d14bab8c'),
-    technologies: U('1498050108023-c5249f4df085'),
-    lifecycle: U('1522071820081-009f0129c71c'),
-    'business-impact': U('1551288049-bebda4e38f71'),
-    'next-steps': U('1519389950473-47ba0277781c'),
+    heroLandscape: '/mobile.png', // User's custom 2000x625 mobile banner
+    inlineLandscape: '/blog1.png',
+    inlineCaption: '"Agile Sprint Architecture" High-Fidelity Mobile App Prototyping & Cross-Platform Engineering',
+    cardImage: '/blog-images/2.png',
   },
   'mobile-apps-better-digital-experiences': {
-    hero: U('1551650975-87deedd944c3'),
-    'mobile-first': U('1512941937669-90a1b58e7e9c'),
-    pillars: U('1555066931-4365d14bab8c'),
-    'bridging-touchpoints': U('1556742049-0cfed4f6a45d'),
-    'internal-operations': U('1519389950473-47ba0277781c'),
-    'measuring-success': U('1460925895917-afdab827c52f'),
-    conclusion: U('1522071820081-009f0129c71c'),
+    heroLandscape: '/mobile2.png', // User's custom mobile banner
+    inlineLandscape: '/blog2.png',
+    inlineCaption: '"User-Centric Architecture" Streamlined Touchpoints & Omnichannel Experience Optimization',
+    cardImage: '/blog-images/1.png',
   },
   'erp-crm-transform-ecommerce-operations': {
-    hero: U('1586528116311-ad8dd3c8310d'),
-    complexity: U('1565793298595-6a879b1d9492'),
-    'erp-role': U('1553877522-43269d4ea984'),
-    'crm-power': U('1551288049-bebda4e38f71'),
-    'integration-synergy': U('1460925895917-afdab827c52f'),
-    implementation: U('1522071820081-009f0129c71c'),
-    conclusion: U('1556742049-0cfed4f6a45d'),
+    heroLandscape: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80', // Wide modern automated eCommerce fulfillment & distribution center
+    inlineLandscape: '/blog3.png', // Enterprise CRM customer relationship management & pipeline analytics
+    inlineCaption: '"Unified CRM & ERP Operations" Multi-Channel Customer Lifecycle & Enterprise Telemetry',
+    cardImage: '/blogs/erp-crm-ecommerce.png', // Enterprise eCommerce systems
   },
 };
 
-/* Image with graceful gradient fallback if a URL fails */
-function SmartImage({ src, alt, className = '' }) {
-  const [failed, setFailed] = useState(false);
-  if (!src || failed) {
-    return (
-      <div className={`bg-gradient-to-br from-[#102448] via-[#1b3a73] to-[#D7192D] flex items-center justify-center ${className}`}>
-        <ImageIcon className="w-10 h-10 text-white/50" />
-      </div>
-    );
-  }
-  return <img src={src} alt={alt} loading="lazy" onError={() => setFailed(true)} className={className} />;
-}
-
-/* Simple banner image (calm, like the reference) */
-function BannerImage({ src, alt }) {
-  return (
-    <motion.figure
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.6 }}
-      className="relative h-48 sm:h-64 rounded-2xl overflow-hidden shadow-md shadow-slate-900/10 bg-slate-100"
-    >
-      <SmartImage src={src} alt={alt} className="w-full h-full object-cover" />
-    </motion.figure>
-  );
-}
-
-/* Split "Title: description" bullets */
-const splitBullet = (text) => {
-  const clean = text.replace(/^\d+\.\s*/, '');
-  const i = clean.indexOf(':');
-  return i > 0 && i < 70
-    ? { title: clean.slice(0, i), body: clean.slice(i + 1).trim() }
-    : { title: '', body: clean };
-};
-const isSteps = (bullets) => bullets.every((b) => /^\d+\.\s/.test(b));
-
-/* Vertical timeline for numbered steps */
-function Timeline({ bullets }) {
-  return (
-    <div className="relative pl-12 sm:pl-14 space-y-4">
-      <div className="absolute left-[19px] sm:left-[21px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[#D7192D] to-[#102448]/20" />
-      {bullets.map((b, i) => {
-        const { title, body } = splitBullet(b);
-        return (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-30px' }}
-            transition={{ duration: 0.45, delay: i * 0.05 }}
-            className="relative bg-white rounded-2xl p-4 border border-slate-200 shadow-sm"
-          >
-            <span className="absolute -left-12 sm:-left-14 top-3 w-10 h-10 rounded-full bg-gradient-to-br from-[#D7192D] to-[#a5111f] text-white font-extrabold flex items-center justify-center ring-4 ring-white shadow-md">
-              {i + 1}
-            </span>
-            {title && <h4 className="font-extrabold text-[#102448] mb-1">{title}</h4>}
-            <p className="text-black text-sm leading-relaxed">{body}</p>
-          </motion.div>
-        );
-      })}
-    </div>
-  );
-}
-
-/* Feature cards for regular bullets (single column inside the narrow reading area) */
-function CardGrid({ bullets }) {
-  return (
-    <div className="grid grid-cols-1 gap-3">
-      {bullets.map((b, i) => {
-        const { title, body } = splitBullet(b);
-        return (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-30px' }}
-            transition={{ duration: 0.4, delay: i * 0.04 }}
-            className="flex items-start gap-3 rounded-2xl p-4 bg-white border border-slate-200 hover:border-[#D7192D]/40 hover:shadow-md transition"
-          >
-            <span className="mt-0.5 flex-shrink-0 w-8 h-8 rounded-xl bg-red-50 text-[#D7192D] flex items-center justify-center">
-              <CheckCircle2 className="w-5 h-5" />
-            </span>
-            <div>
-              {title && <h4 className="font-extrabold text-[#102448] leading-snug mb-0.5">{title}</h4>}
-              <p className="text-black text-sm leading-relaxed">{body}</p>
-            </div>
-          </motion.div>
-        );
-      })}
-    </div>
-  );
-}
-
-/* FAQ accordion (reads blog.faqs = [{ question, answer }] or [{ q, a }]) */
-function Faq({ items }) {
-  const [open, setOpen] = useState(0);
-  return (
-    <div className="space-y-3">
-      {items.map((f, i) => {
-        const q = f.question || f.q;
-        const a = f.answer || f.a;
-        const isOpen = open === i;
-        return (
-          <div key={i} className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-            <button
-              onClick={() => setOpen(isOpen ? -1 : i)}
-              className="w-full flex items-center justify-between gap-4 text-left px-5 py-4 font-bold text-[#102448]"
-              aria-expanded={isOpen}
-            >
-              <span className="text-sm sm:text-[15px]">{q}</span>
-              <ChevronDown className={`w-4 h-4 flex-shrink-0 transition-transform ${isOpen ? 'rotate-180 text-[#D7192D]' : ''}`} />
-            </button>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <p className="px-5 pb-5 text-sm text-black leading-relaxed">{a}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-/* ───────────── Page ───────────── */
 export default function BlogDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const blog = getBlogById(id);
-  const relatedBlogs = getRelatedBlogs(blog?.id);
-  const [activeSection, setActiveSection] = useState('intro');
-  const [copied, setCopied] = useState(false);
 
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, restDelta: 0.001 });
+  // Accordion Toggles
+  const [openSummary, setOpenSummary] = useState(true);
+  const [openHistory, setOpenHistory] = useState(false);
+  const [openPasses, setOpenPasses] = useState(true);
+
+  // Interactive Action states
+  const [bookmarked, setBookmarked] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setActiveSection('intro');
+    setOpenSummary(true);
+    setOpenHistory(false);
+    setOpenPasses(true);
   }, [id]);
 
-  // ScrollSpy
-  useEffect(() => {
-    if (!blog) return;
-    const ids = ['intro', ...(blog.content.sections?.map((s) => s.id) || [])];
-    const onScroll = () => {
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 300) {
-        setActiveSection(ids[ids.length - 1]);
-        return;
-      }
-      let current = ids[0];
-      ids.forEach((sId) => {
-        const el = document.getElementById(sId);
-        if (el && el.getBoundingClientRect().top <= 200) current = sId;
-      });
-      setActiveSection(current);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [blog]);
-
-  const scrollToSection = (sectionId) => {
-    setActiveSection(sectionId);
-    const el = document.getElementById(sectionId);
-    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 110, behavior: 'smooth' });
-  };
-
-  const url = typeof window !== 'undefined' ? window.location.href : '';
-  const copyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    } catch (e) { /* ignore */ }
-  };
+  // Find the other 2 blogs to display in the right sidebar
+  const otherBlogs = useMemo(() => {
+    return BLOGS.filter((b) => b.id !== blog?.id).slice(0, 2);
+  }, [blog?.id]);
 
   if (!blog) {
     return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center px-4">
-        <h2 className="text-2xl font-bold text-[#102448] mb-4">Blog Article Not Found</h2>
-        <Link to="/blogs" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#102448] text-white font-medium hover:bg-[#D7192D] transition-colors">
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to All Blogs</span>
+      <div className={`${FONT} min-h-[70vh] flex flex-col items-center justify-center px-4 bg-white`}>
+        <h2 className="text-2xl font-bold text-[#0F3D2E] mb-4">Blog Article Not Found</h2>
+        <Link
+          to="/blogs"
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0F3D2E] text-white font-medium hover:bg-[#E8890C] transition-colors"
+        >
+          Back to All Blogs
         </Link>
       </div>
     );
   }
 
-  const imgs = IMAGES[blog.id] || {};
-  const faqs = blog.faqs || blog.faq || [];
+  const extras = BLOG_EXPANDED_DATA[blog.id] || BLOG_EXPANDED_DATA['mobile-application-development-services'];
+  const introParagraphs = blog.content?.intro || [];
+  const sections = blog.content?.sections || [];
 
-  const shareLinks = [
-    { label: 'Facebook', Icon: FacebookIcon, href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}` },
-    { label: 'LinkedIn', Icon: LinkedInIcon, href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}` },
-    { label: 'X', Icon: TwitterIcon, href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(blog.title)}` },
-  ];
+  const copyUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* ignore */
+    }
+  };
 
   return (
-    <div className="w-full min-h-screen bg-white font-sans text-[#111111] selection:bg-[#D7192D] selection:text-white">
-      {/* Reading progress bar */}
-      <motion.div style={{ scaleX: progress }} className="fixed top-0 left-0 right-0 h-1 origin-left bg-gradient-to-r from-[#D7192D] to-[#ff6b7a] z-[60]" />
+    <div className={`${FONT} w-full min-h-screen bg-[#FDFEFE] text-slate-800 selection:bg-[#E8890C] selection:text-white`}>
 
-      {/* ─── 1. BANNER ─── */}
-      <header
-        className="relative overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: `url('/banner/5.png')` }}
-      >
-        <div className="absolute inset-0 bg-[#102448]/15 z-0" />
+      {/* ════════════════ 1. CENTERED HERO BANNER ════════════════ */}
+      {/* ════════════════ 1. CENTERED HERO BANNER ════════════════ */}
+<section className="relative w-full pt-28 sm:pt-32 pb-14 sm:pb-16 min-h-[320px] sm:min-h-[380px] flex items-center justify-center bg-[rgb(240,231,195)] border-b border-slate-200">
+  <div className="w-full max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-12 flex flex-col items-center text-center">
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-6 sm:pb-8 text-center flex flex-col items-center">
-          {blog.category && (
-            <motion.span
-              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-              className="inline-block bg-[#D7192D] text-white text-xs font-bold px-3 py-1 rounded-[10px] mb-3"
-            >
-              {blog.category}
-            </motion.span>
-          )}
+    {/* Category Pill */}
+    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E8890C] text-[#0F3D2E] text-xs font-black uppercase tracking-widest shadow-md mb-5">
+      <Sparkles className="w-3.5 h-3.5" />
+      <span>{blog.category}</span>
+      <span>•</span>
+      <span>{blog.readTime}</span>
+    </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-            style={{ textShadow: '0 4px 22px rgba(16,36,72,0.35)' }}
-            className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-[1.18] max-w-4xl"
-          >
-            {blog.title}
-          </motion.h1>
+    {/* Main Title */}
+    <motion.h1
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-black text-[#0F3D2E] tracking-tight leading-[1.15] max-w-[900px]"
+    >
+      {blog.title}
+    </motion.h1>
 
-          {/* Breadcrumb pill */}
-          <motion.nav
-            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-4 inline-flex items-center gap-2.5 rounded-full bg-white/25 backdrop-blur-sm px-5 py-2 text-xs sm:text-sm text-white"
-          >
-            <Link to="/" className="flex items-center gap-1.5 font-medium hover:opacity-80 transition-opacity">
-              <Home className="w-3.5 h-3.5" /><span>Home</span>
-            </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-white/80" />
-            <Link to="/blogs" className="font-extrabold hover:opacity-80 transition-opacity">Blogs</Link>
-          </motion.nav>
-        </div>
-      </header>
+    {/* Author and Date */}
+    <p className="mt-5 text-xs sm:text-sm text-[#0F3D2E]/80 font-medium flex items-center justify-center gap-2">
+      <span>By {blog.author}</span>
+      <span>•</span>
+      <span>Published {blog.date}</span>
+    </p>
 
-      {/* ─── 2. BODY: fixed TOC (left) + scrolling article (right) ─── */}
-      <section className="pt-8 pb-10 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-        {/* Mobile TOC chips */}
-        <div className="lg:hidden mb-6 sticky top-24 z-20 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-slate-200 shadow-sm">
-          <div className="text-xs font-bold text-black uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            <Bookmark className="w-3.5 h-3.5 text-[#D7192D]" /><span>Table of contents</span>
-          </div>
-          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
-            {blog.tableOfContents.map((toc) => (
+    {/* Breadcrumbs */}
+    <nav
+      aria-label="Breadcrumb"
+      className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white bg-[#0F3D2E] px-5 py-2 rounded-full shadow-sm"
+    >
+      <Link to="/" className="hover:text-[#E8890C] transition-colors flex items-center gap-1.5">
+        <Home className="w-3.5 h-3.5" />
+        <span>Home</span>
+      </Link>
+      <ChevronRight className="w-3.5 h-3.5 text-white/60" />
+      <Link to="/blogs" className="hover:text-[#E8890C] transition-colors">
+        Blogs
+      </Link>
+      <ChevronRight className="w-3.5 h-3.5 text-[#E8890C]" />
+      <span className="text-[#E8890C] font-extrabold">{blog.category}</span>
+    </nav>
+  </div>
+</section>
+
+      {/* ════════════════ 2. MAIN CONTENT + RIGHT SIDEBAR (NEXT 2 BLOGS) ════════════════ */}
+      <main className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_400px] gap-10 lg:gap-14 items-start">
+
+          {/* ───────────────── LEFT: ARTICLE ACCORDION BODY ───────────────── */}
+          <article className="min-w-0">
+
+            {/* Section 1: Summary (Collapsible Accordion) */}
+            <div className="pb-8 border-b border-slate-200">
               <button
-                key={toc.id}
-                onClick={() => scrollToSection(toc.id)}
-                className={`whitespace-nowrap px-3 py-1.5 rounded-[10px] text-xs font-semibold transition-colors flex-shrink-0 ${
-                  activeSection === toc.id ? 'bg-[#D7192D] text-white' : 'bg-slate-100 text-black hover:bg-red-50 hover:text-[#D7192D]'
+                type="button"
+                onClick={() => setOpenSummary(!openSummary)}
+                className="w-full flex items-center justify-between text-left group"
+                aria-expanded={openSummary}
+              >
+                <h2 className="text-2xl sm:text-[26px] font-black text-[#0F3D2E] group-hover:text-[#2563EB] transition-colors">
+                  Summary & Overview
+                </h2>
+                <span className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-[#0F3D2E] group-hover:text-white flex items-center justify-center text-slate-600 transition-colors">
+                  {openSummary ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                </span>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {openSummary && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-5 space-y-5">
+                      {introParagraphs[0] && (
+                        <p className="text-[16.5px] sm:text-[17.5px] leading-[1.85] text-slate-700">
+                          <span className="float-left text-5xl sm:text-6xl font-black font-['Poppins',sans-serif] leading-none mr-3 mt-1 text-[#0F3D2E] select-none">
+                            {introParagraphs[0].charAt(0)}
+                          </span>
+                          {introParagraphs[0].slice(1)}
+                        </p>
+                      )}
+
+                      {introParagraphs[1] && (
+                        <p className="text-[16.5px] sm:text-[17.5px] leading-[1.85] text-slate-700">
+                          {introParagraphs[1]}
+                        </p>
+                      )}
+
+                      {/* Inline Landscape Photo with Caption */}
+                      <figure className="my-7">
+                        <div className="overflow-hidden rounded-2xl aspect-[16/10] sm:aspect-[16/9] shadow-md border border-slate-200 bg-slate-100">
+                          <img
+                            src={extras.inlineLandscape}
+                            alt={blog.title}
+                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                          />
+                        </div>
+                        <figcaption className="mt-2.5 text-xs text-slate-500 italic text-center sm:text-left">
+                          {extras.inlineCaption}
+                        </figcaption>
+                      </figure>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Section 2: Technical Evolution (Collapsible Accordion) */}
+            <div className="py-8 border-b border-slate-200">
+              <button
+                type="button"
+                onClick={() => setOpenHistory(!openHistory)}
+                className="w-full flex items-center justify-between text-left group"
+                aria-expanded={openHistory}
+              >
+                <h2 className="text-2xl sm:text-[26px] font-black text-[#0F3D2E] group-hover:text-[#2563EB] transition-colors">
+                  Technical Evolution & Architecture
+                </h2>
+                <span className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-[#0F3D2E] group-hover:text-white flex items-center justify-center text-slate-600 transition-colors">
+                  {openHistory ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                </span>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {openHistory && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-5 space-y-4">
+                      <p className="text-[16.5px] leading-[1.85] text-slate-700">
+                        Over the past decade, enterprise applications transitioned from monolithic codebases into modular, cloud-native services. Organizations that invested in modern mobile-first ecosystems unlocked rapid time-to-market, resilient uptime, and sustained customer lifetime value.
+                      </p>
+                      <p className="text-[16.5px] leading-[1.85] text-slate-700">
+                        Modern engineering standards prioritize sub-second interface responses, end-to-end encrypted transactions, and automated telemetry that delivers predictable business ROI.
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Section 3: Core Frameworks & Implementation (Open Accordion) */}
+            <div className="py-8 border-b border-slate-200">
+              <button
+                type="button"
+                onClick={() => setOpenPasses(!openPasses)}
+                className="w-full flex items-center justify-between text-left group"
+                aria-expanded={openPasses}
+              >
+                <h2 className="text-2xl sm:text-[26px] font-black text-[#0F3D2E] group-hover:text-[#2563EB] transition-colors">
+                  Core Frameworks & Implementation
+                </h2>
+                <span className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-[#0F3D2E] group-hover:text-white flex items-center justify-center text-slate-600 transition-colors">
+                  {openPasses ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                </span>
+              </button>
+
+              <AnimatePresence initial={false}>
+                {openPasses && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-6 space-y-8">
+                      {sections.map((sec, sIdx) => (
+                        <div key={sec.id || sIdx} className="space-y-3">
+                          <h3 className="text-lg sm:text-xl font-black text-[#0F3D2E]">
+                            {sec.heading}
+                          </h3>
+                          {sec.paragraphs?.map((p, pIdx) => (
+                            <p key={pIdx} className="text-[16px] leading-[1.85] text-slate-700">
+                              {p}
+                            </p>
+                          ))}
+                          {sec.bullets && (
+                            <ul className="space-y-2.5 pt-2">
+                              {sec.bullets.map((b, bIdx) => (
+                                <li key={bIdx} className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-800">
+                                  <span className="w-6 h-6 rounded-lg bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <CheckCircle2 className="w-3.5 h-3.5" />
+                                  </span>
+                                  <span>{b}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+          </article>
+
+          {/* ───────────────── RIGHT SIDEBAR: NEXT 2 BLOGS (USER REQUEST) ───────────────── */}
+          <aside className="space-y-6 lg:sticky lg:top-28">
+
+            {/* Sidebar Title */}
+            <div className="border-b-2 border-[#0F3D2E] pb-3 flex items-center justify-between">
+              <h3 className="text-base sm:text-lg font-black text-[#0F3D2E] uppercase tracking-wider flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#E8890C]" /> Next Articles
+              </h3>
+              <span className="text-xs font-bold text-[#2563EB] bg-[#2563EB]/10 px-2.5 py-0.5 rounded-full">
+                2 Reads
+              </span>
+            </div>
+
+            {/* Next 2 Blog Cards with Direct Links */}
+            <div className="space-y-5">
+              {otherBlogs.map((b) => {
+                const bThumb = b.cardImage || BLOG_EXPANDED_DATA[b.id]?.cardImage || b.heroImage;
+                return (
+                  <Link
+                    key={b.id}
+                    to={`/blogs/${b.id}`}
+                    className="group block rounded-2xl overflow-hidden bg-white border-2 border-slate-200 hover:border-[#2563EB] shadow-sm hover:shadow-xl transition-all duration-300"
+                  >
+                    {/* Thumbnail Image */}
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
+                      <img
+                        src={bThumb}
+                        alt={b.title}
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-md bg-[#2563EB] text-white text-[11px] font-black uppercase tracking-wider shadow">
+                        {b.category}
+                      </span>
+                    </div>
+
+                  {/* Content */}
+                  <div className="p-4 sm:p-5">
+                    <div className="flex items-center gap-2 text-xs text-slate-500 font-medium mb-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-[#E8890C]" />
+                      <span>{b.date}</span>
+                      <span>•</span>
+                      <span>{b.readTime}</span>
+                    </div>
+
+                    <h4 className="text-[15px] sm:text-base font-black text-[#0F3D2E] group-hover:text-[#2563EB] transition-colors leading-snug line-clamp-2">
+                      {b.title}
+                    </h4>
+
+                    <p className="mt-2 text-xs sm:text-[13px] text-slate-600 line-clamp-2 leading-relaxed">
+                      {b.summary}
+                    </p>
+
+                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#2563EB] group-hover:text-[#E8890C] transition-colors">
+                      <span>Read Article</span>
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+            </div>
+
+            {/* Quick Share / Bookmark Capsule Bar */}
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+              <button
+                onClick={() => setBookmarked(!bookmarked)}
+                type="button"
+                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                  bookmarked ? 'bg-[#E8890C] text-white' : 'bg-white text-slate-700 border border-slate-200 hover:border-[#E8890C]'
                 }`}
               >
-                {toc.title}
+                <Bookmark className={`w-3.5 h-3.5 ${bookmarked ? 'fill-white' : ''}`} />
+                <span>{bookmarked ? 'Saved' : 'Bookmark'}</span>
               </button>
-            ))}
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)] gap-10 items-start">
-          {/* LEFT: fixed (sticky) compact TOC card */}
-          <aside className="hidden lg:block sticky top-28 self-start z-30">
-            <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-lg shadow-slate-900/5 max-h-[calc(100vh-140px)] overflow-y-auto">
-              <h3 className="text-[11px] font-extrabold uppercase tracking-wider text-[#D7192D] mb-4">
-                Table of contents
-              </h3>
-              <nav className="flex flex-col gap-1">
-                {blog.tableOfContents.map((toc, i) => {
-                  const active = activeSection === toc.id;
-                  return (
-                    <button
-                      key={toc.id}
-                      onClick={() => scrollToSection(toc.id)}
-                      className={`flex items-start gap-3 text-left rounded-xl px-2.5 py-2.5 transition-colors cursor-pointer w-full ${
-                        active ? 'bg-red-50' : 'hover:bg-slate-50'
-                      }`}
-                    >
-                      <span
-                        className={`flex-shrink-0 w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center transition-colors ${
-                          active ? 'bg-[#D7192D] text-white' : 'bg-slate-100 text-black'
-                        }`}
-                      >
-                        {i + 1}
-                      </span>
-                      <span className={`text-sm leading-snug pt-0.5 ${active ? 'text-[#102448] font-bold' : 'text-black font-medium'}`}>
-                        {toc.title}
-                      </span>
-                    </button>
-                  );
-                })}
-              </nav>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={copyUrl}
+                  type="button"
+                  title="Copy Link"
+                  className="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-700 hover:text-[#2563EB] flex items-center justify-center transition-colors"
+                >
+                  {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                </button>
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Share on LinkedIn"
+                  className="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-700 hover:text-[#2563EB] flex items-center justify-center transition-colors"
+                >
+                  <Share2 className="w-4 h-4" />
+                </a>
+              </div>
             </div>
+
           </aside>
 
-          {/* RIGHT: scrolling article */}
-          <article className="max-w-[760px] space-y-10 text-black leading-relaxed text-sm sm:text-base">
-            {/* Intro */}
-            <div id="intro" className="space-y-4 scroll-mt-28">
-              {blog.content.intro.map((p, i) => (
-                <p
-                  key={i}
-                  className={
-                    i === 0
-                      ? 'text-lg sm:text-xl text-[#102448] font-bold leading-relaxed'
-                      : 'text-base sm:text-[17px] text-black'
-                  }
-                >
-                  {p}
-                </p>
-              ))}
-            </div>
-
-            {/* Sections */}
-            {blog.content.sections?.map((section) => (
-              <section key={section.id} id={section.id} className="space-y-4 scroll-mt-28">
-                <BannerImage src={imgs[section.id]} alt={section.heading} />
-
-                <h2 className="text-2xl sm:text-[28px] font-extrabold text-[#102448] tracking-tight leading-snug pt-2">
-                  {section.heading}
-                </h2>
-
-                {section.paragraphs?.map((p, i) => (
-                  <p key={i} className="text-black text-base sm:text-[17px] leading-relaxed">{p}</p>
-                ))}
-
-                {section.bullets?.length > 0 &&
-                  (isSteps(section.bullets) ? <Timeline bullets={section.bullets} /> : <CardGrid bullets={section.bullets} />)}
-
-                {section.note && (
-                  <p className="text-sm font-medium text-black bg-red-50/60 p-4 rounded-xl border border-red-100">{section.note}</p>
-                )}
-              </section>
-            ))}
-
-            {/* Inline CTA card (end of article) */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6">
-              <div>
-                <h3 className="text-lg font-extrabold text-[#102448]">Have a project in mind?</h3>
-                <p className="text-sm text-black">Talk to our team and get a tailored plan.</p>
-              </div>
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center gap-2 bg-[#D7192D] hover:bg-[#102448] text-white text-sm font-bold px-5 py-3 rounded-[10px] transition-colors whitespace-nowrap"
-              >
-                <span>Get in touch</span><ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* Share row */}
-            <div className="flex items-center gap-3 pt-6 border-t border-slate-200">
-              <span className="text-sm font-bold text-[#102448] flex items-center gap-1.5">
-                <Share2 className="w-4 h-4 text-[#D7192D]" /> Share
-              </span>
-              {shareLinks.map(({ label, Icon, href }) => (
-                <a
-                  key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${label}`}
-                  className="w-10 h-10 rounded-[10px] bg-slate-100 text-[#102448] flex items-center justify-center hover:bg-[#D7192D] hover:text-white transition-colors"
-                >
-                  <Icon />
-                </a>
-              ))}
-              <button
-                onClick={copyLink} aria-label="Copy link"
-                className="w-10 h-10 rounded-[10px] bg-slate-100 text-[#102448] flex items-center justify-center hover:bg-[#102448] hover:text-white transition-colors"
-              >
-                {copied ? <Check className="w-4 h-4" /> : <Share2 className="w-4 h-4" />}
-              </button>
-            </div>
-          </article>
         </div>
+      </main>
 
-        {/* ─── FAQ (full width, below the article, like the reference) ─── */}
-        {faqs.length > 0 && (
-          <div className="mt-14 max-w-3xl">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#102448] tracking-tight mb-6">
-              Frequently asked questions
-            </h2>
-            <Faq items={faqs} />
-          </div>
-        )}
-      </section>
+      {/* Global CTA Section */}
+      <CtaSection />
 
-      {/* ─── 3. CTA ─── */}
-      <div className="[&>*]:!py-8 sm:[&>*]:!py-10 [&>*]:!my-0">
-        <CtaSection />
-      </div>
-
-      {/* ─── 4. RELATED ─── */}
-      <section className="py-10 bg-slate-50 border-t border-slate-200 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#102448] tracking-tight">Related Articles</h2>
-            <Link to="/blogs" className="text-xs sm:text-sm font-bold text-[#D7192D] hover:underline flex items-center gap-1">
-              <span>View All Blogs</span><ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {relatedBlogs.map((rel, i) => (
-              <motion.div
-                key={rel.id}
-                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="relative w-full h-44 rounded-2xl overflow-hidden mb-3 bg-slate-900">
-                    <SmartImage
-                      src={IMAGES[rel.id]?.hero || rel.cardImage} alt={rel.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                  </div>
-                  <span className="text-xs font-bold text-[#D7192D] uppercase tracking-wider block mb-1.5">{rel.date} • {rel.readTime}</span>
-                  <h3 className="text-lg font-extrabold text-[#102448] group-hover:text-[#D7192D] transition-colors line-clamp-2 mb-2">
-                    <Link to={`/blogs/${rel.id}`}>{rel.title}</Link>
-                  </h3>
-                  <p className="text-sm text-black line-clamp-2 mb-5 leading-relaxed">{rel.summary}</p>
-                </div>
-                <Link to={`/blogs/${rel.id}`} className="inline-flex items-center gap-1.5 text-sm font-bold text-[#102448] group-hover:text-[#D7192D] transition-colors">
-                  <span>Read article</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

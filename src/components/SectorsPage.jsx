@@ -67,7 +67,7 @@ const GeometricGraphic = ({ themeIndex }) => {
  // 0: Emerald / Teal composition
  if (index === 0) {
  return (
- <svg className="w-24 h-24 sm:w-28 sm:h-28" viewBox="0 0 120 120" fill="none">
+ <svg className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28" viewBox="0 0 120 120" fill="none">
  <defs>
  <linearGradient id="g0_1" x1="0%" y1="0%" x2="100%" y2="100%">
  <stop offset="0%" stopColor="#10b981" />
@@ -93,7 +93,7 @@ const GeometricGraphic = ({ themeIndex }) => {
  // 1: Amber / Mustard Wood Blocks
  if (index === 1) {
  return (
- <svg className="w-24 h-24 sm:w-28 sm:h-28" viewBox="0 0 120 120" fill="none">
+ <svg className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28" viewBox="0 0 120 120" fill="none">
  <defs>
  <linearGradient id="g1_1" x1="0%" y1="0%" x2="100%" y2="100%">
  <stop offset="0%" stopColor="#f59e0b" />
@@ -104,7 +104,7 @@ const GeometricGraphic = ({ themeIndex }) => {
  </pattern>
  </defs>
  <path d="M45 40 L85 20 L85 70 L45 90 Z" fill="#fcd34d" opacity="0.95" />
- <path d="M85 20 L115 40 L115 90 L85 70 Z" fill="#d97706" opacity="0.85" />
+ <path d="M85 20 L120 40 L120 120 L85 90 Z" fill="#d97706" opacity="0.85" />
  <circle cx="50" cy="86" r="22" fill="url(#g1_1)" />
  <circle cx="50" cy="86" r="22" fill="url(#pat1)" />
  <rect x="70" y="70" width="38" height="26" rx="6" fill="#b45309" opacity="0.9" />
@@ -115,7 +115,7 @@ const GeometricGraphic = ({ themeIndex }) => {
  // 2: Coral / Crimson Arches
  if (index === 2) {
  return (
- <svg className="w-24 h-24 sm:w-28 sm:h-28" viewBox="0 0 120 120" fill="none">
+ <svg className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28" viewBox="0 0 120 120" fill="none">
  <defs>
  <linearGradient id="g2_1" x1="0%" y1="0%" x2="100%" y2="100%">
  <stop offset="0%" stopColor="#f43f5e" />
@@ -125,8 +125,8 @@ const GeometricGraphic = ({ themeIndex }) => {
  <line x1="0" y1="0" x2="7" y2="7" stroke="#881337" strokeWidth="1.3" opacity="0.3" />
  </pattern>
  </defs>
- <path d="M40 96 C40 50, 110 50, 110 96 Z" fill="url(#g2_1)" opacity="0.9" />
- <path d="M40 96 C40 50, 110 50, 110 96 Z" fill="url(#pat2)" />
+ <path d="M40 120 C40 55, 120 55, 120 120 Z" fill="url(#g2_1)" opacity="0.9" />
+ <path d="M40 120 C40 55, 120 55, 120 120 Z" fill="url(#pat2)" />
  <circle cx="45" cy="86" r="20" fill="#9f1239" />
  <circle cx="45" cy="86" r="20" fill="url(#pat2)" />
  <circle cx="28" cy="98" r="10" fill="#fda4af" />
@@ -137,7 +137,7 @@ const GeometricGraphic = ({ themeIndex }) => {
  // 3: Purple / Lavender Waves and Orb
  if (index === 3) {
  return (
- <svg className="w-24 h-24 sm:w-28 sm:h-28" viewBox="0 0 120 120" fill="none">
+ <svg className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28" viewBox="0 0 120 120" fill="none">
  <defs>
  <linearGradient id="g3_1" x1="0%" y1="0%" x2="100%" y2="100%">
  <stop offset="0%" stopColor="#a855f7" />
@@ -147,11 +147,11 @@ const GeometricGraphic = ({ themeIndex }) => {
  <line x1="0" y1="0" x2="0" y2="6" stroke="#4c1d95" strokeWidth="1.2" opacity="0.35" />
  </pattern>
  </defs>
- <path d="M30 96 Q50 60 70 75 Q90 90 110 65 L110 96 Z" fill="#c084fc" opacity="0.85" />
- <path d="M30 96 Q50 60 70 75 Q90 90 110 65 L110 96 Z" fill="url(#pat3)" />
- <circle cx="95" cy="65" r="18" fill="url(#g3_1)" />
- <circle cx="95" cy="65" r="18" fill="url(#pat3)" />
- <ellipse cx="60" cy="90" rx="28" ry="14" fill="#7e22ce" opacity="0.8" />
+ <path d="M25 120 Q50 65 75 80 Q95 95 120 70 L120 120 Z" fill="#c084fc" opacity="0.85" />
+					<path d="M25 120 Q50 65 75 80 Q95 95 120 70 L120 120 Z" fill="url(#pat3)" />
+					<circle cx="100" cy="70" r="20" fill="url(#g3_1)" />
+					<circle cx="100" cy="70" r="20" fill="url(#pat3)" />
+					<ellipse cx="65" cy="108" rx="30" ry="16" fill="#7e22ce" opacity="0.8" />
  </svg>
  );
  }
@@ -159,7 +159,7 @@ const GeometricGraphic = ({ themeIndex }) => {
  // 4: Cobalt Blue Geometric Blocks and Prism
  if (index === 4) {
  return (
- <svg className="w-24 h-24 sm:w-28 sm:h-28" viewBox="0 0 120 120" fill="none">
+ <svg className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28" viewBox="0 0 120 120" fill="none">
  <defs>
  <linearGradient id="g4_1" x1="0%" y1="0%" x2="100%" y2="100%">
  <stop offset="0%" stopColor="#3b82f6" />
@@ -169,8 +169,8 @@ const GeometricGraphic = ({ themeIndex }) => {
  <line x1="0" y1="0" x2="0" y2="7" stroke="#172554" strokeWidth="1.3" opacity="0.3" />
  </pattern>
  </defs>
- <rect x="65" y="45" width="40" height="45" fill="#1d4ed8" opacity="0.9" />
- <path d="M35 85 L70 45 L70 85 Z" fill="#60a5fa" opacity="0.95" />
+ <rect x="65" y="45" width="55" height="75" fill="#1d4ed8" opacity="0.9" />
+ <path d="M35 120 L75 55 L75 120 Z" fill="#60a5fa" opacity="0.95" />
  <circle cx="50" cy="90" r="16" fill="url(#g4_1)" />
  <circle cx="50" cy="90" r="16" fill="url(#pat4)" />
  <rect x="80" y="70" width="30" height="26" fill="#172554" opacity="0.85" />
@@ -180,7 +180,7 @@ const GeometricGraphic = ({ themeIndex }) => {
 
  // 5: Caramel / Orange Concentric Arches
  return (
- <svg className="w-24 h-24 sm:w-28 sm:h-28" viewBox="0 0 120 120" fill="none">
+ <svg className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28" viewBox="0 0 120 120" fill="none">
  <defs>
  <linearGradient id="g5_1" x1="0%" y1="0%" x2="100%" y2="100%">
  <stop offset="0%" stopColor="#EF4444" />
@@ -272,7 +272,7 @@ const colorStyles = {
  },
  blue: {
  badge: 'bg-white text-[#0B4F9C] border-[#111111]/10/80',
- hoverBorder: 'hover:border-[#D92419]',
+ hoverBorder: 'hover:border-[#FB0202]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(59,130,246,0.15)]',
  arrowBg: 'hover:bg-[#0B4F9C]',
  pill: 'bg-white text-[#0B4F9C] border-[#111111]/10'
@@ -285,25 +285,25 @@ const colorStyles = {
  pill: 'bg-rose-50 text-rose-800 border-rose-200'
  },
  purple: {
- badge: 'bg-white text-[#D92419] border-[#D92419]/80',
- hoverBorder: 'hover:border-[#D92419]',
+ badge: 'bg-white text-[#FB0202] border-[#FB0202]/80',
+ hoverBorder: 'hover:border-[#FB0202]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(168,85,247,0.15)]',
- arrowBg: 'hover:bg-[#D92419]',
- pill: 'bg-white text-[#D92419] border-[#D92419]'
+ arrowBg: 'hover:bg-[#FB0202]',
+ pill: 'bg-white text-[#FB0202] border-[#FB0202]'
  },
  cyan: {
- badge: 'bg-white text-[#D92419] border-[#D92419]/80',
- hoverBorder: 'hover:border-[#D92419]',
+ badge: 'bg-white text-[#FB0202] border-[#FB0202]/80',
+ hoverBorder: 'hover:border-[#FB0202]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(6,182,212,0.15)]',
- arrowBg: 'hover:bg-[#D92419]',
- pill: 'bg-white text-[#D92419] border-[#D92419]'
+ arrowBg: 'hover:bg-[#FB0202]',
+ pill: 'bg-white text-[#FB0202] border-[#FB0202]'
  },
  indigo: {
- badge: 'bg-indigo-50 text-[#0B4F9C] border-[#D92419]/80',
- hoverBorder: 'hover:border-[#D92419]',
+ badge: 'bg-indigo-50 text-[#0B4F9C] border-[#FB0202]/80',
+ hoverBorder: 'hover:border-[#FB0202]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(99,102,241,0.15)]',
  arrowBg: 'hover:bg-[#0B4F9C]',
- pill: 'bg-indigo-50 text-[#0B4F9C] border-[#D92419]'
+ pill: 'bg-indigo-50 text-[#0B4F9C] border-[#FB0202]'
  },
  orange: {
  badge: 'bg-red-50 text-red-700 border-red-200/80',
@@ -313,11 +313,11 @@ const colorStyles = {
  pill: 'bg-red-50 text-red-800 border-red-200'
  },
  sky: {
- badge: 'bg-sky-50 text-[#0B4F9C] border-[#D92419]/80',
- hoverBorder: 'hover:border-[#D92419]',
+ badge: 'bg-sky-50 text-[#0B4F9C] border-[#FB0202]/80',
+ hoverBorder: 'hover:border-[#FB0202]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(14,165,233,0.15)]',
  arrowBg: 'hover:bg-[#0B4F9C]',
- pill: 'bg-sky-50 text-[#0B4F9C] border-[#D92419]'
+ pill: 'bg-sky-50 text-[#0B4F9C] border-[#FB0202]'
  },
  slate: {
  badge: 'bg-white text-[#111111] border-[#111111]/10',
@@ -334,11 +334,11 @@ const colorStyles = {
  pill: 'bg-teal-50 text-teal-800 border-teal-200'
  },
  pink: {
- badge: 'bg-white text-[#D92419] border-[#D92419]/80',
- hoverBorder: 'hover:border-[#D92419]',
+ badge: 'bg-white text-[#FB0202] border-[#FB0202]/80',
+ hoverBorder: 'hover:border-[#FB0202]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(236,72,153,0.15)]',
- arrowBg: 'hover:bg-[#D92419]',
- pill: 'bg-white text-[#D92419] border-[#D92419]'
+ arrowBg: 'hover:bg-[#FB0202]',
+ pill: 'bg-white text-[#FB0202] border-[#FB0202]'
  },
  red: {
  badge: 'bg-red-50 text-red-700 border-red-200/80',
@@ -351,19 +351,19 @@ const colorStyles = {
 
 // Define vibrant solid background styles for the "Featured" cards that appear every 10th card
 const solidStyles = {
- emerald: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-emerald-200', textDesc: 'text-emerald-50', textIcon: 'text-emerald-200' },
- amber: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-amber-200', textDesc: 'text-amber-50', textIcon: 'text-amber-200' },
- blue: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
- rose: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-rose-200', textDesc: 'text-rose-50', textIcon: 'text-rose-200' },
- purple: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
- cyan: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
- indigo: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
- orange: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-red-200', textDesc: 'text-red-50', textIcon: 'text-red-200' },
- sky: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
- slate: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#111111]', textDesc: 'text-[#111111]', textIcon: 'text-[#111111]' },
- teal: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-teal-200', textDesc: 'text-teal-50', textIcon: 'text-teal-200' },
- pink: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
- red: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-red-200', textDesc: 'text-red-50', textIcon: 'text-red-200' }
+	emerald: { bg: 'bg-emerald-700', shadow: 'shadow-lg shadow-emerald-900/20', textBadge: 'text-emerald-100 bg-white/20', textDesc: 'text-emerald-50', textIcon: 'text-emerald-100' },
+	amber: { bg: 'bg-amber-600', shadow: 'shadow-lg shadow-amber-900/20', textBadge: 'text-amber-100 bg-white/20', textDesc: 'text-amber-50', textIcon: 'text-amber-100' },
+	blue: { bg: 'bg-[#0B4F9C]', shadow: 'shadow-lg shadow-blue-900/20', textBadge: 'text-blue-100 bg-white/20', textDesc: 'text-blue-50', textIcon: 'text-blue-100' },
+	rose: { bg: 'bg-rose-700', shadow: 'shadow-lg shadow-rose-900/20', textBadge: 'text-rose-100 bg-white/20', textDesc: 'text-rose-50', textIcon: 'text-rose-100' },
+	purple: { bg: 'bg-purple-700', shadow: 'shadow-lg shadow-purple-900/20', textBadge: 'text-purple-100 bg-white/20', textDesc: 'text-purple-50', textIcon: 'text-purple-100' },
+	cyan: { bg: 'bg-teal-700', shadow: 'shadow-lg shadow-teal-900/20', textBadge: 'text-teal-100 bg-white/20', textDesc: 'text-teal-50', textIcon: 'text-teal-100' },
+	indigo: { bg: 'bg-indigo-700', shadow: 'shadow-lg shadow-indigo-900/20', textBadge: 'text-indigo-100 bg-white/20', textDesc: 'text-indigo-50', textIcon: 'text-indigo-100' },
+	orange: { bg: 'bg-orange-600', shadow: 'shadow-lg shadow-orange-900/20', textBadge: 'text-orange-100 bg-white/20', textDesc: 'text-orange-50', textIcon: 'text-orange-100' },
+	sky: { bg: 'bg-sky-700', shadow: 'shadow-lg shadow-sky-900/20', textBadge: 'text-sky-100 bg-white/20', textDesc: 'text-sky-50', textIcon: 'text-sky-100' },
+	slate: { bg: 'bg-slate-800', shadow: 'shadow-lg shadow-slate-900/20', textBadge: 'text-slate-100 bg-white/20', textDesc: 'text-slate-50', textIcon: 'text-slate-100' },
+	teal: { bg: 'bg-teal-700', shadow: 'shadow-lg shadow-teal-900/20', textBadge: 'text-teal-100 bg-white/20', textDesc: 'text-teal-50', textIcon: 'text-teal-100' },
+	pink: { bg: 'bg-pink-700', shadow: 'shadow-lg shadow-pink-900/20', textBadge: 'text-pink-100 bg-white/20', textDesc: 'text-pink-50', textIcon: 'text-pink-100' },
+	red: { bg: 'bg-red-700', shadow: 'shadow-lg shadow-red-900/20', textBadge: 'text-red-100 bg-white/20', textDesc: 'text-red-50', textIcon: 'text-red-100' }
 };
 
 export default function SectorsPage() {
@@ -417,66 +417,54 @@ export default function SectorsPage() {
  };
 
  return (
- <div className="min-h-screen bg-white text-[#111111] pt-28 pb-24 relative overflow-hidden">
+ <div className="min-h-screen bg-white text-[#111111] pt-0 pb-16 sm:pb-24 relative overflow-hidden">
  
  {/* Background Soft Ambiance Gradients */}
  <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-[#0B4F9C] -100/50 -50/30 blur-3xl pointer-events-none -z-10" />
 
- {/* Hero Banner Section (Full Width Edge-) */}
- <div className="relative w-full h-[332px] flex items-center justify-center overflow-hidden mb-12 lg:mb-16 shadow-[0_20px_50px_rgba(23,37,84,0.15)] border-b border-[#111111]/10">
- 
- {/* Background Layer */}
- <div className="absolute inset-0 z-0">
- <img 
- src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2560&h=600" 
- alt="Global Architecture" 
- className="w-full h-full object-cover"
- />
- </div>
- 
- <div className="relative z-10 text-center px-4 w-full md:px-8 max-w-[1440px] mx-auto">
- {/* Soft, blurred radial glow strictly behind the text (No Box) */}
- <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] md:w-[60%] h-[120%] bg-black/60 blur-[60px] md:blur-[80px] rounded-[100%] pointer-events-none -z-10"></div>
- 
- <motion.h1
- initial={{ opacity: 0 }}
- animate={{ opacity: 1 }}
- transition={{ duration: 1.5, ease: "easeInOut" }}
- className="font-extrabold text-white tracking-tight mb-4 min-[768px]:mb-6 leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] text-[26px] min-[320px]:text-[28px] min-[768px]:text-[42px] min-[1040px]:text-[52px] min-[1440px]:text-[60px]"
- >
- Industry Verticals We Empower
- </motion.h1>
+ {/* Hero Banner Section (Responsive Full Width) */}
+			<div className="relative w-full min-h-[250px] sm:min-h-[290px] md:min-h-[320px] pt-[84px] sm:pt-[96px] lg:pt-[104px] pb-8 sm:pb-12 lg:pb-14 flex items-center justify-center overflow-hidden mb-8 sm:mb-12 lg:mb-16 shadow-[0_20px_50px_rgba(23,37,84,0.1)] border-b border-[#0F3D2E]/10 bg-[rgb(240,231,195)]">
+				<div className="relative z-10 text-center px-4 w-full md:px-8 max-w-[1440px] mx-auto flex flex-col items-center">
+				
+					<motion.h1
+						initial={{ opacity: 0, y: 15 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.8, ease: "easeOut" }}
+						className="font-extrabold text-[#0F3D2E] tracking-tight mb-3 sm:mb-4 lg:mb-5 leading-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl max-w-4xl mx-auto"
+					>
+						Industry Verticals We Empower
+					</motion.h1>
 
- <motion.p
- initial={{ opacity: 0 }}
- animate={{ opacity: 1 }}
- transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
- className="text-white leading-relaxed font-medium mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] max-w-[95%] min-[768px]:max-w-3xl text-[13px] min-[320px]:text-[14px] min-[768px]:text-[16px] min-[1040px]:text-[18px] min-[1440px]:text-[20px] mb-8"
- >
- From high-compliance banking to spatial WebXR and agritech telemetry, 
- explore our tailored digital architecture across 40 specialized industry domains.
- </motion.p>
+					<motion.p
+						initial={{ opacity: 0, y: 10 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+						className="text-[#0F3D2E]/80 leading-relaxed font-medium mx-auto max-w-[95%] sm:max-w-2xl lg:max-w-3xl text-xs sm:text-sm md:text-base lg:text-lg mb-5 sm:mb-7 lg:mb-8"
+					>
+						From high-compliance banking to spatial WebXR and agritech telemetry, 
+						explore our tailored digital architecture across 40 specialized industry domains.
+					</motion.p>
 
- {/* Breadcrumbs */}
- <motion.div 
- initial={{ opacity: 0 }}
- animate={{ opacity: 1 }}
- transition={{ duration: 0.8, delay: 0.8 }}
- className="flex items-center justify-center gap-2 text-sm sm:text-base font-medium text-[#111111] bg-black/30 px-5 py-2.5 rounded-full backdrop-blur-md border border-white/20 w-max mx-auto"
- >
- <Link to="/" className="flex items-center gap-1.5 hover:text-white transition-colors">
- <Home className="w-4 h-4" />
- <span>Home</span>
- </Link>
- <div className="flex items-center gap-2">
- <ChevronRight className="w-4 h-4 text-[#111111]" />
- <span className="text-white font-bold">Sectors</span>
- </div>
- </motion.div>
- </div>
- </div>
+					{/* Breadcrumbs */}
+					<motion.div 
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ duration: 0.8, delay: 0.4 }}
+						className="flex items-center justify-center gap-2 text-xs sm:text-sm font-medium text-white bg-[#0F3D2E] px-4 py-1.5 rounded-full shadow-sm w-max mx-auto"
+					>
+						<Link to="/" className="flex items-center gap-1.5 hover:text-[#E8890C] transition-colors">
+							<Home className="w-3.5 h-3.5" />
+							<span>Home</span>
+						</Link>
+						<div className="flex items-center gap-2">
+							<ChevronRight className="w-3.5 h-3.5 text-white/60" />
+							<span className="text-white font-bold">Sectors</span>
+						</div>
+					</motion.div>
+				</div>
+			</div>
 
- {/* Main Content Container with padding */}
+			{/* Main Content Container with padding */}
  <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
 
  {/* Search and Category Filter Bar */}
@@ -509,7 +497,7 @@ export default function SectorsPage() {
  const isSelected = selectedCategory === tab;
  return (
  <button
- key={tab}https://127.0.0.1:63047/static/artifacts/0a2d5867-9e81-4b9e-8be5-d38a93e84ae1/.user_uploaded/media_1791276706209.png?csrf=b87d8ea4-abd7-49a1-a9b7-6e8549cdacb5
+ key={tab}
  onClick={() => setSelectedCategory(tab)}
  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
  isSelected
@@ -530,7 +518,7 @@ export default function SectorsPage() {
  </div>
 
  {/* 40 SECTOR CARDS GRID (Inspired by Reference Screenshot) */}
- <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
+ <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-7">
  <AnimatePresence mode="popLayout">
  {filteredSectors.map((sector, idx) => {
  const Icon = sector.icon;
@@ -548,7 +536,7 @@ export default function SectorsPage() {
  animate={{ opacity: 1, scale: 1 }}
  exit={{ opacity: 0, scale: 0.95 }}
  transition={{ duration: 0.35 }}
- className={`group relative rounded-3xl p-7 text-white bg-[#0B4F9C] ${solidStyle.bg} ${solidStyle.shadow} flex flex-col justify-between min-h-[260px] overflow-hidden transition-all duration-300`}
+ className={`group relative rounded-3xl p-5 sm:p-6 lg:p-7 text-white ${solidStyle.bg} ${solidStyle.shadow} flex flex-col justify-between min-h-[240px] sm:min-h-[260px] overflow-hidden transition-all duration-300`}
  >
  {/* Top Header */}
  <div className="flex items-start justify-between relative z-10">
@@ -582,7 +570,7 @@ export default function SectorsPage() {
  </div>
 
  {/* Bottom Right 3D Geometric Vector Artwork */}
- <div className="absolute -bottom-2 -right-2 pointer-events-none group-hover:scale-105 transition-transform duration-500">
+ <div className="absolute bottom-0 right-0 pointer-events-none group-hover:scale-105 transition-transform duration-500">
  <GeometricGraphic themeIndex={idx} />
  </div>
  </motion.div>
@@ -597,7 +585,7 @@ export default function SectorsPage() {
  animate={{ opacity: 1, scale: 1 }}
  exit={{ opacity: 0, scale: 0.95 }}
  transition={{ duration: 0.3, delay: idx * 0.02 }}
- className={`group relative rounded-3xl p-7 bg-white border border-[#111111]/10/90 shadow-[0_10px_30px_rgba(23,37,84,0.05)] ${styling.hoverBorder} ${styling.shadowGlow} flex flex-col justify-between min-h-[260px] overflow-hidden transition-all duration-300`}
+ className={`group relative rounded-3xl p-5 sm:p-6 lg:p-7 bg-white border border-slate-200/90 shadow-[0_10px_30px_rgba(23,37,84,0.05)] ${styling.hoverBorder} ${styling.shadowGlow} flex flex-col justify-between min-h-[240px] sm:min-h-[260px] overflow-hidden transition-all duration-300`}
  >
  {/* Top Header */}
  <div className="flex items-start justify-between relative z-10">
@@ -642,7 +630,7 @@ export default function SectorsPage() {
  </div>
 
  {/* Bottom Right 3D Geometric Vector Shapes (Inspired by Screenshot) */}
- <div className="absolute -bottom-2 -right-2 pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100">
+ <div className="absolute bottom-0 right-0 pointer-events-none group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100">
  <GeometricGraphic themeIndex={sector.id} />
  </div>
  </motion.div>
@@ -672,7 +660,7 @@ export default function SectorsPage() {
  )}
 
  {/* Bottom Australian Enterprise Callout */}
- <div className="mt-16 sm:mt-20 p-8 sm:p-10 rounded-3xl bg-[#0B4F9C] ] text-white shadow-[0_25px_60px_rgba(23,37,84,0.25)] flex flex-col md:flex-row items-center justify-between gap-6 border border-[#0B4F9C]">
+ <div className="mt-12 sm:mt-16 lg:mt-20 p-6 sm:p-8 lg:p-10 rounded-3xl bg-[#0B4F9C] text-white shadow-[0_25px_60px_rgba(23,37,84,0.25)] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-[#0B4F9C]">
  <div className="flex items-center gap-4">
  <div className="w-12 h-12 rounded-2xl bg-white text-[#0B4F9C] flex items-center justify-center flex-shrink-0 shadow-md">
  <AustralianKangarooIcon className="w-6 h-6 text-[#0B4F9C]" />
@@ -681,7 +669,7 @@ export default function SectorsPage() {
  <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight">
  Operating in a niche Australian or Global industry?
  </h3>
- <p className="text-xs sm:text-sm text-[#D92419] mt-1 max-w-xl">
+ <p className="text-xs sm:text-sm text-[#FB0202] mt-1 max-w-xl">
  Our Australian solutions architects deliver customized discovery sessions and functional MVPs across all 40 industry verticals.
  </p>
  </div>
@@ -691,7 +679,7 @@ export default function SectorsPage() {
  onClick={() => {
  setSelectedSectorModal(sectorsList[0]);
  }}
- className="px-6 py-3 rounded-xl bg-white text-[#0B4F9C] hover:bg-white font-extrabold text-sm shadow-md hover:scale-105 transition-all whitespace-normal sm:whitespace-nowrap cursor-pointer"
+ className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white text-[#0B4F9C] hover:bg-white/90 font-extrabold text-sm shadow-md hover:scale-105 transition-all text-center whitespace-normal sm:whitespace-nowrap cursor-pointer"
  >
  Consult Our Architects
  </button>
@@ -718,7 +706,7 @@ export default function SectorsPage() {
  animate={{ opacity: 1, scale: 1, y: 0 }}
  exit={{ opacity: 0, scale: 0.9, y: 15 }}
  transition={{ type: "spring", stiffness: 380, damping: 25 }}
- className="relative w-full max-w-lg bg-white rounded-3xl border border-[#111111]/10 shadow-[0_30px_70px_rgba(23,37,84,0.3)] overflow-hidden z-10"
+ className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-white rounded-3xl border border-[#111111]/10 shadow-[0_30px_70px_rgba(23,37,84,0.3)] overflow-hidden z-10 my-auto"
  >
  <div className="h-2 w-full bg-[#0B4F9C]" />
 
@@ -744,7 +732,7 @@ export default function SectorsPage() {
  </button>
  </div>
 
- <div className="p-6 pt-2">
+ <div className="p-6 pt-2 overflow-y-auto flex-1">
  {!quoteSubmitted ? (
  <form onSubmit={handleInquirySubmit} className="space-y-3.5">
  <div>

@@ -14,9 +14,49 @@
     <title>VR4WEB | Digital Solutions Increase AI Search Visibility · AEO · GEO</title>
     <meta name="description" content="VR4WEB delivers enterprise digital solutions to increase AI search visibility, powering Australian businesses with cutting-edge AEO, GEO, web, and custom software development." />
     <meta name="keywords" content="AI search visibility, digital solutions increase AI search visibility, AEO, GEO, answer engine optimization, generative engine optimization, Australian software development" />
+    <script>
+      // Automatic image path resolver: if an image fails to load due to base path differences, automatically resolves alternate paths (/demo/vr4web/, /demo/, or /)
+      window.addEventListener('error', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'IMG' && t.src && !t.dataset.fallbackRetried) {
+          t.dataset.fallbackRetried = '1';
+          try {
+            var url = new URL(t.src, window.location.origin);
+            var p = url.pathname;
+            var candidates = [];
+            if (p.indexOf('/demo/vr4web/') !== -1) {
+              candidates.push(p.replace('/demo/vr4web/', '/demo/'));
+              candidates.push(p.replace('/demo/vr4web/', '/'));
+            } else if (p.indexOf('/demo/') !== -1) {
+              candidates.push(p.replace('/demo/', '/demo/vr4web/'));
+              candidates.push(p.replace('/demo/', '/'));
+            } else {
+              candidates.push('/demo/vr4web' + p);
+              candidates.push('/demo' + p);
+            }
+            var i = 0;
+            function tryNext() {
+              if (i >= candidates.length) return;
+              var cand = candidates[i++];
+              var probe = new Image();
+              probe.onload = function () { t.src = cand; };
+              probe.onerror = tryNext;
+              probe.src = cand;
+            }
+            tryNext();
+          } catch (err) {}
+        }
+      }, true);
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <!-- WidgetCraft Click to Call Widget -->
+    <script
+      src="https://backend.ormconsult.com/embed/click-to-call.js"
+      data-widget-id="4"
+      data-api-base="https://backend.ormconsult.com">
+    </script>
   </body>
 </html>
