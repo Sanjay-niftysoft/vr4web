@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { 
-  ShoppingCart, 
-  GraduationCap, 
-  HeartPulse, 
-  TrendingUp, 
-  Building2, 
-  Home, 
-  Truck, 
-  Users, 
-  ArrowRight, 
-  ArrowLeft 
+import {
+  ShoppingCart,
+  GraduationCap,
+  HeartPulse,
+  TrendingUp,
+  Building2,
+  Home,
+  Truck,
+  Users,
+  ArrowRight,
+  ArrowLeft
 } from 'lucide-react';
 
 // Exact 8 Sectors with 100% verified daylight high-key photography
@@ -21,8 +21,8 @@ const sectors = [
     title: 'Retail',
     desc: 'Modern retail experiences with scalable digital solutions.',
     icon: ShoppingCart,
-    iconColor: '#F97316',
-    iconBg: '#FFF7ED',
+    iconColor: '#D92419',
+    iconBg: '#FEF2F2',
     image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80',
     link: '/sectors'
   },
@@ -41,8 +41,8 @@ const sectors = [
     title: 'Healthcare',
     desc: 'Next-gen healthcare systems for better care and outcomes.',
     icon: HeartPulse,
-    iconColor: '#F97316',
-    iconBg: '#FFF7ED',
+    iconColor: '#D92419',
+    iconBg: '#FEF2F2',
     image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
     link: '/sectors'
   },
@@ -51,8 +51,8 @@ const sectors = [
     title: 'Finance',
     desc: 'Secure, scalable and intelligent financial solutions.',
     icon: TrendingUp,
-    iconColor: '#F97316',
-    iconBg: '#FFF7ED',
+    iconColor: '#D92419',
+    iconBg: '#FEF2F2',
     image: '/sectors/finance.jpg',
     link: '/sectors'
   },
@@ -71,8 +71,8 @@ const sectors = [
     title: 'Real Estate',
     desc: 'Virtual property solutions and intelligent real estate platforms.',
     icon: Home,
-    iconColor: '#F97316',
-    iconBg: '#FFF7ED',
+    iconColor: '#D92419',
+    iconBg: '#FEF2F2',
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
     link: '/sectors'
   },
@@ -91,8 +91,8 @@ const sectors = [
     title: 'Professional Services',
     desc: 'Digital tools for modern professional businesses.',
     icon: Users,
-    iconColor: '#F97316',
-    iconBg: '#FFF7ED',
+    iconColor: '#D92419',
+    iconBg: '#FEF2F2',
     image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
     link: '/sectors'
   }
@@ -145,27 +145,31 @@ export default function SectorsSection() {
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      className="relative w-full pt-16 pb-20 lg:pt-24 lg:pb-28 overflow-hidden bg-white font-['Inter',sans-serif]"
+      className="relative w-full pt-3 pb-6 sm:pt-4 sm:pb-8 lg:pt-6 lg:pb-10 overflow-hidden bg-white font-['Inter',sans-serif]"
     >
-      
+      {/* Background Graphic: Modern City on Left, Digital Network Globe on Right */}
+      <div
+        className="absolute inset-0 w-full h-full bg-[url('/sector.png')] bg-cover bg-center bg-no-repeat pointer-events-none z-0 opacity-85"
+      />
+
       {/* BACKGROUND TECHNOLOGY ORBIT DECORATION (Subtle lines & glowing nodes) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
         {/* Soft ambient radial glow */}
-        <div className="absolute w-[1200px] h-[550px] bg-gradient-to-b from-[#F97316]/5 via-[#0B4F9C]/5 to-transparent rounded-full blur-3xl opacity-50 transform -translate-y-8"></div>
-        
+        <div className="absolute w-[1200px] h-[550px] bg-gradient-to-b from-[#D92419]/5 via-[#0B4F9C]/5 to-transparent rounded-full blur-3xl opacity-50 transform -translate-y-8"></div>
+
         {/* Orbit Arc SVG */}
-        <svg 
-          viewBox="0 0 1600 600" 
+        <svg
+          viewBox="0 0 1600 600"
           className="w-full max-w-[1700px] h-[500px] absolute top-[52%] -translate-y-1/2 opacity-65"
           fill="none"
         >
           <defs>
             <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#F97316" stopOpacity="0.1" />
-              <stop offset="25%" stopColor="#F97316" stopOpacity="0.45" />
-              <stop offset="50%" stopColor="#F97316" stopOpacity="0.75" />
+              <stop offset="0%" stopColor="#D92419" stopOpacity="0.1" />
+              <stop offset="25%" stopColor="#D92419" stopOpacity="0.45" />
+              <stop offset="50%" stopColor="#D92419" stopOpacity="0.75" />
               <stop offset="75%" stopColor="#0B4F9C" stopOpacity="0.45" />
               <stop offset="100%" stopColor="#0B4F9C" stopOpacity="0.1" />
             </linearGradient>
@@ -177,63 +181,63 @@ export default function SectorsSection() {
           </defs>
 
           {/* Primary Arched Orbit Path */}
-          <path 
-            d="M 50,470 Q 800,200 1550,470" 
-            stroke="url(#orbitGrad)" 
-            strokeWidth="2" 
+          <path
+            d="M 50,470 Q 800,200 1550,470"
+            stroke="url(#orbitGrad)"
+            strokeWidth="2"
             strokeLinecap="round"
           />
 
           {/* Secondary Dashed Ambient Path */}
-          <path 
-            d="M 120,430 Q 800,250 1480,430" 
-            stroke="url(#subtleDashed)" 
-            strokeWidth="1.5" 
+          <path
+            d="M 120,430 Q 800,250 1480,430"
+            stroke="url(#subtleDashed)"
+            strokeWidth="1.5"
             strokeDasharray="6 6"
           />
 
           {/* Floating Orbit Nodes / Spheres */}
-          <circle cx="280" cy="390" r="9" fill="#F97316" opacity="0.85" className="filter drop-shadow-[0_0_10px_rgba(249,115,22,0.8)]" />
+          <circle cx="280" cy="390" r="9" fill="#D92419" opacity="0.85" className="filter drop-shadow-[0_0_10px_rgba(217, 36, 25,0.8)]" />
           <circle cx="480" cy="280" r="12" fill="#38BDF8" opacity="0.75" className="filter drop-shadow-[0_0_14px_rgba(56,189,248,0.6)]" />
-          <circle cx="1180" cy="285" r="7" fill="#F97316" opacity="0.85" className="filter drop-shadow-[0_0_8px_rgba(249,115,22,0.7)]" />
-          <circle cx="1280" cy="395" r="9" fill="#F97316" opacity="0.8" className="filter drop-shadow-[0_0_10px_rgba(249,115,22,0.7)]" />
+          <circle cx="1180" cy="285" r="7" fill="#D92419" opacity="0.85" className="filter drop-shadow-[0_0_8px_rgba(217, 36, 25,0.7)]" />
+          <circle cx="1280" cy="395" r="9" fill="#D92419" opacity="0.8" className="filter drop-shadow-[0_0_10px_rgba(217, 36, 25,0.7)]" />
         </svg>
       </div>
 
       <div className="relative z-10 w-full max-w-[1440px] 4xl:max-w-[2400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 flex flex-col items-center">
-        
+
         {/* TOP CENTER HEADER */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col items-center text-center mb-10 lg:mb-14"
+          className="flex flex-col items-center text-center mb-5 sm:mb-6 lg:mb-8"
         >
           {/* Eyebrow */}
           <div className="flex flex-col items-center mb-3">
             <span className="text-[#0B4F9C] font-extrabold text-[12px] sm:text-[13px] tracking-[0.25em] uppercase mb-1.5">
               OUR SECTORS
             </span>
-            <div className="w-12 h-1 bg-[#F97316] rounded-full"></div>
+            <div className="w-12 h-1 bg-[#D92419] rounded-full"></div>
           </div>
 
           {/* Main Heading */}
           <h2 className="text-[clamp(1.9rem,4vw,3.25rem)] font-extrabold text-center leading-[1.14] tracking-tight mb-3.5">
             <span className="text-[#0B4F9C]">Technology for industries that</span><br />
-            <span className="text-[#F97316]">keep business moving.</span>
+            <span className="text-[#D92419]">keep business moving.</span>
           </h2>
 
           {/* Subtitle */}
           <p className="text-black text-[15px] sm:text-lg max-w-2xl text-center leading-relaxed font-normal">
-            We build digital solutions around the unique challenges, workflows and opportunities of every industry we serve.
+            We engineer tailored digital solutions that increase AI search visibility, combining industry workflows with cutting-edge AEO and GEO optimization.
           </p>
         </motion.div>
 
         {/* ========================================================================= */}
         {/* DESKTOP 3D-STYLE SECTOR CAROUSEL FAN (>= 1280px xl)                        */}
         {/* ========================================================================= */}
-        <div 
+        <div
           className="hidden xl:flex relative w-full h-[510px] items-center justify-center overflow-visible my-3 [perspective:1400px]"
           style={{ transformStyle: 'preserve-3d' }}
           onMouseEnter={() => setIsPaused(true)}
@@ -241,7 +245,7 @@ export default function SectorsSection() {
         >
           {sectors.map((sector, index) => {
             const Icon = sector.icon;
-            
+
             // Calculate relative offset from activeIndex
             let offset = index - activeIndex;
             // Circular wrapping offset calculation for 8 items (-4 to +4)
@@ -306,49 +310,46 @@ export default function SectorsSection() {
                   to={sector.link}
                   className="block w-full h-full focus:outline-none"
                 >
-                  <motion.div 
-                    whileHover={{ 
-                      y: -8, 
+                  <motion.div
+                    whileHover={{
+                      y: -8,
                       scale: 1.02,
-                      transition: { duration: 0.25, ease: "easeOut" } 
+                      transition: { duration: 0.25, ease: "easeOut" }
                     }}
-                    className={`w-full h-full rounded-[24px] bg-white flex flex-col justify-between overflow-hidden transition-all duration-300 group ${
-                      isActive 
-                        ? 'border-[1.5px] border-[#F97316]/75 shadow-[0_25px_50px_-10px_rgba(11,79,156,0.18),0_10px_25px_-5px_rgba(249,115,22,0.18)] ring-1 ring-[#F97316]/20' 
-                        : 'border border-slate-200/90 shadow-[0_16px_35px_-8px_rgba(11,79,156,0.08)] hover:border-[#F97316]/50 hover:shadow-[0_20px_40px_-5px_rgba(249,115,22,0.14)]'
-                    }`}
+                    className={`w-full h-full rounded-[24px] bg-white flex flex-col justify-between overflow-hidden transition-all duration-300 group ${isActive
+                      ? 'border-[1.5px] border-[#D92419]/75 shadow-[0_25px_50px_-10px_rgba(11,79,156,0.18),0_10px_25px_-5px_rgba(217, 36, 25,0.18)] ring-1 ring-[#D92419]/20'
+                      : 'border border-slate-200/90 shadow-[0_16px_35px_-8px_rgba(11,79,156,0.08)] hover:border-[#D92419]/50 hover:shadow-[0_20px_40px_-5px_rgba(217, 36, 25,0.14)]'
+                      }`}
                   >
                     {/* Top Content Area: Icon + Title together, with description */}
                     <div className="p-4 sm:p-5 pb-2.5 flex flex-col">
-                      
+
                       {/* Icon + Title Row */}
                       <div className="flex items-center gap-3 mb-2">
-                        <div 
+                        <div
                           className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-xs border border-black/[0.04] transition-transform duration-300 group-hover:scale-105"
                           style={{ backgroundColor: sector.iconBg }}
                         >
                           <Icon className="w-5 h-5" style={{ color: sector.iconColor }} />
                         </div>
 
-                        <h3 className={`font-extrabold tracking-tight text-[#0B4F9C] transition-colors duration-200 group-hover:text-[#F97316] ${
-                          isActive ? 'text-[20px] sm:text-[21px]' : 'text-[17px] sm:text-[18px]'
-                        }`}>
+                        <h3 className={`font-extrabold tracking-tight text-[#0B4F9C] transition-colors duration-200 group-hover:text-[#D92419] ${isActive ? 'text-[20px] sm:text-[21px]' : 'text-[17px] sm:text-[18px]'
+                          }`}>
                           {sector.title}
                         </h3>
                       </div>
 
                       {/* Description */}
-                      <p className={`text-black font-normal leading-relaxed ${
-                        isActive ? 'text-[13px] line-clamp-2' : 'text-[12px] line-clamp-2'
-                      }`}>
+                      <p className={`text-black font-normal leading-relaxed ${isActive ? 'text-[13px] line-clamp-2' : 'text-[12px] line-clamp-2'
+                        }`}>
                         {sector.desc}
                       </p>
                     </div>
 
                     {/* Framed Image Container: Clean rounded photograph that doesn't cut card */}
                     <div className="mx-3.5 mb-3.5 rounded-[18px] overflow-hidden relative flex-1 min-h-[175px] bg-slate-100 border border-slate-100 shadow-xs">
-                      <img 
-                        src={sector.image} 
+                      <img
+                        src={sector.image}
                         alt={sector.title}
                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         loading="lazy"
@@ -367,7 +368,7 @@ export default function SectorsSection() {
         {/* ========================================================================= */}
         {/* TABLET & MOBILE TOUCH CAROUSEL (< 1280px)                                  */}
         {/* ========================================================================= */}
-        <div 
+        <div
           className="flex xl:hidden w-full flex-col items-center my-4"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -384,13 +385,13 @@ export default function SectorsSection() {
                     animate={{ opacity: 1, scale: 1, x: 0 }}
                     exit={{ opacity: 0, scale: 0.94, x: -30 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="w-full h-full rounded-[24px] bg-white border-[1.5px] border-[#F97316]/75 shadow-[0_18px_40px_rgba(11,79,156,0.10),0_6px_16px_rgba(249,115,22,0.10)] flex flex-col justify-between overflow-hidden"
+                    className="w-full h-full rounded-[24px] bg-white border-[1.5px] border-[#D92419]/75 shadow-[0_18px_40px_rgba(11,79,156,0.10),0_6px_16px_rgba(217, 36, 25,0.10)] flex flex-col justify-between overflow-hidden"
                   >
                     <Link to={sector.link} className="block w-full h-full flex flex-col justify-between">
                       {/* Top Content: Icon + Title */}
                       <div className="p-5 pb-2.5 flex flex-col">
                         <div className="flex items-center gap-3 mb-2.5">
-                          <div 
+                          <div
                             className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 shadow-xs border border-black/[0.04]"
                             style={{ backgroundColor: sector.iconBg }}
                           >
@@ -408,9 +409,9 @@ export default function SectorsSection() {
 
                       {/* Framed Bottom Image */}
                       <div className="mx-4 mb-4 rounded-[18px] overflow-hidden relative flex-1 min-h-[210px] bg-slate-100 border border-slate-100 shadow-xs">
-                        <img 
-                          src={sector.image} 
-                          alt={sector.title} 
+                        <img
+                          src={sector.image}
+                          alt={sector.title}
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute bottom-2.5 right-2.5 w-9 h-9 rounded-full bg-white/95 border border-[#0B4F9C]/15 shadow-md flex items-center justify-center text-[#0B4F9C]">
@@ -428,13 +429,13 @@ export default function SectorsSection() {
         {/* ========================================================================= */}
         {/* CAROUSEL CONTROLS: Left Arrow, Pagination Dots, Right Arrow                */}
         {/* ========================================================================= */}
-        <div className="flex items-center justify-center gap-6 mt-8 sm:mt-10 z-20">
-          
+        <div className="flex items-center justify-center gap-6 mt-4 sm:mt-5 z-20">
+
           {/* Left Arrow Button */}
-          <button 
+          <button
             onClick={handlePrev}
             aria-label="Previous Sector"
-            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#0B4F9C]/20 bg-white text-[#0B4F9C] hover:border-[#F97316] hover:text-[#F97316] hover:bg-orange-50/40 shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#0B4F9C]/20 bg-white text-[#0B4F9C] hover:border-[#D92419] hover:text-[#D92419] hover:bg-red-50/40 shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
@@ -446,20 +447,19 @@ export default function SectorsSection() {
                 key={idx}
                 onClick={() => setActiveIndex(idx)}
                 aria-label={`Go to sector ${idx + 1}`}
-                className={`transition-all duration-300 rounded-full cursor-pointer ${
-                  idx === activeIndex
-                    ? 'w-6 h-2 bg-[#F97316] shadow-[0_0_8px_rgba(249,115,22,0.5)]'
-                    : 'w-2 h-2 bg-[#0B4F9C]/20 hover:bg-[#0B4F9C]/50'
-                }`}
+                className={`transition-all duration-300 rounded-full cursor-pointer ${idx === activeIndex
+                  ? 'w-6 h-2 bg-[#D92419] shadow-[0_0_8px_rgba(217, 36, 25,0.5)]'
+                  : 'w-2 h-2 bg-[#0B4F9C]/20 hover:bg-[#0B4F9C]/50'
+                  }`}
               />
             ))}
           </div>
 
           {/* Right Arrow Button */}
-          <button 
+          <button
             onClick={handleNext}
             aria-label="Next Sector"
-            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#0B4F9C]/20 bg-white text-[#0B4F9C] hover:border-[#F97316] hover:text-[#F97316] hover:bg-orange-50/40 shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#0B4F9C]/20 bg-white text-[#0B4F9C] hover:border-[#D92419] hover:text-[#D92419] hover:bg-red-50/40 shadow-sm hover:shadow-md flex items-center justify-center transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
           >
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>

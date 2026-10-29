@@ -183,7 +183,7 @@ const GeometricGraphic = ({ themeIndex }) => {
  <svg className="w-24 h-24 sm:w-28 sm:h-28" viewBox="0 0 120 120" fill="none">
  <defs>
  <linearGradient id="g5_1" x1="0%" y1="0%" x2="100%" y2="100%">
- <stop offset="0%" stopColor="#fb923c" />
+ <stop offset="0%" stopColor="#EF4444" />
  <stop offset="100%" stopColor="#c2410c" />
  </linearGradient>
  <pattern id="pat5" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(15)">
@@ -192,7 +192,7 @@ const GeometricGraphic = ({ themeIndex }) => {
  </defs>
  <rect x="40" y="55" width="32" height="42" rx="16" fill="url(#g5_1)" opacity="0.9" />
  <rect x="74" y="45" width="36" height="52" rx="8" fill="#fdba74" opacity="0.95" />
- <circle cx="92" cy="70" r="14" fill="#ea580c" />
+ <circle cx="92" cy="70" r="14" fill="#C21E14" />
  <circle cx="92" cy="70" r="14" fill="url(#pat5)" />
  <circle cx="55" cy="85" r="12" fill="#9a3412" opacity="0.8" />
  </svg>
@@ -272,7 +272,7 @@ const colorStyles = {
  },
  blue: {
  badge: 'bg-white text-[#0B4F9C] border-[#111111]/10/80',
- hoverBorder: 'hover:border-[#F97316]',
+ hoverBorder: 'hover:border-[#D92419]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(59,130,246,0.15)]',
  arrowBg: 'hover:bg-[#0B4F9C]',
  pill: 'bg-white text-[#0B4F9C] border-[#111111]/10'
@@ -285,39 +285,39 @@ const colorStyles = {
  pill: 'bg-rose-50 text-rose-800 border-rose-200'
  },
  purple: {
- badge: 'bg-white text-[#F97316] border-[#F97316]/80',
- hoverBorder: 'hover:border-[#F97316]',
+ badge: 'bg-white text-[#D92419] border-[#D92419]/80',
+ hoverBorder: 'hover:border-[#D92419]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(168,85,247,0.15)]',
- arrowBg: 'hover:bg-[#F97316]',
- pill: 'bg-white text-[#F97316] border-[#F97316]'
+ arrowBg: 'hover:bg-[#D92419]',
+ pill: 'bg-white text-[#D92419] border-[#D92419]'
  },
  cyan: {
- badge: 'bg-white text-[#F97316] border-[#F97316]/80',
- hoverBorder: 'hover:border-[#F97316]',
+ badge: 'bg-white text-[#D92419] border-[#D92419]/80',
+ hoverBorder: 'hover:border-[#D92419]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(6,182,212,0.15)]',
- arrowBg: 'hover:bg-[#F97316]',
- pill: 'bg-white text-[#F97316] border-[#F97316]'
+ arrowBg: 'hover:bg-[#D92419]',
+ pill: 'bg-white text-[#D92419] border-[#D92419]'
  },
  indigo: {
- badge: 'bg-indigo-50 text-[#0B4F9C] border-[#F97316]/80',
- hoverBorder: 'hover:border-[#F97316]',
+ badge: 'bg-indigo-50 text-[#0B4F9C] border-[#D92419]/80',
+ hoverBorder: 'hover:border-[#D92419]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(99,102,241,0.15)]',
  arrowBg: 'hover:bg-[#0B4F9C]',
- pill: 'bg-indigo-50 text-[#0B4F9C] border-[#F97316]'
+ pill: 'bg-indigo-50 text-[#0B4F9C] border-[#D92419]'
  },
  orange: {
- badge: 'bg-orange-50 text-orange-700 border-orange-200/80',
- hoverBorder: 'hover:border-orange-300',
- shadowGlow: 'hover:shadow-[0_20px_45px_rgba(249,115,22,0.15)]',
- arrowBg: 'hover:bg-orange-600',
- pill: 'bg-orange-50 text-orange-800 border-orange-200'
+ badge: 'bg-red-50 text-red-700 border-red-200/80',
+ hoverBorder: 'hover:border-red-300',
+ shadowGlow: 'hover:shadow-[0_20px_45px_rgba(217, 36, 25,0.15)]',
+ arrowBg: 'hover:bg-red-600',
+ pill: 'bg-red-50 text-red-800 border-red-200'
  },
  sky: {
- badge: 'bg-sky-50 text-[#0B4F9C] border-[#F97316]/80',
- hoverBorder: 'hover:border-[#F97316]',
+ badge: 'bg-sky-50 text-[#0B4F9C] border-[#D92419]/80',
+ hoverBorder: 'hover:border-[#D92419]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(14,165,233,0.15)]',
  arrowBg: 'hover:bg-[#0B4F9C]',
- pill: 'bg-sky-50 text-[#0B4F9C] border-[#F97316]'
+ pill: 'bg-sky-50 text-[#0B4F9C] border-[#D92419]'
  },
  slate: {
  badge: 'bg-white text-[#111111] border-[#111111]/10',
@@ -334,11 +334,11 @@ const colorStyles = {
  pill: 'bg-teal-50 text-teal-800 border-teal-200'
  },
  pink: {
- badge: 'bg-white text-[#F97316] border-[#F97316]/80',
- hoverBorder: 'hover:border-[#F97316]',
+ badge: 'bg-white text-[#D92419] border-[#D92419]/80',
+ hoverBorder: 'hover:border-[#D92419]',
  shadowGlow: 'hover:shadow-[0_20px_45px_rgba(236,72,153,0.15)]',
- arrowBg: 'hover:bg-[#F97316]',
- pill: 'bg-white text-[#F97316] border-[#F97316]'
+ arrowBg: 'hover:bg-[#D92419]',
+ pill: 'bg-white text-[#D92419] border-[#D92419]'
  },
  red: {
  badge: 'bg-red-50 text-red-700 border-red-200/80',
@@ -353,16 +353,16 @@ const colorStyles = {
 const solidStyles = {
  emerald: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-emerald-200', textDesc: 'text-emerald-50', textIcon: 'text-emerald-200' },
  amber: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-amber-200', textDesc: 'text-amber-50', textIcon: 'text-amber-200' },
- blue: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#F97316]', textDesc: 'text-[#F97316]', textIcon: 'text-[#F97316]' },
+ blue: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
  rose: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-rose-200', textDesc: 'text-rose-50', textIcon: 'text-rose-200' },
- purple: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#F97316]', textDesc: 'text-[#F97316]', textIcon: 'text-[#F97316]' },
- cyan: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#F97316]', textDesc: 'text-[#F97316]', textIcon: 'text-[#F97316]' },
- indigo: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#F97316]', textDesc: 'text-[#F97316]', textIcon: 'text-[#F97316]' },
- orange: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-orange-200', textDesc: 'text-orange-50', textIcon: 'text-orange-200' },
- sky: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#F97316]', textDesc: 'text-[#F97316]', textIcon: 'text-[#F97316]' },
+ purple: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
+ cyan: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
+ indigo: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
+ orange: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-red-200', textDesc: 'text-red-50', textIcon: 'text-red-200' },
+ sky: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
  slate: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#111111]', textDesc: 'text-[#111111]', textIcon: 'text-[#111111]' },
  teal: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-teal-200', textDesc: 'text-teal-50', textIcon: 'text-teal-200' },
- pink: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#F97316]', textDesc: 'text-[#F97316]', textIcon: 'text-[#F97316]' },
+ pink: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-[#D92419]', textDesc: 'text-[#D92419]', textIcon: 'text-[#D92419]' },
  red: { bg: '] ]', shadow: 'shadow-lg', textBadge: 'text-red-200', textDesc: 'text-red-50', textIcon: 'text-red-200' }
 };
 
@@ -681,7 +681,7 @@ export default function SectorsPage() {
  <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight">
  Operating in a niche Australian or Global industry?
  </h3>
- <p className="text-xs sm:text-sm text-[#F97316] mt-1 max-w-xl">
+ <p className="text-xs sm:text-sm text-[#D92419] mt-1 max-w-xl">
  Our Australian solutions architects deliver customized discovery sessions and functional MVPs across all 40 industry verticals.
  </p>
  </div>

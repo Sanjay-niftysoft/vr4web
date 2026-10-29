@@ -1,7 +1,5 @@
-
-
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Globe, Handshake, ArrowRight, Lightbulb, Rocket, RefreshCw, Search, PenTool, Code2, Headphones } from 'lucide-react';
 import ServicesSection from './ServicesSection';
 import SectorsSection from './SectorsSection';
@@ -21,8 +19,8 @@ const mapLocations = [
       425: { top: '71%', left: '28%' },
       768: { top: '61%', left: '23%' },
       1024: { top: '65%', left: '30%' },
-      1440: { top: '60%', left: '27%' },
-      2560: { top: '60%', left: '27%' },
+      1440: { top: '62%', left: '26%' },
+      2560: { top: '64%', left: '15%' },
     },
     labelPos: {
       320: { top: '50%', right: '100%', transform: 'translateY(-50%)', marginRight: '6px' },
@@ -42,8 +40,8 @@ const mapLocations = [
       425: { top: '72%', left: '57.5%' },
       768: { top: '65%', left: '53%' },
       1024: { top: '68%', left: '54%' },
-      1440: { top: '63%', left: '54%' },
-      2560: { top: '63%', left: '54%' },
+      1440: { top: '64%', left: '52%' },
+      2560: { top: '66%', left: '50.5%' },
     },
     labelPos: {
       320: { bottom: '100%', right: '50%', marginBottom: '4px', marginRight: '-12px' },
@@ -63,8 +61,8 @@ const mapLocations = [
       425: { top: '78%', left: '65.5%' },
       768: { top: '72%', left: '61%' },
       1024: { top: '82%', left: '60%' },
-      1440: { top: '73%', left: '62%' },
-      2560: { top: '73%', left: '62%' },
+      1440: { top: '73%', left: '60.5%' },
+      2560: { top: '74%', left: '59.5%' },
     },
     labelPos: {
       320: { top: '100%', right: '50%', marginTop: '4px', marginRight: '-12px' },
@@ -84,8 +82,8 @@ const mapLocations = [
       425: { top: '72%', left: '77%' },
       768: { top: '65%', left: '75%' },
       1024: { top: '68.5%', left: '70%' },
-      1440: { top: '63%', left: '73%' },
-      2560: { top: '63%', left: '73%' },
+      1440: { top: '63%', left: '69.5%' },
+      2560: { top: '63.5%', left: '68.5%' },
     },
     labelPos: {
       320: { top: '50%', left: '100%', transform: 'translateY(-50%)', marginLeft: '6px' },
@@ -105,8 +103,8 @@ const mapLocations = [
       425: { top: '66%', left: '73%' },
       768: { top: '50%', left: '72%' },
       1024: { top: '54%', left: '67.5%' },
-      1440: { top: '54%', left: '71%' },
-      2560: { top: '54%', left: '71%' },
+      1440: { top: '53.5%', left: '67.5%' },
+      2560: { top: '53%', left: '66.5%' },
     },
     labelPos: {
       320: { bottom: '100%', left: '50%', marginBottom: '4px', marginLeft: '-12px' },
@@ -135,7 +133,7 @@ const processSteps = [
   {
     title: 'Build',
     icon: Code2,
-    desc: 'Our developers build your website, app or custom software, with regular demos so you always know progress.',
+    desc: 'Our developers engineer custom software and digital solutions that increase AI search visibility, embedding AEO and GEO protocols into every line of code.',
   },
   {
     title: 'Support',
@@ -215,8 +213,34 @@ const AnimatedTextScroll = ({ text, delay = 0, className = "" }) => {
   );
 };
 
+const ROTATING_WORDS = [
+  'App Development',
+  'Email',
+  'Digital',
+  'Software',
+  'E-Commerce',
+  'Maintenance'
+];
+
 export default function Home() {
   const [step, setStep] = useState(0);
+  const [wordIndex, setWordIndex] = useState(0);
+
+  useEffect(() => {
+    let intervalId;
+    const timeoutId = setTimeout(() => {
+      setWordIndex(1);
+
+      intervalId = setInterval(() => {
+        setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+      }, 3200);
+    }, 4500);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -230,7 +254,8 @@ export default function Home() {
 
       {/* Hero Banner Section with Comprehensive Screen Responsiveness: 320px Mobile, 768px Tablet, 1024px & 1440px Laptop, 2560px Ultra-Wide */}
       <section
-        className="relative w-full h-[100svh] min-h-[520px] xs:min-h-[560px] sm:min-h-[600px] md:min-h-[640px] lg:min-h-[700px] 2xl:min-h-[780px] 4xl:min-h-[1000px] flex flex-col items-center justify-start pt-[72px] xs:pt-[80px] sm:pt-[96px] md:pt-[110px] lg:pt-[120px] 2xl:pt-[130px] 4xl:pt-[180px] overflow-hidden"
+        id="hero"
+        className="relative w-full h-[100svh] min-h-[520px] xs:min-h-[560px] sm:min-h-[600px] md:min-h-[640px] lg:min-h-[700px] 2xl:min-h-[780px] 4xl:min-h-[1000px] flex flex-col items-center justify-start pt-[140px] xs:pt-[150px] sm:pt-[160px] md:pt-[200px] lg:pt-[180px] 2xl:pt-[200px] 4xl:pt-[260px] overflow-hidden"
       >
         {/* Background Image with absolute positioning: optimized for mobile (320px-767px), tablet (768px-1023px), laptop (1024px-1440px), ultrawide (2560px) */}
         <div
@@ -301,13 +326,37 @@ export default function Home() {
 
         {/* Content Container: Fully Responsive Width and Typography */}
         <div className="relative z-20 max-w-6xl 2xl:max-w-7xl 4xl:max-w-[2100px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-12 4xl:px-16 flex flex-col items-center text-center w-full">
-
-          <div className="mb-4 xs:mb-5 sm:mb-6 md:mb-8 4xl:mb-14 w-full flex flex-col items-center">
-            <div className="mb-2 xs:mb-3 sm:mb-4 md:mb-6 4xl:mb-8">
-              <p className="text-[#0B4F9C] font-bold tracking-wider text-[8.5px] xs:text-[9.5px] sm:text-[10px] md:text-[11px] 2xl:text-xs 4xl:text-base uppercase text-center px-2 sm:px-4 drop-shadow-[0_0_10px_rgba(255,255,255,1)]">
-                <AnimatedText text="Software Solutions For A Brighter Australia" delay={0.2} />
-              </p>
-            </div>
+<div className="mb-4 xs:mb-5 sm:mb-6 md:mb-8 4xl:mb-14 w-full flex flex-col items-center px-3 sm:px-5 md:px-6">
+  <div className="mb-3 sm:mb-4 md:mb-5 4xl:mb-8 w-full max-w-5xl">
+    <p
+      className="
+        text-[#0B4F9C]
+        font-extrabold
+        tracking-[0.15em] md:tracking-[0.2em]
+        uppercase
+        text-center
+        leading-relaxed
+        text-[10px]
+        xs:text-[11px]
+        sm:text-[12px]
+        md:text-[13px]
+        lg:text-sm
+        xl:text-sm
+        2xl:text-base
+        4xl:text-lg
+        px-2 sm:px-4
+        break-words
+        [text-wrap:balance]
+        drop-shadow-[0_0_15px_rgba(255,255,255,1)]
+      "
+    >
+      <AnimatedText
+        text="Digital Solutions That Increase AI Search Visibility · AEO · GEO"
+        delay={0.2}
+      />
+    </p>
+  </div>
+</div>
 
             <h1
               className="text-[clamp(1rem,2.1vw,2.5rem)] font-extrabold text-[#0B4F9C] tracking-tight leading-[1.2] w-full text-center flex flex-col items-center px-2 sm:px-4 drop-shadow-[0_0_15px_rgba(255,255,255,1)]"
@@ -317,15 +366,50 @@ export default function Home() {
                 delay={0.6}
                 className="whitespace-normal lg:whitespace-nowrap leading-tight md:leading-[1.1]"
               />
-              <AnimatedText
-                text="Smarter Software Solutions"
-                delay={1.2}
-                className="text-white-black-border mt-1.5 xs:mt-2 sm:mt-2.5 md:mt-3 4xl:mt-5 whitespace-normal sm:whitespace-nowrap inline-block text-[clamp(1.4rem,3.3vw,3.75rem)] drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] font-extrabold text-[#F97316]"
-              />
+              <div
+                className="mt-1.5 xs:mt-2 sm:mt-2.5 md:mt-3 4xl:mt-5 flex flex-wrap items-center justify-center gap-x-[0.25em] text-[clamp(1.4rem,3.3vw,3.75rem)] font-extrabold leading-[1.2]"
+              >
+                <motion.span
+                  initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 1.0, delay: 1.1, ease: [0.25, 0.1, 0.25, 1.0] }}
+                  className="text-white inline-block"
+                >
+                  Smarter
+                </motion.span>
+
+                <motion.span
+                  initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 1.0, delay: 1.8, ease: [0.25, 0.1, 0.25, 1.0] }}
+                  className="inline-flex items-center justify-center relative overflow-hidden py-1 px-1"
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.span
+                      key={wordIndex}
+                      initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                      exit={{ opacity: 0, y: -24, filter: 'blur(8px)' }}
+                      transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1.0] }}
+                      className="text-[#D92419] inline-block whitespace-normal sm:whitespace-nowrap"
+                    >
+                      {ROTATING_WORDS[wordIndex]}
+                    </motion.span>
+                  </AnimatePresence>
+                </motion.span>
+
+                <motion.span
+                  initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 1.0, delay: 2.5, ease: [0.25, 0.1, 0.25, 1.0] }}
+                  className="text-white inline-block"
+                >
+                  Solutions
+                </motion.span>
+              </div>
             </h1>
           </div>
-
-        </div>
+        
       </section>
 
       {/* About Us Section */}
@@ -347,16 +431,11 @@ export default function Home() {
                 transition={{ duration: 0.4 }}
                 className="flex items-center gap-4 mb-3"
               >
-                <div className="w-10 h-0.5 bg-[#F97316]"></div>
-                <span className="text-[#0B4F9C] font-bold text-sm tracking-widest uppercase">Who We Are</span>
+                <div className="w-10 h-0.5 bg-[#D92419]"></div>
+                <span className="text-[#0B4F9C] font-bold text-sm 4xl:text-lg tracking-widest uppercase">Who We Are</span>
               </motion.div>
-              <h2 className="text-[clamp(2rem,4.5vw,3.5rem)] font-extrabold text-[#0B4F9C] leading-[1.1] mb-5 tracking-tight whitespace-normal sm:whitespace-nowrap">
-                <AnimatedCharacters text="Technology" delay={0.0} /><br />
-                <AnimatedCharacters text="built around" delay={0.1} /><br />
-                <AnimatedCharacters text="your business." delay={0.2} className="text-[#F97316]" />
-              </h2>
-              <p className="text-[#0B4F9C] text-base lg:text-lg mb-8 leading-relaxed font-normal max-w-sm xl:max-w-md">
-                <AnimatedTextScroll text="You bring the idea. We build it, back it, and take it further — just like a kangaroo carries its journey forward" delay={0.3} />
+              <p className="text-[#0B4F9C] text-base lg:text-lg 4xl:text-2xl mb-8 4xl:mb-12 leading-relaxed font-normal max-w-sm xl:max-w-md 4xl:max-w-2xl">
+                <AnimatedTextScroll text="You bring the vision. We engineer digital solutions that increase AI search visibility, accelerate growth through AEO and GEO, and carry your business forward." delay={0.3} />
               </p>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -364,9 +443,9 @@ export default function Home() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: 0.4 }}
               >
-                <a href="/about" className="group inline-flex items-center justify-center px-6 py-3 border-2 border-[#0B4F9C] text-[#0B4F9C] font-semibold rounded-xl hover:bg-[#0B4F9C] hover:text-white transition-all duration-300">
+                <a href="/about" className="group inline-flex items-center justify-center px-6 py-3 4xl:px-10 4xl:py-5 4xl:text-xl border-2 border-[#0B4F9C] text-[#0B4F9C] font-semibold rounded-xl hover:bg-[#0B4F9C] hover:text-white transition-all duration-300">
                   Discover Who We Are
-                  <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="w-5 h-5 4xl:w-7 4xl:h-7 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                 </a>
               </motion.div>
             </div>
@@ -395,12 +474,12 @@ export default function Home() {
                 transition={{ duration: 0.4, delay: 0.1 }}
                 className="flex items-start gap-5 pb-6 border-b border-[#0B4F9C]/15 group"
               >
-                <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center mt-0.5">
-                  <Lightbulb className="w-10 h-10 text-[#F97316] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                <div className="flex-shrink-0 w-12 h-12 4xl:w-16 4xl:h-16 flex items-center justify-center mt-0.5 4xl:mt-2">
+                  <Lightbulb className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#D92419] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="text-[#0B4F9C] text-[17px] xl:text-[19px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 tracking-tight">01 — Carry Your Idea</h3>
-                  <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] font-normal">
+                  <h3 className="text-[#0B4F9C] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">01 — Carry Your Idea</h3>
+                  <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] 4xl:text-[20px] font-normal">
                     You bring the vision. We turn your idea into a powerful digital solution.
                   </p>
                 </div>
@@ -414,13 +493,13 @@ export default function Home() {
                 transition={{ duration: 0.4, delay: 0.2 }}
                 className="flex items-start gap-5 pb-6 border-b border-[#0B4F9C]/15 group"
               >
-                <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center mt-0.5">
-                  <Rocket className="w-10 h-10 text-[#F97316] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                <div className="flex-shrink-0 w-12 h-12 4xl:w-16 4xl:h-16 flex items-center justify-center mt-0.5 4xl:mt-2">
+                  <Rocket className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#D92419] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="text-[#0B4F9C] text-[17px] xl:text-[19px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 tracking-tight">02 — Take the Leap</h3>
-                  <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] font-normal">
-                    Smart technology that transforms opportunities into real business growth.
+                  <h3 className="text-[#0B4F9C] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">02 — Boost AI Search Visibility</h3>
+                  <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] 4xl:text-[20px] font-normal">
+                    Targeted digital solutions that increase AI search visibility, integrating AEO and GEO to dominate conversational search engines.
                   </p>
                 </div>
               </motion.div>
@@ -433,12 +512,12 @@ export default function Home() {
                 transition={{ duration: 0.4, delay: 0.3 }}
                 className="flex items-start gap-5 group"
               >
-                <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center mt-0.5">
-                  <RefreshCw className="w-10 h-10 text-[#F97316] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                <div className="flex-shrink-0 w-12 h-12 4xl:w-16 4xl:h-16 flex items-center justify-center mt-0.5 4xl:mt-2">
+                  <RefreshCw className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#D92419] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="text-[#0B4F9C] text-[17px] xl:text-[19px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 tracking-tight">03 — Keep Moving Forward</h3>
-                  <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] font-normal">
+                  <h3 className="text-[#0B4F9C] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">03 — Keep Moving Forward</h3>
+                  <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] 4xl:text-[20px] font-normal">
                     We build, support, and evolve your technology as your business grows.
                   </p>
                 </div>
@@ -451,14 +530,16 @@ export default function Home() {
       </section>
 
       <ServicesSection />
+      <WhyChooseUsSection />
+            <ProductShowcase />
       <SectorsSection />
-      <ProductShowcase />
+
 
 
       {/* ===================== OUR PROCESS SECTION ===================== */}
       <section className="relative w-full overflow-hidden py-16 sm:py-20 lg:py-24 4xl:py-32 bg-gradient-to-b from-white via-[#F3F7FF] to-white">
         {/* Soft colour glows (no dots) */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#F97316]/10 blur-3xl pointer-events-none" />
+        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#D92419]/10 blur-3xl pointer-events-none" />
         <div className="absolute top-1/2 -right-40 w-[28rem] h-[28rem] rounded-full bg-[#0B4F9C]/10 blur-3xl pointer-events-none" />
         <div className="absolute -bottom-32 left-1/3 w-80 h-80 rounded-full bg-[#2563eb]/10 blur-3xl pointer-events-none" />
 
@@ -472,12 +553,12 @@ export default function Home() {
             className="text-center max-w-3xl 4xl:max-w-5xl mx-auto mb-12 lg:mb-8 4xl:mb-14"
           >
             <span className="block text-[#0B4F9C] font-bold text-xs sm:text-sm 4xl:text-base tracking-widest uppercase">Our Process</span>
-            <span className="block w-10 h-0.5 bg-[#F97316] mx-auto mt-2 mb-4" />
+            <span className="block w-10 h-0.5 bg-[#D92419] mx-auto mt-2 mb-4" />
             <h2 className="text-[clamp(1.75rem,4vw,3rem)] 4xl:text-[4rem] font-extrabold text-[#0B4F9C] leading-[1.15] tracking-tight">
-              Your journey, <span className="text-[#F97316]">mapped out</span> step by step.
+              Your journey, <span className="text-[#D92419]">mapped out</span><br />step by step
             </h2>
             <p className="mt-4 text-[#111111]/80 text-sm sm:text-base 4xl:text-xl leading-relaxed">
-              New to working with a software partner? Here is exactly what happens, from the first conversation to long-term support. No jargon, no guesswork.
+              From discovery to deployment, our digital solutions increase AI search visibility with structured AEO and GEO frameworks at every milestone.
             </p>
           </motion.div>
 
@@ -494,7 +575,7 @@ export default function Home() {
                 <motion.path
                   key={i}
                   d={d}
-                  stroke="#F97316"
+                  stroke="#D92419"
                   strokeWidth="2.5"
                   strokeDasharray="7 7"
                   strokeLinecap="round"
@@ -517,8 +598,8 @@ export default function Home() {
                 className="absolute top-[56px] -translate-x-1/2 -translate-y-1/2"
                 style={{ left: `${12.5 + i * 25}%` }}
               >
-                <span className="absolute inset-0 rounded-full bg-[#F97316]/40 animate-ping" style={{ animationDuration: '2.6s' }} />
-                <span className="relative flex items-center justify-center w-7 h-7 4xl:w-9 4xl:h-9 rounded-full bg-white ring-[3px] ring-[#F97316] shadow-[0_6px_16px_rgba(249,115,22,0.35)]">
+                <span className="absolute inset-0 rounded-full bg-[#D92419]/40 animate-ping" style={{ animationDuration: '2.6s' }} />
+                <span className="relative flex items-center justify-center w-7 h-7 4xl:w-9 4xl:h-9 rounded-full bg-white ring-[3px] ring-[#D92419] shadow-[0_6px_16px_rgba(217, 36, 25,0.35)]">
                   <span className="w-2.5 h-2.5 4xl:w-3 4xl:h-3 rounded-full bg-[#0B4F9C]" />
                 </span>
               </motion.div>
@@ -527,7 +608,7 @@ export default function Home() {
 
           {/* Cards: vertical timeline on mobile/tablet, 4 staggered columns on desktop */}
           <div className="relative max-w-2xl lg:max-w-none mx-auto">
-            <div className="lg:hidden absolute left-[13px] top-6 bottom-6 border-l-2 border-dashed border-[#F97316]/60" aria-hidden="true" />
+            <div className="lg:hidden absolute left-[13px] top-6 bottom-6 border-l-2 border-dashed border-[#D92419]/60" aria-hidden="true" />
 
             <ol className="relative pl-12 space-y-6 sm:pl-14 lg:pl-0 lg:space-y-0 lg:grid lg:grid-cols-4">
               {processSteps.map((s, i) => {
@@ -542,31 +623,31 @@ export default function Home() {
                     className="relative lg:px-3 xl:px-3.5 4xl:px-5 lg:even:mt-10 4xl:even:mt-14"
                   >
                     {/* Mobile stop */}
-                    <span className="lg:hidden absolute -left-12 sm:-left-14 top-7 flex items-center justify-center w-7 h-7 rounded-full bg-white ring-[3px] ring-[#F97316] shadow-[0_6px_16px_rgba(249,115,22,0.35)]">
+                    <span className="lg:hidden absolute -left-12 sm:-left-14 top-7 flex items-center justify-center w-7 h-7 rounded-full bg-white ring-[3px] ring-[#D92419] shadow-[0_6px_16px_rgba(217, 36, 25,0.35)]">
                       <span className="w-2.5 h-2.5 rounded-full bg-[#0B4F9C]" />
                     </span>
 
-                    <article className="group relative h-full overflow-hidden rounded-3xl bg-white/90 backdrop-blur border border-[#0B4F9C]/10 shadow-[0_12px_32px_rgba(11,79,156,0.09)] p-6 xl:p-7 4xl:p-10 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_22px_48px_rgba(11,79,156,0.2)] hover:border-[#F97316]/40">
+                    <article className="group relative h-full overflow-hidden rounded-3xl bg-white/90 backdrop-blur border border-[#0B4F9C]/10 shadow-[0_12px_32px_rgba(11,79,156,0.09)] p-6 xl:p-7 4xl:p-10 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_22px_48px_rgba(11,79,156,0.2)] hover:border-[#D92419]/40">
                       {/* Big faint icon as a decorative corner */}
                       <Icon
-                        className="absolute -bottom-5 -right-5 w-32 h-32 4xl:w-44 4xl:h-44 -rotate-12 text-[#0B4F9C]/[0.06] transition-all duration-500 group-hover:text-[#F97316]/[0.14] group-hover:rotate-0 group-hover:scale-110 pointer-events-none"
+                        className="absolute -bottom-5 -right-5 w-32 h-32 4xl:w-44 4xl:h-44 -rotate-12 text-[#0B4F9C]/[0.06] transition-all duration-500 group-hover:text-[#D92419]/[0.14] group-hover:rotate-0 group-hover:scale-110 pointer-events-none"
                         strokeWidth={1.2}
                         aria-hidden="true"
                       />
                       {/* Glow on hover */}
-                      <div className="absolute -top-16 -left-16 w-40 h-40 rounded-full bg-[#F97316]/0 group-hover:bg-[#F97316]/15 blur-2xl transition-all duration-500 pointer-events-none" />
+                      <div className="absolute -top-16 -left-16 w-40 h-40 rounded-full bg-[#D92419]/0 group-hover:bg-[#D92419]/15 blur-2xl transition-all duration-500 pointer-events-none" />
 
                       <div className="relative">
                         {/* Icon + title */}
                         <div className="flex items-center gap-3.5 mb-3 4xl:mb-5">
-                          <div className="w-12 h-12 4xl:w-16 4xl:h-16 shrink-0 rounded-2xl bg-gradient-to-br from-[#0B4F9C] to-[#2563eb] text-white flex items-center justify-center shadow-[0_8px_18px_rgba(11,79,156,0.35)] transition-all duration-300 group-hover:-rotate-6 group-hover:scale-105 group-hover:from-[#F97316] group-hover:to-[#fb923c] group-hover:shadow-[0_8px_18px_rgba(249,115,22,0.4)]">
+                          <div className="w-12 h-12 4xl:w-16 4xl:h-16 shrink-0 rounded-2xl bg-gradient-to-br from-[#0B4F9C] to-[#2563eb] text-white flex items-center justify-center shadow-[0_8px_18px_rgba(11,79,156,0.35)] transition-all duration-300 group-hover:-rotate-6 group-hover:scale-105 group-hover:from-[#D92419] group-hover:to-[#EF4444] group-hover:shadow-[0_8px_18px_rgba(217, 36, 25,0.4)]">
                             <Icon className="w-6 h-6 4xl:w-8 4xl:h-8" strokeWidth={1.8} />
                           </div>
                           <h3 className="text-[#0B4F9C] font-extrabold text-xl xl:text-2xl 4xl:text-4xl tracking-tight">{s.title}</h3>
                         </div>
 
                         {/* Accent line grows on hover */}
-                        <div className="w-8 group-hover:w-20 h-[3px] rounded-full bg-[#F97316] mb-3 4xl:mb-5 transition-all duration-500" />
+                        <div className="w-8 group-hover:w-20 h-[3px] rounded-full bg-[#D92419] mb-3 4xl:mb-5 transition-all duration-500" />
 
                         {/* Paragraph */}
                         <p className="text-[#111111]/80 text-[14px] xl:text-[15px] 4xl:text-xl leading-relaxed">{s.desc}</p>
@@ -581,7 +662,7 @@ export default function Home() {
       </section>
       {/* =================== END OUR PROCESS SECTION =================== */}
 
-      <WhyChooseUsSection />
+
       <AsymmetricGallerySection />
       <CtaSection />
       <OurClientsSection />
