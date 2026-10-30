@@ -25,6 +25,9 @@ import {
   Target,
   Globe,
   Building2,
+  ShieldCheck,
+  Lock,
+  Sparkles,
 } from 'lucide-react';
 import PageBanner from '../../components/common/PageBanner';
 import CtaSection from '../../components/CtaSection';
@@ -537,198 +540,292 @@ function BrandCard({ item, open, onToggle }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function ParentBrandSection() {
+  const [activeCategory, setActiveCategory] = useState(0);
+
+  const portfolioCategories = [
+    { label: 'Enterprise Web', count: '180+ Apps', desc: 'Custom portals, high-traffic SaaS & corporate web systems' },
+    { label: 'Mobile & iOS', count: '120+ Deployed', desc: 'Native Swift, Kotlin & cross-platform Flutter/React Native' },
+    { label: 'E-Commerce & CRM', count: '140+ Stores', desc: 'Bespoke checkout architectures, Shopify & multi-vendor platforms' },
+    { label: 'Cloud & AI Systems', count: '60+ Scaled', desc: 'Microservices, AI search integration & AWS/GCP DevOps' },
+  ];
+
   return (
-    <section className="relative w-full bg-gradient-to-b from-[#F7FAF8] via-white to-white py-12 lg:py-16 border-b border-slate-100 overflow-hidden">
-      {/* Decorative ambient background glows */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#0F3D2E]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#E8890C]/10 rounded-full blur-3xl pointer-events-none" />
+    <section className="relative w-full bg-[#FAFCFA] py-12 lg:py-20 border-b border-slate-200/80 overflow-hidden">
+      {/* Ambient background glows & grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(#0F3D2E_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none" />
+      <div className="absolute top-10 left-1/3 w-[500px] h-[500px] bg-[#0F3D2E]/[0.04] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-[#E8890C]/[0.06] rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Heading */}
-        <div className="text-center max-w-[760px] mx-auto mb-10 sm:mb-12">
+        {/* Section Header */}
+        <div className="text-center max-w-[780px] mx-auto mb-10 lg:mb-14">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={stagger}
           >
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0F3D2E]/8 border border-[#0F3D2E]/15 mb-4 shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-[#E8890C]" />
+              <span className="text-xs font-black uppercase tracking-wider text-[#0F3D2E]">
+                Corporate Ecosystem &amp; Enterprise Pedigree
+              </span>
+            </div>
+
             <motion.h2
               variants={fadeInUp}
-              className="font-black tracking-tight leading-[1.05] text-4xl sm:text-5xl lg:text-[52px] text-[#0F3D2E]"
+              className="font-black tracking-tight leading-[1.08] text-3xl sm:text-4xl lg:text-[46px] text-[#0F3D2E]"
             >
-              Our Parent Brand &amp; Portfolio
+              The Strategic Engineering Foundation Powering VR4Web
             </motion.h2>
+
             <motion.div
               variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.7, ease: 'easeOut' } } }}
               style={{ originX: 0.5 }}
               className="h-1 w-24 bg-[#E8890C] rounded-full mt-4 mx-auto"
             />
+
             <motion.p
               variants={fadeInUp}
-              className="font-bold text-[#E8890C] mt-4 text-lg sm:text-xl"
+              className="text-sm sm:text-base leading-relaxed text-black/80 max-w-[660px] mt-4 mx-auto"
             >
-              The Global Engineering Foundation Powering VR4Web
-            </motion.p>
-            <motion.p
-              variants={fadeInUp}
-              className="text-sm sm:text-base leading-relaxed max-w-[620px] mt-2 mx-auto text-black/85"
-            >
-              VR4Web is an integral part of the Niftysoft corporate family. Learn more about our parent company and explore our extensive global software portfolio.
+              VR4Web operates as the specialized digital solutions arm of <strong>Niftysoft</strong>. Learn more about our global parent company and explore our extensive cross-industry commercial portfolio.
             </motion.p>
           </motion.div>
         </div>
 
-        {/* 2-Column Grid: Parent Brand Left | Portfolio Showcase Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-          
-          {/* Left Column: Parent Brand (https://niftysoft.com/) - 7 cols */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeInUp}
-            className="lg:col-span-7 flex flex-col justify-between bg-white rounded-[26px] p-6 sm:p-8 lg:p-10 border border-[#E3EAE4] shadow-[0_16px_40px_-20px_rgba(15,61,46,0.15)] relative overflow-hidden"
-          >
-            {/* Top decorative accent line */}
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#0F3D2E] via-[#1A6B4E] to-[#E8890C]" />
-
-            <div>
-              {/* Header Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0F3D2E]/8 border border-[#0F3D2E]/15 mb-5 sm:mb-6">
-                <span className="w-2 h-2 rounded-full bg-[#0F3D2E] animate-pulse" />
-                <span className="text-xs font-black uppercase tracking-wider text-[#0F3D2E]">
-                  Parent Brand &amp; Global Headquarters
-                </span>
-              </div>
-
-              {/* Logo & Headline */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-5">
+        {/* ── UNIFIED BESPOKE ARCHITECTURAL CONSOLE ── */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={fadeInUp}
+          className="rounded-[32px] bg-white border border-slate-200 shadow-[0_24px_60px_-15px_rgba(15,61,46,0.12)] overflow-hidden"
+        >
+          {/* TOP PANORAMA: Niftysoft Flagship Header Ribbon */}
+          <div className="relative bg-gradient-to-r from-[#0F3D2E] via-[#124836] to-[#0A291E] p-6 sm:p-8 lg:p-10 text-white overflow-hidden">
+            {/* Ambient gold illumination */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#E8890C]/15 rounded-full blur-3xl pointer-events-none" />
+            
+            <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-10">
+              
+              {/* Left Identity Area */}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
                 <a
                   href="https://niftysoft.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block flex-shrink-0 transition-transform duration-300 hover:scale-105"
+                  className="group flex-shrink-0 p-3.5 sm:p-4 rounded-2xl bg-white shadow-lg transition-transform duration-300 hover:scale-105"
                   title="Visit Niftysoft Official Website"
                 >
                   <img
                     src="/brand/niftysoft.png"
-                    alt="Niftysoft - Parent Brand of VR4Web"
-                    className="h-12 sm:h-14 w-auto object-contain"
+                    alt="Niftysoft Global"
+                    className="h-10 sm:h-12 w-auto object-contain"
                   />
                 </a>
-                <div className="hidden sm:block w-px h-10 bg-slate-200" />
-                <div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-[#0F3D2E] tracking-tight leading-tight">
+
+                <div className="space-y-1">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/10 text-[#E8890C] text-[11px] font-extrabold uppercase tracking-wider border border-white/15">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#E8890C] animate-pulse" />
+                    Verified Global Parent Company
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                     Niftysoft Global
                   </h3>
-                  <p className="text-xs sm:text-sm font-bold text-[#E8890C]">
-                    Enterprise Software &amp; Digital Engineering Group
+                  <p className="text-xs sm:text-sm text-white/80 max-w-xl">
+                    Enterprise Software Development · Cloud Infrastructure · Digital Transformation Group
                   </p>
                 </div>
               </div>
 
-              {/* Description */}
-              <p className="text-black/85 text-sm sm:text-[15px] leading-relaxed mb-6 font-normal">
-                VR4Web proudly operates under the leadership of <strong>Niftysoft</strong>, our global parent technology enterprise. With deep software engineering roots, worldwide delivery infrastructure, and 15+ years of digital innovation, Niftysoft provides the technological foundation, governance, and cloud engineering powering our ecosystem.
-              </p>
-
-              {/* Key Trust Highlights */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6 sm:mb-8 pt-2 border-t border-slate-100">
-                <div className="p-3.5 rounded-xl bg-[#F8FAF9] border border-slate-200/70">
-                  <span className="block text-2xl font-black text-[#0F3D2E]">15+</span>
-                  <span className="text-xs text-slate-600 font-semibold">Years of Excellence</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-[#F8FAF9] border border-slate-200/70">
-                  <span className="block text-2xl font-black text-[#0F3D2E]">Global</span>
-                  <span className="text-xs text-slate-600 font-semibold">Delivery Network</span>
-                </div>
-                <div className="p-3.5 rounded-xl bg-[#F8FAF9] border border-slate-200/70 col-span-2 sm:col-span-1">
-                  <span className="block text-2xl font-black text-[#0F3D2E]">Flagship</span>
-                  <span className="text-xs text-slate-600 font-semibold">Parent Technology Group</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Parent Brand CTA Button */}
-            <div className="pt-2">
-              <motion.a
-                href="https://niftysoft.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#0F3D2E] hover:bg-[#134D3A] text-white font-bold text-sm shadow-[0_10px_24px_-8px_rgba(15,61,46,0.6)] transition-all duration-200"
-              >
-                <span>Visit Parent Brand (niftysoft.com)</span>
-                <ExternalLink className="w-4 h-4 flex-shrink-0" />
-              </motion.a>
-            </div>
-          </motion.div>
-
-          {/* Right Column: Portfolio Showcase (https://niftysoft.in) - 5 cols */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeInUp}
-            className="lg:col-span-5 flex flex-col justify-between bg-gradient-to-br from-[#0F3D2E] via-[#103F30] to-[#0A2E22] rounded-[26px] p-6 sm:p-8 lg:p-9 text-white shadow-[0_20px_45px_-18px_rgba(15,61,46,0.35)] relative overflow-hidden"
-          >
-            {/* Ambient gold glow */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#E8890C]/20 rounded-full blur-2xl pointer-events-none" />
-
-            <div className="relative z-10">
-              {/* Header Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 mb-5 sm:mb-6">
-                <span className="w-2 h-2 rounded-full bg-[#E8890C]" />
-                <span className="text-xs font-bold uppercase tracking-wider text-white">
-                  Global Portfolio &amp; Case Studies
-                </span>
+              {/* Right Global CTA Pill */}
+              <div className="flex-shrink-0">
+                <motion.a
+                  href="https://niftysoft.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#E8890C] hover:bg-[#d67d0a] text-white font-bold text-sm shadow-[0_10px_24px_rgba(232,137,12,0.4)] transition-all"
+                >
+                  <span>Visit Parent Brand (niftysoft.com)</span>
+                  <ExternalLink className="w-4 h-4 flex-shrink-0" />
+                </motion.a>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-snug mb-3">
-                Know About Our <span className="text-[#E8890C]">Portfolio</span>
-              </h3>
+            </div>
 
-              <p className="text-white/85 text-sm sm:text-[14.5px] leading-relaxed mb-6 font-normal">
-                Looking to explore our extensive work? Dive into the official Niftysoft portfolio to view live case studies, production web applications, SaaS platforms, and enterprise solutions built for clients across the globe.
+            {/* Quick Metrics Bar across bottom of header ribbon */}
+            <div className="mt-8 pt-6 border-t border-white/15 grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div>
+                <span className="block text-2xl sm:text-3xl font-black text-[#E8890C]">15+</span>
+                <span className="text-xs text-white/70 font-medium">Years Engineering Excellence</span>
+              </div>
+              <div>
+                <span className="block text-2xl sm:text-3xl font-black text-white">500+</span>
+                <span className="text-xs text-white/70 font-medium">Enterprise Systems Shipped</span>
+              </div>
+              <div>
+                <span className="block text-2xl sm:text-3xl font-black text-white">Global</span>
+                <span className="text-xs text-white/70 font-medium">AU · IN · US · UK Reach</span>
+              </div>
+              <div>
+                <span className="block text-2xl sm:text-3xl font-black text-[#E8890C]">Tier-1</span>
+                <span className="text-xs text-white/70 font-medium">Enterprise Security &amp; SLAs</span>
+              </div>
+            </div>
+          </div>
+
+          {/* LOWER SECTION: ASYMMETRIC DUAL PORTAL */}
+          <div className="p-6 sm:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white">
+            
+            {/* Left 5 cols: Corporate Pillars & Strategic Architecture */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-[#0F3D2E]/6 text-[#0F3D2E] text-xs font-bold">
+                <ShieldCheck className="w-4 h-4 text-[#0F3D2E]" />
+                How Niftysoft Backs Every VR4Web Project
+              </div>
+
+              <h4 className="text-2xl sm:text-[26px] font-black text-[#0F3D2E] tracking-tight leading-snug">
+                Enterprise Muscle for Australian &amp; Global Growth
+              </h4>
+
+              <p className="text-slate-600 text-sm leading-relaxed">
+                By partnering with VR4Web, clients receive localized strategy, agile Australian leadership, and direct access to Niftysoft’s enterprise delivery centers, senior engineering pool, and mature software pipelines.
               </p>
 
-              {/* Portfolio Highlights */}
-              <ul className="space-y-3 mb-6 sm:mb-8">
+              {/* 3 Value Pillars */}
+              <div className="space-y-4 pt-1">
                 {[
-                  '500+ Web, Mobile & Enterprise Projects',
-                  'Live Case Studies Across Diverse Sectors',
-                  'Proven ROI & Scalable Cloud Implementations',
-                ].map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-xs sm:text-sm text-white/95 font-medium">
-                    <CheckCircle2 className="w-4 h-4 text-[#E8890C] flex-shrink-0" />
-                    <span>{item}</span>
-                  </li>
+                  {
+                    title: 'Tier-1 Development Infrastructure',
+                    desc: 'Automated CI/CD, ISO security compliance, and zero-compromise code quality reviews.',
+                  },
+                  {
+                    title: 'Multi-Disciplinary Technical Pool',
+                    desc: 'Over 150+ senior architects covering spatial visionOS, modern web frameworks, and AI search.',
+                  },
+                  {
+                    title: 'Proven Delivery Governance',
+                    desc: 'Transparent sprint reporting, dedicated technical account managers, and continuous SLAs.',
+                  },
+                ].map((pillar, idx) => (
+                  <div key={idx} className="flex items-start gap-3.5 p-3.5 rounded-xl bg-[#F8FAF9] border border-slate-100 hover:border-[#0F3D2E]/20 transition-colors">
+                    <div className="w-7 h-7 rounded-lg bg-[#0F3D2E] text-white flex items-center justify-center flex-shrink-0 text-xs font-bold mt-0.5">
+                      {idx + 1}
+                    </div>
+                    <div>
+                      <h5 className="text-sm font-bold text-[#0F3D2E]">{pillar.title}</h5>
+                      <p className="text-xs text-slate-500 leading-relaxed mt-0.5">{pillar.desc}</p>
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
 
-            {/* Portfolio CTA Button */}
-            <div className="relative z-10 pt-2">
-              <motion.a
-                href="https://niftysoft.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#E8890C] hover:bg-[#d67d0a] text-white font-bold text-sm shadow-[0_12px_28px_-8px_rgba(232,137,12,0.8)] transition-all duration-200"
-              >
-                <span>Explore Portfolio (niftysoft.in)</span>
-                <ArrowUpRight className="w-4 h-4 flex-shrink-0" />
-              </motion.a>
-              <p className="text-center text-[11.5px] text-white/60 mt-2.5">
-                Visit niftysoft.in for live project demos &amp; client reviews
-              </p>
-            </div>
-          </motion.div>
+            {/* Right 7 cols: Interactive macOS-Style Portfolio Window (https://niftysoft.in) */}
+            <div className="lg:col-span-7">
+              <div className="rounded-2xl border border-slate-300/80 shadow-[0_16px_40px_-15px_rgba(0,0,0,0.15)] bg-slate-900 overflow-hidden">
+                
+                {/* Browser Top Window Bar */}
+                <div className="bg-[#1E293B] px-4 py-3 flex items-center justify-between border-b border-slate-700/60">
+                  {/* Traffic lights */}
+                  <div className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full bg-[#FF5F56] inline-block" />
+                    <span className="w-3 h-3 rounded-full bg-[#FFBD2E] inline-block" />
+                    <span className="w-3 h-3 rounded-full bg-[#27C93F] inline-block" />
+                  </div>
 
-        </div>
+                  {/* Browser URL Search Bar */}
+                  <div className="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-slate-800 text-xs text-slate-300 font-mono border border-slate-700/80 max-w-[280px] w-full justify-center">
+                    <Lock className="w-3 h-3 text-[#27C93F]" />
+                    <span className="truncate">https://niftysoft.in/portfolio</span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 text-[11px] text-[#E8890C] font-bold">
+                    <span className="w-2 h-2 rounded-full bg-[#E8890C] animate-ping" />
+                    Live Vault
+                  </div>
+                </div>
+
+                {/* Browser Canvas Content */}
+                <div className="p-6 sm:p-7 bg-[#0F172A] text-white">
+                  
+                  {/* Portfolio Window Title */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+                    <div>
+                      <span className="text-xs font-bold text-[#E8890C] uppercase tracking-wider block mb-1">
+                        Commercial Portfolio &amp; Case Studies
+                      </span>
+                      <h4 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                        Know About Our Portfolio at <span className="text-[#E8890C]">niftysoft.in</span>
+                      </h4>
+                    </div>
+
+                    <span className="self-start sm:self-center px-3 py-1 rounded-full bg-[#E8890C]/15 border border-[#E8890C]/30 text-[#E8890C] text-xs font-extrabold whitespace-nowrap">
+                      500+ Projects Live
+                    </span>
+                  </div>
+
+                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-5">
+                    Explore live production systems, commercial case studies, and enterprise solutions architected and deployed by Niftysoft across global industries.
+                  </p>
+
+                  {/* Interactive Category Selector Pills */}
+                  <div className="grid grid-cols-2 gap-2.5 mb-6">
+                    {portfolioCategories.map((cat, i) => (
+                      <div
+                        key={i}
+                        onClick={() => setActiveCategory(i)}
+                        className={`p-3 rounded-xl border transition-all cursor-pointer text-left ${
+                          activeCategory === i
+                            ? 'bg-[#1E293B] border-[#E8890C] shadow-sm'
+                            : 'bg-slate-800/50 border-slate-700/60 hover:bg-slate-800 hover:border-slate-600'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span className={`text-xs font-bold ${activeCategory === i ? 'text-[#E8890C]' : 'text-white'}`}>
+                            {cat.label}
+                          </span>
+                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-slate-300">
+                            {cat.count}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-400 line-clamp-1">{cat.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Main Action Bar */}
+                  <div className="pt-2 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="text-left w-full sm:w-auto">
+                      <span className="text-xs text-slate-400 block font-medium">Official Showcase Portal:</span>
+                      <span className="text-sm font-mono text-white font-bold">niftysoft.in</span>
+                    </div>
+
+                    <motion.a
+                      href="https://niftysoft.in"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.04 }}
+                      whileTap={{ scale: 0.96 }}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl bg-[#E8890C] hover:bg-[#d67d0a] text-white font-bold text-sm shadow-[0_8px_20px_rgba(232,137,12,0.45)] transition-all whitespace-nowrap"
+                    >
+                      <span>Explore Portfolio (niftysoft.in)</span>
+                      <ArrowUpRight className="w-4 h-4 flex-shrink-0" />
+                    </motion.a>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
