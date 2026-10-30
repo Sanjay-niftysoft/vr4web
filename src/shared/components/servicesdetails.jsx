@@ -889,15 +889,13 @@ function ProcessShowcase({ steps, active, setActive }) {
    Cards are dark green and mostly solid so they stay visible on top of the photo.
    Hover pauses the auto-play. Uses the `procFill` keyframe defined at the bottom of this file.
 ─────────────────────────────────────────────── */
-const WHY_MS = 4200;
-
+/* ───────── why choose us: clean natural accordion ─────────
+   In-flow accordion: cards expand naturally in document flow without overlapping
+   the cards or guarantees below. Background photo expands smoothly with the content.
+─────────────────────────────────────────────── */
 function WhyShowcase({ why, visual, fallback2, visual2, alt }) {
-    const reduce = useReducedMotion();
     const reasons = why.reasons || [];
     const [active, setActive] = useState(0);
-    const [paused, setPaused] = useState(false);
-    const total = reasons.length;
-    const next = total ? (active + 1) % total : 0;
 
     return (
         <div className="relative w-full">
@@ -916,14 +914,8 @@ function WhyShowcase({ why, visual, fallback2, visual2, alt }) {
                 </Reveal>
             </div>
 
-            {/* ── Reason cards: fixed-height slots, so the section never grows ── */}
-            <div
-                className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-8 sm:mb-10 items-start"
-                onMouseEnter={() => setPaused(true)}
-                onMouseLeave={() => setPaused(false)}
-                onFocus={() => setPaused(true)}
-                onBlur={() => setPaused(false)}
-            >
+            {/* ── Reason cards: in normal document flow, so expanding pushes content down naturally with NO overlay ── */}
+            <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-8 sm:mb-10 items-start">
                 {reasons.map((r, idx) => {
                     const ReasonIcon = smartIcon(r.iconName, r.title, idx);
                     const on = idx === active;
@@ -934,17 +926,14 @@ function WhyShowcase({ why, visual, fallback2, visual2, alt }) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-40px' }}
                             transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                            /* fixed slot: this height never changes, open or closed */
-                            className={`relative h-[104px] sm:h-[112px] ${on ? 'z-30' : 'z-0'}`}
+                            className="relative w-full"
                         >
-                            {/* the card floats inside the slot and grows OVER the layout when opened */}
                             <div
                                 role="button"
                                 tabIndex={0}
                                 onClick={() => setActive(on ? -1 : idx)}
-                                onMouseEnter={() => setActive(idx)}
                                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActive(on ? -1 : idx); }}
-                                className={`absolute inset-x-0 top-0 min-h-full flex flex-col justify-center overflow-hidden rounded-2xl border-2 p-4 sm:p-5 cursor-pointer backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300 ${
+                                className={`relative w-full flex flex-col justify-center overflow-hidden rounded-2xl border-2 p-4 sm:p-5 cursor-pointer backdrop-blur-md transition-all duration-300 ${
                                     on
                                         ? 'bg-[#071712]/95 border-[#E8890C] shadow-[0_18px_40px_rgba(0,0,0,0.6)]'
                                         : 'bg-[#0F3D2E]/80 border-white/30 shadow-[0_10px_26px_rgba(0,0,0,0.4)] hover:bg-[#0F3D2E]/90 hover:border-[#E8890C]/70'
@@ -986,18 +975,6 @@ function WhyShowcase({ why, visual, fallback2, visual2, alt }) {
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
-
-                                {on && (
-                                    <span
-                                        aria-hidden="true"
-                                        className="absolute left-0 bottom-0 h-[3px] w-full origin-left bg-[#E8890C]"
-                                        style={{
-                                            animation: reduce ? 'none' : `procFill ${WHY_MS}ms linear forwards`,
-                                            animationPlayState: paused ? 'paused' : 'running',
-                                        }}
-                                        onAnimationEnd={() => setActive(next)}
-                                    />
-                                )}
                             </div>
                         </motion.div>
                     );
@@ -1028,6 +1005,7 @@ function WhyShowcase({ why, visual, fallback2, visual2, alt }) {
         </div>
     );
 }
+
 
 /* ───────── industries: orbit wheel ─────────
    Industries sit on a ring around a glowing hub. Click one (or let auto-play run)

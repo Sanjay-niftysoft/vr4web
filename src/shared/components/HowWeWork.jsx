@@ -269,30 +269,31 @@ function OurApproachSection() {
               <motion.div variants={fadeInUp} className="pt-6 max-w-[540px]">
                 <div className="flex items-center justify-between w-full">
                   {approachPoints.map((item, index) => {
-                    const Icon = item.icon;
-                    return (
-                      <React.Fragment key={index}>
-                        <div className="flex flex-col items-center text-center flex-shrink-0 w-24 sm:w-28">
-                          <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#E6F0EC] flex items-center justify-center text-[#103F30] shadow-sm transition-transform duration-300 hover:scale-105">
-                            <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
-                          </div>
-                          <div className="mt-3 text-xs sm:text-[13px] font-bold text-[#E8890C] leading-tight">
-                            <span>{item.line1}</span>
-                            <br />
-                            <span>{item.line2}</span>
-                          </div>
-                        </div>
+  const Icon = item.icon;
+  return (
+    <React.Fragment key={index}>
+      <div className="flex flex-col items-center text-center flex-shrink-0 w-[84px] min-[400px]:w-24 sm:w-28">
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#E6F0EC] flex items-center justify-center text-[#103F30] shadow-sm transition-transform duration-300 hover:scale-105">
+          <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
+        </div>
+        <div className="mt-2.5 text-[11px] min-[400px]:text-xs sm:text-[13px] font-bold text-[#E8890C] leading-tight break-words">
+          <span>{item.line1}</span>
+          <br />
+          <span>{item.line2}</span>
+        </div>
+      </div>
 
-                        {index < approachPoints.length - 1 && (
-                          <div className="flex-1 flex items-center justify-center px-1 sm:px-2 relative -mt-7 sm:-mt-8">
-                            <div className="w-full h-[1.5px] bg-[#E2E8F0] relative flex items-center justify-center">
-                              <span className="w-2 h-2 rounded-full bg-[#103F30] shadow-[0_0_6px_rgba(16,63,48,0.4)]" />
-                            </div>
-                          </div>
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
+      {index < approachPoints.length - 1 && (
+        <div className="flex-1 min-w-0 flex items-center justify-center px-0.5 sm:px-2 relative -mt-6 sm:-mt-8">
+          <div className="w-full h-[1.5px] bg-[#E2E8F0] relative flex items-center justify-center">
+            <span className="w-2 h-2 rounded-full bg-[#103F30] shadow-[0_0_6px_rgba(16,63,48,0.4)]" />
+          </div>
+        </div>
+      )}
+    </React.Fragment>
+  );
+})}
+                 
                 </div>
               </motion.div>
             </motion.div>

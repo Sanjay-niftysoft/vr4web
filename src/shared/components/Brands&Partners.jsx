@@ -21,13 +21,7 @@ import {
   FileText,
   Share2,
   Shield,
-  Link2,
   Target,
-  Globe,
-  Building2,
-  ShieldCheck,
-  Lock,
-  Sparkles,
 } from 'lucide-react';
 import PageBanner from '../../components/common/PageBanner';
 import CtaSection from '../../components/CtaSection';
@@ -528,16 +522,7 @@ function BrandCard({ item, open, onToggle }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SECTION 00 — PARENT BRAND & PORTFOLIO SHOWCASE
-// ─────────────────────────────────────────────────────────────────────────────
-
-// ─────────────────────────────────────────────────────────────────────────────
 // SECTION 00 — PARENT BRAND & PORTFOLIO (light, professional, 3D cards)
-//
-// Replace the old ParentBrandSection in Brands&Partners.jsx with everything below.
-// Imports needed (already in your file): motion, useMotionValue, useSpring,
-// useTransform, useReducedMotion, ExternalLink, ArrowUpRight, CheckCircle2.
-// You can now remove the unused imports: Sparkles, Lock (and ShieldCheck if unused).
 // ─────────────────────────────────────────────────────────────────────────────
 
 /* Layered shadow = the "raised box" look. Used on every card in this section. */
@@ -578,36 +563,36 @@ function Tilt3D({ children, className = '', max = 4 }) {
 }
 
 export function ParentBrandSection() {
-const cards = [
-  {
-    id: 'parent',
-    label: 'Parent company',
-    labelColor: 'text-[#E8890C]',
-    title: 'Niftysoft Global',
-    desc: 'Enterprise software development, cloud infrastructure and digital transformation.',
-    url: 'https://niftysoft.com/',
-    logo: '/brand/niftysoft.png',        // logo for box 1
-    btnText: 'Visit niftysoft.com',
-    btnClass:
-      'bg-[#E8890C] hover:bg-[#d67d0a] shadow-[0_8px_20px_-6px_rgba(232,137,12,0.6)]',
-    borderClass: 'border-b-[#0F3D2E]',
-    alt: 'Niftysoft Global',
-  },
-  {
-    id: 'portfolio',
-    label: 'Global portfolio',
-    labelColor: 'text-[#0F3D2E]',
-    title: 'See our work at niftysoft.in',
-    desc: 'Browse 500+ live production systems, case studies and enterprise solutions.',
-    url: 'https://niftysoft.in',
-    logo: '/niftysoft.in.png',           // logo for box 2
-    btnText: 'Visit niftysoft.in',
-    btnClass:
-      'bg-[#0F3D2E] hover:bg-[#155440] shadow-[0_8px_20px_-6px_rgba(15,61,46,0.6)]',
-    borderClass: 'border-b-[#E8890C]',
-    alt: 'Niftysoft Portfolio',
-  },
-];
+  const cards = [
+    {
+      id: 'parent',
+      label: 'Parent company',
+      labelColor: 'text-[#E8890C]',
+      title: 'Niftysoft Global',
+      desc: 'Enterprise software development, cloud infrastructure and digital transformation.',
+      url: 'https://niftysoft.com/',
+      logo: '/brand/niftysoft.png', // logo for box 1
+      btnText: 'Visit niftysoft.com',
+      btnClass:
+        'bg-[#E8890C] hover:bg-[#d67d0a] shadow-[0_8px_20px_-6px_rgba(232,137,12,0.6)]',
+      borderClass: 'border-b-[#0F3D2E]',
+      alt: 'Niftysoft Global',
+    },
+    {
+      id: 'portfolio',
+      label: 'Global portfolio',
+      labelColor: 'text-[#0F3D2E]',
+      title: 'See our work at niftysoft.in',
+      desc: 'Browse 500+ live production systems, case studies and enterprise solutions.',
+      url: 'https://niftysoft.in',
+      logo: '/niftysoft.in.png', // logo for box 2
+      btnText: 'Visit niftysoft.in',
+      btnClass:
+        'bg-[#0F3D2E] hover:bg-[#155440] shadow-[0_8px_20px_-6px_rgba(15,61,46,0.6)]',
+      borderClass: 'border-b-[#E8890C]',
+      alt: 'Niftysoft Portfolio',
+    },
+  ];
 
   return (
     <section className="relative w-full bg-[#F3F6F4] py-8 lg:py-10 border-b border-slate-200">
@@ -623,33 +608,33 @@ const cards = [
           </p>
         </div>
 
-        {/* Box 1 + Box 2 (same height) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+        {/* Box 1 + Box 2: 1 column on mobile + tablet, 2 columns from laptop (1024px) up, same height */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6 items-stretch">
           {cards.map((c) => (
             <Tilt3D key={c.id} max={2.5} className="h-full">
               <div
                 className={`relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 border-b-4 ${c.borderClass} p-5 sm:p-6 flex flex-col gap-3 h-full ${CARD_SHADOW}`}
               >
-                {/* 1. Logo + name */}
-                <div className="flex items-center gap-4">
+                {/* 1. Logo + name (stacked on mobile, side by side from 640px) */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                   <a
                     href={c.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     title={c.btnText}
-                    className="flex-shrink-0 rounded-xl bg-white border border-slate-200 p-3 transition-transform duration-300 hover:-translate-y-0.5"
+                    className="self-start flex-shrink-0 rounded-xl bg-white border border-slate-200 p-3 transition-transform duration-300 hover:-translate-y-0.5"
                   >
                     <img
                       src={c.logo}
                       alt={c.alt}
-                      className="h-9 w-auto object-contain"
+                      className="h-8 sm:h-9 w-auto max-w-full object-contain"
                     />
                   </a>
                   <div className="min-w-0">
                     <p className={`text-xs sm:text-sm font-semibold ${c.labelColor}`}>
                       {c.label}
                     </p>
-                    <h3 className="text-lg sm:text-xl font-black tracking-tight leading-tight text-[#0F3D2E]">
+                    <h3 className="text-lg sm:text-xl font-black tracking-tight leading-tight text-[#0F3D2E] break-words">
                       {c.title}
                     </h3>
                   </div>
@@ -678,6 +663,7 @@ const cards = [
     </section>
   );
 }
+
 export function OurBrandsSection() {
   const [openId, setOpenId] = useState(null);
 
@@ -722,7 +708,6 @@ function LogoMarquee() {
   const loop = [...all, ...all];
 
   return (
-    /* GREEN strip (slightly deeper than the Partners section so they stay separate) */
     <section className="relative w-full bg-transparent py-5 overflow-hidden border-y border-slate-200">
       <div className="bp-marquee flex w-max gap-5">
         {loop.map((it, i) => (
@@ -784,11 +769,12 @@ export function OurPartnersSection() {
           text="Our partner companies bring deep domain expertise in digital marketing, content, reputation management and more, helping us deliver greater value together."
         />
 
-        {/* Partner tabs */}
+        {/* Partner tabs: hidden on mobile + tablet, shown from laptop (1024px) up.
+            On smaller screens people use the previous / next arrows in the white card. */}
         <div
           role="tablist"
           aria-label="Partners"
-          className="flex gap-2.5 overflow-x-auto pb-3 mb-5 -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] justify-start lg:justify-center"
+          className="hidden lg:flex gap-2.5 overflow-x-auto pb-3 mb-5 [scrollbar-width:none] justify-center"
         >
           {PARTNERS_DATA.map((item, i) => {
             const isActive = i === active;
