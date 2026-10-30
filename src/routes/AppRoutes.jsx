@@ -17,6 +17,7 @@ import Blogs from '../components/Blogs';
 import BlogDetails from '../components/BlogDetails';
 import Whitepaper from '../shared/components/Whitepaper';
 import ServicesDetails from '../shared/components/servicesdetails';
+import PrivacyPolicy from '../components/PrivacyPolicy';
 
 // 404 Catch-All Component with navigation recovery
 const NotFound = () => (
@@ -82,6 +83,9 @@ export default function AppRoutes() {
         <Route path="/get-quote" element={<EnquiryPage />} />
         <Route path="/enquiry" element={<EnquiryPage />} />
         <Route path="/product" element={<Product />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
         {/* Catch-all 404 handler */}
         <Route path="*" element={<NotFound />} />
       </Route>

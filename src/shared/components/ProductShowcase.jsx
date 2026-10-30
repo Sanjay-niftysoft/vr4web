@@ -336,8 +336,8 @@ export default function ProductShowcase() {
                   </a>
                 </div>
 
-                {/* BOTTOM RIGHT PILL TAGS CLUSTER */}
-                <div className="absolute bottom-3.5 right-3.5 sm:bottom-6 sm:right-6 z-20 max-w-[200px] xs:max-w-[240px] sm:max-w-[320px] md:max-w-sm flex flex-wrap justify-end gap-1 sm:gap-1.5">
+                {/* BOTTOM RIGHT PILL TAGS CLUSTER (hidden on mobile + tablet, shown from 1024px) */}
+                <div className="hidden lg:flex absolute bottom-6 right-6 z-20 max-w-sm flex-wrap justify-end gap-1.5">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeProduct.id}
@@ -345,14 +345,12 @@ export default function ProductShowcase() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.35 }}
-                      className="flex flex-wrap justify-end gap-1 sm:gap-1.5"
+                      className="flex flex-wrap justify-end gap-1.5"
                     >
                       {activeProduct.tags.map((tag, i) => (
                         <span
                           key={i}
-                          className={`bg-black/55 hover:bg-black/80 backdrop-blur-md text-white/95 text-[9px] xs:text-[10px] sm:text-[11px] font-medium px-2 py-0.5 sm:px-3 sm:py-1 rounded-full border border-white/15 transition-all hover:border-white/40 cursor-default shadow-sm ${
-                            i > 3 ? 'hidden sm:inline-block' : 'inline-block'
-                          }`}
+                          className="bg-black/55 hover:bg-black/80 backdrop-blur-md text-white/95 text-[11px] font-medium px-3 py-1 rounded-full border border-white/15 transition-all hover:border-white/40 cursor-default shadow-sm inline-block"
                         >
                           {tag}
                         </span>
@@ -392,8 +390,6 @@ export default function ProductShowcase() {
             </div>
 
           </div>
-
-
 
         </div>
 

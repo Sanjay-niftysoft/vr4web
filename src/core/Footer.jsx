@@ -233,11 +233,11 @@ export default function Footer() {
             .
           </p>
           <div className="flex flex-wrap justify-center items-center gap-2 lg:gap-[0.5em] w-full md:w-auto">
-            <a href="https://niftysoft.com/terms-and-conditions" target="_blank" rel="noopener noreferrer" className="hover:text-[#FB0202] transition-colors">Terms and Conditions</a>
+            <a href="https://niftysoft.com/terms-and-conditions" target="_blank" rel="noopener noreferrer" className="hover:text-[#E8890C] transition-colors">Terms and Conditions</a>
             <span className="text-[#111111]">|</span>
-            <a href="https://niftysoft.com/privacypolicy" target="_blank" rel="noopener noreferrer" className="hover:text-[#FB0202] transition-colors">Privacy Policy</a>
+            <Link to="/privacy-policy" className="hover:text-[#E8890C] transition-colors font-medium">Privacy Policy</Link>
             <span className="text-[#111111]">|</span>
-            <a href="https://niftysoft.com/refund-cancellation-policy" target="_blank" rel="noopener noreferrer" className="hover:text-[#FB0202] transition-colors">Refund Policy</a>
+            <a href="https://niftysoft.com/refund-cancellation-policy" target="_blank" rel="noopener noreferrer" className="hover:text-[#E8890C] transition-colors">Refund Policy</a>
           </div>
         </div>
       </div>
