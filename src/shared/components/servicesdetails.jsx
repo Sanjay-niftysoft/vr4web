@@ -914,8 +914,8 @@ function WhyShowcase({ why, visual, fallback2, visual2, alt }) {
                 </Reveal>
             </div>
 
-            {/* ── Reason cards: in normal document flow, so expanding pushes content down naturally with NO overlay ── */}
-            <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-8 sm:mb-10 items-start">
+            {/* ── Reason cards: stable 2x2 grid where all descriptions are shown cleanly, eliminating layout shifts and preventing background image height changes ── */}
+            <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-8 sm:mb-10 items-stretch">
                 {reasons.map((r, idx) => {
                     const ReasonIcon = smartIcon(r.iconName, r.title, idx);
                     const on = idx === active;
@@ -926,20 +926,20 @@ function WhyShowcase({ why, visual, fallback2, visual2, alt }) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-40px' }}
                             transition={{ duration: 0.5, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                            className="relative w-full"
+                            className="relative w-full h-full"
                         >
                             <div
                                 role="button"
                                 tabIndex={0}
-                                onClick={() => setActive(on ? -1 : idx)}
-                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActive(on ? -1 : idx); }}
-                                className={`relative w-full flex flex-col justify-center overflow-hidden rounded-2xl border-2 p-4 sm:p-5 cursor-pointer backdrop-blur-md transition-all duration-300 ${
+                                onClick={() => setActive(idx)}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActive(idx); }}
+                                className={`relative w-full h-full flex flex-col justify-start overflow-hidden rounded-2xl border-2 p-5 sm:p-6 cursor-pointer backdrop-blur-md transition-all duration-300 ${
                                     on
-                                        ? 'bg-[#071712]/95 border-[#E8890C] shadow-[0_18px_40px_rgba(0,0,0,0.6)]'
+                                        ? 'bg-[#071712]/95 border-[#E8890C] shadow-[0_18px_40px_rgba(0,0,0,0.6)] ring-1 ring-[#E8890C]/50'
                                         : 'bg-[#0F3D2E]/80 border-white/30 shadow-[0_10px_26px_rgba(0,0,0,0.4)] hover:bg-[#0F3D2E]/90 hover:border-[#E8890C]/70'
                                 }`}
                             >
-                                <div className="flex items-center gap-3.5 sm:gap-4">
+                                <div className="flex items-center gap-3.5 sm:gap-4 mb-3">
                                     <span
                                         className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl border flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
                                             on
@@ -952,29 +952,11 @@ function WhyShowcase({ why, visual, fallback2, visual2, alt }) {
                                     <h4 className="flex-1 min-w-0 text-sm sm:text-base font-bold text-white leading-snug">
                                         {r.title}
                                     </h4>
-                                    <ChevronDown
-                                        className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${
-                                            on ? 'rotate-180 text-[#E8890C]' : 'text-white/70'
-                                        }`}
-                                    />
                                 </div>
 
-                                <AnimatePresence initial={false}>
-                                    {on && (
-                                        <motion.div
-                                            key="body"
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: 'auto', opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                                            className="overflow-hidden"
-                                        >
-                                            <p className="pt-3 pl-0 sm:pl-[60px] text-xs sm:text-sm leading-relaxed text-white/90">
-                                                {r.description}
-                                            </p>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
+                                <p className="text-xs sm:text-sm leading-relaxed text-white/90">
+                                    {r.description}
+                                </p>
                             </div>
                         </motion.div>
                     );
