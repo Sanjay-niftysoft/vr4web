@@ -278,9 +278,17 @@ export default function Home() {
         className="relative w-full h-[100svh] min-h-[520px] xs:min-h-[560px] sm:min-h-[600px] md:min-h-[640px] lg:min-h-[700px] 2xl:min-h-[780px] 4xl:min-h-[1000px] flex flex-col items-center justify-start pt-[140px] xs:pt-[150px] sm:pt-[160px] md:pt-[200px] lg:pt-[180px] 2xl:pt-[200px] 4xl:pt-[260px] overflow-hidden"
       >
         {/* Background Image with absolute positioning: optimized for mobile (320px-767px), tablet (768px-1023px), laptop (1024px-1440px), ultrawide (2560px) */}
-        <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat z-0 bg-[url('/mobileviewbanner.png')] md:bg-[url('/tabview.png')] lg:bg-[url('banner1.png')]"
-        >
+        <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+          <picture className="absolute inset-0 w-full h-full pointer-events-none z-0 select-none">
+            <source media="(min-width: 1024px)" srcSet="/banner1.png" />
+            <source media="(min-width: 768px)" srcSet="/tabview.png" />
+            <img
+              src="/mobileviewbanner.png"
+              alt="Australia Map Hero Background"
+              className="w-full h-full object-cover object-center pointer-events-none select-none"
+            />
+          </picture>
+
           {/* Map Locations Responsive Styles for All Breakpoints */}
           <style>
             {mapLocations.map((loc, i) => `
@@ -442,10 +450,15 @@ export default function Home() {
 
       {/* About Us Section */}
       <section className="relative w-full py-16 lg:py-24 overflow-hidden bg-white">
-        {/* Background image responsive: mobile vs tablet vs desktop */}
-        <div
-          className="absolute inset-0 w-full h-full bg-[length:100%_100%] sm:bg-cover bg-top lg:bg-center bg-no-repeat opacity-90 pointer-events-none bg-[url('/about/mobileview-bg.png')] md:bg-[url('/about/tabview.png')] lg:bg-[url('/about/bg.png')]"
-        />
+        {/* Background image responsive: mobile vs desktop */}
+        <picture className="absolute inset-0 w-full h-full pointer-events-none z-0 select-none opacity-90">
+          <source media="(min-width: 1024px)" srcSet="/about/bg.png" />
+          <img
+            src="/about/mobileview-bg.png"
+            alt="About Us Background"
+            className="w-full h-full object-cover object-top lg:object-center pointer-events-none select-none"
+          />
+        </picture>
 
         <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-4 xl:gap-8">

@@ -95,10 +95,15 @@ export default function FeatureCards({ features, resolveIcon }) {
         <section
             id="features-section"
             className="relative scroll-mt-32 overflow-hidden bg-[#FAF7F2] bg-cover bg-center py-10 sm:py-14"
-            style={{ backgroundImage: "url('/servicesbg.png')" }}
         >
+            <img
+                src="/services-home.png"
+                alt="Services Background"
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none opacity-20"
+            />
             {/* ivory wash keeps the background image subtle and the text readable */}
-            <div aria-hidden="true" className="absolute inset-0 bg-[#FAF7F2]/80" />
+            <div aria-hidden="true" className="absolute inset-0 bg-[#FAF7F2]/80 pointer-events-none" />
 
             <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* heading */}

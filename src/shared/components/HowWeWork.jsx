@@ -366,10 +366,11 @@ function WorkingProcessSection() {
   return (
     <section className="relative w-full pt-10 sm:pt-12 lg:pt-14 pb-6 sm:pb-8 lg:pb-8 overflow-hidden bg-white">
       {/* Full-width architectural workspace photograph background */}
-      <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none"
-        style={{ backgroundImage: `url(${IMAGES.processBg})` }}
+      <img
+        src={IMAGES.processBg}
+        alt="Process Background"
         aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
       />
       <div
         className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-transparent pointer-events-none"

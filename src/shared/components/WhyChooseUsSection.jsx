@@ -22,9 +22,11 @@ export default function WhyChooseUsSection() {
       {/* ========================================================================= */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Background Architectural Canvas */}
-        <div 
-          className="absolute inset-0 w-full h-full bg-cover bg-center opacity-85 transition-opacity duration-1000"
-          style={{ backgroundImage: `url('/whychoose/bg_architecture.jpg')` }}
+        <img 
+          src="/whychoose/bg_architecture.jpg"
+          alt="Architectural Background"
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-85 transition-opacity duration-1000 select-none pointer-events-none"
         />
 
         {/* Ambient Top & Side Vignette to ensure maximum text readability */}

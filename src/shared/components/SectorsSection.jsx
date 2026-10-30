@@ -156,8 +156,11 @@ export default function SectorsSection() {
       className="relative w-full pt-3 pb-6 sm:pt-4 sm:pb-8 lg:pt-6 lg:pb-10 overflow-hidden bg-white font-['Inter',sans-serif]"
     >
       {/* Background Graphic: Modern City on Left, Digital Network Globe on Right */}
-      <div
-        className="absolute inset-0 w-full h-full bg-[url('/sector.png')] bg-cover bg-center bg-no-repeat pointer-events-none z-0 opacity-85"
+      <img
+        src="/sector.png"
+        alt="Sectors Background"
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0 opacity-85 select-none"
       />
 
       {/* BACKGROUND TECHNOLOGY ORBIT DECORATION (Subtle lines & glowing nodes) */}
