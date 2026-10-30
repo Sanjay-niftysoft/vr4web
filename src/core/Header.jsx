@@ -428,7 +428,7 @@ export default function Header() {
               <img
                 src="/vr4web.png"
                 alt="VR4WEB Logo"
-                className="h-8 xs:h-9 sm:h-9 md:h-10 lg:h-9 xl:h-12 4xl:h-18 w-auto object-contain drop-shadow-sm"
+                className="h-10 xs:h-11 sm:h-12 md:h-13 lg:h-12 xl:h-14 2xl:h-16 4xl:h-22 w-auto object-contain drop-shadow-sm"
               />
             </motion.div>
           </Link>

@@ -144,7 +144,7 @@ export default function Footer() {
                 <img
                   src="/vr4web.png"
                   alt="VR4WEB Logo"
-                  className="w-[220px] lg:w-[18em] h-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
+                  className="w-[260px] sm:w-[290px] lg:w-[22em] 4xl:w-[26em] h-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
                 />
               </a>
             </div>
@@ -240,8 +240,8 @@ export default function Footer() {
               <li className="flex items-start gap-3 lg:gap-[0.8em] group">
                 <Phone className="w-5 h-5 lg:w-[1.4em] lg:h-[1.4em] shrink-0 text-[#111111] group-hover:text-[#FB0202] transition-colors mt-0.5" />
                 <div className="flex flex-col gap-1 lg:gap-[0.4em]">
-                  <a href="tel:+919444116316" className="text-[#111111] hover:text-[#FB0202] transition-colors whitespace-nowrap font-medium">+91 94441 16316 <span className="text-xs text-gray-500 font-normal">(India)</span></a>
-                  <a href="tel:+61489986622" className="text-[#111111] hover:text-[#FB0202] transition-colors whitespace-nowrap font-medium">+61 489 986 622 <span className="text-xs text-gray-500 font-normal">(Australia)</span></a>
+                  <a href="tel:+919444116316" className="text-[#111111] hover:text-[#FB0202] transition-colors whitespace-nowrap font-medium">+91 94441 16316 <span className="text-xs text-black font-normal">(India)</span></a>
+                  <a href="tel:+61489986622" className="text-[#111111] hover:text-[#FB0202] transition-colors whitespace-nowrap font-medium">+61 489 986 622 <span className="text-xs text-black font-normal">(Australia)</span></a>
                 </div>
               </li>
               <li className="flex items-start gap-3 lg:gap-[0.8em] group">
