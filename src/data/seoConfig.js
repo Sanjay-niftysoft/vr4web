@@ -24,6 +24,12 @@ export const ORGANIZATION_SCHEMA = {
   description:
     'VR4Web is an elite Australian digital and software engineering firm delivering custom software, website development, mobile apps, AEO, GEO, and AI solutions.',
   slogan: SITE_TAGLINE,
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'Niftysoft',
+    url: 'https://niftysoft.com',
+    sameAs: ['https://niftysoft.com', 'https://niftysoft.in'],
+  },
   email: 'info@vr4web.com',
   telephone: '+61 489 986 622',
   contactPoint: [

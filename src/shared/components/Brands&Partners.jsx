@@ -23,6 +23,8 @@ import {
   Shield,
   Link2,
   Target,
+  Globe,
+  Building2,
 } from 'lucide-react';
 import PageBanner from '../../components/common/PageBanner';
 import CtaSection from '../../components/CtaSection';
@@ -101,6 +103,21 @@ const BRANDS_DATA = [
     accent: '#0F3D2E',
     tint: 'rgba(15,61,46,0.10)',
     glow: 'rgba(15,61,46,0.35)',
+  },
+  {
+    id: '100dollarwebdesign',
+    name: '100 DOLLAR WEBSITE DESIGN',
+    domain: 'a100dollarwebsitedesign.com',
+    url: 'https://a100dollarwebsitedesign.com/',
+    desc: 'Flat-Rate $100 Starter Website Packages',
+    fullDesc:
+      'High-impact, budget-friendly starter websites engineered for startups, freelancers, and small businesses looking for an immediate online presence at just $100.',
+    tags: ['$100 Web Design', 'Mobile-Ready', 'Rapid 48h Launch'],
+    stats: 'Flat $100 Package',
+    logo: '/logo/100dollar.svg',
+    accent: '#E8890C',
+    tint: 'rgba(232,137,12,0.10)',
+    glow: 'rgba(232,137,12,0.35)',
   },
   {
     id: 'businessmailsolutions',
@@ -386,7 +403,7 @@ function BrandCard({ item, open, onToggle }) {
       onMouseLeave={handleLeave}
       style={{ '--accent': item.accent, '--glow': item.glow, '--tint': item.tint, '--mx': '50%', '--my': '50%', perspective: 900 }}
       className={`group relative rounded-[26px] w-full min-w-0 ${
-        open ? 'lg:flex-[1.7]' : 'lg:flex-1'
+        open ? 'lg:flex-[1.6]' : 'lg:flex-1'
       }`}
     >
       <motion.div
@@ -515,6 +532,208 @@ function BrandCard({ item, open, onToggle }) {
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION 00 — PARENT BRAND & PORTFOLIO SHOWCASE
+// ─────────────────────────────────────────────────────────────────────────────
+
+export function ParentBrandSection() {
+  return (
+    <section className="relative w-full bg-gradient-to-b from-[#F7FAF8] via-white to-white py-12 lg:py-16 border-b border-slate-100 overflow-hidden">
+      {/* Decorative ambient background glows */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#0F3D2E]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#E8890C]/10 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Heading */}
+        <div className="text-center max-w-[760px] mx-auto mb-10 sm:mb-12">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={stagger}
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="font-black tracking-tight leading-[1.05] text-4xl sm:text-5xl lg:text-[52px] text-[#0F3D2E]"
+            >
+              Our Parent Brand &amp; Portfolio
+            </motion.h2>
+            <motion.div
+              variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.7, ease: 'easeOut' } } }}
+              style={{ originX: 0.5 }}
+              className="h-1 w-24 bg-[#E8890C] rounded-full mt-4 mx-auto"
+            />
+            <motion.p
+              variants={fadeInUp}
+              className="font-bold text-[#E8890C] mt-4 text-lg sm:text-xl"
+            >
+              The Global Engineering Foundation Powering VR4Web
+            </motion.p>
+            <motion.p
+              variants={fadeInUp}
+              className="text-sm sm:text-base leading-relaxed max-w-[620px] mt-2 mx-auto text-black/85"
+            >
+              VR4Web is an integral part of the Niftysoft corporate family. Learn more about our parent company and explore our extensive global software portfolio.
+            </motion.p>
+          </motion.div>
+        </div>
+
+        {/* 2-Column Grid: Parent Brand Left | Portfolio Showcase Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+          
+          {/* Left Column: Parent Brand (https://niftysoft.com/) - 7 cols */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={fadeInUp}
+            className="lg:col-span-7 flex flex-col justify-between bg-white rounded-[26px] p-6 sm:p-8 lg:p-10 border border-[#E3EAE4] shadow-[0_16px_40px_-20px_rgba(15,61,46,0.15)] relative overflow-hidden"
+          >
+            {/* Top decorative accent line */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#0F3D2E] via-[#1A6B4E] to-[#E8890C]" />
+
+            <div>
+              {/* Header Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0F3D2E]/8 border border-[#0F3D2E]/15 mb-5 sm:mb-6">
+                <span className="w-2 h-2 rounded-full bg-[#0F3D2E] animate-pulse" />
+                <span className="text-xs font-black uppercase tracking-wider text-[#0F3D2E]">
+                  Parent Brand &amp; Global Headquarters
+                </span>
+              </div>
+
+              {/* Logo & Headline */}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-5">
+                <a
+                  href="https://niftysoft.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block flex-shrink-0 transition-transform duration-300 hover:scale-105"
+                  title="Visit Niftysoft Official Website"
+                >
+                  <img
+                    src="/brand/niftysoft.png"
+                    alt="Niftysoft - Parent Brand of VR4Web"
+                    className="h-12 sm:h-14 w-auto object-contain"
+                  />
+                </a>
+                <div className="hidden sm:block w-px h-10 bg-slate-200" />
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-[#0F3D2E] tracking-tight leading-tight">
+                    Niftysoft Global
+                  </h3>
+                  <p className="text-xs sm:text-sm font-bold text-[#E8890C]">
+                    Enterprise Software &amp; Digital Engineering Group
+                  </p>
+                </div>
+              </div>
+
+              {/* Description */}
+              <p className="text-black/85 text-sm sm:text-[15px] leading-relaxed mb-6 font-normal">
+                VR4Web proudly operates under the leadership of <strong>Niftysoft</strong>, our global parent technology enterprise. With deep software engineering roots, worldwide delivery infrastructure, and 15+ years of digital innovation, Niftysoft provides the technological foundation, governance, and cloud engineering powering our ecosystem.
+              </p>
+
+              {/* Key Trust Highlights */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6 sm:mb-8 pt-2 border-t border-slate-100">
+                <div className="p-3.5 rounded-xl bg-[#F8FAF9] border border-slate-200/70">
+                  <span className="block text-2xl font-black text-[#0F3D2E]">15+</span>
+                  <span className="text-xs text-slate-600 font-semibold">Years of Excellence</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-[#F8FAF9] border border-slate-200/70">
+                  <span className="block text-2xl font-black text-[#0F3D2E]">Global</span>
+                  <span className="text-xs text-slate-600 font-semibold">Delivery Network</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-[#F8FAF9] border border-slate-200/70 col-span-2 sm:col-span-1">
+                  <span className="block text-2xl font-black text-[#0F3D2E]">Flagship</span>
+                  <span className="text-xs text-slate-600 font-semibold">Parent Technology Group</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Parent Brand CTA Button */}
+            <div className="pt-2">
+              <motion.a
+                href="https://niftysoft.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#0F3D2E] hover:bg-[#134D3A] text-white font-bold text-sm shadow-[0_10px_24px_-8px_rgba(15,61,46,0.6)] transition-all duration-200"
+              >
+                <span>Visit Parent Brand (niftysoft.com)</span>
+                <ExternalLink className="w-4 h-4 flex-shrink-0" />
+              </motion.a>
+            </div>
+          </motion.div>
+
+          {/* Right Column: Portfolio Showcase (https://niftysoft.in) - 5 cols */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={fadeInUp}
+            className="lg:col-span-5 flex flex-col justify-between bg-gradient-to-br from-[#0F3D2E] via-[#103F30] to-[#0A2E22] rounded-[26px] p-6 sm:p-8 lg:p-9 text-white shadow-[0_20px_45px_-18px_rgba(15,61,46,0.35)] relative overflow-hidden"
+          >
+            {/* Ambient gold glow */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#E8890C]/20 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="relative z-10">
+              {/* Header Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 mb-5 sm:mb-6">
+                <span className="w-2 h-2 rounded-full bg-[#E8890C]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-white">
+                  Global Portfolio &amp; Case Studies
+                </span>
+              </div>
+
+              <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-snug mb-3">
+                Know About Our <span className="text-[#E8890C]">Portfolio</span>
+              </h3>
+
+              <p className="text-white/85 text-sm sm:text-[14.5px] leading-relaxed mb-6 font-normal">
+                Looking to explore our extensive work? Dive into the official Niftysoft portfolio to view live case studies, production web applications, SaaS platforms, and enterprise solutions built for clients across the globe.
+              </p>
+
+              {/* Portfolio Highlights */}
+              <ul className="space-y-3 mb-6 sm:mb-8">
+                {[
+                  '500+ Web, Mobile & Enterprise Projects',
+                  'Live Case Studies Across Diverse Sectors',
+                  'Proven ROI & Scalable Cloud Implementations',
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-3 text-xs sm:text-sm text-white/95 font-medium">
+                    <CheckCircle2 className="w-4 h-4 text-[#E8890C] flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Portfolio CTA Button */}
+            <div className="relative z-10 pt-2">
+              <motion.a
+                href="https://niftysoft.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#E8890C] hover:bg-[#d67d0a] text-white font-bold text-sm shadow-[0_12px_28px_-8px_rgba(232,137,12,0.8)] transition-all duration-200"
+              >
+                <span>Explore Portfolio (niftysoft.in)</span>
+                <ArrowUpRight className="w-4 h-4 flex-shrink-0" />
+              </motion.a>
+              <p className="text-center text-[11.5px] text-white/60 mt-2.5">
+                Visit niftysoft.in for live project demos &amp; client reviews
+              </p>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function OurBrandsSection() {
   const [openId, setOpenId] = useState(null);
 
@@ -534,7 +753,7 @@ export function OurBrandsSection() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
           variants={stagger}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-row gap-6 lg:gap-7 items-start"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-row gap-5 xl:gap-6 items-start"
         >
           {BRANDS_DATA.map((brand) => (
             <BrandCard
@@ -922,6 +1141,9 @@ export default function BrandsAndPartners() {
         bgImage="/brand-partner-banner.png"
         className="!mb-0 lg:!mb-0"
       />
+
+      {/* Parent Brand & Portfolio Section */}
+      <ParentBrandSection />
 
       <OurBrandsSection />
       
