@@ -763,7 +763,7 @@ function ProcessShowcase({ steps, active, setActive }) {
             onBlur={() => setPaused(false)}
         >
             {/* ── step list ── */}
-            <div className="lg:col-span-4 flex lg:flex-col gap-2.5 overflow-x-auto lg:overflow-visible px-1 py-2 -mx-1 snap-x">
+            <div className="lg:col-span-4 grid grid-cols-2 sm:grid-cols-4 lg:flex lg:flex-col gap-2 sm:gap-2.5 w-full">
                 {steps.map((st, idx) => {
                     const on = idx === active;
                     return (
@@ -772,15 +772,15 @@ function ProcessShowcase({ steps, active, setActive }) {
                             type="button"
                             onClick={() => setActive(idx)}
                             aria-current={on ? 'step' : undefined}
-                            className={`relative snap-start shrink-0 w-[230px] lg:w-full overflow-hidden text-left flex items-center gap-3.5 rounded-2xl border px-4 py-3.5 cursor-pointer transition-all duration-300 ${on
+                            className={`relative w-full overflow-hidden text-left flex items-center gap-2 sm:gap-3 lg:gap-3.5 rounded-xl sm:rounded-2xl border p-2.5 sm:p-3 lg:px-4 lg:py-3.5 cursor-pointer transition-all duration-300 ${on
                                 ? 'bg-[#0F3D2E] border-[#0F3D2E] text-white shadow-[0_16px_34px_rgba(15,61,46,0.28)] lg:translate-x-2'
                                 : 'bg-white border-[#EFE1C6] text-[#0F3D2E] hover:border-[#E8890C] hover:shadow-md'
                                 }`}
                         >
-                            <span className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black tracking-wide transition-colors ${on ? 'bg-[#E8890C] text-[#0F3D2E]' : 'bg-[#FFF3DC] text-[#E8890C]'}`}>
+                            <span className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 rounded-lg sm:rounded-xl flex items-center justify-center text-xs sm:text-sm font-black tracking-wide transition-colors ${on ? 'bg-[#E8890C] text-[#0F3D2E]' : 'bg-[#FFF3DC] text-[#E8890C]'}`}>
                                 {String(idx + 1).padStart(2, '0')}
                             </span>
-                            <span className="min-w-0 text-[13px] sm:text-sm font-bold leading-snug">{st.title}</span>
+                            <span className="min-w-0 text-xs sm:text-[13px] lg:text-sm font-bold leading-tight truncate sm:truncate-none sm:line-clamp-2">{st.title}</span>
                             {on && (
                                 <span
                                     aria-hidden="true"
@@ -983,20 +983,20 @@ function WhyShowcase({ why, visual, fallback2, visual2, alt }) {
 
             {/* ── Bottom Guarantees Bar ── */}
             {why.guarantees?.length > 0 && (
-                <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="relative z-10 max-w-5xl mx-auto px-3 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="rounded-2xl bg-[#0F3D2E]/80 border-2 border-white/30 backdrop-blur-md shadow-[0_10px_26px_rgba(0,0,0,0.4)] px-5 sm:px-8 py-3.5 sm:py-4 flex flex-wrap items-center justify-around gap-4 sm:gap-6"
+                        className="rounded-xl sm:rounded-2xl bg-[#0F3D2E]/80 border-2 border-white/30 backdrop-blur-md shadow-[0_10px_26px_rgba(0,0,0,0.4)] px-3 sm:px-8 py-3 sm:py-4 grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-around gap-2.5 sm:gap-6"
                     >
                         {why.guarantees.map((g, i) => (
-                            <div key={i} className="flex items-center gap-2.5">
+                            <div key={i} className="flex items-center gap-1.5 sm:gap-2.5">
                                 <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border border-[#E8890C] bg-[#E8890C]/15 flex items-center justify-center text-[#E8890C] flex-shrink-0">
                                     <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5" strokeWidth={3} />
                                 </span>
-                                <span className="text-xs sm:text-sm font-semibold text-white tracking-wide">{g}</span>
+                                <span className="text-[11px] sm:text-sm font-semibold text-white tracking-wide truncate">{g}</span>
                             </div>
                         ))}
                     </motion.div>
@@ -1329,17 +1329,17 @@ export default function ServicesDetails() {
                     <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-4 sm:py-5 flex flex-col items-center text-center">
                         <motion.div
                             initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-                            className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-bold text-[#0F3D2E] bg-white/85 px-4 py-1.5 rounded-full shadow-sm border border-white/70 mb-3 backdrop-blur-md"
+                            className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-[11px] min-[400px]:text-xs sm:text-sm font-bold text-[#0F3D2E] bg-white/85 px-3 sm:px-4 py-1.5 rounded-xl sm:rounded-full shadow-sm border border-white/70 mb-3 backdrop-blur-md max-w-full text-center"
                         >
-                            <Link to="/" className="flex items-center gap-1 hover:text-[#E8890C] transition-colors"><Home className="w-3.5 h-3.5" /><span>Home</span></Link>
-                            <ChevronRight className="w-3.5 h-3.5 text-[#0F3D2E]/50" />
-                            <Link to="/services" className="hover:text-[#E8890C] transition-colors">Services</Link>
-                            <ChevronRight className="w-3.5 h-3.5 text-[#0F3D2E]/50" />
+                            <Link to="/" className="flex items-center gap-1 hover:text-[#E8890C] transition-colors"><Home className="w-3.5 h-3.5 flex-shrink-0" /><span>Home</span></Link>
+                            <ChevronRight className="w-3.5 h-3.5 text-[#0F3D2E]/50 flex-shrink-0" />
+                            <Link to="/services" className="hover:text-[#E8890C] transition-colors flex-shrink-0">Services</Link>
+                            <ChevronRight className="w-3.5 h-3.5 text-[#0F3D2E]/50 flex-shrink-0" />
                             <Link to={`/services/${activeCatSlug}`} className={`hover:text-[#E8890C] transition-colors ${!isSubService ? 'font-extrabold text-[#0F3D2E]' : ''}`}>{categoryName}</Link>
                             {isSubService && (
                                 <>
-                                    <ChevronRight className="w-3.5 h-3.5 text-[#0F3D2E]/50" />
-                                    <span className="font-extrabold truncate max-w-[200px] sm:max-w-none text-[#0F3D2E]">{subServiceName}</span>
+                                    <ChevronRight className="w-3.5 h-3.5 text-[#0F3D2E]/50 flex-shrink-0" />
+                                    <span className="font-extrabold text-[#0F3D2E]">{subServiceName}</span>
                                 </>
                             )}
                         </motion.div>
