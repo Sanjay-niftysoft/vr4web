@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import { ArrowRight, Maximize2 } from 'lucide-react';
 
 export const GALLERY_ITEMS = [
   {
@@ -276,9 +277,38 @@ function GalleryCard3D({ item, index, onOpen, className = '' }) {
   );
 }
 
+function ArrowButton({ dir, onClick }) {
+  return (
+    <button
+      type="button"
+      aria-label={dir === 'prev' ? 'Previous image' : 'Next image'}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      className={`absolute top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#0F3D2E] shadow-lg transition hover:scale-110 hover:bg-white sm:h-12 sm:w-12 min-[1920px]:h-16 min-[1920px]:w-16 cursor-pointer ${
+        dir === 'prev' ? 'left-2 sm:left-5' : 'right-2 sm:right-5'
+      }`}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        className="h-5 w-5 sm:h-6 sm:w-6 min-[1920px]:h-8 min-[1920px]:w-8"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {dir === 'prev' ? <polyline points="15 18 9 12 15 6" /> : <polyline points="9 18 15 12 9 6" />}
+      </svg>
+    </button>
+  );
+}
+
 export default function GallerySection({ onExploreClick }) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [mobileSlideIndex, setMobileSlideIndex] = useState(0);
+  const touchX = useRef(null);
 
   const mobileGalleryItems = GALLERY_ITEMS;
 
@@ -312,6 +342,15 @@ export default function GallerySection({ onExploreClick }) {
     return () => {
       document.body.style.overflow = '';
     };
+  }, [lightboxIndex]);
+
+  // Warm the cache for neighbouring photos so arrows feel instant
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const total = GALLERY_ITEMS.length;
+    [GALLERY_ITEMS[(lightboxIndex + 1) % total], GALLERY_ITEMS[(lightboxIndex - 1 + total) % total]].forEach((it) => {
+      if (it && it.img) new Image().src = it.img;
+    });
   }, [lightboxIndex]);
 
   const activeLightboxItem = lightboxIndex !== null ? GALLERY_ITEMS[lightboxIndex] : null;
@@ -527,97 +566,102 @@ export default function GallerySection({ onExploreClick }) {
       </div>
 
       {/* ============================================================== */}
-      {/* FULL-SCREEN LIGHTBOX                                            */}
+      {/* FULL-SCREEN LIGHTBOX (Matching Gallery Page Lightroom Effect) */}
       {/* ============================================================== */}
-      <AnimatePresence>
-        {activeLightboxItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-3 xs:p-4 sm:p-6"
-            onClick={() => setLightboxIndex(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.94, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.94, opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative max-w-5xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {activeLightboxItem && (
+              <motion.div
+                role="dialog"
+                aria-modal="true"
+                aria-label={activeLightboxItem.title}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
                 onClick={() => setLightboxIndex(null)}
-                aria-label="Close modal"
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer shadow-lg"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setLightboxIndex((prev) => (prev - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length);
+                onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+                onTouchEnd={(e) => {
+                  if (touchX.current === null) return;
+                  const dx = e.changedTouches[0].clientX - touchX.current;
+                  touchX.current = null;
+                  if (Math.abs(dx) > 50) {
+                    if (dx > 0) {
+                      setLightboxIndex((prev) => (prev - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length);
+                    } else {
+                      setLightboxIndex((prev) => (prev + 1) % GALLERY_ITEMS.length);
+                    }
+                  }
                 }}
-                aria-label="Previous image"
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/80 hover:bg-white text-gray-900 flex items-center justify-center transition-all shadow-xl cursor-pointer hover:scale-105"
+                className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/90 px-3 py-14 backdrop-blur-sm sm:px-20"
               >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
+                {/* Counter */}
+                <div className="absolute left-4 top-4 z-20 rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white sm:left-6 sm:top-5 sm:text-sm">
+                  {lightboxIndex + 1} / {GALLERY_ITEMS.length}
+                </div>
 
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setLightboxIndex((prev) => (prev + 1) % GALLERY_ITEMS.length);
-                }}
-                aria-label="Next image"
-                className="absolute right-4 md:right-[340px] top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white/80 hover:bg-white text-gray-900 flex items-center justify-center transition-all shadow-xl cursor-pointer hover:scale-105"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
+                {/* Close */}
+                <button
+                  type="button"
+                  aria-label="Close"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxIndex(null);
+                  }}
+                  className="absolute right-3 top-3 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#0F3D2E] shadow-lg transition hover:scale-110 hover:bg-white sm:right-5 sm:top-4 sm:h-12 sm:w-12 cursor-pointer"
+                >
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                  </svg>
+                </button>
 
-              {/* Image canvas (object-contain: always the full image) */}
-              <div className="flex-1 bg-slate-950 flex items-center justify-center overflow-hidden min-h-[300px] md:min-h-[550px] relative">
-                <img
-                  src={activeLightboxItem.img}
-                  alt={activeLightboxItem.title}
-                  className="max-h-[82vh] w-auto max-w-full object-contain"
+                {/* Prev / Next arrows */}
+                <ArrowButton
+                  dir="prev"
+                  onClick={() => setLightboxIndex((prev) => (prev - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length)}
                 />
-              </div>
+                <ArrowButton
+                  dir="next"
+                  onClick={() => setLightboxIndex((prev) => (prev + 1) % GALLERY_ITEMS.length)}
+                />
 
-              {/* Details */}
-              <div className="w-full md:w-[320px] lg:w-[360px] p-6 sm:p-8 flex flex-col justify-between bg-white border-t md:border-t-0 md:border-l border-gray-100 overflow-y-auto">
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="px-3 py-1 rounded-full bg-[#E8890C]/10 text-[#E8890C] text-xs font-bold tracking-wider uppercase">
-                      FRAME {activeLightboxItem.number} / {String(GALLERY_ITEMS.length).padStart(2, '0')}
-                    </span>
-                    <span className="text-xs text-gray-400 font-medium">{activeLightboxItem.location}</span>
-                  </div>
+                {/* Big image, shown in full */}
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeLightboxItem.id || lightboxIndex}
+                    src={activeLightboxItem.img}
+                    alt={activeLightboxItem.title}
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    onClick={(e) => e.stopPropagation()}
+                    draggable={false}
+                    className="max-h-[75vh] w-auto max-w-full rounded-2xl bg-gray-900 object-contain shadow-2xl min-[1920px]:max-h-[80vh]"
+                  />
+                </AnimatePresence>
 
-                  <h3 className="text-2xl font-bold text-[#111111] mb-2 tracking-tight">
+                {/* Caption */}
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="mt-4 max-w-[90vw] text-center text-white sm:max-w-[700px] min-[1920px]:max-w-[1000px]"
+                >
+                  <h3 className="text-base font-extrabold sm:text-xl min-[1920px]:text-3xl text-white">
                     {activeLightboxItem.title}
                   </h3>
-
-                  <p className="text-xs font-semibold text-[#0F3D2E] uppercase tracking-wider mb-4">
-                    {activeLightboxItem.category}
-                  </p>
-
-                  <p className="text-sm text-gray-600 leading-relaxed font-normal mb-6">
-                    {activeLightboxItem.desc}
-                  </p>
+                  {activeLightboxItem.desc && (
+                    <p className="mt-1 text-xs text-white/80 sm:text-sm min-[1920px]:text-xl">
+                      {activeLightboxItem.desc}
+                    </p>
+                  )}
                 </div>
-
-                <div className="pt-6 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
-                  <span>VR4WEB Immersive Collection</span>
-                  <span>Full Color 3D</span>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </section>
   );
 }
