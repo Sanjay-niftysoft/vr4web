@@ -175,61 +175,41 @@ const SectionTag = ({
   </div>
 );
 
-const AnimatedText = ({ text, delay = 0, className = "" }) => {
-  const words = text.split(" ");
+const AnimatedText = ({ text, delay = 0, className = "", isMobile = false }) => {
+  if (isMobile) {
+    return <span className={className}>{text}</span>;
+  }
   return (
-    <span className={className}>
-      {words.map((word, index) => (
-        <motion.span
-          key={index}
-          initial={{ opacity: 0, y: 20, filter: 'blur(5px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.8, delay: delay + index * 0.12, ease: "easeOut" }}
-          className="inline-block mr-[0.25em]"
-        >
-          {word}
-        </motion.span>
-      ))}
-    </span>
+    <motion.span
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, delay, ease: "easeOut" }}
+      className={`inline-block ${className}`}
+    >
+      {text}
+    </motion.span>
   );
 };
 
 const AnimatedCharacters = ({ text, delay = 0, className = "" }) => {
   return (
     <span className={className}>
-      {text.split("").map((char, index) => (
-        <motion.span
-          key={index}
-          initial={{ opacity: 0, filter: 'blur(5px)' }}
-          whileInView={{ opacity: 1, filter: 'blur(0px)' }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.2, delay: delay + index * 0.01, ease: "easeOut" }}
-          className={char === " " ? "inline-block w-[0.25em]" : "inline-block"}
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
+      {text}
     </span>
   );
 };
 
 const AnimatedTextScroll = ({ text, delay = 0, className = "" }) => {
-  const words = text.split(" ");
   return (
-    <span className={className}>
-      {words.map((word, index) => (
-        <motion.span
-          key={index}
-          initial={{ opacity: 0, y: 15, filter: 'blur(4px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.3, delay: delay + index * 0.015, ease: "easeOut" }}
-          className="inline-block mr-[0.25em]"
-        >
-          {word}
-        </motion.span>
-      ))}
-    </span>
+    <motion.span
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.4, delay, ease: "easeOut" }}
+      className={`inline-block ${className}`}
+    >
+      {text}
+    </motion.span>
   );
 };
 
@@ -243,8 +223,22 @@ const ROTATING_WORDS = [
 ];
 
 export default function Home() {
-  const [step, setStep] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 1024;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile, { passive: true });
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     let intervalId;
@@ -253,20 +247,13 @@ export default function Home() {
 
       intervalId = setInterval(() => {
         setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
-      }, 3200);
-    }, 4500);
+      }, 3000);
+    }, 2500);
 
     return () => {
       clearTimeout(timeoutId);
       if (intervalId) clearInterval(intervalId);
     };
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStep((prev) => (prev >= 6 ? 0 : prev + 1));
-    }, 800);
-    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -327,12 +314,9 @@ export default function Home() {
             {mapLocations.map((loc, index) => (
               <motion.div
                 key={loc.name}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{
-                  opacity: step > index ? 1 : 0,
-                  scale: step > index ? 1 : 0.5
-                }}
-                transition={{ duration: 0.4, type: "spring", bounce: 0.4 }}
+                initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.35, delay: isMobile ? 0 : 0.08 + index * 0.06, ease: "easeOut" }}
                 className={`pin-${index} absolute transform -translate-x-1/2 -translate-y-1/2 flex items-center md:gap-2`}
               >
                 <div className="relative flex items-center justify-center">
@@ -383,7 +367,8 @@ export default function Home() {
       >
         <AnimatedText
           text="Digital Solutions That Increase AI Search Visibility · AEO · GEO"
-          delay={0.2}
+          delay={0.05}
+          isMobile={isMobile}
         />
       </p>
     </div>
@@ -396,7 +381,8 @@ export default function Home() {
     {/* 2) "Powering Australian Businesses with": WHITE */}
     <AnimatedText
       text="Powering Australian Businesses with"
-      delay={0.6}
+      delay={0.12}
+      isMobile={isMobile}
       className="!text-white whitespace-normal lg:whitespace-nowrap leading-tight md:leading-[1.1]"
     />
 
@@ -404,43 +390,66 @@ export default function Home() {
     <div
       className="mt-1.5 xs:mt-2 sm:mt-2.5 md:mt-3 4xl:mt-5 flex flex-wrap items-center justify-center gap-x-[0.25em] text-[clamp(1.4rem,3.3vw,3.75rem)] font-extrabold leading-[1.2]"
     >
-      <motion.span
-        initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        transition={{ duration: 1.0, delay: 1.1, ease: [0.25, 0.1, 0.25, 1.0] }}
-        className="!text-white inline-block"
-      >
-        Smarter
-      </motion.span>
-
-      <motion.span
-        initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        transition={{ duration: 1.0, delay: 1.8, ease: [0.25, 0.1, 0.25, 1.0] }}
-        className="inline-flex items-center justify-center relative overflow-hidden py-1 px-1"
-      >
-        <AnimatePresence mode="wait" initial={false}>
+      {isMobile ? (
+        <>
+          <span className="!text-white inline-block">Smarter</span>
+          <span className="inline-flex items-center justify-center relative overflow-hidden py-1 px-1">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={wordIndex}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="!text-[#FFC400] inline-block whitespace-normal sm:whitespace-nowrap"
+              >
+                {ROTATING_WORDS[wordIndex]}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+          <span className="!text-white inline-block">Solutions</span>
+        </>
+      ) : (
+        <>
           <motion.span
-            key={wordIndex}
-            initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -24, filter: 'blur(8px)' }}
-            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1.0] }}
-            className="!text-[#FFC400] inline-block whitespace-normal sm:whitespace-nowrap"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.18, ease: "easeOut" }}
+            className="!text-white inline-block"
           >
-            {ROTATING_WORDS[wordIndex]}
+            Smarter
           </motion.span>
-        </AnimatePresence>
-      </motion.span>
 
-      <motion.span
-        initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        transition={{ duration: 1.0, delay: 2.5, ease: [0.25, 0.1, 0.25, 1.0] }}
-        className="!text-white inline-block"
-      >
-        Solutions
-      </motion.span>
+          <motion.span
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.24, ease: "easeOut" }}
+            className="inline-flex items-center justify-center relative overflow-hidden py-1 px-1"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={wordIndex}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="!text-[#FFC400] inline-block whitespace-normal sm:whitespace-nowrap"
+              >
+                {ROTATING_WORDS[wordIndex]}
+              </motion.span>
+            </AnimatePresence>
+          </motion.span>
+
+          <motion.span
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.30, ease: "easeOut" }}
+            className="!text-white inline-block"
+          >
+            Solutions
+          </motion.span>
+        </>
+      )}
     </div>
   </h1>
 </div>
@@ -495,10 +504,10 @@ export default function Home() {
             {/* Center Kangaroo Image */}
             <div className="w-full lg:w-[36%] xl:w-[40%] flex justify-center relative z-10 mt-8 lg:mt-0">
               <motion.img
-                initial={{ opacity: 0, filter: 'blur(8px)' }}
-                whileInView={{ opacity: 1, filter: 'blur(0px)' }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, delay: 0.1, ease: "easeInOut" }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 src="/about/animal.png"
                 alt="Australian Technology"
                 className="w-full max-w-[400px] md:max-w-[550px] lg:max-w-[650px] xl:max-w-[750px] h-auto object-contain transform transition-all duration-500 md:scale-[1.15] lg:scale-[1.15] xl:scale-[1.25] hover:scale-[1.05] md:hover:scale-[1.20] lg:hover:scale-[1.22] xl:hover:scale-[1.32] origin-bottom lg:origin-center drop-shadow-2xl hover:drop-shadow-[0_25px_40px_rgba(232,137,12,0.4)] hover:-translate-y-2 relative z-20 cursor-pointer"

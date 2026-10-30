@@ -377,26 +377,15 @@ export default function Header() {
     return item.subItems.some(sub => location.pathname === sub.path);
   };
 
-  // Staggered slow visible reveal animation variants
+  // Fast crisp visible navigation variants
   const navContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.2
-      }
-    }
+    hidden: { opacity: 1 },
+    visible: { opacity: 1 }
   };
 
   const navItemVariants = {
-    hidden: { opacity: 0, y: -16, filter: 'blur(6px)' },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] }
-    }
+    hidden: { opacity: 1, y: 0 },
+    visible: { opacity: 1, y: 0 }
   };
 
   // Currently selected category in the mega menu
@@ -404,10 +393,7 @@ export default function Header() {
 
   return (
     <>
-      <motion.header
-        initial={{ y: -90, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled
           ? 'bg-white/95 backdrop-blur-md shadow-[0_4px_24px_rgba(15,61,46,0.06)] border-b border-[#111111]/10/80 h-[64px] sm:h-[72px] lg:h-[78px] xl:h-[84px] 4xl:h-[100px]'
           : 'bg-white/90 backdrop-blur-sm border-b border-[#111111]/10/50 h-[68px] sm:h-[76px] lg:h-[82px] xl:h-[88px] 4xl:h-[108px]'
@@ -425,20 +411,13 @@ export default function Header() {
             className="flex items-center gap-2 flex-shrink-0 group focus:outline-none"
             title="VR4WEB - Home"
           >
-            <motion.div
-              initial={{ opacity: 0, x: -20, filter: 'blur(5px)' }}
-              animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-              transition={{ duration: 0.9, ease: "easeOut" }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center"
-            >
+            <div className="flex items-center hover:scale-105 active:scale-95 transition-transform duration-200">
               <img
                 src="/vr4web.png"
                 alt="VR4WEB Logo"
                 className="h-10 xs:h-11 sm:h-12 md:h-13 lg:h-12 xl:h-14 2xl:h-16 4xl:h-22 w-auto object-contain drop-shadow-sm"
               />
-            </motion.div>
+            </div>
           </Link>
 
           {/* Desktop Navigation Bar (1024px, 1440px, 2560px) */}
@@ -775,12 +754,7 @@ export default function Header() {
           </motion.nav>
 
           {/* CTA Button: Solid Gold (#E8890C) - Desktop Only (hidden on mobile and tablet <= 720px/1024px) */}
-          <motion.div
-            initial={{ opacity: 0, x: 20, filter: 'blur(5px)' }}
-            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-            transition={{ duration: 0.9, delay: 0.4, ease: "easeOut" }}
-            className="hidden lg:flex items-center flex-shrink-0"
-          >
+          <div className="hidden lg:flex items-center flex-shrink-0">
             <Link
               to="/enquiry"
               onClick={() => setActiveDropdown(null)}
@@ -790,7 +764,7 @@ export default function Header() {
                 Get a Quote
               </span>
             </Link>
-          </motion.div>
+          </div>
 
           {/* Mobile and Tablet Hamburger Toggle (320px to 720px - Quote button removed as requested) */}
           <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
@@ -1046,7 +1020,7 @@ export default function Header() {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.header>
+      </header>
 
       {/* Interactive Australian Quote Request Modal (Spring Popup Animation) */}
       <AnimatePresence>
