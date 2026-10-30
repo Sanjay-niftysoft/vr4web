@@ -142,7 +142,7 @@ export default function Footer() {
                 aria-label="VR4WEB - Scroll to hero section"
               >
                 <img
-                  src="/vrlogo.png"
+                  src="/vr4web.png"
                   alt="VR4WEB Logo"
                   className="w-[220px] lg:w-[18em] h-auto object-contain transition-opacity duration-200 group-hover:opacity-90"
                 />

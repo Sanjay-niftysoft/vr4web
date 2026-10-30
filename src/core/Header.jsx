@@ -426,7 +426,7 @@ export default function Header() {
               className="flex items-center"
             >
               <img
-                src="/vrlogo.png"
+                src="/vr4web.png"
                 alt="VR4WEB Logo"
                 className="h-8 xs:h-9 sm:h-9 md:h-10 lg:h-9 xl:h-12 4xl:h-18 w-auto object-contain drop-shadow-sm"
               />
