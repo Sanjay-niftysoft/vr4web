@@ -523,13 +523,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="flex items-start gap-5 pb-6 border-b border-[#0F3D2E]/15 group"
+                className="flex items-start gap-3.5 sm:gap-5 pb-5 sm:pb-6 border-b border-[#0F3D2E]/15 group"
               >
                 <div className="flex-shrink-0 w-12 h-12 4xl:w-16 4xl:h-16 flex items-center justify-center mt-0.5 4xl:mt-2">
                   <Lightbulb className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#E8890C] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
                 </div>
-                <div>
-                  <h3 className="text-[#0F3D2E] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">01 — Carry Your Idea</h3>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-[#0F3D2E] text-[15px] sm:text-[17px] xl:text-[19px] 4xl:text-[26px] font-bold mb-1.5 4xl:mb-3 tracking-tight break-words">01 — Carry Your Idea</h3>
                   <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] 4xl:text-[20px] font-normal">
                     You bring the vision. We turn your idea into a powerful digital solution.
                   </p>
@@ -542,13 +542,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="flex items-start gap-5 pb-6 border-b border-[#0F3D2E]/15 group"
+                className="flex items-start gap-3.5 sm:gap-5 pb-5 sm:pb-6 border-b border-[#0F3D2E]/15 group"
               >
                 <div className="flex-shrink-0 w-12 h-12 4xl:w-16 4xl:h-16 flex items-center justify-center mt-0.5 4xl:mt-2">
                   <Rocket className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#E8890C] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
                 </div>
-                <div>
-                  <h3 className="text-[#0F3D2E] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">02 — Boost AI Search Visibility</h3>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-[#0F3D2E] text-[15px] sm:text-[17px] xl:text-[19px] 4xl:text-[26px] font-bold mb-1.5 4xl:mb-3 tracking-tight break-words">02 — Boost AI Search Visibility</h3>
                   <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] 4xl:text-[20px] font-normal">
                     Targeted digital solutions that increase AI search visibility, integrating AEO and GEO to dominate conversational search engines.
                   </p>
@@ -561,13 +561,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: 0.3 }}
-                className="flex items-start gap-5 group"
+                className="flex items-start gap-3.5 sm:gap-5 group"
               >
                 <div className="flex-shrink-0 w-12 h-12 4xl:w-16 4xl:h-16 flex items-center justify-center mt-0.5 4xl:mt-2">
                   <RefreshCw className="w-10 h-10 4xl:w-12 4xl:h-12 text-[#E8890C] transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
                 </div>
-                <div>
-                  <h3 className="text-[#0F3D2E] text-[17px] xl:text-[19px] 4xl:text-[26px] whitespace-nowrap xl:whitespace-normal font-bold mb-1.5 4xl:mb-3 tracking-tight">03 — Keep Moving Forward</h3>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-[#0F3D2E] text-[15px] sm:text-[17px] xl:text-[19px] 4xl:text-[26px] font-bold mb-1.5 4xl:mb-3 tracking-tight break-words">03 — Keep Moving Forward</h3>
                   <p className="text-[#111111] leading-relaxed text-[14px] xl:text-[15px] 4xl:text-[20px] font-normal">
                     We build, support, and evolve your technology as your business grows.
                   </p>

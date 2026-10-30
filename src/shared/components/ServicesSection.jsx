@@ -305,92 +305,95 @@ export default function ServicesSection() {
               onMouseLeave={() => setPaused(false)}
               onFocus={() => setPaused(true)}
               onBlur={() => setPaused(false)}
-              className="group relative w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 bg-[#091512] shadow-[0_24px_50px_rgba(0,0,0,0.5)]" style={{ aspectRatio: "903/590", minHeight: "260px" }}
+              className="group relative w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10 bg-[#091512] shadow-[0_24px_50px_rgba(0,0,0,0.5)] flex flex-col"
             >
-              <AnimatePresence>
-                <motion.img
-                  key={`${service.id}-${currentSubIdx}`}
-                  src={sub.img}
-                  alt={sub.title}
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800";
-                  }}
-                  initial={{ opacity: 0, scale: 1.04 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.7, ease: "easeInOut" }}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              </AnimatePresence>
+              {/* TOP: Unobstructed Image Frame */}
+              <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[903/430] overflow-hidden bg-black/40">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={`${service.id}-${currentSubIdx}`}
+                    src={sub.img}
+                    alt={sub.title}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800";
+                    }}
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.4, ease: "easeInOut" }}
+                    className="h-full w-full object-cover object-center"
+                  />
+                </AnimatePresence>
 
-              {/* Category badge */}
-              <div className="absolute left-3.5 top-3.5 z-20 sm:left-6 sm:top-6">
-                <button
-                  type="button"
-                  onClick={() => selectService((serviceIdx + 1) % servicesData.length)}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 sm:px-4 sm:py-2 text-[9px] sm:text-xs font-extrabold uppercase tracking-[0.18em] text-[#0F3D2E] shadow-md backdrop-blur-md transition hover:bg-white active:scale-95"
-                  title="Switch category"
-                >
-                  <span>{service.title}</span>
-                  <ChevronRight className="h-3 w-3 text-[#E8890C] sm:hidden" />
-                </button>
+                {/* Category badge */}
+                <div className="absolute left-3.5 top-3.5 z-20 sm:left-5 sm:top-5">
+                  <button
+                    type="button"
+                    onClick={() => selectService((serviceIdx + 1) % servicesData.length)}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 sm:px-4 sm:py-1.5 text-[9px] sm:text-xs font-extrabold uppercase tracking-[0.18em] text-[#0F3D2E] shadow-md backdrop-blur-md transition hover:bg-white active:scale-95 cursor-pointer"
+                    title="Switch category"
+                  >
+                    <span>{service.title}</span>
+                    <ChevronRight className="h-3 w-3 text-[#E8890C] sm:hidden" />
+                  </button>
+                </div>
+
+                {/* Prev / next */}
+                {total > 1 && (
+                  <div className="absolute right-3.5 top-3.5 z-20 flex gap-1.5 sm:gap-2 sm:right-5 sm:top-5">
+                    {[["Previous", prev, ChevronLeft], ["Next", next, ChevronRight]].map(([label, fn, Ico]) => (
+                      <button
+                        key={label}
+                        onClick={fn}
+                        aria-label={`${label} service`}
+                        className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-white/30 bg-black/40 text-white backdrop-blur-md transition hover:border-[#E8890C] hover:bg-[#E8890C] hover:text-[#0F3D2E] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E8890C] cursor-pointer"
+                      >
+                        <Ico className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              {/* Prev / next */}
-              {total > 1 && (
-                <div className="absolute right-3.5 top-3.5 z-20 flex gap-1.5 sm:gap-2 sm:right-6 sm:top-6">
-                  {[["Previous", prev, ChevronLeft], ["Next", next, ChevronRight]].map(([label, fn, Ico]) => (
-                    <button
-                      key={label}
-                      onClick={fn}
-                      aria-label={`${label} service`}
-                      className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-md transition hover:border-[#E8890C] hover:bg-[#E8890C] hover:text-[#0F3D2E] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E8890C]"
-                    >
-                      <Ico className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Bottom content */}
-              <div className="absolute inset-x-3.5 bottom-3.5 z-20 sm:inset-x-6 sm:bottom-6">
+              {/* BOTTOM: All text & buttons placed UNDER the photo */}
+              <div className="relative z-20 w-full p-4 sm:p-5 lg:p-6 bg-gradient-to-b from-[#091512] to-[#0d1e1a] border-t border-white/10 flex flex-col justify-between gap-3">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={`${service.id}-${currentSubIdx}-txt`}
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: reduceMotion ? 0 : 0.3 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.25 }}
                   >
-                    <div className="flex max-w-full items-center gap-2 sm:gap-3 self-start rounded-full bg-white/95 backdrop-blur-md p-1 sm:p-1.5 pr-3.5 sm:pr-5 shadow-lg sm:inline-flex">
-                      <span className="flex h-7 w-7 sm:h-9 sm:w-9 md:h-11 md:w-11 shrink-0 items-center justify-center rounded-full bg-[#f4f1ea]">
-                        <ArrowUpRight className="h-4 w-4 sm:h-5 sm:w-5 text-[#E8890C]" strokeWidth={2.5} />
+                    <div className="flex max-w-full items-center gap-2 sm:gap-3 self-start rounded-full bg-white/95 backdrop-blur-md p-1 sm:p-1.5 pr-3.5 sm:pr-5 shadow-md inline-flex">
+                      <span className="flex h-6 w-6 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-[#f4f1ea]">
+                        <ArrowUpRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#E8890C]" strokeWidth={2.5} />
                       </span>
-                      <h3 className="truncate text-xs sm:text-sm md:text-lg font-extrabold tracking-tight text-[#0F3D2E]">{sub.title}</h3>
+                      <h3 className="truncate text-xs sm:text-sm md:text-base font-extrabold tracking-tight text-[#0F3D2E]">{sub.title}</h3>
                     </div>
-                    <p className="mt-1.5 sm:mt-2 max-w-md text-xs sm:text-[13px] md:text-sm line-clamp-2 leading-snug text-white font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)]">{sub.desc}</p>
+                    <p className="mt-2 text-xs sm:text-[13px] md:text-sm line-clamp-2 leading-relaxed text-white/90 font-medium">{sub.desc}</p>
                   </motion.div>
                 </AnimatePresence>
 
-                <div className="mt-2.5 sm:mt-3 flex items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
                   <Link
                     to={service.link}
-                    className="inline-flex items-center gap-1.5 sm:gap-2 rounded-lg sm:rounded-[10px] bg-[#E8890C] px-3 py-1.5 sm:px-4 sm:py-2 text-[11px] sm:text-[13px] font-bold text-[#0F3D2E] shadow-md transition hover:bg-[#E8890C]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white whitespace-nowrap"
+                    className="inline-flex items-center gap-1.5 sm:gap-2 rounded-lg sm:rounded-[10px] bg-[#E8890C] px-3.5 py-1.5 sm:px-4 sm:py-2 text-[11px] sm:text-[13px] font-bold text-[#0F3D2E] shadow-md transition hover:bg-[#E8890C]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white whitespace-nowrap"
                   >
                     <span>{service.cta}</span>
                     <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </Link>
 
                   {/* Progress dots – click to jump */}
-                  <div className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-white/25 bg-black/40 px-2 sm:px-3 py-1 sm:py-1.5 backdrop-blur-md flex-shrink-0">
+                  <div className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-white/20 bg-black/40 px-2.5 sm:px-3 py-1 sm:py-1.5 backdrop-blur-md flex-shrink-0">
                     <div className="flex gap-1">
                       {service.subServices.map((item, i) => (
                         <button
                           key={item.title}
                           onClick={() => setSubIdx(i)}
                           aria-label={`Show ${item.title}`}
-                          className="relative h-1.5 w-2.5 sm:w-3 overflow-hidden rounded-full bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:w-4"
+                          className="relative h-1.5 w-2.5 sm:w-3 overflow-hidden rounded-full bg-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:w-4 cursor-pointer"
                         >
                           {i < currentSubIdx && <span className="absolute inset-0 bg-[#E8890C]/50" />}
                           {i === currentSubIdx &&
