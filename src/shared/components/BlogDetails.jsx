@@ -53,7 +53,7 @@ export default function BlogDetails() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
     setOpenSummary(true);
     setOpenHistory(false);
     setOpenPasses(true);

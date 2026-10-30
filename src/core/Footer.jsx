@@ -46,63 +46,17 @@ export default function Footer() {
   const scrollToHeroTop = (e) => {
     if (e) e.preventDefault();
 
-    const doSlowScroll = () => {
+    const doSnappyScroll = () => {
       const heroEl = document.getElementById('hero');
       const targetY = heroEl ? heroEl.getBoundingClientRect().top + window.pageYOffset : 0;
-      const startPosition = window.pageYOffset || document.documentElement.scrollTop;
-      const distance = Math.abs(startPosition - targetY);
-
-      if (distance < 5) return;
-
-      // Slow, luxurious smooth scroll duration (~1500ms) for an elegant down-to-top glide
-      const duration = 1500;
-      let startTime = null;
-      let animId = null;
-
-      // Smooth easeInOutCubic for soft start, majestic motion, gentle landing
-      const easeInOutCubic = (t) => {
-        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      };
-
-      const cleanup = () => {
-        window.removeEventListener('wheel', interrupt);
-        window.removeEventListener('touchmove', interrupt);
-      };
-
-      const interrupt = () => {
-        if (animId) cancelAnimationFrame(animId);
-        cleanup();
-      };
-
-      window.addEventListener('wheel', interrupt, { passive: true });
-      window.addEventListener('touchmove', interrupt, { passive: true });
-
-      const step = (currentTime) => {
-        if (!startTime) startTime = currentTime;
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const ease = easeInOutCubic(progress);
-
-        window.scrollTo(0, Math.round(startPosition + (targetY - startPosition) * ease));
-
-        if (progress < 1) {
-          animId = requestAnimationFrame(step);
-        } else {
-          cleanup();
-          window.scrollTo(0, targetY);
-        }
-      };
-
-      animId = requestAnimationFrame(step);
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
     };
 
     if (location.pathname !== '/') {
       navigate('/');
-      setTimeout(() => {
-        doSlowScroll();
-      }, 150);
+      setTimeout(doSnappyScroll, 50);
     } else {
-      doSlowScroll();
+      doSnappyScroll();
     }
   };
 

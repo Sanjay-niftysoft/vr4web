@@ -181,7 +181,7 @@ export default function EnquiryPage() {
   const bannerRef = useRef(null);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo(0, 0);
   }, []);
 
   // bring the success message into view

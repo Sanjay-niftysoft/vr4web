@@ -147,9 +147,9 @@ export default function CaseStudyDetails() {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    window.scrollTo(0, 0);
     scrollRef.current?.scrollTo({ top: 0 }); // opening another case study starts at the top
-  }, [id, reduce]);
+  }, [id]);
 
   if (!study) {
     return (

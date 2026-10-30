@@ -1301,7 +1301,7 @@ export default function ServicesDetails() {
     }, [categorySlug, subServiceSlug, queryCategory, queryItem]);
 
     useEffect(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo(0, 0);
         setOpenFaqIndex(0);
         setActiveTechCategory(0);
         setActiveStep(0);

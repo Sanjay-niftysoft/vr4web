@@ -117,7 +117,7 @@ const BRANDS_DATA = [
       'High-impact, budget-friendly starter websites engineered for startups, freelancers, and small businesses looking for an immediate online presence at just $100.',
     tags: ['$100 Web Design', 'Mobile-Ready', 'Rapid 48h Launch'],
     stats: 'Flat $100 Package',
-    logo: '/logo/100dollar.svg',
+    logo: '/brand/A100$webdesign.png',
     accent: '#E8890C',
     tint: 'rgba(232,137,12,0.10)',
     glow: 'rgba(232,137,12,0.35)',
@@ -578,112 +578,106 @@ function Tilt3D({ children, className = '', max = 4 }) {
 }
 
 export function ParentBrandSection() {
+const cards = [
+  {
+    id: 'parent',
+    label: 'Parent company',
+    labelColor: 'text-[#E8890C]',
+    title: 'Niftysoft Global',
+    desc: 'Enterprise software development, cloud infrastructure and digital transformation.',
+    url: 'https://niftysoft.com/',
+    logo: '/brand/niftysoft.png',        // logo for box 1
+    btnText: 'Visit niftysoft.com',
+    btnClass:
+      'bg-[#E8890C] hover:bg-[#d67d0a] shadow-[0_8px_20px_-6px_rgba(232,137,12,0.6)]',
+    borderClass: 'border-b-[#0F3D2E]',
+    alt: 'Niftysoft Global',
+  },
+  {
+    id: 'portfolio',
+    label: 'Global portfolio',
+    labelColor: 'text-[#0F3D2E]',
+    title: 'See our work at niftysoft.in',
+    desc: 'Browse 500+ live production systems, case studies and enterprise solutions.',
+    url: 'https://niftysoft.in',
+    logo: '/niftysoft.in.png',           // logo for box 2
+    btnText: 'Visit niftysoft.in',
+    btnClass:
+      'bg-[#0F3D2E] hover:bg-[#155440] shadow-[0_8px_20px_-6px_rgba(15,61,46,0.6)]',
+    borderClass: 'border-b-[#E8890C]',
+    alt: 'Niftysoft Portfolio',
+  },
+];
+
   return (
-    <section className="relative w-full bg-[#F3F6F4] py-10 lg:py-14 border-b border-slate-200">
+    <section className="relative w-full bg-[#F3F6F4] py-8 lg:py-10 border-b border-slate-200">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Section Heading */}
-        <div className="max-w-[720px] mb-8 lg:mb-10">
+        <div className="max-w-[720px] mb-6 lg:mb-8">
           <h2 className="font-black tracking-tight leading-[1.1] text-2xl sm:text-3xl lg:text-[36px] text-[#0F3D2E]">
             Our Parent Brand &amp; Global Portfolio
           </h2>
           <div className="h-1 w-16 bg-[#E8890C] rounded-full mt-3" />
-          <p className="mt-3.5 text-sm sm:text-base leading-relaxed text-slate-600">
+          <p className="mt-3.5 text-sm sm:text-base leading-relaxed text-black">
             VR4Web is backed by Niftysoft. Explore our parent company and browse the commercial portfolio behind our work.
           </p>
         </div>
 
-        {/* 2 Reduced-Width Cards Side-by-Side: Left = Parent Brand | Right = Portfolio */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-          
-          {/* Card 1: Parent Company (niftysoft.com) */}
-          <Tilt3D max={2.5}>
-            <div
-              className={`relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 border-b-4 border-b-[#0F3D2E] p-6 sm:p-7 flex flex-col justify-between h-full ${CARD_SHADOW}`}
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
+        {/* Box 1 + Box 2 (same height) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          {cards.map((c) => (
+            <Tilt3D key={c.id} max={2.5} className="h-full">
+              <div
+                className={`relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 border-b-4 ${c.borderClass} p-5 sm:p-6 flex flex-col gap-3 h-full ${CARD_SHADOW}`}
+              >
+                {/* 1. Logo + name */}
+                <div className="flex items-center gap-4">
                   <a
-                    href="https://niftysoft.com/"
+                    href={c.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    title="Visit Niftysoft"
-                    className="flex-shrink-0 self-start sm:self-center rounded-xl bg-white border border-slate-200 p-3.5 shadow-xs transition-transform duration-300 hover:-translate-y-0.5"
+                    title={c.btnText}
+                    className="flex-shrink-0 rounded-xl bg-white border border-slate-200 p-3 transition-transform duration-300 hover:-translate-y-0.5"
                   >
-                    <img src="/brand/niftysoft.png" alt="Niftysoft Global" className="h-9 sm:h-10 w-auto object-contain" />
+                    <img
+                      src={c.logo}
+                      alt={c.alt}
+                      className="h-9 w-auto object-contain"
+                    />
                   </a>
-
-                  <div>
-                    <p className="text-xs sm:text-sm font-semibold text-[#E8890C]">Parent company</p>
-                    <h3 className="mt-0.5 text-xl sm:text-2xl font-black tracking-tight text-[#0F3D2E]">
-                      Niftysoft Global
-                    </h3>
-                    <p className="mt-1 text-xs sm:text-[13.5px] leading-relaxed text-slate-600">
-                      Enterprise software development, cloud infrastructure and digital transformation.
+                  <div className="min-w-0">
+                    <p className={`text-xs sm:text-sm font-semibold ${c.labelColor}`}>
+                      {c.label}
                     </p>
+                    <h3 className="text-lg sm:text-xl font-black tracking-tight leading-tight text-[#0F3D2E]">
+                      {c.title}
+                    </h3>
                   </div>
                 </div>
 
+                {/* 2. Description (black, takes the spare height so both boxes match) */}
+                <p className="flex-1 text-[13.5px] leading-relaxed text-black">
+                  {c.desc}
+                </p>
+
+                {/* 3. Link (centered, always at the bottom) */}
                 <a
-                  href="https://niftysoft.com/"
+                  href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="sm:self-center inline-flex items-center justify-center gap-2 px-5 py-3 rounded-[10px] bg-[#E8890C] hover:bg-[#d67d0a] text-white font-bold text-xs sm:text-sm shadow-[0_8px_20px_-6px_rgba(232,137,12,0.6)] transition-all whitespace-nowrap self-start"
+                  className={`mt-auto self-center inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-[10px] text-white font-bold text-xs sm:text-sm transition-all whitespace-nowrap ${c.btnClass}`}
                 >
-                  Visit niftysoft.com
+                  {c.btnText}
                   <ExternalLink className="w-4 h-4 flex-shrink-0" />
                 </a>
               </div>
-            </div>
-          </Tilt3D>
-
-          {/* Card 2: Portfolio Showcase (niftysoft.in) */}
-          <Tilt3D max={2.5}>
-            <div
-              className={`relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 border-b-4 border-b-[#E8890C] p-6 sm:p-7 flex flex-col justify-between h-full ${CARD_SHADOW}`}
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
-                  <a
-                    href="https://niftysoft.in"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="View Portfolio at niftysoft.in"
-                    className="flex-shrink-0 self-start sm:self-center rounded-xl bg-white border border-slate-200 p-3.5 shadow-xs transition-transform duration-300 hover:-translate-y-0.5"
-                  >
-                    <img src="/brand/niftysoft.png" alt="Niftysoft Portfolio" className="h-9 sm:h-10 w-auto object-contain" />
-                  </a>
-
-                  <div>
-                    <p className="text-xs sm:text-sm font-semibold text-[#0F3D2E]">Global portfolio</p>
-                    <h3 className="mt-0.5 text-xl sm:text-2xl font-black tracking-tight text-[#0F3D2E]">
-                      See our work at niftysoft.in
-                    </h3>
-                    <p className="mt-1 text-xs sm:text-[13.5px] leading-relaxed text-slate-600">
-                      Browse 500+ live production systems, case studies and enterprise solutions.
-                    </p>
-                  </div>
-                </div>
-
-                <a
-                  href="https://niftysoft.in"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="sm:self-center inline-flex items-center justify-center gap-2 px-5 py-3 rounded-[10px] bg-[#0F3D2E] hover:bg-[#155440] text-white font-bold text-xs sm:text-sm shadow-[0_8px_20px_-6px_rgba(15,61,46,0.6)] transition-all whitespace-nowrap self-start"
-                >
-                  Visit niftysoft.in
-                  <ExternalLink className="w-4 h-4 flex-shrink-0" />
-                </a>
-              </div>
-            </div>
-          </Tilt3D>
-
+            </Tilt3D>
+          ))}
         </div>
       </div>
     </section>
   );
 }
-
 export function OurBrandsSection() {
   const [openId, setOpenId] = useState(null);
 

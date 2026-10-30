@@ -235,7 +235,7 @@ export default function Whitepaper() {
   const topics = useMemo(() => Array.from(new Set(WHITEPAPERS.map((p) => p.category))), []);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
   }, []);
 
   // ─── Automatic download with confetti ───
