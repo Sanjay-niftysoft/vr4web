@@ -183,7 +183,7 @@ const PARTNERS_DATA = [
     tags: ['Technical SEO', 'Lead Gen Funnels', 'Keyword Growth'],
     points: ['Site audits that find what holds your rankings back', 'Keywords chosen around what buyers actually search', 'Reports that track leads, not just traffic'],
     logo: '/logo-2/leadseo.png',
-    banner:'/PARTERNS-BANNER/LEADSEO.png',
+    banner: '/PARTERNS-BANNER/LEADSEO.png',
   },
   {
     id: 'contentconsult',
@@ -328,15 +328,13 @@ function SectionHeading({ title, sub, text, light = false, align = 'center', com
       viewport={{ once: true, amount: 0.3 }}
       variants={stagger}
       style={light ? { textShadow: '0 2px 10px rgba(0,0,0,0.45)' } : undefined}
-      className={`max-w-[780px] ${compact ? 'mb-5 sm:mb-6' : 'mb-8 sm:mb-10'} ${
-        align === 'center' ? 'mx-auto text-center' : ''
-      }`}
+      className={`max-w-[780px] ${compact ? 'mb-5 sm:mb-6' : 'mb-8 sm:mb-10'} ${align === 'center' ? 'mx-auto text-center' : ''
+        }`}
     >
       <motion.h2
         variants={fadeInUp}
-        className={`font-black tracking-tight leading-[1.05] ${
-          compact ? 'text-3xl sm:text-4xl lg:text-[44px]' : 'text-4xl sm:text-5xl lg:text-[56px]'
-        } ${light ? 'text-white' : 'text-[#0F3D2E]'}`}
+        className={`font-black tracking-tight leading-[1.05] ${compact ? 'text-3xl sm:text-4xl lg:text-[44px]' : 'text-4xl sm:text-5xl lg:text-[56px]'
+          } ${light ? 'text-white' : 'text-[#0F3D2E]'}`}
       >
         {title}
       </motion.h2>
@@ -353,9 +351,8 @@ function SectionHeading({ title, sub, text, light = false, align = 'center', com
       </motion.p>
       <motion.p
         variants={fadeInUp}
-        className={`text-sm sm:text-base leading-relaxed max-w-[640px] ${compact ? 'mt-1.5' : 'mt-2'} ${
-          align === 'center' ? 'mx-auto' : ''
-        } ${light ? 'text-white' : 'text-black'}`}
+        className={`text-sm sm:text-base leading-relaxed max-w-[640px] ${compact ? 'mt-1.5' : 'mt-2'} ${align === 'center' ? 'mx-auto' : ''
+          } ${light ? 'text-white' : 'text-black'}`}
       >
         {text}
       </motion.p>
@@ -405,9 +402,8 @@ function BrandCard({ item, open, onToggle }) {
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={{ '--accent': item.accent, '--glow': item.glow, '--tint': item.tint, '--mx': '50%', '--my': '50%', perspective: 900 }}
-      className={`group relative rounded-[26px] w-full min-w-0 ${
-        open ? 'lg:flex-[1.6]' : 'lg:flex-1'
-      }`}
+      className={`group relative rounded-[26px] w-full min-w-0 ${open ? 'lg:flex-[1.6]' : 'lg:flex-1'
+        }`}
     >
       <motion.div
         layout="position"
@@ -422,27 +418,24 @@ function BrandCard({ item, open, onToggle }) {
             onToggle();
           }
         }}
-        className={`relative overflow-hidden rounded-[26px] bg-white cursor-pointer border outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/30 transition-shadow duration-500 ${
-          open
+        className={`relative overflow-hidden rounded-[26px] bg-white cursor-pointer border outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/30 transition-shadow duration-500 ${open
             ? 'border-[color:var(--accent)] shadow-[0_24px_50px_-20px_rgba(15,23,42,0.3)]'
             : 'border-[#E5EBF2] shadow-[0_14px_32px_-20px_rgba(15,23,42,0.25)] hover:shadow-[0_22px_44px_-18px_rgba(15,23,42,0.3)]'
-        }`}
+          }`}
       >
         {/* Accent bar that fills on hover/open */}
         <div
-          className={`absolute top-0 left-0 h-1.5 bg-[color:var(--accent)] transition-all duration-500 ${
-            open ? 'w-full' : 'w-0 group-hover:w-full'
-          }`}
+          className={`absolute top-0 left-0 h-1.5 bg-[color:var(--accent)] transition-all duration-500 ${open ? 'w-full' : 'w-0 group-hover:w-full'
+            }`}
         />
 
         <div className="relative z-10 p-6 sm:p-7">
           {/* Open / close indicator */}
           <div
-            className={`absolute top-5 right-5 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
-              open
+            className={`absolute top-5 right-5 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${open
                 ? 'bg-[color:var(--accent)] text-white'
                 : 'border-2 border-[color:var(--accent)] text-[color:var(--accent)] group-hover:bg-[color:var(--accent)] group-hover:text-white'
-            }`}
+              }`}
           >
             <ChevronDown className={`w-4 h-4 stroke-[3] transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
           </div>
@@ -467,9 +460,8 @@ function BrandCard({ item, open, onToggle }) {
           {/* Description */}
           <motion.p
             layout="position"
-            className={`mt-2 text-[13.5px] leading-relaxed text-black ${
-              open ? 'text-left' : 'text-center line-clamp-2'
-            }`}
+            className={`mt-2 text-[13.5px] leading-relaxed text-black ${open ? 'text-left' : 'text-center line-clamp-2'
+              }`}
           >
             {item.fullDesc}
           </motion.p>
@@ -539,293 +531,154 @@ function BrandCard({ item, open, onToggle }) {
 // SECTION 00 — PARENT BRAND & PORTFOLIO SHOWCASE
 // ─────────────────────────────────────────────────────────────────────────────
 
-export function ParentBrandSection() {
-  const [activeCategory, setActiveCategory] = useState(0);
+// ─────────────────────────────────────────────────────────────────────────────
+// SECTION 00 — PARENT BRAND & PORTFOLIO (light, professional, 3D cards)
+//
+// Replace the old ParentBrandSection in Brands&Partners.jsx with everything below.
+// Imports needed (already in your file): motion, useMotionValue, useSpring,
+// useTransform, useReducedMotion, ExternalLink, ArrowUpRight, CheckCircle2.
+// You can now remove the unused imports: Sparkles, Lock (and ShieldCheck if unused).
+// ─────────────────────────────────────────────────────────────────────────────
 
-  const portfolioCategories = [
-    { label: 'Enterprise Web', count: '180+ Apps', desc: 'Custom portals, high-traffic SaaS & corporate web systems' },
-    { label: 'Mobile & iOS', count: '120+ Deployed', desc: 'Native Swift, Kotlin & cross-platform Flutter/React Native' },
-    { label: 'E-Commerce & CRM', count: '140+ Stores', desc: 'Bespoke checkout architectures, Shopify & multi-vendor platforms' },
-    { label: 'Cloud & AI Systems', count: '60+ Scaled', desc: 'Microservices, AI search integration & AWS/GCP DevOps' },
-  ];
+/* Layered shadow = the "raised box" look. Used on every card in this section. */
+const CARD_SHADOW =
+  'shadow-[0_1px_2px_rgba(15,61,46,0.06),0_10px_20px_-6px_rgba(15,61,46,0.10),0_30px_60px_-20px_rgba(15,61,46,0.18)]';
+
+/* Soft 3D tilt that follows the mouse. Turned off when reduced motion is on. */
+function Tilt3D({ children, className = '', max = 4 }) {
+  const reduce = useReducedMotion();
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [max, -max]), { stiffness: 200, damping: 22 });
+  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-max, max]), { stiffness: 200, damping: 22 });
+
+  const onMove = (e) => {
+    if (reduce) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
 
   return (
-    <section className="relative w-full bg-[#FAFCFA] py-12 lg:py-20 border-b border-slate-200/80 overflow-hidden">
-      {/* Ambient background glows & grid */}
-      <div className="absolute inset-0 bg-[radial-gradient(#0F3D2E_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none" />
-      <div className="absolute top-10 left-1/3 w-[500px] h-[500px] bg-[#0F3D2E]/[0.04] rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-[#E8890C]/[0.06] rounded-full blur-3xl pointer-events-none" />
+    <div style={{ perspective: 1100 }} className={className}>
+      <motion.div
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+        style={{ rotateX: reduce ? 0 : rotateX, rotateY: reduce ? 0 : rotateY, transformStyle: 'preserve-3d' }}
+        className="h-full"
+      >
+        {children}
+      </motion.div>
+    </div>
+  );
+}
 
-      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+export function ParentBrandSection() {
+  return (
+    <section className="relative w-full bg-[#F3F6F4] py-10 lg:py-14 border-b border-slate-200">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="text-center max-w-[780px] mx-auto mb-10 lg:mb-14">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={stagger}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0F3D2E]/8 border border-[#0F3D2E]/15 mb-4 shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#E8890C]" />
-              <span className="text-xs font-black uppercase tracking-wider text-[#0F3D2E]">
-                Corporate Ecosystem &amp; Enterprise Pedigree
-              </span>
-            </div>
-
-            <motion.h2
-              variants={fadeInUp}
-              className="font-black tracking-tight leading-[1.08] text-3xl sm:text-4xl lg:text-[46px] text-[#0F3D2E]"
-            >
-              The Strategic Engineering Foundation Powering VR4Web
-            </motion.h2>
-
-            <motion.div
-              variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1, transition: { duration: 0.7, ease: 'easeOut' } } }}
-              style={{ originX: 0.5 }}
-              className="h-1 w-24 bg-[#E8890C] rounded-full mt-4 mx-auto"
-            />
-
-            <motion.p
-              variants={fadeInUp}
-              className="text-sm sm:text-base leading-relaxed text-black/80 max-w-[660px] mt-4 mx-auto"
-            >
-              VR4Web operates as the specialized digital solutions arm of <strong>Niftysoft</strong>. Learn more about our global parent company and explore our extensive cross-industry commercial portfolio.
-            </motion.p>
-          </motion.div>
+        {/* Section Heading */}
+        <div className="max-w-[720px] mb-8 lg:mb-10">
+          <h2 className="font-black tracking-tight leading-[1.1] text-2xl sm:text-3xl lg:text-[36px] text-[#0F3D2E]">
+            Our Parent Brand &amp; Global Portfolio
+          </h2>
+          <div className="h-1 w-16 bg-[#E8890C] rounded-full mt-3" />
+          <p className="mt-3.5 text-sm sm:text-base leading-relaxed text-slate-600">
+            VR4Web is backed by Niftysoft. Explore our parent company and browse the commercial portfolio behind our work.
+          </p>
         </div>
 
-        {/* ── UNIFIED BESPOKE ARCHITECTURAL CONSOLE ── */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          variants={fadeInUp}
-          className="rounded-[32px] bg-white border border-slate-200 shadow-[0_24px_60px_-15px_rgba(15,61,46,0.12)] overflow-hidden"
-        >
-          {/* TOP PANORAMA: Niftysoft Flagship Header Ribbon */}
-          <div className="relative bg-gradient-to-r from-[#0F3D2E] via-[#124836] to-[#0A291E] p-6 sm:p-8 lg:p-10 text-white overflow-hidden">
-            {/* Ambient gold illumination */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#E8890C]/15 rounded-full blur-3xl pointer-events-none" />
-            
-            <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-10">
-              
-              {/* Left Identity Area */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
+        {/* 2 Reduced-Width Cards Side-by-Side: Left = Parent Brand | Right = Portfolio */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+          
+          {/* Card 1: Parent Company (niftysoft.com) */}
+          <Tilt3D max={2.5}>
+            <div
+              className={`relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 border-b-4 border-b-[#0F3D2E] p-6 sm:p-7 flex flex-col justify-between h-full ${CARD_SHADOW}`}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
+                  <a
+                    href="https://niftysoft.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Visit Niftysoft"
+                    className="flex-shrink-0 self-start sm:self-center rounded-xl bg-white border border-slate-200 p-3.5 shadow-xs transition-transform duration-300 hover:-translate-y-0.5"
+                  >
+                    <img src="/brand/niftysoft.png" alt="Niftysoft Global" className="h-9 sm:h-10 w-auto object-contain" />
+                  </a>
+
+                  <div>
+                    <p className="text-xs sm:text-sm font-semibold text-[#E8890C]">Parent company</p>
+                    <h3 className="mt-0.5 text-xl sm:text-2xl font-black tracking-tight text-[#0F3D2E]">
+                      Niftysoft Global
+                    </h3>
+                    <p className="mt-1 text-xs sm:text-[13.5px] leading-relaxed text-slate-600">
+                      Enterprise software development, cloud infrastructure and digital transformation.
+                    </p>
+                  </div>
+                </div>
+
                 <a
                   href="https://niftysoft.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex-shrink-0 p-3.5 sm:p-4 rounded-2xl bg-white shadow-lg transition-transform duration-300 hover:scale-105"
-                  title="Visit Niftysoft Official Website"
+                  className="sm:self-center inline-flex items-center justify-center gap-2 px-5 py-3 rounded-[10px] bg-[#E8890C] hover:bg-[#d67d0a] text-white font-bold text-xs sm:text-sm shadow-[0_8px_20px_-6px_rgba(232,137,12,0.6)] transition-all whitespace-nowrap self-start"
                 >
-                  <img
-                    src="/brand/niftysoft.png"
-                    alt="Niftysoft Global"
-                    className="h-10 sm:h-12 w-auto object-contain"
-                  />
+                  Visit niftysoft.com
+                  <ExternalLink className="w-4 h-4 flex-shrink-0" />
                 </a>
-
-                <div className="space-y-1">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/10 text-[#E8890C] text-[11px] font-extrabold uppercase tracking-wider border border-white/15">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E8890C] animate-pulse" />
-                    Verified Global Parent Company
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                    Niftysoft Global
-                  </h3>
-                  <p className="text-xs sm:text-sm text-white/80 max-w-xl">
-                    Enterprise Software Development · Cloud Infrastructure · Digital Transformation Group
-                  </p>
-                </div>
               </div>
+            </div>
+          </Tilt3D>
 
-              {/* Right Global CTA Pill */}
-              <div className="flex-shrink-0">
-                <motion.a
-                  href="https://niftysoft.com/"
+          {/* Card 2: Portfolio Showcase (niftysoft.in) */}
+          <Tilt3D max={2.5}>
+            <div
+              className={`relative overflow-hidden rounded-2xl bg-white border border-slate-200/80 border-b-4 border-b-[#E8890C] p-6 sm:p-7 flex flex-col justify-between h-full ${CARD_SHADOW}`}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5">
+                  <a
+                    href="https://niftysoft.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View Portfolio at niftysoft.in"
+                    className="flex-shrink-0 self-start sm:self-center rounded-xl bg-white border border-slate-200 p-3.5 shadow-xs transition-transform duration-300 hover:-translate-y-0.5"
+                  >
+                    <img src="/brand/niftysoft.png" alt="Niftysoft Portfolio" className="h-9 sm:h-10 w-auto object-contain" />
+                  </a>
+
+                  <div>
+                    <p className="text-xs sm:text-sm font-semibold text-[#0F3D2E]">Global portfolio</p>
+                    <h3 className="mt-0.5 text-xl sm:text-2xl font-black tracking-tight text-[#0F3D2E]">
+                      See our work at niftysoft.in
+                    </h3>
+                    <p className="mt-1 text-xs sm:text-[13.5px] leading-relaxed text-slate-600">
+                      Browse 500+ live production systems, case studies and enterprise solutions.
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href="https://niftysoft.in"
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#E8890C] hover:bg-[#d67d0a] text-white font-bold text-sm shadow-[0_10px_24px_rgba(232,137,12,0.4)] transition-all"
+                  className="sm:self-center inline-flex items-center justify-center gap-2 px-5 py-3 rounded-[10px] bg-[#0F3D2E] hover:bg-[#155440] text-white font-bold text-xs sm:text-sm shadow-[0_8px_20px_-6px_rgba(15,61,46,0.6)] transition-all whitespace-nowrap self-start"
                 >
-                  <span>Visit Parent Brand (niftysoft.com)</span>
+                  Visit niftysoft.in
                   <ExternalLink className="w-4 h-4 flex-shrink-0" />
-                </motion.a>
-              </div>
-
-            </div>
-
-            {/* Quick Metrics Bar across bottom of header ribbon */}
-            <div className="mt-8 pt-6 border-t border-white/15 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div>
-                <span className="block text-2xl sm:text-3xl font-black text-[#E8890C]">15+</span>
-                <span className="text-xs text-white/70 font-medium">Years Engineering Excellence</span>
-              </div>
-              <div>
-                <span className="block text-2xl sm:text-3xl font-black text-white">500+</span>
-                <span className="text-xs text-white/70 font-medium">Enterprise Systems Shipped</span>
-              </div>
-              <div>
-                <span className="block text-2xl sm:text-3xl font-black text-white">Global</span>
-                <span className="text-xs text-white/70 font-medium">AU · IN · US · UK Reach</span>
-              </div>
-              <div>
-                <span className="block text-2xl sm:text-3xl font-black text-[#E8890C]">Tier-1</span>
-                <span className="text-xs text-white/70 font-medium">Enterprise Security &amp; SLAs</span>
+                </a>
               </div>
             </div>
-          </div>
+          </Tilt3D>
 
-          {/* LOWER SECTION: ASYMMETRIC DUAL PORTAL */}
-          <div className="p-6 sm:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white">
-            
-            {/* Left 5 cols: Corporate Pillars & Strategic Architecture */}
-            <div className="lg:col-span-5 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-[#0F3D2E]/6 text-[#0F3D2E] text-xs font-bold">
-                <ShieldCheck className="w-4 h-4 text-[#0F3D2E]" />
-                How Niftysoft Backs Every VR4Web Project
-              </div>
-
-              <h4 className="text-2xl sm:text-[26px] font-black text-[#0F3D2E] tracking-tight leading-snug">
-                Enterprise Muscle for Australian &amp; Global Growth
-              </h4>
-
-              <p className="text-slate-600 text-sm leading-relaxed">
-                By partnering with VR4Web, clients receive localized strategy, agile Australian leadership, and direct access to Niftysoft’s enterprise delivery centers, senior engineering pool, and mature software pipelines.
-              </p>
-
-              {/* 3 Value Pillars */}
-              <div className="space-y-4 pt-1">
-                {[
-                  {
-                    title: 'Tier-1 Development Infrastructure',
-                    desc: 'Automated CI/CD, ISO security compliance, and zero-compromise code quality reviews.',
-                  },
-                  {
-                    title: 'Multi-Disciplinary Technical Pool',
-                    desc: 'Over 150+ senior architects covering spatial visionOS, modern web frameworks, and AI search.',
-                  },
-                  {
-                    title: 'Proven Delivery Governance',
-                    desc: 'Transparent sprint reporting, dedicated technical account managers, and continuous SLAs.',
-                  },
-                ].map((pillar, idx) => (
-                  <div key={idx} className="flex items-start gap-3.5 p-3.5 rounded-xl bg-[#F8FAF9] border border-slate-100 hover:border-[#0F3D2E]/20 transition-colors">
-                    <div className="w-7 h-7 rounded-lg bg-[#0F3D2E] text-white flex items-center justify-center flex-shrink-0 text-xs font-bold mt-0.5">
-                      {idx + 1}
-                    </div>
-                    <div>
-                      <h5 className="text-sm font-bold text-[#0F3D2E]">{pillar.title}</h5>
-                      <p className="text-xs text-slate-500 leading-relaxed mt-0.5">{pillar.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right 7 cols: Interactive macOS-Style Portfolio Window (https://niftysoft.in) */}
-            <div className="lg:col-span-7">
-              <div className="rounded-2xl border border-slate-300/80 shadow-[0_16px_40px_-15px_rgba(0,0,0,0.15)] bg-slate-900 overflow-hidden">
-                
-                {/* Browser Top Window Bar */}
-                <div className="bg-[#1E293B] px-4 py-3 flex items-center justify-between border-b border-slate-700/60">
-                  {/* Traffic lights */}
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-[#FF5F56] inline-block" />
-                    <span className="w-3 h-3 rounded-full bg-[#FFBD2E] inline-block" />
-                    <span className="w-3 h-3 rounded-full bg-[#27C93F] inline-block" />
-                  </div>
-
-                  {/* Browser URL Search Bar */}
-                  <div className="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-slate-800 text-xs text-slate-300 font-mono border border-slate-700/80 max-w-[280px] w-full justify-center">
-                    <Lock className="w-3 h-3 text-[#27C93F]" />
-                    <span className="truncate">https://niftysoft.in/portfolio</span>
-                  </div>
-
-                  <div className="flex items-center gap-1.5 text-[11px] text-[#E8890C] font-bold">
-                    <span className="w-2 h-2 rounded-full bg-[#E8890C] animate-ping" />
-                    Live Vault
-                  </div>
-                </div>
-
-                {/* Browser Canvas Content */}
-                <div className="p-6 sm:p-7 bg-[#0F172A] text-white">
-                  
-                  {/* Portfolio Window Title */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
-                    <div>
-                      <span className="text-xs font-bold text-[#E8890C] uppercase tracking-wider block mb-1">
-                        Commercial Portfolio &amp; Case Studies
-                      </span>
-                      <h4 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                        Know About Our Portfolio at <span className="text-[#E8890C]">niftysoft.in</span>
-                      </h4>
-                    </div>
-
-                    <span className="self-start sm:self-center px-3 py-1 rounded-full bg-[#E8890C]/15 border border-[#E8890C]/30 text-[#E8890C] text-xs font-extrabold whitespace-nowrap">
-                      500+ Projects Live
-                    </span>
-                  </div>
-
-                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-5">
-                    Explore live production systems, commercial case studies, and enterprise solutions architected and deployed by Niftysoft across global industries.
-                  </p>
-
-                  {/* Interactive Category Selector Pills */}
-                  <div className="grid grid-cols-2 gap-2.5 mb-6">
-                    {portfolioCategories.map((cat, i) => (
-                      <div
-                        key={i}
-                        onClick={() => setActiveCategory(i)}
-                        className={`p-3 rounded-xl border transition-all cursor-pointer text-left ${
-                          activeCategory === i
-                            ? 'bg-[#1E293B] border-[#E8890C] shadow-sm'
-                            : 'bg-slate-800/50 border-slate-700/60 hover:bg-slate-800 hover:border-slate-600'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className={`text-xs font-bold ${activeCategory === i ? 'text-[#E8890C]' : 'text-white'}`}>
-                            {cat.label}
-                          </span>
-                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-slate-300">
-                            {cat.count}
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-slate-400 line-clamp-1">{cat.desc}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Main Action Bar */}
-                  <div className="pt-2 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="text-left w-full sm:w-auto">
-                      <span className="text-xs text-slate-400 block font-medium">Official Showcase Portal:</span>
-                      <span className="text-sm font-mono text-white font-bold">niftysoft.in</span>
-                    </div>
-
-                    <motion.a
-                      href="https://niftysoft.in"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.04 }}
-                      whileTap={{ scale: 0.96 }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl bg-[#E8890C] hover:bg-[#d67d0a] text-white font-bold text-sm shadow-[0_8px_20px_rgba(232,137,12,0.45)] transition-all whitespace-nowrap"
-                    >
-                      <span>Explore Portfolio (niftysoft.in)</span>
-                      <ArrowUpRight className="w-4 h-4 flex-shrink-0" />
-                    </motion.a>
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-        </motion.div>
-
+        </div>
       </div>
     </section>
   );
@@ -952,11 +805,10 @@ export function OurPartnersSection() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => select(i)}
-                className={`group relative flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm whitespace-nowrap transition-all duration-300 outline-none ${
-                  isActive
+                className={`group relative flex items-center gap-2.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm whitespace-nowrap transition-all duration-300 outline-none ${isActive
                     ? 'bg-[#E8890C] text-white shadow-[0_10px_24px_-6px_rgba(232,137,12,0.7)]'
                     : 'bg-[#0F3D2E]/45 backdrop-blur-sm text-white hover:bg-white/15 border border-white/30'
-                }`}
+                  }`}
               >
                 <Icon className="w-4 h-4 text-white" strokeWidth={isActive ? 2.5 : 2} />
                 <span>{item.name}</span>
@@ -1194,17 +1046,15 @@ export function FaqSection() {
                     type="button"
                     aria-expanded={isOpen}
                     onClick={() => setOpenId(isOpen ? null : faq.id)}
-                    className={`group flex w-full items-center justify-between gap-3 text-left rounded-[10px] px-5 py-3.5 font-bold text-[14.5px] sm:text-[15px] transition-all duration-300 outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/30 ${
-                      isOpen
+                    className={`group flex w-full items-center justify-between gap-3 text-left rounded-[10px] px-5 py-3.5 font-bold text-[14.5px] sm:text-[15px] transition-all duration-300 outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/30 ${isOpen
                         ? 'bg-[#E8890C] text-white shadow-[0_16px_34px_-12px_rgba(232,137,12,0.7)]'
                         : 'bg-white text-[#0F3D2E] border border-slate-200 shadow-sm hover:border-[#E8890C]/50 hover:-translate-y-0.5 hover:shadow-md'
-                    }`}
+                      }`}
                   >
                     <span>{faq.question}</span>
                     <span
-                      className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
-                        isOpen ? 'bg-white/20 text-white' : 'bg-[#FFF3E0] text-[#E8890C]'
-                      }`}
+                      className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors ${isOpen ? 'bg-white/20 text-white' : 'bg-[#FFF3E0] text-[#E8890C]'
+                        }`}
                     >
                       <ChevronDown className={`w-4 h-4 stroke-[3] transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
                     </span>
@@ -1243,7 +1093,7 @@ export default function BrandsAndPartners() {
       <ParentBrandSection />
 
       <OurBrandsSection />
-      
+
       <OurPartnersSection />
       <FaqSection />
       <div className="[&>*]:!py-6 lg:[&>*]:!py-8 [&>*]:!my-0">
