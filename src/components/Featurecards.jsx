@@ -94,7 +94,7 @@ export default function FeatureCards({ features, resolveIcon }) {
     return (
         <section
             id="features-section"
-            className="relative scroll-mt-32 overflow-hidden bg-[#FAF7F2] bg-cover bg-center py-10 sm:py-14"
+            className="relative scroll-mt-32 overflow-hidden bg-[#FAF7F2] bg-cover bg-center py-8 sm:py-10 lg:py-12"
         >
             <img
                 src="/services-home.png"

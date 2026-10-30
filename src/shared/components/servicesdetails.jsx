@@ -1307,8 +1307,8 @@ export default function ServicesDetails() {
                     className="fixed top-0 left-0 right-0 h-1 origin-left bg-[#E8890C] z-[70]"
                 />
                 {/* ───────────── 1. HERO ───────────── */}
-                <section className="relative w-full overflow-hidden mt-[68px] sm:mt-[76px] lg:mt-[82px] xl:mt-[88px] min-h-[390px] sm:h-[410px] lg:h-[440px] flex items-center justify-center bg-[rgb(240,231,195)]">
-                    <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-4 sm:py-5 flex flex-col items-center text-center">
+                <section className="relative w-full overflow-hidden mt-[68px] sm:mt-[76px] lg:mt-[82px] xl:mt-[88px] py-6 sm:py-8 lg:py-10 flex items-center justify-center bg-[rgb(240,231,195)]">
+                    <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-1 sm:py-2 flex flex-col items-center text-center">
                         <motion.div
                             initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
                             className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-[11px] min-[400px]:text-xs sm:text-sm font-bold text-[#0F3D2E] bg-white/85 px-3 sm:px-4 py-1.5 rounded-xl sm:rounded-full shadow-sm border border-white/70 mb-3 backdrop-blur-md max-w-full text-center"
@@ -1366,19 +1366,19 @@ export default function ServicesDetails() {
                 </section>
 
                 {/* ───────────── 2. ABOUT (WHITE) — photo + overlapping text card, animated reveal ───────────── */}
-                <section className="relative py-14 sm:py-20 overflow-hidden bg-white font-['Poppins',sans-serif]">
+                <section className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 lg:pt-10 lg:pb-16 overflow-hidden bg-white font-['Poppins',sans-serif]">
                     {/* short pastel blocks, offset up / down, that grow in */}
                     <motion.span
                         aria-hidden="true"
                         initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true }}
                         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                        className="hidden sm:block absolute left-0 top-[18%] h-[46%] w-[20%] origin-top bg-[#FFE3B8]"
+                        className="hidden sm:block absolute left-0 top-[8%] h-[54%] w-[20%] origin-top bg-[#FFE3B8]"
                     />
                     <motion.span
                         aria-hidden="true"
                         initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true }}
                         transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                        className="hidden sm:block absolute right-0 bottom-[16%] h-[46%] w-[20%] origin-bottom bg-[#FFE9BE]"
+                        className="hidden sm:block absolute right-0 bottom-[8%] h-[54%] w-[20%] origin-bottom bg-[#FFE9BE]"
                     />
 
                     <div className="relative max-w-7xl xl:max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -1450,7 +1450,7 @@ export default function ServicesDetails() {
                 <FeatureCards features={features} resolveIcon={smartIcon} />
 
                 {/* ───────────── 4. PROCESS / DELIVERY FRAMEWORK (WHITE) — click-to-view tabs ───────────── */}
-                <section className={`relative overflow-hidden bg-white ${isIos ? 'pt-14 pb-10 sm:pt-20 sm:pb-14' : 'py-10 sm:py-14'}`}>
+                <section className={`relative overflow-hidden bg-white ${isIos ? 'pt-8 pb-8 sm:pt-10 sm:pb-10' : 'py-8 sm:py-10 lg:py-12'}`}>
                     <DotGrid className="opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent_75%)]" />
                     <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <SectionHeading
@@ -1465,7 +1465,7 @@ export default function ServicesDetails() {
                 </section>
 
                 {/* ───────────── 5. WHY CHOOSE US — photo + lighter natural overlay, compact height ───────────── */}
-                <section className="relative py-12 sm:py-16 lg:py-20 overflow-hidden bg-[#071712]">
+                <section className="relative py-8 sm:py-10 lg:py-12 overflow-hidden bg-[#071712]">
                     <PhotoBackdrop
                         src={BG_WHY}
                         fallback={BG_WHY_FALLBACK}
@@ -1482,7 +1482,7 @@ export default function ServicesDetails() {
                 </section>
 
                 {/* ───────────── 6. TECH STACK (WHITE) — real logos ───────────── */}
-                <section className="relative py-10 sm:py-14 bg-white overflow-hidden">
+                <section className="relative py-8 sm:py-10 lg:py-12 bg-white overflow-hidden">
                     <DotGrid className="opacity-50 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
                     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <SectionHeading badge={techStack.badge} title={techStack.title} description={techStack.description} />
@@ -1540,7 +1540,7 @@ export default function ServicesDetails() {
                 </section>
 
                 {/* ───────────── 9. FAQ (WHITE / CREAM) — 3-D accordion + contact card ───────────── */}
-                <section className="relative py-14 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-white via-[#F6FAF7] to-white">
+                <section className="relative py-8 sm:py-12 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-white via-[#F6FAF7] to-white">
                     <span aria-hidden="true" className="pointer-events-none absolute -top-24 -left-24 w-80 h-80 rounded-full bg-[#0F3D2E]/5 blur-3xl" />
                     <span aria-hidden="true" className="pointer-events-none absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-[#E8890C]/10 blur-3xl" />
                     <div className="relative max-w-6xl mx-auto">
