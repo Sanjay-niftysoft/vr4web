@@ -527,29 +527,30 @@ export default function CaseStudyDetails() {
 
             {/* ─── LIVE PLATFORM ARCHITECTURE SHOWCASE BANNER ─── */}
             {showcaseImg && (
-              <Reveal className="mt-14 mb-2">
-                <div className="relative overflow-hidden rounded-3xl bg-slate-900 border-2 border-[#0F3D2E]/15 shadow-xl group">
-                  <div className="relative overflow-hidden aspect-[16/9] w-full">
+              <Reveal className="mt-10 sm:mt-14 mb-4">
+                <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-[#071712] border-2 border-[#0F3D2E]/20 shadow-xl group">
+                  {/* Clean, unobstructed image preview - never covered or hidden by text */}
+                  <div className="relative overflow-hidden w-full aspect-[16/10] sm:aspect-[16/9] bg-slate-900">
                     <img
                       loading="lazy"
                       src={showcaseImg}
                       alt={`${study.title} platform architecture showcase`}
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A291E]/90 via-[#0A291E]/25 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                   </div>
 
-                  {/* Sleek bottom overlay strip */}
-                  <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 flex flex-wrap items-center justify-between gap-3 text-white">
-                    <div>
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8890C] text-[#0F3D2E] text-xs font-black uppercase tracking-wider shadow-md">
+                  {/* Clean info bar positioned below the image - 100% visible and readable on mobile (320px) and tablet (720px) */}
+                  <div className="p-4 sm:p-5 lg:p-6 bg-[#071712] border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-white">
+                    <div className="min-w-0">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#E8890C] text-[#0F3D2E] text-[10px] min-[400px]:text-xs font-black uppercase tracking-wider shadow-sm">
                         {CONCEPT_SHOWCASE_CAPTIONS[study.id]?.tag || 'Platform Preview'}
                       </span>
-                      <h4 className={`${FONT} text-lg sm:text-xl font-black text-white mt-2 drop-shadow-md`}>
+                      <h4 className={`${FONT} text-base sm:text-lg lg:text-xl font-black text-white mt-1.5 leading-snug break-words`}>
                         {CONCEPT_SHOWCASE_CAPTIONS[study.id]?.title || `${study.shortTitle || study.title} Architecture`}
                       </h4>
                     </div>
-                    <span className="text-xs sm:text-sm font-bold text-white/95 bg-white/15 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20">
+                    <span className="self-start sm:self-auto text-xs sm:text-sm font-bold text-white/90 bg-white/10 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/15 shrink-0">
                       {CONCEPT_SHOWCASE_CAPTIONS[study.id]?.badge || 'Production System'}
                     </span>
                   </div>

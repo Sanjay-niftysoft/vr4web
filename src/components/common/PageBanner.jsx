@@ -20,7 +20,7 @@ export default function PageBanner({ title, bgImage, breadcrumbs, className = ""
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex items-center gap-2 text-xs sm:text-sm font-medium text-white bg-[#0F3D2E] px-4 py-1.5 rounded-full shadow-sm"
+          className="flex flex-wrap justify-center items-center gap-1.5 sm:gap-2 text-[11px] min-[400px]:text-xs sm:text-sm font-medium text-white bg-[#0F3D2E] px-3 sm:px-4 py-1.5 rounded-xl sm:rounded-full shadow-sm max-w-full text-center"
         >
           <Link to="/" className="flex items-center gap-1.5 hover:text-[#E8890C] transition-colors">
             <Home className="w-3.5 h-3.5" />
