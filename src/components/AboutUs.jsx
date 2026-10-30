@@ -165,7 +165,7 @@ const WhoWeAre = () => (
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
             <Link
-              to="/get-quote"
+              to="/get-a-quote"
               className="inline-flex items-center w-fit bg-white border-2 border-[#0F3D2E] text-[#0F3D2E] hover:bg-[#E8890C] hover:border-[#E8890C] hover:text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl font-bold hover:-translate-y-0.5 transition-all duration-300"
             >
               Get a Quote

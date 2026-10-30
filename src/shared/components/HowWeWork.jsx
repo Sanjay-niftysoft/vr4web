@@ -498,7 +498,8 @@ function DigitalSolutionsSection() {
       desc: 'Modern, responsive and high-performance websites tailored to your brand.',
       icon: Monitor,
       iconBg: 'bg-[#103F30]',
-      image:'/website-development.png',
+      image: '/website-development.png',
+      link: '/services/web-design-and-development',
     },
     {
       title: 'Digital Marketing',
@@ -506,6 +507,7 @@ function DigitalSolutionsSection() {
       icon: Megaphone,
       iconBg: 'bg-[#E8890C]',
       image: IMAGES.serviceMarketing,
+      link: '/services/digital-marketing-solutions',
     },
     {
       title: 'Application Development',
@@ -513,6 +515,7 @@ function DigitalSolutionsSection() {
       icon: Smartphone,
       iconBg: 'bg-[#103F30]',
       image: IMAGES.serviceApp,
+      link: '/services/app-development',
     },
     {
       title: 'Back-Office Support',
@@ -520,6 +523,7 @@ function DigitalSolutionsSection() {
       icon: Headset,
       iconBg: 'bg-[#E8890C]',
       image: '/support.png',
+      link: '/services/back-office-support',
     },
   ];
 
@@ -588,8 +592,8 @@ function DigitalSolutionsSection() {
                     {card.desc}
                   </p>
 
-                  <a
-                    href="#"
+                  <Link
+                    to={card.link}
                     aria-label={`Learn more about ${card.title}`}
                     className="mt-auto inline-flex items-center gap-2.5 text-sm font-bold text-[#E8890C] group-hover:text-[#103F30] transition-colors duration-300"
                   >
@@ -597,7 +601,7 @@ function DigitalSolutionsSection() {
                       <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                     </span>
                     Learn more
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="relative w-full h-48 sm:h-52 shrink-0 overflow-hidden bg-slate-100">

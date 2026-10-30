@@ -25,7 +25,23 @@ export const ORGANIZATION_SCHEMA = {
     'VR4Web is an elite Australian digital and software engineering firm delivering custom software, website development, mobile apps, AEO, GEO, and AI solutions.',
   slogan: SITE_TAGLINE,
   email: 'info@vr4web.com',
-  telephone: '+61 400 000 000',
+  telephone: '+61 489 986 622',
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      telephone: '+61 489 986 622',
+      contactType: 'customer service',
+      areaServed: 'AU',
+      availableLanguage: 'English',
+    },
+    {
+      '@type': 'ContactPoint',
+      telephone: '+91 94441 16316',
+      contactType: 'technical support',
+      areaServed: 'IN',
+      availableLanguage: 'English',
+    },
+  ],
   priceRange: '$$$',
   address: {
     '@type': 'PostalAddress',
@@ -742,3 +758,4 @@ export function resolveSEO(rawPathname = '/') {
     schema: [ORGANIZATION_SCHEMA],
   };
 }
+
