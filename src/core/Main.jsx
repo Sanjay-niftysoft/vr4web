@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import SEO from '../components/common/SEO';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -34,6 +35,7 @@ export default function Main() {
 
   return (
     <div className="flex flex-col min-h-screen w-full relative">
+      <SEO />
       <Header />
       <main className="flex-1 flex flex-col bg-cyber-bg w-full">
         {/* React Router will inject child routes here */}

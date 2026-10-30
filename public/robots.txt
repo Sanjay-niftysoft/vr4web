@@ -1,0 +1,25 @@
+# ==============================================================================
+# VR4Web Official Robots.txt
+# Website: https://vr4web.com/
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Allow: /src/
+Allow: /public/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.svg$
+Allow: /*.webp$
+
+# Disallow internal or staging paths
+Disallow: /admin/
+Disallow: /api/
+Disallow: /draft/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://vr4web.com/sitemap.xml
