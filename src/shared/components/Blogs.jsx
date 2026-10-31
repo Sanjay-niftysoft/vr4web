@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, ChevronRight, Home } from 'lucide-react';
 import { getAllBlogs } from '../../data/blogsData';
+import authService from '../../services/authService';
 import CtaSection from '../../components/CtaSection';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -39,12 +40,12 @@ function PostRow({ blog }) {
     >
       {/* Image */}
       <Link
-        to={`/blogs/${blog.id}`}
+        to={`/blog/${blog.slug || blog.id || blog._id}`}
         aria-label={`Read blog: ${blog.title}`}
         className="block overflow-hidden rounded-md aspect-[4/3] bg-slate-100 shadow-[0_18px_40px_-20px_rgba(15,61,46,0.35)] outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/40"
       >
         <img
-          src={blog.cardImage || FALLBACK_IMG}
+          src={blog.cardImage || blog.imageUrl || FALLBACK_IMG}
           alt={blog.title}
           loading="lazy"
           onError={imgFallback}
@@ -65,7 +66,7 @@ function PostRow({ blog }) {
         </div>
 
         <h3 className="mt-3 text-2xl sm:text-[28px] font-extrabold tracking-tight leading-tight text-[#0F3D2E] transition-colors duration-300 group-hover:text-[#E8890C]">
-          <Link to={`/blogs/${blog.id}`} className="outline-none focus-visible:underline">
+          <Link to={`/blog/${blog.slug || blog.id || blog._id}`} className="outline-none focus-visible:underline">
             {blog.title}
           </Link>
         </h3>
@@ -77,7 +78,7 @@ function PostRow({ blog }) {
         )}
 
         <Link
-          to={`/blogs/${blog.id}`}
+          to={`/blog/${blog.slug || blog.id || blog._id}`}
           className="mt-4 inline-flex items-center gap-2 border-b-2 border-[#E8890C] pb-0.5 text-sm font-bold text-[#0F3D2E] transition-colors duration-300 hover:text-[#E8890C]"
         >
           Read More
@@ -101,13 +102,13 @@ function SidebarItem({ blog, index }) {
       className="border-b border-[#0F3D2E]/10 last:border-b-0 py-4 first:pt-0 last:pb-0"
     >
       <Link
-        to={`/blogs/${blog.id}`}
+        to={`/blog/${blog.slug || blog.id || blog._id}`}
         aria-label={`Read blog: ${blog.title}`}
         className="group flex items-center gap-4 outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/40 rounded-xl"
       >
         <div className="h-[92px] w-[84px] flex-shrink-0 overflow-hidden rounded-md bg-slate-100">
           <img
-            src={blog.cardImage || FALLBACK_IMG}
+            src={blog.cardImage || blog.imageUrl || FALLBACK_IMG}
             alt=""
             loading="lazy"
             onError={imgFallback}
@@ -126,7 +127,43 @@ function SidebarItem({ blog, index }) {
 }
 
 export default function Blogs() {
-  const blogs = getAllBlogs();
+  const staticBlogs = useMemo(() => getAllBlogs(), []);
+  const [blogs, setBlogs] = useState(staticBlogs);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchLiveBlogs = async () => {
+      try {
+        const res = await authService.getPublicBlogs({ status: 'published' });
+        if (res?.success && Array.isArray(res.data) && res.data.length > 0 && isMounted) {
+          const liveNormalized = res.data.map((item) => ({
+            id: item.slug || item._id,
+            slug: item.slug,
+            _id: item._id,
+            title: item.title,
+            category: item.category || 'Technology',
+            author: item.author || 'VR4Web Insights',
+            readTime: item.readTime || '5 min read',
+            summary: item.summary || '',
+            content: item.content || '',
+            cardImage: item.imageUrl || '/blogs/blogs-banner.png',
+            imageUrl: item.imageUrl || '/blogs/blogs-banner.png',
+            date: item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '',
+            tags: item.tags || []
+          }));
+
+          const liveSlugs = new Set(liveNormalized.map((b) => b.id));
+          const filteredStatic = staticBlogs.filter((b) => !liveSlugs.has(b.id) && !liveSlugs.has(b.slug));
+          setBlogs([...liveNormalized, ...filteredStatic]);
+        }
+      } catch (err) {
+        console.warn('Live blogs fallback to static:', err);
+      }
+    };
+
+    fetchLiveBlogs();
+    return () => { isMounted = false; };
+  }, [staticBlogs]);
 
   /* Tags are shown only if your blog data has a `tags` array */
   const tags = useMemo(

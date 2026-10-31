@@ -160,12 +160,26 @@ export const authService = {
   },
 
   // Public Case Studies
-  async getPublicCaseStudies() {
-    const res = await api.get('/case-studies/public');
+  async getPublicCaseStudies(params = {}) {
+    const res = await api.get('/case-studies/public', { params });
     return res.data;
   },
   async getPublicCaseStudy(slug) {
     const res = await api.get(`/case-studies/public/${slug}`);
+    return res.data;
+  },
+  async getPublicCaseStudyBySlug(slug) {
+    const res = await api.get(`/case-studies/public/${slug}`);
+    return res.data;
+  },
+
+  // Public Blogs
+  async getPublicBlogs(params = {}) {
+    const res = await api.get('/blogs', { params });
+    return res.data;
+  },
+  async getPublicBlog(idOrSlug) {
+    const res = await api.get(`/blogs/${idOrSlug}`);
     return res.data;
   },
 };

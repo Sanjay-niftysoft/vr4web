@@ -338,12 +338,12 @@ export function getAllBlogs() {
 }
 
 export function getBlogById(idOrSlug) {
-  if (!idOrSlug) return BLOGS[0];
+  if (!idOrSlug) return null;
   const normalized = idOrSlug.toLowerCase();
   const found = BLOGS.find(
     (b) => b.id.toLowerCase() === normalized || b.slug.toLowerCase() === normalized
   );
-  return found || BLOGS[0];
+  return found || null;
 }
 
 export function getRelatedBlogs(currentId) {

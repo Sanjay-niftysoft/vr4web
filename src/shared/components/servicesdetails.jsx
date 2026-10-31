@@ -17,6 +17,7 @@ import {
     Mail, Video, Link2, BookOpen, Share2, Bot, ClipboardList,
 } from 'lucide-react';
 import { getServiceData, getServiceByQuery } from '../../data/servicesdata';
+import authService from '../../services/authService';
 
 
 /* ───────── Section background photos + green overlay (like the "How We Work" banner) ─────────
@@ -1275,6 +1276,65 @@ export default function ServicesDetails() {
 
     const currentTitle = subServiceName || categoryName;
 
+    // Live Case Studies and Blogs State from Admin
+    const [liveCaseStudies, setLiveCaseStudies] = useState([]);
+    const [liveBlogs, setLiveBlogs] = useState([]);
+    const [loadingLiveContent, setLoadingLiveContent] = useState(false);
+
+    useEffect(() => {
+        let isMounted = true;
+        const fetchLiveContent = async () => {
+            try {
+                setLoadingLiveContent(true);
+                const [csRes, blogRes] = await Promise.allSettled([
+                    authService.getPublicCaseStudies({ limit: 12 }),
+                    authService.getPublicBlogs({ status: 'published', limit: 6 })
+                ]);
+
+                if (isMounted && csRes.status === 'fulfilled' && csRes.value?.success) {
+                    setLiveCaseStudies(csRes.value.data || []);
+                }
+                if (isMounted && blogRes.status === 'fulfilled' && blogRes.value?.success) {
+                    setLiveBlogs(blogRes.value.data || []);
+                }
+            } catch (err) {
+                console.warn('Failed to load live case studies or blogs in servicesdetails:', err);
+            } finally {
+                if (isMounted) setLoadingLiveContent(false);
+            }
+        };
+
+        fetchLiveContent();
+        return () => { isMounted = false; };
+    }, [categorySlug, subServiceSlug]);
+
+    const displayCaseStudies = useMemo(() => {
+        if (!liveCaseStudies.length) return [];
+        const needle = `${categoryName || ''} ${subServiceName || ''} ${activeCatSlug || ''} ${activeSubSlug || ''}`.toLowerCase();
+
+        const matched = liveCaseStudies.filter((item) => {
+            const cat = (item.category || '').toLowerCase();
+            const ind = (item.industry || '').toLowerCase();
+            const services = (item.servicesProvided || []).map((s) => s.toLowerCase());
+            const tech = (item.technologiesUsed || []).map((t) => t.toLowerCase());
+
+            return (
+                needle.includes(cat) ||
+                cat.includes(categoryName?.toLowerCase() || '') ||
+                needle.includes(ind) ||
+                services.some((s) => needle.includes(s) || s.includes(subServiceName?.toLowerCase() || '')) ||
+                tech.some((t) => needle.includes(t))
+            );
+        });
+
+        return matched.length > 0 ? matched.slice(0, 4) : liveCaseStudies.slice(0, 4);
+    }, [liveCaseStudies, categoryName, subServiceName, activeCatSlug, activeSubSlug]);
+
+    const displayBlogs = useMemo(() => {
+        if (!liveBlogs.length) return [];
+        return liveBlogs.slice(0, 3);
+    }, [liveBlogs]);
+
     /* iOS page keeps its "Delivery Framework" heading styling.
        Adjust this regex if your iOS slug/name differs. */
     const isIos = /\bios\b/i.test(`${activeCatSlug || ''} ${activeSubSlug || ''} ${categoryName || ''} ${subServiceName || ''}`.replace(/-/g, ' '));
@@ -1538,6 +1598,213 @@ export default function ServicesDetails() {
                         <IndustryCoverflow list={industries.list || []} />
                     </div>
                 </section>
+
+                {/* ───────────── 8. CASE STUDIES & CLIENT STORIES (WHITE / LIGHT) — Live Admin-Synced ───────────── */}
+                {(displayCaseStudies.length > 0 || displayBlogs.length > 0) && (
+                    <section className="relative py-12 sm:py-16 lg:py-20 bg-[#F8FAF9] overflow-hidden border-t border-[#E5E7EB]">
+                        <DotGrid className="opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+                        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                            {/* Section Header */}
+                            <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+                                <span className="inline-block px-4 py-1.5 rounded-full bg-[#E8890C]/15 border border-[#E8890C]/40 text-[#E8890C] text-xs font-black uppercase tracking-wider mb-3.5 shadow-xs">
+                                    Client Success Stories
+                                </span>
+                                <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#0F3D2E] tracking-tight leading-tight">
+                                    Real Projects, <span className="text-[#E8890C]">Measurable Results</span>
+                                </h2>
+                                <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+                                    Discover how we build scalable architectures, modern engineering pipelines, and verified digital solutions for {currentTitle}.
+                                </p>
+                            </div>
+
+                            {/* Case Studies Grid */}
+                            {displayCaseStudies.length > 0 && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12">
+                                    {displayCaseStudies.map((study) => {
+                                        const studySlug = study.slug || study._id;
+                                        const studyImg = study.featuredImage || study.cardImage || '/case-study/ad.png';
+                                        const metricsList = Array.isArray(study.metrics) ? study.metrics.slice(0, 2) : [];
+                                        const tagsList = [
+                                            study.industry,
+                                            ...(Array.isArray(study.technologiesUsed) ? study.technologiesUsed.slice(0, 3) : []),
+                                            ...(Array.isArray(study.servicesProvided) ? study.servicesProvided.slice(0, 2) : [])
+                                        ].filter(Boolean);
+
+                                        return (
+                                            <div
+                                                key={study._id || study.slug}
+                                                className="group bg-white rounded-2xl sm:rounded-3xl border border-[#E5E7EB] hover:border-[#E8890C] shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between"
+                                            >
+                                                <div>
+                                                    {/* Image Frame */}
+                                                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
+                                                        <img
+                                                            src={studyImg}
+                                                            alt={study.title}
+                                                            loading="lazy"
+                                                            onError={(e) => {
+                                                                e.currentTarget.onerror = null;
+                                                                e.currentTarget.src = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80';
+                                                            }}
+                                                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                                        />
+                                                        <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                                                            <span className="px-3 py-1 rounded-full bg-[#0F3D2E]/90 text-white text-[11px] font-bold backdrop-blur-md shadow-xs">
+                                                                {study.category || 'Case Study'}
+                                                            </span>
+                                                            {study.clientName && (
+                                                                <span className="px-2.5 py-1 rounded-full bg-white/95 text-[#0F3D2E] text-[11px] font-extrabold backdrop-blur-md shadow-xs">
+                                                                    {study.clientName}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Content Body */}
+                                                    <div className="p-5 sm:p-7">
+                                                        <h3 className="text-xl sm:text-2xl font-black text-[#0F3D2E] group-hover:text-[#E8890C] transition-colors leading-snug mb-2.5">
+                                                            <Link to={`/case-study/${studySlug}`}>
+                                                                {study.title}
+                                                            </Link>
+                                                        </h3>
+                                                        <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed mb-4">
+                                                            {study.shortDescription || study.projectOverview || study.summary || study.challenge || 'Custom enterprise solution engineered with modern performance benchmarks.'}
+                                                        </p>
+
+                                                        {/* Metrics Row */}
+                                                        {metricsList.length > 0 && (
+                                                            <div className="grid grid-cols-2 gap-3 mb-4 p-3 rounded-xl bg-[#F8FAF9] border border-[#E5E7EB]">
+                                                                {metricsList.map((m, mIdx) => (
+                                                                    <div key={mIdx}>
+                                                                        <span className="text-lg sm:text-xl font-black text-[#0F3D2E] block">
+                                                                            {m.value}
+                                                                        </span>
+                                                                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                                                                            {m.label}
+                                                                        </span>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
+
+                                                        {/* Tags */}
+                                                        {tagsList.length > 0 && (
+                                                            <div className="flex flex-wrap gap-1.5 mb-2">
+                                                                {tagsList.map((tag, tIdx) => (
+                                                                    <span
+                                                                        key={tIdx}
+                                                                        className="px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold"
+                                                                    >
+                                                                        {tag}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Action Footer */}
+                                                <div className="px-5 sm:px-7 pb-5 sm:pb-7 flex items-center justify-between border-t border-[#E5E7EB]/60 pt-4">
+                                                    <Link
+                                                        to={`/case-study/${studySlug}`}
+                                                        className="inline-flex items-center gap-2 text-sm font-bold text-[#0F3D2E] hover:text-[#E8890C] transition-colors group/link"
+                                                    >
+                                                        <span>View Full Case Study</span>
+                                                        <ArrowRight className="w-4 h-4 text-[#E8890C] group-hover/link:translate-x-1 transition-transform" />
+                                                    </Link>
+                                                    {study.projectUrl && (
+                                                        <a
+                                                            href={study.projectUrl}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-xs font-semibold text-slate-500 hover:text-[#0F3D2E] transition-colors"
+                                                        >
+                                                            Live Project ↗
+                                                        </a>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+
+                            {/* Blogs / Industry Insights Section */}
+                            {displayBlogs.length > 0 && (
+                                <div className="mt-12 pt-10 border-t border-[#E5E7EB]">
+                                    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+                                        <div>
+                                            <span className="text-xs font-black uppercase tracking-wider text-[#E8890C] block mb-1">
+                                                Technical Insights & Research
+                                            </span>
+                                            <h3 className="text-xl sm:text-2xl font-black text-[#0F3D2E]">
+                                                Related Articles & Best Practices
+                                            </h3>
+                                        </div>
+                                        <Link
+                                            to="/blogs"
+                                            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0F3D2E] hover:text-[#E8890C] transition-colors"
+                                        >
+                                            <span>Explore All Insights</span>
+                                            <ChevronRight className="w-4 h-4 text-[#E8890C]" />
+                                        </Link>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {displayBlogs.map((b) => (
+                                            <Link
+                                                key={b._id || b.slug}
+                                                to={`/blog/${b.slug || b._id}`}
+                                                className="group bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#E8890C] p-5 shadow-xs hover:shadow-lg transition-all flex flex-col justify-between"
+                                            >
+                                                <div>
+                                                    <div className="aspect-[16/9] w-full rounded-xl overflow-hidden mb-4 bg-slate-100">
+                                                        <img
+                                                            src={b.imageUrl || '/blogs/blogs-banner.png'}
+                                                            alt={b.title}
+                                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                        />
+                                                    </div>
+                                                    <div className="flex items-center gap-2 mb-2">
+                                                        <span className="text-[11px] font-bold text-[#E8890C] uppercase tracking-wider">
+                                                            {b.category || 'Tech'}
+                                                        </span>
+                                                        <span className="text-slate-300">•</span>
+                                                        <span className="text-[11px] text-slate-500 font-medium">
+                                                            {b.readTime || '5 min read'}
+                                                        </span>
+                                                    </div>
+                                                    <h4 className="text-base font-bold text-[#0F3D2E] group-hover:text-[#E8890C] transition-colors line-clamp-2 leading-snug mb-2">
+                                                        {b.title}
+                                                    </h4>
+                                                    <p className="text-xs sm:text-sm text-slate-600 line-clamp-2 leading-relaxed">
+                                                        {b.summary || 'In-depth architectural analysis and engineering methodology.'}
+                                                    </p>
+                                                </div>
+                                                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#0F3D2E]">
+                                                    <span>Read Article</span>
+                                                    <ArrowRight className="w-3.5 h-3.5 text-[#E8890C] group-hover:translate-x-1 transition-transform" />
+                                                </div>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Bottom Link to Stories Listing */}
+                            <div className="text-center mt-10">
+                                <Link
+                                    to="/stories"
+                                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0F3D2E] hover:bg-[#E8890C] text-white font-bold text-sm shadow-md transition-all duration-200"
+                                >
+                                    <span>Browse All Client Success Stories</span>
+                                    <ArrowRight className="w-4 h-4" />
+                                </Link>
+                            </div>
+                        </div>
+                    </section>
+                )}
 
                 {/* ───────────── 9. FAQ (WHITE / CREAM) — 3-D accordion + contact card ───────────── */}
                 <section className="relative py-8 sm:py-12 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-white via-[#F6FAF7] to-white">

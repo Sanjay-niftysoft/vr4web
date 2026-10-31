@@ -101,14 +101,18 @@ export default function AppRoutes() {
         <Route path="/sectors" element={<SectorsPage />} />
         <Route path="/stories" element={<Stories />} />
         <Route path="/stories/:id" element={<CaseStudyDetails />} />
+        <Route path="/stories/:slug" element={<CaseStudyDetails />} />
         <Route path="/case-studies" element={<Stories />} />
         <Route path="/case-studies/:id" element={<CaseStudyDetails />} />
+        <Route path="/case-studies/:slug" element={<CaseStudyDetails />} />
         <Route path="/case-study/:id" element={<CaseStudyDetails />} />
         <Route path="/case-study/:slug" element={<CaseStudyDetails />} />
         <Route path="/our-work" element={<Stories />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />
+        <Route path="/blogs/:slug" element={<BlogDetails />} />
         <Route path="/blog/:id" element={<BlogDetails />} />
+        <Route path="/blog/:slug" element={<BlogDetails />} />
         <Route path="/journal" element={<Blogs />} />
         <Route path="/white-paper" element={<Whitepaper />} />
         <Route path="/whitepaper" element={<Whitepaper />} />

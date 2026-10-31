@@ -25,9 +25,11 @@ const CARD_IMAGES = [
 ];
 
 function getCardImage(study) {
+  if (study.featuredImage) return study.featuredImage;
+  if (study.cardImage && study.cardImage.startsWith('/uploads/')) return study.cardImage;
   const key = `${study.id || ''} ${study.title || ''}`;
   const hit = CARD_IMAGES.find(([re]) => re.test(key));
-  return hit ? hit[1] : study.cardImage;
+  return hit ? hit[1] : (study.cardImage || FALLBACK_IMG);
 }
 
 /* Used only if a case study has no image at all */
@@ -199,9 +201,10 @@ export default function CaseStudies() {
             _id: item._id,
             title: item.title,
             shortTitle: item.clientName || item.title,
-            summary: item.summary || item.challenge || '',
+            summary: item.shortDescription || item.summary || item.projectOverview || item.challenge || '',
             category: item.category || 'Case Study',
             industry: item.industry || '',
+            featuredImage: item.featuredImage,
             cardImage: item.featuredImage || '/case-study/ad.png',
             date: item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : '',
             isLive: true,

@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import DOMPurify from 'dompurify';
 import {
   Share2, Bookmark, ChevronRight, ArrowRight, CheckCircle2, Home,
   Copy, Check, Plus, Minus, Calendar, Clock, Sparkles
 } from 'lucide-react';
 import { getBlogById, BLOGS } from '../../data/blogsData';
+import authService from '../../services/authService';
 import CtaSection from '../../components/CtaSection';
 
 /* ─────────────────────────────────────────────────────────────
@@ -39,9 +41,12 @@ const BLOG_EXPANDED_DATA = {
 };
 
 export default function BlogDetails() {
-  const { id } = useParams();
+  const params = useParams();
+  const currentSlugOrId = params.id || params.slug;
   const navigate = useNavigate();
-  const blog = getBlogById(id);
+  const staticBlog = getBlogById(currentSlugOrId);
+  const [blog, setBlog] = useState(staticBlog);
+  const [loading, setLoading] = useState(!staticBlog);
 
   // Accordion Toggles
   const [openSummary, setOpenSummary] = useState(true);
@@ -57,12 +62,60 @@ export default function BlogDetails() {
     setOpenSummary(true);
     setOpenHistory(false);
     setOpenPasses(true);
-  }, [id]);
+
+    let isMounted = true;
+    const fetchLiveBlog = async () => {
+      try {
+        if (!staticBlog) setLoading(true);
+        const res = await authService.getPublicBlog(currentSlugOrId);
+        if (res?.success && res.data && isMounted) {
+          const d = res.data;
+          setBlog({
+            id: d.slug || d._id,
+            slug: d.slug,
+            _id: d._id,
+            title: d.title,
+            category: d.category || 'Technology',
+            author: d.author || 'VR4Web Insights',
+            readTime: d.readTime || '5 min read',
+            summary: d.summary || '',
+            content: d.content || '',
+            cardImage: d.imageUrl || '/blogs/blogs-banner.png',
+            imageUrl: d.imageUrl || '/blogs/blogs-banner.png',
+            date: d.createdAt ? new Date(d.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '',
+            tags: d.tags || [],
+            sections: d.sections || (d.content ? [] : [
+              {
+                heading: d.title,
+                paragraphs: [d.summary]
+              }
+            ])
+          });
+        }
+      } catch (err) {
+        console.warn('Live blog lookup fallback:', err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    fetchLiveBlog();
+    return () => { isMounted = false; };
+  }, [currentSlugOrId, staticBlog]);
 
   // Find the other 2 blogs to display in the right sidebar
   const otherBlogs = useMemo(() => {
-    return BLOGS.filter((b) => b.id !== blog?.id).slice(0, 2);
-  }, [blog?.id]);
+    return BLOGS.filter((b) => b.id !== (blog?.id || blog?.slug)).slice(0, 2);
+  }, [blog?.id, blog?.slug]);
+
+  if (loading) {
+    return (
+      <div className={`${FONT} min-h-[70vh] flex flex-col items-center justify-center px-4 bg-white`}>
+        <div className="w-10 h-10 border-4 border-[#E8890C] border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-sm font-semibold text-[#0F3D2E]">Loading Article...</p>
+      </div>
+    );
+  }
 
   if (!blog) {
     return (
@@ -304,6 +357,23 @@ export default function BlogDetails() {
                 )}
               </AnimatePresence>
             </div>
+
+            {/* Rich Blog Body (from Admin Editor) */}
+            {blog.content && (
+              <div 
+                className="py-8 border-b border-slate-200 text-slate-800 leading-relaxed font-sans prose prose-lg max-w-none
+                  [&_h1]:text-2xl sm:[&_h1]:text-3xl [&_h1]:font-black [&_h1]:text-[#0F3D2E] [&_h1]:mt-6 [&_h1]:mb-3
+                  [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-[#0F3D2E] [&_h2]:mt-6 [&_h2]:mb-3
+                  [&_h3]:text-lg sm:[&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-[#0F3D2E] [&_h3]:mt-4 [&_h3]:mb-2
+                  [&_p]:text-base [&_p]:leading-relaxed [&_p]:mb-4 [&_p]:text-slate-700
+                  [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ul]:space-y-1.5
+                  [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4 [&_ol]:space-y-1.5
+                  [&_blockquote]:border-l-4 [&_blockquote]:border-[#E8890C] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:my-6 [&_blockquote]:bg-[#0F3D2E]/5 [&_blockquote]:p-4 [&_blockquote]:rounded-r-xl
+                  [&_img]:rounded-2xl [&_img]:shadow-md [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto
+                  [&_a]:text-[#E8890C] [&_a]:underline [&_a]:font-semibold"
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.content) }}
+              />
+            )}
 
           </article>
 

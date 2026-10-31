@@ -588,11 +588,11 @@ export function getAllCaseStudies() {
 }
 
 export function getCaseStudyById(idOrSlug) {
-  if (!idOrSlug) return CASE_STUDIES[0];
+  if (!idOrSlug) return null;
   const found = CASE_STUDIES.find(
     (item) => item.id.toLowerCase() === idOrSlug.toLowerCase() || item.slug.toLowerCase() === idOrSlug.toLowerCase()
   );
-  return found || CASE_STUDIES[0];
+  return found || null;
 }
 
 export function getRelatedCaseStudies(currentId) {

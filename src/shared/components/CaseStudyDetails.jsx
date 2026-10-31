@@ -141,8 +141,9 @@ function Lightbox({ items, index, onClose, onStep }) {
 
 /* ════════════════ PAGE ════════════════ */
 export default function CaseStudyDetails() {
-  const { id } = useParams();
-  const staticStudy = getCaseStudyById(id);
+  const params = useParams();
+  const currentSlugOrId = params.slug || params.id;
+  const staticStudy = getCaseStudyById(currentSlugOrId);
   const [study, setStudy] = useState(staticStudy);
   const [loading, setLoading] = useState(!staticStudy);
   const related = study ? getRelatedCaseStudies(study.id || study.slug) : [];
@@ -158,7 +159,7 @@ export default function CaseStudyDetails() {
     const fetchLiveCaseStudy = async () => {
       try {
         if (!staticStudy) setLoading(true);
-        const res = await authService.getPublicCaseStudyBySlug(id);
+        const res = await authService.getPublicCaseStudy(currentSlugOrId);
         if (res?.success && res.data && isMounted) {
           const d = res.data;
           setStudy({
@@ -174,33 +175,47 @@ export default function CaseStudyDetails() {
             cardImage: d.featuredImage,
             creationMode: d.creationMode || 'manual',
             content: d.content || '',
-            leadDescription: d.summary || d.challenge || '',
+            leadDescription: d.shortDescription || d.summary || d.projectOverview || d.challenge || '',
             challenges: d.challenge ? [{ title: "The Business Challenge", description: d.challenge }] : [],
             approach: d.solution ? { heading: "Our Strategic Approach", description: d.solution, points: [] } : null,
-            keyFeatures: d.implementation ? [{ title: "Implementation & Architecture", description: d.implementation, tag: "Delivered" }] : [],
+            keyFeatures: d.implementation ? [{ title: "Core Architecture & Implementation", description: d.implementation, tag: "Delivered" }] : [],
             results: {
-              metrics: (d.metrics || []).map((m) => ({ value: m.value, label: m.label, note: m.description })),
+              metrics: (d.metrics || []).map((m) => ({ value: m.value, label: m.label, note: m.description || m.note })),
               points: []
             },
-            testimonial: d.testimonial?.quote ? d.testimonial : null,
-            beforeAfter: d.beforeAfter,
-            techStack: (d.technologiesUsed || []).map((t) => ({ name: t, role: "Technology", iconName: "Code2" })),
+            testimonial: d.testimonial?.quote ? {
+              quote: d.testimonial.quote,
+              author: d.testimonial.author || d.testimonial.name || d.clientName,
+              role: d.testimonial.role || d.testimonial.designation
+            } : null,
+            beforeAfter: d.beforeAfter ? {
+              beforeText: d.beforeAfter.beforeText || d.beforeAfter.beforeDescription,
+              afterText: d.beforeAfter.afterText || d.beforeAfter.afterDescription,
+              beforeImage: d.beforeAfter.beforeImage,
+              afterImage: d.beforeAfter.afterImage
+            } : null,
+            techStack: (d.technologiesUsed || []).map((t) => ({
+              name: typeof t === 'string' ? t : t.name,
+              role: typeof t === 'string' ? "Technology" : t.role || "Technology",
+              iconName: "Code2"
+            })),
             servicesProvided: d.servicesProvided || [],
             aboutClient: d.clientName ? {
               heading: d.clientName,
-              description: `Client operating in the ${d.industry || 'technology'} industry.`,
+              description: d.clientOverview || d.summary || `Client operating in the ${d.industry || 'technology'} industry.`,
               tag: "About the Client",
               highlights: [
-                d.industry && { label: "Industry", value: d.industry, iconName: "Building2" },
-                d.projectDetails?.timeline && { label: "Timeline", value: d.projectDetails.timeline, iconName: "Calendar" },
-                d.projectDetails?.location && { label: "Location", value: d.projectDetails.location, iconName: "Globe" }
+                d.clientName && { label: "Client", value: d.clientName, iconName: "Building2" },
+                d.industry && { label: "Industry", value: d.industry, iconName: "Layers" },
+                (d.projectDuration || d.projectDetails?.timeline) && { label: "Timeline", value: d.projectDuration || d.projectDetails?.timeline, iconName: "Clock" },
+                (d.clientLocation || d.projectDetails?.location) && { label: "Location", value: d.clientLocation || d.projectDetails?.location, iconName: "Globe" }
               ].filter(Boolean)
             } : null,
             meta: [
               d.clientName && { label: "Client", value: d.clientName },
               d.industry && { label: "Industry", value: d.industry },
-              d.projectDetails?.timeline && { label: "Timeline", value: d.projectDetails.timeline },
-              d.projectDetails?.location && { label: "Location", value: d.projectDetails.location }
+              (d.projectDuration || d.projectDetails?.timeline) && { label: "Timeline", value: d.projectDuration || d.projectDetails?.timeline },
+              (d.clientLocation || d.projectDetails?.location) && { label: "Location", value: d.clientLocation || d.projectDetails?.location }
             ].filter(Boolean)
           });
         }
@@ -213,7 +228,7 @@ export default function CaseStudyDetails() {
 
     fetchLiveCaseStudy();
     return () => { isMounted = false; };
-  }, [id, staticStudy]);
+  }, [currentSlugOrId, staticStudy]);
 
   if (loading) {
     return (
@@ -329,11 +344,11 @@ export default function CaseStudyDetails() {
               </div>
             )}
 
-            {(about.website || study.website) && (
+            {(about.website || study.website || study.projectUrl) && (
               <div>
                 <Tiny className="mb-3.5">Let’s connect</Tiny>
                 <a
-                  href={about.website || study.website}
+                  href={about.website || study.website || study.projectUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`${FONT} inline-flex items-center gap-2 text-[16px] sm:text-[17px] font-extrabold text-[#0F3D2E] border-b-2 border-[#E8890C] pb-0.5 hover:text-[#E8890C] transition-colors`}
