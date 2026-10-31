@@ -8,12 +8,12 @@ export default function AdminRoute({ children }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#071811] flex flex-col items-center justify-center text-white">
+      <div className="min-h-screen bg-[#F8FAF9] flex flex-col items-center justify-center text-[#0F3D2E]">
         <div className="relative flex items-center justify-center">
-          <div className="w-16 h-16 border-4 border-[#E8890C]/20 border-t-[#E8890C] rounded-full animate-spin"></div>
-          <Loader2 className="w-6 h-6 text-[#E8890C] absolute animate-pulse" />
+          <div className="w-14 h-14 border-4 border-[#E5E7EB] border-t-[#E8890C] rounded-full animate-spin"></div>
+          <Loader2 className="w-6 h-6 text-[#0F3D2E] absolute animate-pulse" />
         </div>
-        <p className="mt-4 text-emerald-200/80 text-sm tracking-widest font-mono uppercase">
+        <p className="mt-4 text-[#64748B] text-xs tracking-widest font-mono uppercase font-semibold">
           Verifying Admin Access...
         </p>
       </div>
