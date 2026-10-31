@@ -35,3 +35,4 @@ export const getImageUrl = (path, fallback = '/case-study/property.png') => {
 };
 
 export default getImageUrl;
+

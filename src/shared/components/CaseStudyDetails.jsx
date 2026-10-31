@@ -88,7 +88,7 @@ function Reveal({ children, delay = 0, className = '' }) {
 
 /** sidebar heading with a short yellow line */
 const SideTitle = ({ children, className = '' }) => (
-  <h3 className={`${FONT} text-xl sm:text-[22px] font-extrabold text-[#0F3D2E] tracking-tight ${className}`}>
+  <h3 className={`${FONT} text-xl sm:text-[22px] font-extrabold text-[#0F3D2E] tracking-tight break-words [overflow-wrap:anywhere] ${className}`}>
     {children}
     <span className="block mt-2.5 h-[3.5px] w-12 bg-[#E8890C] rounded-full" aria-hidden="true" />
   </h3>
@@ -96,20 +96,20 @@ const SideTitle = ({ children, className = '' }) => (
 
 /** tiny uppercase label (like "LET'S CONNECT", "PROJECT FACTS") */
 const Tiny = ({ children, className = '' }) => (
-  <p className={`${FONT} text-sm sm:text-[14.5px] font-black uppercase tracking-[0.14em] text-[#0F3D2E] ${className}`}>{children}</p>
+  <p className={`${FONT} text-sm sm:text-[14.5px] font-black uppercase tracking-[0.14em] text-[#0F3D2E] break-words [overflow-wrap:anywhere] ${className}`}>{children}</p>
 );
 
 /** article sub-heading */
 const ArticleHeading = ({ id, label, children }) => (
-  <div className="mb-6">
+  <div className="mb-6 min-w-0 max-w-full">
     {label && <Tiny className="!text-[#E8890C] mb-2">{label}</Tiny>}
-    <h2 id={id} className={`${FONT} text-[26px] sm:text-[32px] md:text-[36px] font-black leading-snug text-[#0F3D2E]`}>{children}</h2>
+    <h2 id={id} className={`${FONT} text-[26px] sm:text-[32px] md:text-[36px] font-black leading-snug text-[#0F3D2E] break-words [overflow-wrap:anywhere]`}>{children}</h2>
   </div>
 );
 
 /** body paragraph */
 const P = ({ children, className = '' }) => (
-  <p className={`${FONT} text-[16.5px] sm:text-[18px] leading-[1.8] text-slate-800 font-normal ${className}`}>{children}</p>
+  <p className={`${FONT} text-[16.5px] sm:text-[18px] leading-[1.8] text-slate-800 font-normal break-words [overflow-wrap:anywhere] ${className}`}>{children}</p>
 );
 
 function Lightbox({ items, index, onClose, onStep }) {
@@ -307,37 +307,55 @@ export default function CaseStudyDetails() {
 
       {/* ───────────── 3-COLUMN BODY ───────────── */}
       <div
-        className="w-full max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 pb-16
-                   grid grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)_280px]
-                   gap-8 lg:gap-12 items-start"
+        className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pb-16
+                   grid grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)_240px] xl:grid-cols-[280px_minmax(0,1fr)_280px]
+                   gap-8 lg:gap-8 xl:gap-12 items-start"
       >
 
         {/* ═════ LEFT SIDEBAR — About the client (sticky) ═════ */}
         {about ? (
-          <aside className="order-2 lg:order-1 lg:pr-2 lg:sticky lg:top-28 self-start space-y-6" aria-label="About the client">
+          <aside
+            className="order-2 lg:order-1 w-full min-w-0 max-w-full lg:sticky lg:top-28 self-start space-y-6 break-words [overflow-wrap:anywhere]"
+            aria-label="About the client"
+          >
             <SideTitle>{about.tag || 'About the client'}</SideTitle>
 
             {(about.image || about.logo) && (
-              <img src={about.image || about.logo} alt={about.heading || ''} loading="lazy" className="mt-5 w-full aspect-square object-cover rounded-2xl shadow-sm border border-[#0F3D2E]/10" />
+              <img
+                src={getImageUrl(about.image || about.logo)}
+                alt={about.heading || ''}
+                loading="lazy"
+                className="mt-5 w-full aspect-square object-cover rounded-2xl shadow-sm border border-[#0F3D2E]/10"
+              />
             )}
 
-            <div>
-              <h4 className={`${FONT} text-lg sm:text-xl font-black leading-snug text-[#0F3D2E]`}>{about.heading}</h4>
+            <div className="min-w-0 max-w-full">
+              <h4 className={`${FONT} text-lg sm:text-xl font-black leading-snug text-[#0F3D2E] break-words [overflow-wrap:anywhere]`}>
+                {about.heading}
+              </h4>
               {about.description && (
-                <p className={`${FONT} mt-3 text-[16px] sm:text-[17px] normal-case leading-relaxed text-slate-700 font-normal`}>{about.description}</p>
+                <p className={`${FONT} mt-3 text-[15px] sm:text-[16px] normal-case leading-relaxed text-slate-700 font-normal break-words [overflow-wrap:anywhere]`}>
+                  {about.description}
+                </p>
               )}
             </div>
 
             {(about.highlights || []).length > 0 && (
-              <div>
+              <div className="min-w-0 max-w-full">
                 <Tiny className="mb-4">Client details</Tiny>
                 <ul className="space-y-4">
                   {about.highlights.map((h) => (
-                    <li key={h.id || h.label} className="flex items-start gap-3.5">
-                      <span className="mt-0.5 text-[#E8890C] p-2 rounded-xl bg-[#E8890C]/10 shrink-0"><Icon name={h.iconName} className="w-5 h-5" /></span>
-                      <span className="min-w-0">
-                        <span className={`${FONT} block text-[12px] sm:text-[13px] font-extrabold uppercase tracking-wider text-[#E8890C]`}>{h.label}</span>
-                        <span className={`${FONT} block text-[15.5px] sm:text-[16.5px] font-bold leading-snug text-[#0F3D2E] break-words mt-0.5`}>{h.value}</span>
+                    <li key={h.id || h.label} className="flex items-start gap-3 min-w-0 max-w-full">
+                      <span className="mt-0.5 text-[#E8890C] p-2 rounded-xl bg-[#E8890C]/10 shrink-0">
+                        <Icon name={h.iconName} className="w-5 h-5" />
+                      </span>
+                      <span className="min-w-0 flex-1 max-w-full">
+                        <span className={`${FONT} block text-[12px] sm:text-[13px] font-extrabold uppercase tracking-wider text-[#E8890C]`}>
+                          {h.label}
+                        </span>
+                        <span className={`${FONT} block text-[15px] sm:text-[16px] font-bold leading-snug text-[#0F3D2E] break-words [overflow-wrap:anywhere] mt-0.5`}>
+                          {h.value}
+                        </span>
                       </span>
                     </li>
                   ))}
@@ -346,15 +364,16 @@ export default function CaseStudyDetails() {
             )}
 
             {(about.website || study.website || study.projectUrl) && (
-              <div>
+              <div className="min-w-0 max-w-full">
                 <Tiny className="mb-3.5">Let’s connect</Tiny>
                 <a
                   href={about.website || study.website || study.projectUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${FONT} inline-flex items-center gap-2 text-[16px] sm:text-[17px] font-extrabold text-[#0F3D2E] border-b-2 border-[#E8890C] pb-0.5 hover:text-[#E8890C] transition-colors`}
+                  className={`${FONT} inline-flex items-center gap-2 text-[15px] sm:text-[16px] font-extrabold text-[#0F3D2E] border-b-2 border-[#E8890C] pb-0.5 hover:text-[#E8890C] transition-colors break-words [overflow-wrap:anywhere]`}
                 >
-                  Visit website <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  <span className="truncate max-w-[200px]">Visit website</span>
+                  <ArrowRight className="w-4 h-4 shrink-0" aria-hidden="true" />
                 </a>
               </div>
             )}
@@ -367,7 +386,7 @@ export default function CaseStudyDetails() {
         {/* ═════ CENTRE — the article (scrolls with page) ═════ */}
         <article
           ref={scrollRef}
-          className="order-1 lg:order-2 min-w-0 lg:px-10 lg:border-x lg:border-[#0F3D2E]/10"
+          className="order-1 lg:order-2 w-full min-w-0 max-w-full overflow-hidden lg:px-6 xl:px-10 lg:border-x lg:border-[#0F3D2E]/10"
         >
           {heroImg && (
             <Reveal>
@@ -386,7 +405,7 @@ export default function CaseStudyDetails() {
             {study.creationMode === 'quick' && study.content && (
               <Reveal className="mt-8">
                 <div 
-                  className="prose prose-lg max-w-none text-slate-800 leading-relaxed font-sans
+                  className="prose prose-lg max-w-none text-slate-800 leading-relaxed font-sans break-words [overflow-wrap:anywhere]
                     [&_h1]:text-2xl sm:[&_h1]:text-3xl [&_h1]:font-black [&_h1]:text-[#0F3D2E] [&_h1]:mt-8 [&_h1]:mb-4
                     [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-[#0F3D2E] [&_h2]:mt-8 [&_h2]:mb-3
                     [&_h3]:text-lg sm:[&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-[#0F3D2E] [&_h3]:mt-6 [&_h3]:mb-2
@@ -414,7 +433,7 @@ export default function CaseStudyDetails() {
                       {study.beforeAfter.beforeImage && (
                         <img src={study.beforeAfter.beforeImage} alt="Before" className="w-full h-40 object-cover rounded-xl mb-3 border border-red-200/50" />
                       )}
-                      <p className="text-sm text-red-950 leading-relaxed font-medium">
+                      <p className="text-sm text-red-950 leading-relaxed font-medium break-words [overflow-wrap:anywhere]">
                         {study.beforeAfter.beforeText}
                       </p>
                     </div>
@@ -427,7 +446,7 @@ export default function CaseStudyDetails() {
                       {study.beforeAfter.afterImage && (
                         <img src={study.beforeAfter.afterImage} alt="After" className="w-full h-40 object-cover rounded-xl mb-3 border border-[#0F3D2E]/20" />
                       )}
-                      <p className="text-sm text-[#0F3D2E] leading-relaxed font-medium">
+                      <p className="text-sm text-[#0F3D2E] leading-relaxed font-medium break-words [overflow-wrap:anywhere]">
                         {study.beforeAfter.afterText}
                       </p>
                     </div>
@@ -485,7 +504,7 @@ export default function CaseStudyDetails() {
             {study.testimonial && (
               <Reveal className="mt-10">
                 <blockquote className="border-l-4 border-[#E8890C] pl-6 py-2 bg-[#0F3D2E]/5 rounded-r-2xl">
-                  <p className={`${FONT} text-base sm:text-lg italic leading-relaxed text-[#0F3D2E]`}>“{study.testimonial.quote}”</p>
+                  <p className={`${FONT} text-base sm:text-lg italic leading-relaxed text-[#0F3D2E] break-words [overflow-wrap:anywhere]`}>“{study.testimonial.quote}”</p>
                   <footer className={`${FONT} mt-3 text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#0F3D2E]`}>
                     {study.testimonial.author}
                     {study.testimonial.role && <span className="text-[#E8890C]"> · {study.testimonial.role}</span>}
@@ -781,17 +800,25 @@ export default function CaseStudyDetails() {
           </article>
 
           {/* ═════ RIGHT SIDEBAR — More case studies + Project facts (sticky) ═════ */}
-          <aside className="order-3 lg:pl-2 lg:sticky lg:top-28 self-start space-y-8" aria-label="More from VR4Web">
+          <aside
+            className="order-3 w-full min-w-0 max-w-full lg:sticky lg:top-28 self-start space-y-8 break-words [overflow-wrap:anywhere]"
+            aria-label="More from VR4Web"
+          >
             {related.length > 0 && (
-              <div>
+              <div className="min-w-0 max-w-full">
                 <SideTitle>More case studies</SideTitle>
                 <ul className="mt-6 space-y-6">
                   {related.map((r) => (
-                    <li key={r.id} className="group">
+                    <li key={r.id} className="group min-w-0 max-w-full">
                       {r.badge && (
-                        <span className={`${FONT} inline-block text-[12.5px] sm:text-[13px] font-extrabold uppercase tracking-wider text-[#E8890C] mb-1.5`}>{r.badge}</span>
+                        <span className={`${FONT} inline-block text-[12.5px] sm:text-[13px] font-extrabold uppercase tracking-wider text-[#E8890C] mb-1.5`}>
+                          {r.badge}
+                        </span>
                       )}
-                      <Link to={`/stories/${r.id}`} className={`${FONT} block text-[16.5px] sm:text-[17.5px] font-bold leading-snug text-[#0F3D2E] group-hover:text-[#E8890C] transition-colors`}>
+                      <Link
+                        to={`/stories/${r.id}`}
+                        className={`${FONT} block text-[16px] sm:text-[17px] font-bold leading-snug text-[#0F3D2E] group-hover:text-[#E8890C] transition-colors break-words [overflow-wrap:anywhere]`}
+                      >
                         {r.title}
                       </Link>
                     </li>
@@ -801,13 +828,18 @@ export default function CaseStudyDetails() {
             )}
 
             {meta.length > 0 && (
-              <div>
+              <div className="min-w-0 max-w-full">
                 <Tiny className="mb-4">Project facts</Tiny>
                 <ul className="space-y-3">
                   {meta.map((m) => (
-                    <li key={m.label} className={`${FONT} text-[15.5px] sm:text-[16.5px] text-slate-700 flex items-baseline justify-between gap-3 border-b border-[#0F3D2E]/10 pb-2.5`}>
-                      <span className="font-bold text-[#0F3D2E]">{m.label}</span>
-                      <span className="text-[#E8890C] font-black text-right">({m.value})</span>
+                    <li
+                      key={m.label}
+                      className={`${FONT} text-[15px] sm:text-[16px] text-slate-700 flex items-baseline justify-between gap-3 border-b border-[#0F3D2E]/10 pb-2.5 min-w-0 max-w-full`}
+                    >
+                      <span className="font-bold text-[#0F3D2E] shrink-0">{m.label}</span>
+                      <span className="text-[#E8890C] font-black text-right break-words [overflow-wrap:anywhere]">
+                        ({m.value})
+                      </span>
                     </li>
                   ))}
                 </ul>
