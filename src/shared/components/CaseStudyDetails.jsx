@@ -177,8 +177,33 @@ export default function CaseStudyDetails() {
             creationMode: d.creationMode || 'manual',
             content: d.content || '',
             leadDescription: d.shortDescription || d.summary || d.projectOverview || d.challenge || '',
-            challenges: d.challenge ? [{ title: "The Business Challenge", description: d.challenge }] : [],
-            approach: d.solution ? { heading: "Our Strategic Approach", description: d.solution, points: [] } : null,
+            challenges: (Array.isArray(d.challengesAndSolutions) && d.challengesAndSolutions.length > 0)
+              ? d.challengesAndSolutions
+                  .filter((cs) => cs.challengeDescription || cs.challengeTitle)
+                  .map((cs, i) => ({
+                    title: cs.challengeTitle || `Challenge ${i + 1}`,
+                    description: cs.challengeDescription || '',
+                  }))
+              : d.challenge
+                ? [{ title: "The Business Challenge", description: d.challenge }]
+                : [],
+            challengesAndSolutions: (Array.isArray(d.challengesAndSolutions) && d.challengesAndSolutions.length > 0)
+              ? d.challengesAndSolutions
+              : (d.challenge || d.solution)
+                ? [{
+                    challengeTitle: "The Business Challenge",
+                    challengeDescription: d.challenge || '',
+                    solutionTitle: "Our Strategic Approach",
+                    solutionDescription: d.solution || '',
+                  }]
+                : [],
+            approach: (d.solution || (Array.isArray(d.challengesAndSolutions) && d.challengesAndSolutions.some((cs) => cs.solutionDescription || cs.solutionTitle)))
+              ? {
+                  heading: "Our Strategic Approach",
+                  description: (d.challengesAndSolutions?.[0]?.solutionDescription) || d.solution || '',
+                  points: [],
+                }
+              : null,
             keyFeatures: d.implementation ? [{ title: "Core Architecture & Implementation", description: d.implementation, tag: "Delivered" }] : [],
             results: {
               metrics: (d.metrics || []).map((m) => ({ value: m.value, label: m.label, note: m.description || m.note })),
@@ -486,7 +511,30 @@ export default function CaseStudyDetails() {
                     </div>
                   </Reveal>
                 )}
-                {study.approach.description && <Reveal><P>{study.approach.description}</P></Reveal>}
+                {study.challengesAndSolutions && study.challengesAndSolutions.length > 1 ? (
+                  <ol className="space-y-6 mt-4">
+                    {study.challengesAndSolutions.map((cs, i) => {
+                      if (!cs.solutionDescription && !cs.solutionTitle) return null;
+                      return (
+                        <Reveal key={i} delay={i * 0.06}>
+                          <li className="flex gap-5">
+                            <span className={`${FONT} text-3xl font-extrabold leading-none text-[#0F3D2E]`} aria-hidden="true">
+                              {String(i + 1).padStart(2, '0')}
+                            </span>
+                            <div className="flex-1 border-t border-[#0F3D2E]/15 pt-3">
+                              <h3 className={`${FONT} text-lg font-bold text-[#0F3D2E]`}>
+                                {cs.solutionTitle || `Strategic Solution ${i + 1}`}
+                              </h3>
+                              {cs.solutionDescription && <P className="mt-1.5">{cs.solutionDescription}</P>}
+                            </div>
+                          </li>
+                        </Reveal>
+                      );
+                    })}
+                  </ol>
+                ) : (
+                  study.approach.description && <Reveal><P>{study.approach.description}</P></Reveal>
+                )}
                 {study.approach.points?.length > 0 && (
                   <ul className="mt-5 space-y-3">
                     {study.approach.points.map((p, i) => (

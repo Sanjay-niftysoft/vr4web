@@ -98,6 +98,14 @@ const INITIAL_FORM_STATE = {
   // Structured Content (Manual Fill)
   challenge: '',
   solution: '',
+  challengesAndSolutions: [
+    {
+      challengeTitle: 'The Business Challenge',
+      challengeDescription: '',
+      solutionTitle: 'Our Strategic Approach',
+      solutionDescription: '',
+    },
+  ],
   implementation: '',
   results: '',
   conclusion: '',
@@ -203,9 +211,39 @@ export default function CaseStudiesManagement() {
   const handleOpenModal = async (item = null) => {
     if (item) {
       setEditingId(item._id);
+
+      let csPairs = [];
+      if (Array.isArray(item.challengesAndSolutions) && item.challengesAndSolutions.length > 0) {
+        csPairs = item.challengesAndSolutions.map((cs, idx) => ({
+          challengeTitle: cs.challengeTitle || `Challenge ${idx + 1}`,
+          challengeDescription: cs.challengeDescription || '',
+          solutionTitle: cs.solutionTitle || `Strategic Solution ${idx + 1}`,
+          solutionDescription: cs.solutionDescription || '',
+        }));
+      } else if (item.challenge || item.solution) {
+        csPairs = [
+          {
+            challengeTitle: 'The Business Challenge',
+            challengeDescription: item.challenge || '',
+            solutionTitle: 'Our Strategic Approach',
+            solutionDescription: item.solution || '',
+          },
+        ];
+      } else {
+        csPairs = [
+          {
+            challengeTitle: 'The Business Challenge',
+            challengeDescription: '',
+            solutionTitle: 'Our Strategic Approach',
+            solutionDescription: '',
+          },
+        ];
+      }
+
       setFormData({
         ...INITIAL_FORM_STATE,
         ...item,
+        challengesAndSolutions: csPairs,
         servicesProvided: Array.isArray(item.servicesProvided) ? item.servicesProvided : [],
         technologiesUsed: Array.isArray(item.technologiesUsed) ? item.technologiesUsed : [],
         metrics: Array.isArray(item.metrics) ? item.metrics : [],
@@ -218,6 +256,62 @@ export default function CaseStudiesManagement() {
     }
     setActiveTab('basic');
     setModalOpen(true);
+  };
+
+  // Add Another Challenge & Solution Pair
+  const handleAddChallengeSolution = () => {
+    setFormData((prev) => {
+      const nextIndex = (prev.challengesAndSolutions?.length || 0) + 1;
+      return {
+        ...prev,
+        challengesAndSolutions: [
+          ...(prev.challengesAndSolutions || []),
+          {
+            challengeTitle: `Challenge ${nextIndex}`,
+            challengeDescription: '',
+            solutionTitle: `Strategic Solution ${nextIndex}`,
+            solutionDescription: '',
+          },
+        ],
+      };
+    });
+  };
+
+  // Remove a Challenge & Solution Pair
+  const handleRemoveChallengeSolution = (indexToRemove) => {
+    setFormData((prev) => {
+      const currentList = prev.challengesAndSolutions || [];
+      const updated = currentList.filter((_, idx) => idx !== indexToRemove);
+      const finalList = updated.length > 0 ? updated : [
+        {
+          challengeTitle: 'The Business Challenge',
+          challengeDescription: '',
+          solutionTitle: 'Our Strategic Approach',
+          solutionDescription: '',
+        },
+      ];
+      return {
+        ...prev,
+        challengesAndSolutions: finalList,
+        challenge: finalList[0]?.challengeDescription || '',
+        solution: finalList[0]?.solutionDescription || '',
+      };
+    });
+  };
+
+  // Update a Challenge & Solution Field
+  const handleUpdateChallengeSolution = (index, field, value) => {
+    setFormData((prev) => {
+      const updated = [...(prev.challengesAndSolutions || [])];
+      if (!updated[index]) return prev;
+      updated[index] = { ...updated[index], [field]: value };
+      return {
+        ...prev,
+        challengesAndSolutions: updated,
+        challenge: index === 0 && field === 'challengeDescription' ? value : prev.challenge,
+        solution: index === 0 && field === 'solutionDescription' ? value : prev.solution,
+      };
+    });
   };
 
   // Switch Creation Mode seamlessly
@@ -351,8 +445,11 @@ export default function CaseStudiesManagement() {
 
     setSaving(true);
     try {
+      const firstPair = formData.challengesAndSolutions?.[0];
       const payload = {
         ...formData,
+        challenge: firstPair?.challengeDescription || formData.challenge || '',
+        solution: firstPair?.solutionDescription || formData.solution || '',
         featuredImage: formData.featuredImage?.trim() || '/case-study/property.png',
         status: targetStatus || formData.status,
       };
@@ -1173,30 +1270,121 @@ export default function CaseStudiesManagement() {
                   {/* Tab 3: Structured Content */}
                   {activeTab === 'content' && (
                     <div className="bg-white p-6 rounded-2xl border border-[#E5E7EB] space-y-4">
-                      <div>
-                        <label className="block text-xs font-bold text-[#0F3D2E] mb-1.5 uppercase">
-                          The Challenge
-                        </label>
-                        <textarea
-                          rows={3}
-                          value={formData.challenge}
-                          onChange={(e) => setFormData({ ...formData, challenge: e.target.value })}
-                          placeholder="What core business or technical friction was the client experiencing?"
-                          className="w-full px-3.5 py-2.5 bg-[#F8FAF9] border border-[#E5E7EB] rounded-xl text-[#0F3D2E] text-sm focus:outline-none"
-                        />
-                      </div>
+                      {/* Dynamic Challenges & Solutions Pairs */}
+                      <div className="space-y-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#E5E7EB]">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h3 className="text-xs font-bold text-[#0F3D2E] uppercase tracking-wide">
+                                Challenges & Solutions
+                              </h3>
+                              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#E8890C]/15 text-[#E8890C]">
+                                {formData.challengesAndSolutions?.length || 1} {formData.challengesAndSolutions?.length === 1 ? 'Pair' : 'Pairs'}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-[#64748B] mt-0.5">
+                              Add as many challenge and engineered solution pairs as required for this project.
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={handleAddChallengeSolution}
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0F3D2E] hover:bg-[#E8890C] text-white text-xs font-bold transition-all shadow-xs cursor-pointer self-start sm:self-auto"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Add Pair</span>
+                          </button>
+                        </div>
 
-                      <div>
-                        <label className="block text-xs font-bold text-[#0F3D2E] mb-1.5 uppercase">
-                          Our Solution
-                        </label>
-                        <textarea
-                          rows={3}
-                          value={formData.solution}
-                          onChange={(e) => setFormData({ ...formData, solution: e.target.value })}
-                          placeholder="What architectural and strategic solutions were engineered?"
-                          className="w-full px-3.5 py-2.5 bg-[#F8FAF9] border border-[#E5E7EB] rounded-xl text-[#0F3D2E] text-sm focus:outline-none"
-                        />
+                        {/* List of Pairs */}
+                        <div className="space-y-4">
+                          {(formData.challengesAndSolutions || []).map((pair, idx) => (
+                            <div
+                              key={idx}
+                              className="p-4 sm:p-5 rounded-2xl border border-[#E5E7EB] bg-[#F8FAF9] hover:border-[#0F3D2E]/30 transition-all space-y-3.5 relative"
+                            >
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <span className="w-6 h-6 rounded-full bg-[#0F3D2E] text-white text-xs font-bold flex items-center justify-center">
+                                    {idx + 1}
+                                  </span>
+                                  <span className="text-xs font-bold text-[#0F3D2E] uppercase tracking-wide">
+                                    Challenge & Solution Pair #{idx + 1}
+                                  </span>
+                                </div>
+                                {(formData.challengesAndSolutions || []).length > 1 && (
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveChallengeSolution(idx)}
+                                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 transition-colors cursor-pointer"
+                                    title="Delete this Challenge & Solution pair"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                    <span>Remove</span>
+                                  </button>
+                                )}
+                              </div>
+
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {/* The Challenge Box */}
+                                <div className="p-3.5 rounded-xl bg-white border border-[#E5E7EB] space-y-2">
+                                  <div className="flex items-center justify-between">
+                                    <label className="block text-[11px] font-bold text-[#E8890C] uppercase tracking-wider">
+                                      The Challenge #{idx + 1}
+                                    </label>
+                                  </div>
+                                  <input
+                                    type="text"
+                                    value={pair.challengeTitle || ''}
+                                    onChange={(e) => handleUpdateChallengeSolution(idx, 'challengeTitle', e.target.value)}
+                                    placeholder="Challenge Title (e.g. Legacy System Bottlenecks)"
+                                    className="w-full px-3 py-1.5 bg-[#F8FAF9] border border-[#E5E7EB] rounded-lg text-xs font-semibold text-[#0F3D2E] focus:outline-none focus:border-[#E8890C]"
+                                  />
+                                  <textarea
+                                    rows={3}
+                                    value={pair.challengeDescription || ''}
+                                    onChange={(e) => handleUpdateChallengeSolution(idx, 'challengeDescription', e.target.value)}
+                                    placeholder="What core business or technical friction was the client experiencing?"
+                                    className="w-full px-3 py-2 bg-[#F8FAF9] border border-[#E5E7EB] rounded-lg text-xs text-[#0F3D2E] focus:outline-none focus:border-[#E8890C]"
+                                  />
+                                </div>
+
+                                {/* Our Solution Box */}
+                                <div className="p-3.5 rounded-xl bg-white border border-[#E5E7EB] space-y-2">
+                                  <div className="flex items-center justify-between">
+                                    <label className="block text-[11px] font-bold text-[#0F3D2E] uppercase tracking-wider">
+                                      Our Solution #{idx + 1}
+                                    </label>
+                                  </div>
+                                  <input
+                                    type="text"
+                                    value={pair.solutionTitle || ''}
+                                    onChange={(e) => handleUpdateChallengeSolution(idx, 'solutionTitle', e.target.value)}
+                                    placeholder="Solution Title (e.g. Modern Full-Stack Architecture)"
+                                    className="w-full px-3 py-1.5 bg-[#F8FAF9] border border-[#E5E7EB] rounded-lg text-xs font-semibold text-[#0F3D2E] focus:outline-none focus:border-[#0F3D2E]"
+                                  />
+                                  <textarea
+                                    rows={3}
+                                    value={pair.solutionDescription || ''}
+                                    onChange={(e) => handleUpdateChallengeSolution(idx, 'solutionDescription', e.target.value)}
+                                    placeholder="What architectural and strategic solutions were engineered?"
+                                    className="w-full px-3 py-2 bg-[#F8FAF9] border border-[#E5E7EB] rounded-lg text-xs text-[#0F3D2E] focus:outline-none focus:border-[#0F3D2E]"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Add Another Pair Button */}
+                        <button
+                          type="button"
+                          onClick={handleAddChallengeSolution}
+                          className="w-full py-3 border-2 border-dashed border-[#0F3D2E]/25 hover:border-[#E8890C] hover:bg-orange-50/40 rounded-2xl text-[#0F3D2E] hover:text-[#E8890C] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
+                        >
+                          <Plus className="w-4 h-4" />
+                          <span>Add Another Challenge & Solution Pair</span>
+                        </button>
                       </div>
 
                       <div>
@@ -1762,17 +1950,55 @@ export default function CaseStudiesManagement() {
                 />
               ) : (
                 <div className="space-y-6 text-[#0F3D2E]">
-                  {formData.challenge && (
-                    <div>
-                      <h3 className="text-xl font-bold text-[#0F3D2E] mb-2">The Challenge</h3>
-                      <p className="text-sm text-[#64748B] leading-relaxed whitespace-pre-line">{formData.challenge}</p>
+                  {formData.challengesAndSolutions?.length > 0 ? (
+                    <div className="space-y-4">
+                      <h3 className="text-xl font-bold text-[#0F3D2E]">Challenges & Strategic Solutions</h3>
+                      <div className="space-y-3">
+                        {formData.challengesAndSolutions.map((cs, idx) => (
+                          <div key={idx} className="p-4 rounded-xl border border-[#E5E7EB] bg-[#F8FAF9] space-y-3">
+                            <div className="flex items-center gap-2">
+                              <span className="w-5 h-5 rounded-full bg-[#E8890C] text-white text-[11px] font-bold flex items-center justify-center">
+                                {idx + 1}
+                              </span>
+                              <span className="text-xs font-bold text-[#0F3D2E] uppercase">Pair #{idx + 1}</span>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="border-l-2 border-[#E8890C] pl-3">
+                                <div className="text-xs font-bold text-[#E8890C] uppercase mb-1">
+                                  {cs.challengeTitle || `Challenge ${idx + 1}`}
+                                </div>
+                                <p className="text-xs text-[#64748B] leading-relaxed whitespace-pre-line">
+                                  {cs.challengeDescription || 'No challenge description provided'}
+                                </p>
+                              </div>
+                              <div className="border-l-2 border-[#0F3D2E] pl-3">
+                                <div className="text-xs font-bold text-[#0F3D2E] uppercase mb-1">
+                                  {cs.solutionTitle || `Strategic Solution ${idx + 1}`}
+                                </div>
+                                <p className="text-xs text-[#64748B] leading-relaxed whitespace-pre-line">
+                                  {cs.solutionDescription || 'No solution description provided'}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  )}
-                  {formData.solution && (
-                    <div>
-                      <h3 className="text-xl font-bold text-[#0F3D2E] mb-2">Our Solution</h3>
-                      <p className="text-sm text-[#64748B] leading-relaxed whitespace-pre-line">{formData.solution}</p>
-                    </div>
+                  ) : (
+                    <>
+                      {formData.challenge && (
+                        <div>
+                          <h3 className="text-xl font-bold text-[#0F3D2E] mb-2">The Challenge</h3>
+                          <p className="text-sm text-[#64748B] leading-relaxed whitespace-pre-line">{formData.challenge}</p>
+                        </div>
+                      )}
+                      {formData.solution && (
+                        <div>
+                          <h3 className="text-xl font-bold text-[#0F3D2E] mb-2">Our Solution</h3>
+                          <p className="text-sm text-[#64748B] leading-relaxed whitespace-pre-line">{formData.solution}</p>
+                        </div>
+                      )}
+                    </>
                   )}
                   {formData.implementation && (
                     <div>
