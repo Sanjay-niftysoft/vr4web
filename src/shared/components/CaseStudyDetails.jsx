@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import DOMPurify from 'dompurify';
 import authService from '../../services/authService';
+import { getImageUrl } from '../../utils/imageUrl';
 import CtaSection from '../../components/CtaSection';
 import PageBanner from '../../components/common/PageBanner';
 import {
@@ -171,8 +172,8 @@ export default function CaseStudyDetails() {
             badge: d.category || 'Featured Story',
             category: d.category,
             industry: d.industry,
-            heroImage: d.featuredImage,
-            cardImage: d.featuredImage,
+            heroImage: getImageUrl(d.featuredImage),
+            cardImage: getImageUrl(d.featuredImage),
             creationMode: d.creationMode || 'manual',
             content: d.content || '',
             leadDescription: d.shortDescription || d.summary || d.projectOverview || d.challenge || '',
@@ -191,8 +192,8 @@ export default function CaseStudyDetails() {
             beforeAfter: d.beforeAfter ? {
               beforeText: d.beforeAfter.beforeText || d.beforeAfter.beforeDescription,
               afterText: d.beforeAfter.afterText || d.beforeAfter.afterDescription,
-              beforeImage: d.beforeAfter.beforeImage,
-              afterImage: d.beforeAfter.afterImage
+              beforeImage: getImageUrl(d.beforeAfter.beforeImage),
+              afterImage: getImageUrl(d.beforeAfter.afterImage)
             } : null,
             techStack: (d.technologiesUsed || []).map((t) => ({
               name: typeof t === 'string' ? t : t.name,

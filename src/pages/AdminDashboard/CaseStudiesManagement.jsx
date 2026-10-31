@@ -3,6 +3,7 @@ import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import DOMPurify from 'dompurify';
 import authService from '../../services/authService';
+import { getImageUrl } from '../../utils/imageUrl';
 import ConfirmDeleteModal from '../../shared/components/admin/ConfirmDeleteModal';
 import EmptyState from '../../shared/components/admin/EmptyState';
 import LoadingSpinner from '../../shared/components/admin/LoadingSpinner';
@@ -587,7 +588,7 @@ export default function CaseStudiesManagement() {
                     <td className="py-4 px-4">
                       <div className="w-14 h-10 rounded-lg overflow-hidden bg-slate-100 border border-[#E5E7EB] flex-shrink-0">
                         <img
-                          src={study.featuredImage || '/case-study/property.png'}
+                          src={getImageUrl(study.featuredImage)}
                           alt={study.title}
                           className="w-full h-full object-cover"
                           onError={(e) => {
@@ -920,9 +921,13 @@ export default function CaseStudiesManagement() {
                         <div className="flex flex-col sm:flex-row items-center gap-4">
                           <div className="w-32 h-20 rounded-xl overflow-hidden bg-slate-100 border border-[#E5E7EB] flex-shrink-0">
                             <img
-                              src={formData.featuredImage || '/case-study/property.png'}
+                              src={getImageUrl(formData.featuredImage)}
                               alt="Featured"
                               className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = '/case-study/property.png';
+                              }}
                             />
                           </div>
                           <div className="flex-1 w-full space-y-2">
@@ -1319,16 +1324,40 @@ export default function CaseStudiesManagement() {
                         <h4 className="text-xs font-bold text-[#0F3D2E] uppercase">Before & After Showcase (Optional)</h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div className="p-3.5 rounded-xl border border-[#E5E7EB] bg-[#F8FAF9] space-y-2">
-                            <span className="text-xs font-bold text-[#0F3D2E]">Before Image</span>
-                            <div className="flex gap-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-bold text-[#0F3D2E]">Before Image</span>
+                              {formData.beforeAfter?.beforeImage && (
+                                <button
+                                  type="button"
+                                  onClick={() => setFormData({ ...formData, beforeAfter: { ...formData.beforeAfter, beforeImage: '' } })}
+                                  className="text-[11px] text-red-500 hover:underline cursor-pointer"
+                                >
+                                  Remove
+                                </button>
+                              )}
+                            </div>
+                            <div className="flex gap-2 items-center">
+                              {formData.beforeAfter?.beforeImage && (
+                                <div className="w-12 h-10 rounded-lg overflow-hidden bg-slate-200 border border-[#E5E7EB] flex-shrink-0">
+                                  <img
+                                    src={getImageUrl(formData.beforeAfter.beforeImage, '/case-study/property.png')}
+                                    alt="Before preview"
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = '/case-study/property.png';
+                                    }}
+                                  />
+                                </div>
+                              )}
                               <input
                                 type="text"
                                 value={formData.beforeAfter?.beforeImage || ''}
                                 onChange={(e) => setFormData({ ...formData, beforeAfter: { ...formData.beforeAfter, beforeImage: e.target.value } })}
                                 placeholder="/case-study/before.png"
-                                className="flex-1 px-3 py-1.5 bg-white border border-[#E5E7EB] rounded-lg text-xs"
+                                className="flex-1 px-3 py-1.5 bg-white border border-[#E5E7EB] rounded-lg text-xs text-[#0F3D2E] focus:outline-none"
                               />
-                              <label className="p-2 rounded-lg bg-[#0F3D2E] text-white cursor-pointer">
+                              <label className="p-2 rounded-lg bg-[#0F3D2E] text-white cursor-pointer hover:bg-emerald-900 transition-colors">
                                 <Upload className="w-3.5 h-3.5" />
                                 <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, 'beforeImage')} />
                               </label>
@@ -1343,16 +1372,40 @@ export default function CaseStudiesManagement() {
                           </div>
 
                           <div className="p-3.5 rounded-xl border border-[#E5E7EB] bg-[#F8FAF9] space-y-2">
-                            <span className="text-xs font-bold text-[#0F3D2E]">After Image</span>
-                            <div className="flex gap-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-bold text-[#0F3D2E]">After Image</span>
+                              {formData.beforeAfter?.afterImage && (
+                                <button
+                                  type="button"
+                                  onClick={() => setFormData({ ...formData, beforeAfter: { ...formData.beforeAfter, afterImage: '' } })}
+                                  className="text-[11px] text-red-500 hover:underline cursor-pointer"
+                                >
+                                  Remove
+                                </button>
+                              )}
+                            </div>
+                            <div className="flex gap-2 items-center">
+                              {formData.beforeAfter?.afterImage && (
+                                <div className="w-12 h-10 rounded-lg overflow-hidden bg-slate-200 border border-[#E5E7EB] flex-shrink-0">
+                                  <img
+                                    src={getImageUrl(formData.beforeAfter.afterImage, '/case-study/property.png')}
+                                    alt="After preview"
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = '/case-study/property.png';
+                                    }}
+                                  />
+                                </div>
+                              )}
                               <input
                                 type="text"
                                 value={formData.beforeAfter?.afterImage || ''}
                                 onChange={(e) => setFormData({ ...formData, beforeAfter: { ...formData.beforeAfter, afterImage: e.target.value } })}
                                 placeholder="/case-study/after.png"
-                                className="flex-1 px-3 py-1.5 bg-white border border-[#E5E7EB] rounded-lg text-xs"
+                                className="flex-1 px-3 py-1.5 bg-white border border-[#E5E7EB] rounded-lg text-xs text-[#0F3D2E] focus:outline-none"
                               />
-                              <label className="p-2 rounded-lg bg-[#0F3D2E] text-white cursor-pointer">
+                              <label className="p-2 rounded-lg bg-[#0F3D2E] text-white cursor-pointer hover:bg-emerald-900 transition-colors">
                                 <Upload className="w-3.5 h-3.5" />
                                 <input type="file" className="hidden" onChange={(e) => handleFileUpload(e, 'afterImage')} />
                               </label>

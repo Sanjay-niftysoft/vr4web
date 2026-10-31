@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, ChevronRight, Home } from 'lucide-react';
 import { getAllCaseStudies } from '../../data/caseStudiesData';
 import authService from '../../services/authService';
+import { getImageUrl } from '../../utils/imageUrl';
 import CtaSection from '../../components/CtaSection';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -25,8 +26,8 @@ const CARD_IMAGES = [
 ];
 
 function getCardImage(study) {
-  if (study.featuredImage) return study.featuredImage;
-  if (study.cardImage && study.cardImage.startsWith('/uploads/')) return study.cardImage;
+  if (study.featuredImage) return getImageUrl(study.featuredImage);
+  if (study.cardImage) return getImageUrl(study.cardImage);
   const key = `${study.id || ''} ${study.title || ''}`;
   const hit = CARD_IMAGES.find(([re]) => re.test(key));
   return hit ? hit[1] : (study.cardImage || FALLBACK_IMG);

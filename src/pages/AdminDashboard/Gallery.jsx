@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import authService from '../../services/authService';
+import { getImageUrl } from '../../utils/imageUrl';
 import ConfirmDeleteModal from '../../shared/components/admin/ConfirmDeleteModal';
 import EmptyState from '../../shared/components/admin/EmptyState';
 import LoadingSpinner from '../../shared/components/admin/LoadingSpinner';
@@ -200,7 +201,7 @@ export default function Gallery() {
               {/* Image Preview Container */}
               <div className="relative aspect-video bg-slate-100 overflow-hidden flex items-center justify-center">
                 <img
-                  src={img.imageUrl}
+                  src={getImageUrl(img.imageUrl, '/banner/3.jpg')}
                   alt={img.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-102"
                   onError={(e) => {

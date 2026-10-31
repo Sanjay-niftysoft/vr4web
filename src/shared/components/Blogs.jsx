@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, ChevronRight, Home } from 'lucide-react';
 import { getAllBlogs } from '../../data/blogsData';
 import authService from '../../services/authService';
+import { getImageUrl } from '../../utils/imageUrl';
 import CtaSection from '../../components/CtaSection';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -45,7 +46,7 @@ function PostRow({ blog }) {
         className="block overflow-hidden rounded-md aspect-[4/3] bg-slate-100 shadow-[0_18px_40px_-20px_rgba(15,61,46,0.35)] outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/40"
       >
         <img
-          src={blog.cardImage || blog.imageUrl || FALLBACK_IMG}
+          src={getImageUrl(blog.cardImage || blog.imageUrl, FALLBACK_IMG)}
           alt={blog.title}
           loading="lazy"
           onError={imgFallback}
@@ -108,7 +109,7 @@ function SidebarItem({ blog, index }) {
       >
         <div className="h-[92px] w-[84px] flex-shrink-0 overflow-hidden rounded-md bg-slate-100">
           <img
-            src={blog.cardImage || blog.imageUrl || FALLBACK_IMG}
+            src={getImageUrl(blog.cardImage || blog.imageUrl, FALLBACK_IMG)}
             alt=""
             loading="lazy"
             onError={imgFallback}

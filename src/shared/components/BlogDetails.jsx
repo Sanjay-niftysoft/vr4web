@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { getBlogById, BLOGS } from '../../data/blogsData';
 import authService from '../../services/authService';
+import { getImageUrl } from '../../utils/imageUrl';
 import CtaSection from '../../components/CtaSection';
 
 /* ─────────────────────────────────────────────────────────────
@@ -80,8 +81,8 @@ export default function BlogDetails() {
             readTime: d.readTime || '5 min read',
             summary: d.summary || '',
             content: d.content || '',
-            cardImage: d.imageUrl || '/blogs/blogs-banner.png',
-            imageUrl: d.imageUrl || '/blogs/blogs-banner.png',
+            cardImage: getImageUrl(d.imageUrl || '/blogs/blogs-banner.png'),
+            imageUrl: getImageUrl(d.imageUrl || '/blogs/blogs-banner.png'),
             date: d.createdAt ? new Date(d.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '',
             tags: d.tags || [],
             sections: d.sections || (d.content ? [] : [
@@ -249,7 +250,7 @@ export default function BlogDetails() {
                       <figure className="my-7">
                         <div className="overflow-hidden rounded-2xl aspect-[16/10] sm:aspect-[16/9] shadow-md border border-slate-200 bg-slate-100">
                           <img
-                            src={extras.inlineLandscape}
+                            src={getImageUrl(blog.imageUrl || extras.inlineLandscape)}
                             alt={blog.title}
                             className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                           />

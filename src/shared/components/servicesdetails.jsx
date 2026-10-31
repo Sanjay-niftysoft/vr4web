@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { getServiceData, getServiceByQuery } from '../../data/servicesdata';
 import authService from '../../services/authService';
+import { getImageUrl } from '../../utils/imageUrl';
 
 
 /* ───────── Section background photos + green overlay (like the "How We Work" banner) ─────────
@@ -1623,7 +1624,7 @@ export default function ServicesDetails() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12">
                                     {displayCaseStudies.map((study) => {
                                         const studySlug = study.slug || study._id;
-                                        const studyImg = study.featuredImage || study.cardImage || '/case-study/ad.png';
+                                        const studyImg = getImageUrl(study.featuredImage || study.cardImage, '/case-study/ad.png');
                                         const metricsList = Array.isArray(study.metrics) ? study.metrics.slice(0, 2) : [];
                                         const tagsList = [
                                             study.industry,
@@ -1761,7 +1762,7 @@ export default function ServicesDetails() {
                                                 <div>
                                                     <div className="aspect-[16/9] w-full rounded-xl overflow-hidden mb-4 bg-slate-100">
                                                         <img
-                                                            src={b.imageUrl || '/blogs/blogs-banner.png'}
+                                                            src={getImageUrl(b.imageUrl, '/blogs/blogs-banner.png')}
                                                             alt={b.title}
                                                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                                         />
