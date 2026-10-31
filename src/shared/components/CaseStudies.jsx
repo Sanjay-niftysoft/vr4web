@@ -97,20 +97,20 @@ function StoryRow({ study }) {
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.6, ease: EASE }}
-      className="group grid grid-cols-1 sm:grid-cols-[minmax(0,320px)_1fr] lg:grid-cols-[minmax(0,300px)_1fr] gap-5 sm:gap-7 items-center pb-6 mb-6 border-b border-[#0F3D2E]/10 last:border-b-0 last:mb-0 last:pb-0"
+      className="group grid grid-cols-1 sm:grid-cols-[minmax(0,320px)_1fr] lg:grid-cols-[minmax(0,340px)_1fr] gap-5 sm:gap-7 items-center pb-6 mb-6 border-b border-[#0F3D2E]/10 last:border-b-0 last:mb-0 last:pb-0"
     >
-      {/* Image (case study artwork is shown whole, never cropped) */}
+      {/* Image: modern 16:9 / 16:10 frame that perfectly adapts to uploaded photos without empty space */}
       <Link
         to={link}
         aria-label={`Read case study: ${study.title}`}
-        className="block overflow-hidden rounded-md aspect-[4/3] bg-[#E6F0EC] shadow-[0_18px_40px_-20px_rgba(15,61,46,0.35)] outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/40"
+        className="block overflow-hidden rounded-2xl aspect-[16/9] sm:aspect-[16/10] bg-[#F8FAF9] border border-[#E5E7EB] shadow-[0_12px_32px_-16px_rgba(15,61,46,0.25)] hover:border-[#E8890C]/50 hover:shadow-md transition-all outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/40"
       >
         <img
           src={getCardImage(study) || FALLBACK_IMG}
           alt={study.title}
           loading="lazy"
           onError={imgFallback}
-          className="h-full w-full object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.07]"
+          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
         />
       </Link>
 
@@ -164,22 +164,22 @@ function SidebarItem({ study, index }) {
       <Link
         to={link}
         aria-label={`Read case study: ${study.title}`}
-        className="group flex items-center gap-4 outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/40 rounded-md"
+        className="group flex items-center gap-3.5 outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/40 rounded-xl"
       >
-        <div className="h-[92px] w-[84px] flex-shrink-0 overflow-hidden rounded-md bg-[#E6F0EC]">
+        <div className="h-[68px] w-[100px] flex-shrink-0 overflow-hidden rounded-xl bg-[#F8FAF9] border border-[#E5E7EB] shadow-xs">
           <img
             src={getCardImage(study) || FALLBACK_IMG}
             alt=""
             loading="lazy"
             onError={imgFallback}
-            className="h-full w-full object-contain p-1.5 transition-transform duration-500 group-hover:scale-110"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
         </div>
         <div className="min-w-0">
-          <h4 className="text-[16px] font-extrabold leading-snug text-[#0F3D2E] line-clamp-2 transition-colors duration-300 group-hover:text-[#E8890C]">
+          <h4 className="text-[15px] font-extrabold leading-snug text-[#0F3D2E] line-clamp-2 transition-colors duration-300 group-hover:text-[#E8890C]">
             {name}
           </h4>
-          {text && <p className="mt-1 text-xs font-medium leading-snug text-black line-clamp-2">{text}</p>}
+          {text && <p className="mt-1 text-xs font-medium leading-snug text-slate-600 line-clamp-2">{text}</p>}
         </div>
       </Link>
     </motion.div>
