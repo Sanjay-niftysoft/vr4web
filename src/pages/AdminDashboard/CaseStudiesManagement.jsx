@@ -4,6 +4,7 @@ import 'react-quill-new/dist/quill.snow.css';
 import DOMPurify from 'dompurify';
 import authService from '../../services/authService';
 import { getImageUrl } from '../../utils/imageUrl';
+import DragDropImageUpload from '../../shared/components/admin/DragDropImageUpload';
 import ConfirmDeleteModal from '../../shared/components/admin/ConfirmDeleteModal';
 import EmptyState from '../../shared/components/admin/EmptyState';
 import LoadingSpinner from '../../shared/components/admin/LoadingSpinner';
@@ -81,7 +82,7 @@ const INITIAL_FORM_STATE = {
   industry: 'Technology',
   category: 'Website Development',
   shortDescription: '',
-  featuredImage: '/case-study/property.png',
+  featuredImage: '',
   additionalImages: [],
   projectCompletionDate: new Date().toISOString().split('T')[0],
   isFeatured: false,
@@ -268,18 +269,17 @@ export default function CaseStudiesManagement() {
     }));
   };
 
-  // Generic Image Uploader
-  const handleFileUpload = async (e, fieldPath) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  // Generic Image Uploader supporting both Direct File and Input Event
+  const uploadImageFile = async (file, fieldPath = 'featuredImage') => {
+    if (!file) return null;
 
     if (file.size > 5 * 1024 * 1024) {
       setFeedback({ type: 'error', message: 'File is too large. Maximum size is 5 MB.' });
-      return;
+      return null;
     }
 
     try {
-      setUploadProgress(10);
+      setUploadProgress(15);
       const res = await authService.uploadCaseStudyImage(file, (percent) => setUploadProgress(percent));
       if (res && res.success) {
         setFormData((prev) => {
@@ -290,13 +290,21 @@ export default function CaseStudiesManagement() {
           if (fieldPath === 'additionalImages') return { ...prev, additionalImages: [...prev.additionalImages, res.fileUrl].slice(0, 2) };
           return prev;
         });
-        setFeedback({ type: 'success', message: 'Image uploaded successfully' });
+        setFeedback({ type: 'success', message: 'Photo uploaded successfully' });
+        return res.fileUrl;
       }
+      return null;
     } catch (err) {
       setFeedback({ type: 'error', message: err.response?.data?.message || err.message });
+      return null;
     } finally {
       setUploadProgress(null);
     }
+  };
+
+  const handleFileUpload = async (e, fieldPath) => {
+    const file = e.target?.files?.[0] || e;
+    await uploadImageFile(file, fieldPath);
   };
 
   // Editor Inline Image Handler
@@ -340,6 +348,7 @@ export default function CaseStudiesManagement() {
     try {
       const payload = {
         ...formData,
+        featuredImage: formData.featuredImage?.trim() || '/case-study/property.png',
         status: targetStatus || formData.status,
       };
 
@@ -913,49 +922,19 @@ export default function CaseStudiesManagement() {
                         />
                       </div>
 
-                      {/* Featured Image Upload & Preview */}
-                      <div>
-                        <label className="block text-xs font-bold text-[#0F3D2E] mb-1.5 uppercase">
-                          Featured Image
-                        </label>
-                        <div className="flex flex-col sm:flex-row items-center gap-4">
-                          <div className="w-32 h-20 rounded-xl overflow-hidden bg-slate-100 border border-[#E5E7EB] flex-shrink-0">
-                            <img
-                              src={getImageUrl(formData.featuredImage)}
-                              alt="Featured"
-                              className="w-full h-full object-cover"
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = '/case-study/property.png';
-                              }}
-                            />
-                          </div>
-                          <div className="flex-1 w-full space-y-2">
-                            <div className="flex gap-2">
-                              <input
-                                type="text"
-                                value={formData.featuredImage}
-                                onChange={(e) => setFormData({ ...formData, featuredImage: e.target.value })}
-                                placeholder="/case-study/property.png or upload image"
-                                className="flex-1 px-3 py-2 bg-[#F8FAF9] border border-[#E5E7EB] rounded-xl text-xs text-[#0F3D2E] focus:outline-none"
-                              />
-                              <label className="px-3.5 py-2 rounded-xl bg-[#0F3D2E] text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer hover:bg-emerald-900 transition-colors">
-                                <Upload className="w-3.5 h-3.5" />
-                                <span>Upload</span>
-                                <input
-                                  type="file"
-                                  accept="image/png, image/jpeg, image/webp"
-                                  className="hidden"
-                                  onChange={(e) => handleFileUpload(e, 'featuredImage')}
-                                />
-                              </label>
-                            </div>
-                            <p className="text-[11px] text-[#64748B]">
-                              Accepted formats: JPG, PNG, WEBP (Max: 5 MB)
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                      {/* Featured Image Drag & Drop Upload Zone */}
+                      <DragDropImageUpload
+                        label="Featured Image (Cover Photo)"
+                        sublabel="Drag & drop your featured cover photo here, or browse files"
+                        value={formData.featuredImage}
+                        onChange={(url) => setFormData((prev) => ({ ...prev, featuredImage: url }))}
+                        onUpload={(file) => uploadImageFile(file, 'featuredImage')}
+                        uploading={uploadProgress !== null}
+                        uploadProgress={uploadProgress}
+                        fallback="/case-study/property.png"
+                        aspectRatio="aspect-[16/9]"
+                        helperText="Recommended resolution: 1200 x 675px. Formats: JPG, PNG, WEBP, SVG (Max: 5 MB)"
+                      />
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                         <div>
@@ -1530,6 +1509,22 @@ export default function CaseStudiesManagement() {
                         </select>
                       </div>
                     </div>
+
+                    {/* Featured Image Drag & Drop for Quick Mode */}
+                    <div className="pt-2">
+                      <DragDropImageUpload
+                        label="Featured Cover Photo"
+                        sublabel="Drag & drop your case study cover photo here, or browse files"
+                        value={formData.featuredImage}
+                        onChange={(url) => setFormData((prev) => ({ ...prev, featuredImage: url }))}
+                        onUpload={(file) => uploadImageFile(file, 'featuredImage')}
+                        uploading={uploadProgress !== null}
+                        uploadProgress={uploadProgress}
+                        fallback="/case-study/property.png"
+                        aspectRatio="aspect-[16/9]"
+                        helperText="Visual cover displayed on case study listings and social shares (Max: 5 MB)"
+                      />
+                    </div>
                   </div>
 
                   {/* Single Quill Rich Text Editor */}
@@ -1717,6 +1712,24 @@ export default function CaseStudiesManagement() {
                   </p>
                 )}
               </div>
+
+              {/* Preview Featured Image */}
+              {formData.featuredImage && (
+                <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden border border-[#E5E7EB] bg-slate-100 shadow-xs">
+                  <img
+                    src={getImageUrl(formData.featuredImage, '/case-study/property.png')}
+                    alt={formData.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/case-study/property.png';
+                    }}
+                  />
+                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#0F3D2E]/90 text-white text-xs font-bold backdrop-blur-xs">
+                    {formData.clientName || 'Case Study Cover'}
+                  </div>
+                </div>
+              )}
 
               {/* Main Content Render */}
               {formData.creationMode === 'quick' ? (
