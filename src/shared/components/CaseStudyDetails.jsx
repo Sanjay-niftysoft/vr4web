@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
+import DOMPurify from 'dompurify';
+import authService from '../../services/authService';
 import CtaSection from '../../components/CtaSection';
 import PageBanner from '../../components/common/PageBanner';
 import {
@@ -140,8 +142,10 @@ function Lightbox({ items, index, onClose, onStep }) {
 /* ════════════════ PAGE ════════════════ */
 export default function CaseStudyDetails() {
   const { id } = useParams();
-  const study = getCaseStudyById(id);
-  const related = study ? getRelatedCaseStudies(study.id) : [];
+  const staticStudy = getCaseStudyById(id);
+  const [study, setStudy] = useState(staticStudy);
+  const [loading, setLoading] = useState(!staticStudy);
+  const related = study ? getRelatedCaseStudies(study.id || study.slug) : [];
   const reduce = useReducedMotion();
   const [lightbox, setLightbox] = useState(null);
   const scrollRef = useRef(null);
@@ -149,7 +153,76 @@ export default function CaseStudyDetails() {
   useEffect(() => {
     window.scrollTo(0, 0);
     scrollRef.current?.scrollTo({ top: 0 }); // opening another case study starts at the top
-  }, [id]);
+
+    let isMounted = true;
+    const fetchLiveCaseStudy = async () => {
+      try {
+        if (!staticStudy) setLoading(true);
+        const res = await authService.getPublicCaseStudyBySlug(id);
+        if (res?.success && res.data && isMounted) {
+          const d = res.data;
+          setStudy({
+            id: d.slug || d._id,
+            slug: d.slug,
+            _id: d._id,
+            title: d.title,
+            shortTitle: d.clientName || d.title,
+            badge: d.category || 'Featured Story',
+            category: d.category,
+            industry: d.industry,
+            heroImage: d.featuredImage,
+            cardImage: d.featuredImage,
+            creationMode: d.creationMode || 'manual',
+            content: d.content || '',
+            leadDescription: d.summary || d.challenge || '',
+            challenges: d.challenge ? [{ title: "The Business Challenge", description: d.challenge }] : [],
+            approach: d.solution ? { heading: "Our Strategic Approach", description: d.solution, points: [] } : null,
+            keyFeatures: d.implementation ? [{ title: "Implementation & Architecture", description: d.implementation, tag: "Delivered" }] : [],
+            results: {
+              metrics: (d.metrics || []).map((m) => ({ value: m.value, label: m.label, note: m.description })),
+              points: []
+            },
+            testimonial: d.testimonial?.quote ? d.testimonial : null,
+            beforeAfter: d.beforeAfter,
+            techStack: (d.technologiesUsed || []).map((t) => ({ name: t, role: "Technology", iconName: "Code2" })),
+            servicesProvided: d.servicesProvided || [],
+            aboutClient: d.clientName ? {
+              heading: d.clientName,
+              description: `Client operating in the ${d.industry || 'technology'} industry.`,
+              tag: "About the Client",
+              highlights: [
+                d.industry && { label: "Industry", value: d.industry, iconName: "Building2" },
+                d.projectDetails?.timeline && { label: "Timeline", value: d.projectDetails.timeline, iconName: "Calendar" },
+                d.projectDetails?.location && { label: "Location", value: d.projectDetails.location, iconName: "Globe" }
+              ].filter(Boolean)
+            } : null,
+            meta: [
+              d.clientName && { label: "Client", value: d.clientName },
+              d.industry && { label: "Industry", value: d.industry },
+              d.projectDetails?.timeline && { label: "Timeline", value: d.projectDetails.timeline },
+              d.projectDetails?.location && { label: "Location", value: d.projectDetails.location }
+            ].filter(Boolean)
+          });
+        }
+      } catch (err) {
+        console.warn('Live case study lookup fallback:', err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    fetchLiveCaseStudy();
+    return () => { isMounted = false; };
+  }, [id, staticStudy]);
+
+  if (loading) {
+    return (
+      <div className={`${FONT} min-h-[70vh] flex flex-col items-center justify-center px-4`}>
+        <div className="w-10 h-10 border-4 border-[#E8890C] border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-sm font-semibold text-[#0F3D2E]">Loading Case Study...</p>
+      </div>
+    );
+  }
 
   if (!study) {
     return (
@@ -291,6 +364,60 @@ export default function CaseStudyDetails() {
             {/* lead text */}
             {study.leadDescription && (
               <Reveal className="mt-8"><P>{study.leadDescription}</P></Reveal>
+            )}
+
+            {/* Quick Create Rich Quill Content */}
+            {study.creationMode === 'quick' && study.content && (
+              <Reveal className="mt-8">
+                <div 
+                  className="prose prose-lg max-w-none text-slate-800 leading-relaxed font-sans
+                    [&_h1]:text-2xl sm:[&_h1]:text-3xl [&_h1]:font-black [&_h1]:text-[#0F3D2E] [&_h1]:mt-8 [&_h1]:mb-4
+                    [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-[#0F3D2E] [&_h2]:mt-8 [&_h2]:mb-3
+                    [&_h3]:text-lg sm:[&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-[#0F3D2E] [&_h3]:mt-6 [&_h3]:mb-2
+                    [&_p]:text-sm sm:[&_p]:text-base [&_p]:leading-relaxed [&_p]:mb-4 [&_p]:text-slate-700
+                    [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-4 [&_ul]:space-y-1.5
+                    [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-4 [&_ol]:space-y-1.5
+                    [&_li]:text-slate-700
+                    [&_blockquote]:border-l-4 [&_blockquote]:border-[#E8890C] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:my-6 [&_blockquote]:bg-[#0F3D2E]/5 [&_blockquote]:p-4 [&_blockquote]:rounded-r-xl
+                    [&_img]:rounded-2xl [&_img]:shadow-md [&_img]:my-6 [&_img]:max-w-full [&_img]:h-auto
+                    [&_a]:text-[#E8890C] [&_a]:underline [&_a]:font-semibold"
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(study.content) }}
+                />
+              </Reveal>
+            )}
+
+            {/* Before vs After Comparison Card */}
+            {study.beforeAfter && (study.beforeAfter.beforeText || study.beforeAfter.afterText) && (
+              <Reveal className="mt-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {study.beforeAfter.beforeText && (
+                    <div className="p-5 rounded-2xl bg-red-50/70 border border-red-200">
+                      <span className="inline-block px-3 py-1 rounded-full bg-red-600 text-white text-[11px] font-bold uppercase tracking-wider mb-3">
+                        Before Engagement
+                      </span>
+                      {study.beforeAfter.beforeImage && (
+                        <img src={study.beforeAfter.beforeImage} alt="Before" className="w-full h-40 object-cover rounded-xl mb-3 border border-red-200/50" />
+                      )}
+                      <p className="text-sm text-red-950 leading-relaxed font-medium">
+                        {study.beforeAfter.beforeText}
+                      </p>
+                    </div>
+                  )}
+                  {study.beforeAfter.afterText && (
+                    <div className="p-5 rounded-2xl bg-[#0F3D2E]/5 border border-[#0F3D2E]/20">
+                      <span className="inline-block px-3 py-1 rounded-full bg-[#0F3D2E] text-white text-[11px] font-bold uppercase tracking-wider mb-3">
+                        After VR4Web Solution
+                      </span>
+                      {study.beforeAfter.afterImage && (
+                        <img src={study.beforeAfter.afterImage} alt="After" className="w-full h-40 object-cover rounded-xl mb-3 border border-[#0F3D2E]/20" />
+                      )}
+                      <p className="text-sm text-[#0F3D2E] leading-relaxed font-medium">
+                        {study.beforeAfter.afterText}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </Reveal>
             )}
 
             {/* challenges */}

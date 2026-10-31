@@ -11,3 +11,4 @@ export default function LoadingSpinner({ text = 'Loading data...' }) {
     </div>
   );
 }
+

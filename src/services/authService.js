@@ -110,6 +110,64 @@ export const authService = {
     const res = await api.delete(`/gallery/${id}`);
     return res.data;
   },
+
+  // Case Studies Management (Two Creation Modes: Manual Fill & Quick Create)
+  async getCaseStudies(params = {}) {
+    const res = await api.get('/case-studies', { params });
+    return res.data;
+  },
+  async getCaseStudyById(id) {
+    const res = await api.get(`/case-studies/${id}`);
+    return res.data;
+  },
+  async createCaseStudy(data) {
+    const res = await api.post('/case-studies', data);
+    return res.data;
+  },
+  async updateCaseStudy(id, data) {
+    const res = await api.put(`/case-studies/${id}`, data);
+    return res.data;
+  },
+  async publishCaseStudy(id) {
+    const res = await api.patch(`/case-studies/${id}/publish`);
+    return res.data;
+  },
+  async unpublishCaseStudy(id) {
+    const res = await api.patch(`/case-studies/${id}/unpublish`);
+    return res.data;
+  },
+  async duplicateCaseStudy(id) {
+    const res = await api.post(`/case-studies/${id}/duplicate`);
+    return res.data;
+  },
+  async deleteCaseStudy(id) {
+    const res = await api.delete(`/case-studies/${id}`);
+    return res.data;
+  },
+  async uploadCaseStudyImage(file, onProgress) {
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await api.post('/case-studies/upload-image', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: (progressEvent) => {
+        if (onProgress && progressEvent.total) {
+          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          onProgress(percent);
+        }
+      },
+    });
+    return res.data;
+  },
+
+  // Public Case Studies
+  async getPublicCaseStudies() {
+    const res = await api.get('/case-studies/public');
+    return res.data;
+  },
+  async getPublicCaseStudy(slug) {
+    const res = await api.get(`/case-studies/public/${slug}`);
+    return res.data;
+  },
 };
 
 export default authService;

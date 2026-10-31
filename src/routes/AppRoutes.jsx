@@ -24,6 +24,7 @@ import AdminLogin from '../pages/AdminLogin/AdminLogin';
 import AdminRoute from './AdminRoute';
 import DashboardLayout from '../pages/AdminDashboard/DashboardLayout';
 import DashboardHome from '../pages/AdminDashboard/DashboardHome';
+import CaseStudiesManagement from '../pages/AdminDashboard/CaseStudiesManagement';
 import StoriesModule from '../pages/AdminDashboard/Stories';
 import BlogsModule from '../pages/AdminDashboard/Blogs';
 import NewspaperModule from '../pages/AdminDashboard/Newspaper';
@@ -78,7 +79,9 @@ export default function AppRoutes() {
         }
       >
         <Route index element={<DashboardHome />} />
-        <Route path="stories" element={<StoriesModule />} />
+        <Route path="case-studies" element={<CaseStudiesManagement />} />
+        <Route path="stories" element={<CaseStudiesManagement />} />
+        <Route path="stories-legacy" element={<StoriesModule />} />
         <Route path="blogs" element={<BlogsModule />} />
         <Route path="newspaper" element={<NewspaperModule />} />
         <Route path="gallery" element={<GalleryModule />} />
@@ -100,6 +103,8 @@ export default function AppRoutes() {
         <Route path="/stories/:id" element={<CaseStudyDetails />} />
         <Route path="/case-studies" element={<Stories />} />
         <Route path="/case-studies/:id" element={<CaseStudyDetails />} />
+        <Route path="/case-study/:id" element={<CaseStudyDetails />} />
+        <Route path="/case-study/:slug" element={<CaseStudyDetails />} />
         <Route path="/our-work" element={<Stories />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />

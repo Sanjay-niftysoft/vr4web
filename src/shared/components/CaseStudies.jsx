@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, ChevronRight, Home } from 'lucide-react';
 import { getAllCaseStudies } from '../../data/caseStudiesData';
+import authService from '../../services/authService';
 import CtaSection from '../../components/CtaSection';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -85,7 +86,7 @@ function StoryRow({ study }) {
   const { name, text } = splitTitle(study);
   const tags = getTags(study);
   const badge = tags[0] || 'Case Study';
-  const link = `/stories/${study.id}`;
+  const link = `/case-study/${study.slug || study.id}`;
 
   return (
     <motion.article
@@ -147,6 +148,7 @@ function StoryRow({ study }) {
 function SidebarItem({ study, index }) {
   const reduce = useReducedMotion();
   const { name, text } = splitTitle(study);
+  const link = `/case-study/${study.slug || study.id}`;
 
   return (
     <motion.div
@@ -157,7 +159,7 @@ function SidebarItem({ study, index }) {
       className="border-b border-[#0F3D2E]/10 last:border-b-0 py-4 first:pt-0 last:pb-0"
     >
       <Link
-        to={`/stories/${study.id}`}
+        to={link}
         aria-label={`Read case study: ${study.title}`}
         className="group flex items-center gap-4 outline-none focus-visible:ring-4 focus-visible:ring-[#E8890C]/40 rounded-md"
       >
@@ -182,7 +184,45 @@ function SidebarItem({ study, index }) {
 }
 
 export default function CaseStudies() {
-  const caseStudies = getAllCaseStudies();
+  const staticStudies = useMemo(() => getAllCaseStudies(), []);
+  const [caseStudies, setCaseStudies] = useState(staticStudies);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchLiveStudies = async () => {
+      try {
+        const res = await authService.getPublicCaseStudies({ limit: 50 });
+        if (res?.success && Array.isArray(res.data) && res.data.length > 0 && isMounted) {
+          const liveNormalized = res.data.map((item) => ({
+            id: item.slug || item._id,
+            slug: item.slug,
+            _id: item._id,
+            title: item.title,
+            shortTitle: item.clientName || item.title,
+            summary: item.summary || item.challenge || '',
+            category: item.category || 'Case Study',
+            industry: item.industry || '',
+            cardImage: item.featuredImage || '/case-study/ad.png',
+            date: item.createdAt ? new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : '',
+            isLive: true,
+            creationMode: item.creationMode,
+            tags: [item.category, item.industry].filter(Boolean)
+          }));
+
+          const liveIds = new Set(liveNormalized.map((s) => s.id));
+          const filteredStatic = staticStudies.filter((s) => !liveIds.has(s.id));
+          setCaseStudies([...liveNormalized, ...filteredStatic]);
+        }
+      } catch (err) {
+        console.warn('Using static case studies data fallback:', err);
+      }
+    };
+
+    fetchLiveStudies();
+    return () => {
+      isMounted = false;
+    };
+  }, [staticStudies]);
 
   /* Tags card is shown only if your case studies have tags / categories */
   const tags = useMemo(

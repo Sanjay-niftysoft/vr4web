@@ -5,6 +5,7 @@ import DashboardStatCard from '../../shared/components/admin/DashboardStatCard';
 import EmptyState from '../../shared/components/admin/EmptyState';
 import LoadingSpinner from '../../shared/components/admin/LoadingSpinner';
 import {
+  Briefcase,
   BookOpen,
   FileText,
   Newspaper,
@@ -16,6 +17,7 @@ import {
 
 export default function DashboardHome() {
   const [stats, setStats] = useState({
+    totalCaseStudies: 0,
     totalStories: 0,
     totalBlogs: 0,
     totalNewspaper: 0,
@@ -64,11 +66,11 @@ export default function DashboardHome() {
           {/* Quick Action Buttons */}
           <div className="flex flex-wrap gap-3">
             <Link
-              to="/admin/stories?action=new"
+              to="/admin/case-studies?action=new"
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#E8890C] hover:bg-[#d07703] text-white font-bold text-xs shadow-xs hover:shadow transition-all"
             >
               <Plus className="w-4 h-4" />
-              <span>New Story</span>
+              <span>New Case Study</span>
             </Link>
             <Link
               to="/admin/blogs?action=new"
@@ -90,8 +92,8 @@ export default function DashboardHome() {
 
       {/* Overview Stat Cards */}
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {[1, 2, 3, 4].map((i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+          {[1, 2, 3, 4, 5].map((i) => (
             <div
               key={i}
               className="h-32 bg-white border border-[#E5E7EB] rounded-2xl animate-pulse"
@@ -99,7 +101,13 @@ export default function DashboardHome() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+          <DashboardStatCard
+            title="Case Studies"
+            value={stats.totalCaseStudies}
+            icon={Briefcase}
+            link="/admin/case-studies"
+          />
           <DashboardStatCard
             title="Total Stories"
             value={stats.totalStories}

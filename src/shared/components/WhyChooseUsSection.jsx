@@ -69,15 +69,15 @@ export default function WhyChooseUsSection() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center flex-wrap justify-center gap-1.5 xs:gap-2 sm:gap-3 px-3 sm:px-5 py-1.5 sm:py-2 rounded-xl sm:rounded-full bg-white/80 backdrop-blur-md border border-slate-200/80 shadow-sm max-w-full text-center"
+            className="inline-flex items-center flex-wrap justify-center gap-1.5 xs:gap-2 sm:gap-3 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 backdrop-blur-md border border-slate-200/90 shadow-xs max-w-[95%] sm:max-w-full text-center my-1"
           >
-            <span className="text-[9px] xs:text-[10px] sm:text-[12px] font-bold tracking-[0.1em] sm:tracking-[0.18em] uppercase text-[#E8890C]">IDEAS</span>
+            <span className="text-[10px] xs:text-[11px] sm:text-[12px] font-bold tracking-wider sm:tracking-[0.16em] uppercase text-[#E8890C]">IDEAS</span>
             <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#0F3D2E] flex-shrink-0" />
-            <span className="text-[9px] xs:text-[10px] sm:text-[12px] font-bold tracking-[0.1em] sm:tracking-[0.18em] uppercase text-[#E8890C]">SOLUTIONS</span>
+            <span className="text-[10px] xs:text-[11px] sm:text-[12px] font-bold tracking-wider sm:tracking-[0.16em] uppercase text-[#E8890C]">SOLUTIONS</span>
             <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#0F3D2E] flex-shrink-0" />
-            <span className="text-[9px] xs:text-[10px] sm:text-[12px] font-bold tracking-[0.1em] sm:tracking-[0.18em] uppercase text-[#E8890C]">AI SEARCH VISIBILITY</span>
+            <span className="text-[10px] xs:text-[11px] sm:text-[12px] font-bold tracking-wider sm:tracking-[0.16em] uppercase text-[#E8890C]">AI SEARCH VISIBILITY</span>
             <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#0F3D2E] flex-shrink-0" />
-            <span className="text-[9px] xs:text-[10px] sm:text-[12px] font-bold tracking-[0.1em] sm:tracking-[0.18em] uppercase text-[#E8890C]">GROWTH</span>
+            <span className="text-[10px] xs:text-[11px] sm:text-[12px] font-bold tracking-wider sm:tracking-[0.16em] uppercase text-[#E8890C]">GROWTH</span>
           </motion.div>
         </motion.div>
 

@@ -4,7 +4,7 @@
 ## About VR4Web
 VR4Web is an elite Australian digital and software engineering firm specializing in bespoke web development, enterprise SaaS platforms, native and spatial mobile applications, and advanced AI search visibility (AEO & GEO). Headquartered in Australia with national presence across Melbourne, Perth, Adelaide, Sydney, and Brisbane, VR4Web serves forward-thinking startups and global enterprises.
 
-- **Official Website**: https://vr4web.com/
+- **Official Website**: https://www.vr4web.com
 - **Tagline**: Effective Solutions Online
 - **Core Email**: info@vr4web.com
 - **Locations**: Melbourne, Perth, Adelaide, Sydney, Brisbane, Australia & Global

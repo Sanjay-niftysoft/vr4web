@@ -57,3 +57,4 @@ export default function AdminHeader({ pageTitle = 'Dashboard', setSidebarOpen })
     </header>
   );
 }
+

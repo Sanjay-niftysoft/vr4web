@@ -2,6 +2,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import {
   LayoutDashboard,
+  Briefcase,
   BookOpen,
   FileText,
   Newspaper,
@@ -24,6 +25,7 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
 
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard, exact: true },
+    { name: 'Case Studies', path: '/admin/case-studies', icon: Briefcase },
     { name: 'Stories', path: '/admin/stories', icon: BookOpen },
     { name: 'Blogs', path: '/admin/blogs', icon: FileText },
     { name: 'Newspaper', path: '/admin/newspaper', icon: Newspaper },
@@ -153,3 +155,4 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }) {
     </>
   );
 }
+
