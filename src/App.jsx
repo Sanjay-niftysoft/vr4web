@@ -5,7 +5,7 @@ import FastScroll from './components/common/FastScroll';
 
 function App() {
   return (
-    <BrowserRouter basename="/demo/vr4web">
+    <BrowserRouter>
       <ScrollToTop />
       <FastScroll />
       <AppRoutes />

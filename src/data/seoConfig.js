@@ -531,8 +531,8 @@ export const STATIC_PAGES_SEO = {
  * Open Graph, Twitter cards, and JSON-LD schema for any route in VR4Web.
  */
 export function resolveSEO(rawPathname = '/') {
-  // Strip basename if passed
-  let path = rawPathname.replace(/^\/demo\/vr4web/, '');
+  // Strip legacy demo basename if present
+  let path = rawPathname.replace(/^\/demo\/vr4web/, '').replace(/^\/demo/, '');
   if (!path.startsWith('/')) path = `/${path}`;
   // Strip trailing slashes unless root
   if (path.length > 1 && path.endsWith('/')) {

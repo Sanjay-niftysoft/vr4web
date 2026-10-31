@@ -39,40 +39,6 @@
     <meta name="twitter:description" content="VR4Web delivers high-performance website development, custom software engineering, AI search visibility (AEO/GEO), and digital marketing for growing businesses." />
     <meta name="twitter:image" content="https://vr4web.com/vr4web.png" />
     <meta name="twitter:image:alt" content="VR4Web Effective Solutions Online" />
-    <script>
-      // Automatic image path resolver: if an image fails to load due to base path differences, automatically resolves alternate paths (/demo/vr4web/, /demo/, or /)
-      window.addEventListener('error', function (e) {
-        var t = e.target;
-        if (t && t.tagName === 'IMG' && t.src && !t.dataset.fallbackRetried) {
-          t.dataset.fallbackRetried = '1';
-          try {
-            var url = new URL(t.src, window.location.origin);
-            var p = url.pathname;
-            var candidates = [];
-            if (p.indexOf('/demo/vr4web/') !== -1) {
-              candidates.push(p.replace('/demo/vr4web/', '/demo/'));
-              candidates.push(p.replace('/demo/vr4web/', '/'));
-            } else if (p.indexOf('/demo/') !== -1) {
-              candidates.push(p.replace('/demo/', '/demo/vr4web/'));
-              candidates.push(p.replace('/demo/', '/'));
-            } else {
-              candidates.push('/demo/vr4web' + p);
-              candidates.push('/demo' + p);
-            }
-            var i = 0;
-            function tryNext() {
-              if (i >= candidates.length) return;
-              var cand = candidates[i++];
-              var probe = new Image();
-              probe.onload = function () { t.src = cand; };
-              probe.onerror = tryNext;
-              probe.src = cand;
-            }
-            tryNext();
-          } catch (err) {}
-        }
-      }, true);
-    </script>
   </head>
   <body>
     <div id="root"></div>
