@@ -270,17 +270,21 @@ export default function CaseStudiesManagement() {
   };
 
   // Generic Image Uploader supporting both Direct File and Input Event
-  const uploadImageFile = async (file, fieldPath = 'featuredImage') => {
+  const uploadImageFile = async (file, fieldPath = 'featuredImage', onProgress) => {
     if (!file) return null;
 
     if (file.size > 5 * 1024 * 1024) {
-      setFeedback({ type: 'error', message: 'File is too large. Maximum size is 5 MB.' });
-      return null;
+      const err = new Error('File size exceeds the 5 MB limit. Please select a smaller photo.');
+      setFeedback({ type: 'error', message: err.message });
+      throw err;
     }
 
     try {
       setUploadProgress(15);
-      const res = await authService.uploadCaseStudyImage(file, (percent) => setUploadProgress(percent));
+      const res = await authService.uploadCaseStudyImage(file, (percent) => {
+        setUploadProgress(percent);
+        if (onProgress) onProgress(percent);
+      });
       if (res && res.success) {
         setFormData((prev) => {
           if (fieldPath === 'featuredImage') return { ...prev, featuredImage: res.fileUrl };
@@ -290,13 +294,14 @@ export default function CaseStudiesManagement() {
           if (fieldPath === 'additionalImages') return { ...prev, additionalImages: [...prev.additionalImages, res.fileUrl].slice(0, 2) };
           return prev;
         });
-        setFeedback({ type: 'success', message: 'Photo uploaded successfully' });
+        setFeedback({ type: 'success', message: 'Photo uploaded and saved successfully!' });
         return res.fileUrl;
       }
-      return null;
+      throw new Error(res?.message || 'Server did not return a valid file URL');
     } catch (err) {
-      setFeedback({ type: 'error', message: err.response?.data?.message || err.message });
-      return null;
+      const msg = err.response?.data?.message || err.message || 'Image upload failed';
+      setFeedback({ type: 'error', message: msg });
+      throw err;
     } finally {
       setUploadProgress(null);
     }
@@ -801,6 +806,28 @@ export default function CaseStudiesManagement() {
 
             {/* Modal Body Container */}
             <div className="flex-1 overflow-y-auto p-6 bg-[#F8FAF9]">
+              {/* Modal Feedback Alert */}
+              {feedback && (
+                <div
+                  className={`p-3.5 mb-4 rounded-xl text-xs sm:text-sm flex items-center justify-between border ${
+                    feedback.type === 'success'
+                      ? 'bg-emerald-50 border-emerald-200 text-[#16A34A]'
+                      : 'bg-red-50 border-red-200 text-[#DC2626]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    {feedback.type === 'success' ? (
+                      <CheckCircle2 className="w-4 h-4 text-[#16A34A]" />
+                    ) : (
+                      <AlertCircle className="w-4 h-4 text-[#DC2626]" />
+                    )}
+                    <span className="font-medium">{feedback.message}</span>
+                  </div>
+                  <button onClick={() => setFeedback(null)} className="cursor-pointer">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
               {/* ──────────────────────────────────────────────────
                   MODE 1: MANUAL FILL (5 STRUCTURED TABS)
                  ────────────────────────────────────────────────── */}
@@ -928,9 +955,7 @@ export default function CaseStudiesManagement() {
                         sublabel="Drag & drop your featured cover photo here, or browse files"
                         value={formData.featuredImage}
                         onChange={(url) => setFormData((prev) => ({ ...prev, featuredImage: url }))}
-                        onUpload={(file) => uploadImageFile(file, 'featuredImage')}
-                        uploading={uploadProgress !== null}
-                        uploadProgress={uploadProgress}
+                        onUpload={(file, onProgress) => uploadImageFile(file, 'featuredImage', onProgress)}
                         fallback="/case-study/property.png"
                         aspectRatio="aspect-[16/9]"
                         helperText="Recommended resolution: 1200 x 675px. Formats: JPG, PNG, WEBP, SVG (Max: 5 MB)"
@@ -1517,9 +1542,7 @@ export default function CaseStudiesManagement() {
                         sublabel="Drag & drop your case study cover photo here, or browse files"
                         value={formData.featuredImage}
                         onChange={(url) => setFormData((prev) => ({ ...prev, featuredImage: url }))}
-                        onUpload={(file) => uploadImageFile(file, 'featuredImage')}
-                        uploading={uploadProgress !== null}
-                        uploadProgress={uploadProgress}
+                        onUpload={(file, onProgress) => uploadImageFile(file, 'featuredImage', onProgress)}
                         fallback="/case-study/property.png"
                         aspectRatio="aspect-[16/9]"
                         helperText="Visual cover displayed on case study listings and social shares (Max: 5 MB)"
