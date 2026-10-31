@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import Main from '../core/Main';
 import Home from '../components/Home';
 import SectorsPage from '../components/SectorsPage';
@@ -18,6 +18,16 @@ import BlogDetails from '../components/BlogDetails';
 import Whitepaper from '../shared/components/Whitepaper';
 import ServicesDetails from '../shared/components/servicesdetails';
 import PrivacyPolicy from '../components/PrivacyPolicy';
+
+// Admin Auth & Dashboard Components
+import AdminLogin from '../pages/AdminLogin/AdminLogin';
+import AdminRoute from './AdminRoute';
+import DashboardLayout from '../pages/AdminDashboard/DashboardLayout';
+import DashboardHome from '../pages/AdminDashboard/DashboardHome';
+import StoriesModule from '../pages/AdminDashboard/Stories';
+import BlogsModule from '../pages/AdminDashboard/Blogs';
+import NewspaperModule from '../pages/AdminDashboard/Newspaper';
+import GalleryModule from '../pages/AdminDashboard/Gallery';
 
 // 404 Catch-All Component with navigation recovery
 const NotFound = () => (
@@ -53,7 +63,28 @@ const NotFound = () => (
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* The Main component wraps all these routes with Header and Footer */}
+      {/* Dedicated Admin Login Route (Direct URL access only) */}
+      <Route path="/demo/vr4web/login" element={<AdminLogin />} />
+      <Route path="/login" element={<Navigate to="/demo/vr4web/login" replace />} />
+      <Route path="/admin/login" element={<Navigate to="/demo/vr4web/login" replace />} />
+
+      {/* Protected Admin Dashboard Suite */}
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <DashboardLayout />
+          </AdminRoute>
+        }
+      >
+        <Route index element={<DashboardHome />} />
+        <Route path="stories" element={<StoriesModule />} />
+        <Route path="blogs" element={<BlogsModule />} />
+        <Route path="newspaper" element={<NewspaperModule />} />
+        <Route path="gallery" element={<GalleryModule />} />
+      </Route>
+
+      {/* Public Website Routes (Wrapped with Header and Footer) */}
       <Route element={<Main />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
